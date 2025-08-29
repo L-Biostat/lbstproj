@@ -1,4 +1,4 @@
-#' 
+#'
 save_data <- function(
   x,
   overwrite = FALSE,
@@ -114,10 +114,10 @@ save_table <- function(
   }
 }
 
-save_figure <- function(
-  x,
-  name = deparse(substitute(x)),
-  overwrite = FALSE,
-  export = NULL,
-  quiet = FALSE
-)
+# save_figure <- function(
+#   x,
+#   name = deparse(substitute(x)),
+#   overwrite = FALSE,
+#   export = NULL,
+#   quiet = FALSE
+# )
