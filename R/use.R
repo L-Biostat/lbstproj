@@ -106,6 +106,13 @@ use_skeleton <- function(name, open, type) {
 }
 
 get_author <- function() {
+  # Check if the DESCRIPTION file exists
+  if (!fs::file_exists("DESCRIPTION")) {
+    cli::cli_alert_warning(
+      "No DESCRIPTION file found. Using a placeholder author name."
+    )
+    return("Your Name")
+  }
   sub("\\s*<.*", "", desc::desc_get_author())
 }
 
