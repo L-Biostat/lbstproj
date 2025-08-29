@@ -1,0 +1,14 @@
+Package: lbstproj
+Type: Package
+Title: Functions to create, maintain and use a L-BioStat R project.
+Version: 0.1.0
+Authors@R: c(
+    person(
+      "Alexandre", "Bohyn",
+      email = "alexandre.bohyn@kuleuven.be",
+      role = c("aut", "cre")
+    )
+  )
+Encoding: UTF-8
+LazyData: true
+License: CC0
