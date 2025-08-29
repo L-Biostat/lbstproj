@@ -28,7 +28,7 @@ use_data_raw <- function(
   overwrite = FALSE
 ) {
   # Use the helper function
-  file_path <- use_skeleton(name, open, overwrite, type = "data")
+  file_path <- use_skeleton(name, open, type = "data")
   # Print info message
   cli::cli_bullets(c(
     "*" = "Finish writing the data preparation script in {.path {file_path}}.",
@@ -40,7 +40,7 @@ use_data_raw <- function(
 #' @export
 use_table <- function(name, open = rlang::is_interactive(), overwrite = FALSE) {
   # Use the helper function
-  file_path <- use_skeleton(name, open, overwrite, type = "table")
+  file_path <- use_skeleton(name, open, type = "table")
   # Print info message
   cli::cli_bullets(c(
     "*" = "Finish writing the table-generating script in {.path {file_path}}.",
@@ -56,7 +56,7 @@ use_figure <- function(
   overwrite = FALSE
 ) {
   # Use the helper function
-  file_path <- use_skeleton(name, open, overwrite, type = "figure")
+  file_path <- use_skeleton(name, open, type = "figure")
   # Print info message
   cli::cli_bullets(c(
     "*" = "Finish writing the figure-generating script in {.path {file_path}}.",
@@ -72,14 +72,14 @@ use_function <- function(
   overwrite = FALSE
 ) {
   # Use the helper function
-  file_path <- use_skeleton(name, open, overwrite, type = "function")
+  file_path <- use_skeleton(name, open, type = "function")
   # Print info message
   cli::cli_bullets(c(
     "*" = "Finish writing the helper function in {.path {file_path}}."
   ))
 }
 
-use_skeleton <- function(name, open, overwrite, type) {
+use_skeleton <- function(name, open, type) {
   # Type should match data, figure, table, or function
   stopifnot(type %in% c("data", "figure", "table", "function"))
   # Check the name
@@ -99,8 +99,7 @@ use_skeleton <- function(name, open, overwrite, type) {
       author = get_author()
     ),
     ignore = FALSE,
-    open = open,
-    overwrite = overwrite
+    open = open
   )
   # Return the file path invisibly
   invisible(file_path)
