@@ -4,15 +4,15 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of lbstproj is to ...
+`lbstproj` provides tools to create, maintain, and use standardized R projects for the L-Biostat group.
 
 ## Installation
 
-You can install the development version of lbstproj from [GitHub](https://github.com/) with:
+You can install the development version of `lbstproj` from [GitHub](https://github.com/L-Biostat/lbstproj) with:
 
 ``` r
-# install.packages("pak")
-pak::pak("L-Biostat/lbstproj")
+# install.packages("remotes")
+remotes::install_github("L-Biostat/lbstproj")
 ```
 
 ## Example

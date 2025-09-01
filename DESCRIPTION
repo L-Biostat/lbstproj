@@ -1,6 +1,6 @@
 Package: lbstproj
 Type: Package
-Title: Functions to create, maintain and use a L-BioStat R project.
+Title: Tools To Create, Maintain, And Use Standardized R Projects For The L-Biostat Group.
 Version: 0.1.0
 Authors@R: c(
     person(
