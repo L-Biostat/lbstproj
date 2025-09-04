@@ -32,12 +32,11 @@ generating tables, creating figures, or writing helper functions in your
 project.
 }
 \details{
-Depending on the function you use, the script will be placed in one of the
-following directories:
+Each function saves the script to a specific directory:
 \itemize{
-\item \code{use_data()}: \verb{R/data/}
-\item \code{use_table()}: \verb{R/tables/}
-\item \code{use_figure()}: \verb{R/figures/}
-\item \code{use_function()}: \verb{R/functions/}
+\item \code{use_data()} to \verb{R/data/}
+\item \code{use_table()} to \verb{R/tables/}
+\item \code{use_figure()} to \verb{R/figures/}
+\item \code{use_function()} to \verb{R/functions/}
 }
 }

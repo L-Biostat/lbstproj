@@ -6,12 +6,11 @@
 #' project.
 #'
 #' @details
-#' Depending on the function you use, the script will be placed in one of the
-#' following directories:
-#'  * `use_data()`: `R/data/`
-#'  * `use_table()`: `R/tables/`
-#'  * `use_figure()`: `R/figures/`
-#'  * `use_function()`: `R/functions/`
+#' Each function saves the script to a specific directory:
+#'  * `use_data()` to `R/data/`
+#'  * `use_table()` to `R/tables/`
+#'  * `use_figure()` to `R/figures/`
+#'  * `use_function()` to `R/functions/`
 #'
 #' @param name Name of the dataset/table/figure/function. This will be sanitized
 #'   and used as the script file name.
@@ -78,7 +77,7 @@ use_function <- function(
 }
 
 .generate_file_path <- function(type, name) {
-  good_name <- sanitize_name(name)
+  good_name <- .sanitize_name(name)
   if (type %in% c("figure", "table")) {
     file_path <- fs::path("R", paste0(type, "s"), good_name, ext = "R")
   } else {
