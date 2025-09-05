@@ -1,89 +1,68 @@
-# Public functions to export figures and tables ----------------------------------
-
-export_table <- function(x, name, format, overwrite = FALSE, quiet = FALSE) {
+# TODO: document functions
+export_table <- function(
+  x,
+  name,
+  format,
+  overwrite = FALSE,
+  quiet = FALSE,
+  ...
+) {
   # Check object class validity
+  check_tbl_class(x)
+
+  # Check format validity
+  check_format(format = format, type = "table")
+
+  # Check name validity
+  sane_name <- check_name(name)
+
+  # Check that files doesn't already exist and create directory if needed
+  check_dir_present(dir = "results/tables", quiet = quiet)
+  file_path <- fs::path("results", "tables", sane_name, ext = format)
+  check_files_absent(paths = file_path, overwrite = overwrite)
+
+  # Export based on class and format
   if (inherits(x, "gt_tbl")) {
-    obj_class <- "gt"
-  } else if (inherits(x, "flextable")) {
-    obj_class <- "flextable"
-  } else {
-    cli::cli_abort(
-      c(
-        "x" = "Unsupported table class {.val {class(x)[1]}}.",
-        "i" = "Supported classes are {.val gt} and {.val flextable}."
-      )
-    )
-  }
-
-  # Check details and get file path
-  file_path <- check_export_details(
-    name = name,
-    type = "table",
-    format = format,
-    overwrite = overwrite,
-    quiet = quiet
-  )
-
-  # Define export function based on class
-  if (obj_class == "gt") {
-    gt::gtsave(data = x, filename = file_path)
-  } else if (obj_class == "flextable") {
+    gt::gtsave(data = x, filename = file_path, ...)
+  } else if (inherits(x, "gt_tbl")) {
     if (format == "docx") {
-      flextable::save_as_docx(x, path = file_path)
+      flextable::save_as_docx(x, path = file_path, ...)
     } else if (format == "html") {
-      flextable::save_as_html(x, path = file_path)
+      flextable::save_as_html(x, path = file_path, ...)
     }
   }
 
   # Inform user
-  if (!quiet) {
-    cli::cli_alert_success("Exporting {.val table} to {.file {file_path}}.")
-  }
+  cli_export_msg(type = "table", file_path = file_path, quiet = quiet)
 }
 
-# Helper functions to export objects ---------------------------------------------
-
-check_export_details <- function(
+export_figure <- function(
+  x,
   name,
-  type,
   format,
   overwrite = FALSE,
-  quiet = FALSE
+  quiet = FALSE,
+  ...
 ) {
-  # Check the type validity
-  valid_types <- c("figure", "table")
-  if (!type %in% valid_types) {
-    cli::cli_abort(
-      c(
-        "x" = "Unknown type {.val {type}}.",
-        "i" = "Supported types are {.val {valid_types}}."
-      )
-    )
-  }
-  # Check the format validity based on the type
-  valid_formats <- switch(
-    type,
-    figure = c("png", "jpeg", "tiff", "bmp", "svg", "pdf"),
-    table = c("docx", "html")
-  )
-  if (!format %in% valid_formats) {
-    cli::cli_abort(
-      c(
-        "x" = "Unknown format {.val {format}} for type {.val {type}}.",
-        "i" = "Supported formats are {.val {valid_formats}}."
-      )
-    )
-  }
-  # Check the name validity
-  usethis:::check_name(name)
+  # Check object class validity
+  check_fig_class(x)
 
-  # Ensure output directory exists
-  out_dir <- fs::path("results", paste0(type, "s"))
-  create_directory(out_dir, quiet = quiet)
+  # Check format validity
+  check_format(format = format, type = "figure")
 
-  # Create the file path
-  file_path <- fs::path(out_dir, .sanitize_name(name), ext = format)
-  # Check if file already exists
-  usethis:::check_files_absent(file_path, overwrite = overwrite)
-  return(file_path)
+  # Check name validity
+  sane_name <- check_name(name)
+
+  # Check that files doesn't already exist and create directory if needed
+  check_dir_present(dir = "results/figures", quiet = quiet)
+  file_path <- fs::path("results", "figures", sane_name, ext = format)
+  check_files_absent(paths = file_path, overwrite = overwrite)
+
+  # Export based on class and format
+  if (inherits(x, "ggplot")) {
+    ggplot2::ggsave(filename = file_path, plot = x, device = format, ...)
+  } # other cases are checked above
+
+  # Inform user
+  cli_export_msg(type = "figure", file_path = file_path, quiet = quiet)
 }

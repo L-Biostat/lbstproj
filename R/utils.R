@@ -1,14 +1,17 @@
-create_directory <- function(path, quiet = FALSE) {
-  full_path <- fs::path(path)
-  if (fs::dir_exists(full_path)) {
-    return(invisible(FALSE))
-  } else if (fs::file_exists(full_path)) {
-    cli::cli_abort("{.path {(path)}} exists but is not a directory.")
-  } else {
-    fs::dir_create(full_path, recurse = TRUE)
-    if (!quiet) {
-      cli::cli_alert_success("Created directory {.path {(path)}}.")
-    }
-    return(invisible(TRUE))
+# Custom cli messages ------------------------------------------------------------
+
+cli_export_msg <- function(type, file_path, quiet) {
+  # Ensure path is relative
+  file_path <- fs::path_rel(file_path)
+  if (!quiet) {
+    cli::cli_alert_success("Exporting {.val {type}} to {.file {file_path}}.")
+  }
+}
+
+cli_save_msg <- function(type, file_path, quiet) {
+  # Ensure path is relative
+  file_path <- fs::path_rel(file_path)
+  if (!quiet) {
+    cli::cli_alert_success("Saving {.val {type}} to {.file {file_path}}.")
   }
 }
