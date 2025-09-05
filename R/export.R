@@ -1,5 +1,46 @@
 # Public functions to export figures and tables ----------------------------------
 
+export_table <- function(x, name, format, overwrite = FALSE, quiet = FALSE) {
+  # Check object class validity
+  if (inherits(x, "gt_tbl")) {
+    obj_class <- "gt"
+  } else if (inherits(x, "flextable")) {
+    obj_class <- "flextable"
+  } else {
+    cli::cli_abort(
+      c(
+        "x" = "Unsupported table class {.val {class(x)[1]}}.",
+        "i" = "Supported classes are {.val gt} and {.val flextable}."
+      )
+    )
+  }
+
+  # Check details and get file path
+  file_path <- check_export_details(
+    name = name,
+    type = "table",
+    format = format,
+    overwrite = overwrite,
+    quiet = quiet
+  )
+
+  # Define export function based on class
+  if (obj_class == "gt") {
+    gt::gtsave(data = x, filename = file_path)
+  } else if (obj_class == "flextable") {
+    if (format == "docx") {
+      flextable::save_as_docx(x, path = file_path)
+    } else if (format == "html") {
+      flextable::save_as_html(x, path = file_path)
+    }
+  }
+
+  # Inform user
+  if (!quiet) {
+    cli::cli_alert_success("Exporting {.val table} to {.file {file_path}}.")
+  }
+}
+
 # Helper functions to export objects ---------------------------------------------
 
 check_export_details <- function(
