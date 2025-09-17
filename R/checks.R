@@ -57,18 +57,26 @@ check_format <- function(format, type) {
 
 # Check directories and files ----------------------------------------------------
 
-check_dir_present <- function(dir, quiet = FALSE) {
-  usethis:::check_character(dir)
+check_dir_exists <- function(dir) {
   # If dir does not exist, create it and warn user
-  if (!dir.exists(dir)) {
-    if (!quiet) {
-      cli::cli_alert_info("Creating directory {.path {dir}}.")
-    }
-    dir.create(dir, recursive = TRUE)
+  if (!fs::dir_exists(dir)) {
+    fs::dir_create(dir)
+    cli::cli_alert_warning("Directory created at {.file {fs::path_rel(dir)}}")
   }
 }
 
-check_files_absent <- usethis:::check_files_absent
+check_file_absent <- function(file_path, overwrite) {
+  if (overwrite) {
+    return()
+  } else if (fs::file_exists(file_path)) {
+    cli::cli_abort(
+      c(
+        "x" = "File {.file {file_path}} already exists.",
+        "i" = "To overwrite the file, set {.code overwrite = TRUE}."
+      )
+    )
+  }
+}
 
 # Check object names -------------------------------------------------------------
 
