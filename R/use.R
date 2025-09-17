@@ -79,7 +79,7 @@ use_file <- function(type, name, overwrite, open) {
   author <- desc::desc_get_author()
   template_data <- list(
     name = paste0(name, ".R"),
-    author = paste(author$given, author$family),
+    author = get_author(),
     date = format(Sys.Date(), "%d %B %Y")
   )
   # Render the template with the data
