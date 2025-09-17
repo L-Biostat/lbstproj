@@ -59,6 +59,16 @@ create_project <- function(
   if (!fs::dir_exists(path)) {
     cli::cli_abort("The specified path {.path {full_path}} does not exist.")
   }
+  # Ensure that user does want to create project there
+  ok <- usethis::ui_yeah(
+    paste0("Create project at `", full_path, "`?"),
+    n_no = 1,
+    n_yes = 1
+  )
+  if (!ok) {
+    cli::cli_abort("Project creation aborted by user.")
+  }
+
   # Create project at specified path
   usethis::ui_silence(
     usethis::create_project(
@@ -117,5 +127,6 @@ create_project <- function(
   desc::desc_del("Description")
   desc::desc_del("License")
   cli::cli_alert_success("Project setup complete! Start working!")
+  usethis::proj_activate(full_path)
   invisible(usethis::proj_get())
 }
