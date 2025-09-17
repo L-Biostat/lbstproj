@@ -30,13 +30,13 @@ use_figure <- function(
   overwrite = FALSE,
   open = rlang::is_interactive()
 ) {
-  use_file(type = "figure", name = name, overwrite = overwrite)
+  use_file(type = "figure", name = name, overwrite = overwrite, open = open)
 }
 
 #' @describeIn use_scripts Create a table script in `R/tables/`.
 #' @export
 use_table <- function(name, overwrite = FALSE, open = rlang::is_interactive()) {
-  use_file(type = "table", name = name, overwrite = overwrite)
+  use_file(type = "table", name = name, overwrite = overwrite, open = open)
 }
 
 #' @describeIn use_scripts Create a function script in `R/functions/`.
@@ -46,13 +46,13 @@ use_function <- function(
   overwrite = FALSE,
   open = rlang::is_interactive()
 ) {
-  use_file(type = "function", name = name, overwrite = overwrite)
+  use_file(type = "function", name = name, overwrite = overwrite, open = open)
 }
 
 #' @describeIn use_scripts Create a data script in `R/data/`.
 #' @export
 use_data <- function(name, overwrite = FALSE, open = rlang::is_interactive()) {
-  use_file(type = "data", name = name, overwrite = overwrite)
+  use_file(type = "data", name = name, overwrite = overwrite, open = open)
 }
 
 # Internal function to create a R-script file from a template based on type
@@ -71,7 +71,7 @@ use_file <- function(type, name, overwrite, open) {
   # Read the figure template
   template <- readLines(
     con = fs::path_package(
-      fs::path("inst", "templates", type, ext = "R"),
+      fs::path("templates", type, ext = "R"),
       package = "lbstproj"
     )
   )
