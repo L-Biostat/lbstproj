@@ -1,105 +1,72 @@
-# Public functions to save data, tables, and figures ----
-
-#' Save an R object
+#' Save analysis objects as `.rds`
 #'
-#' These functions save R objects to the appropriate directories within the project
-#' structure, ensuring that they exist. All objects are saved as `.rds` files to be easily
-#' loaded later.
+#' @description
+#' A family of helpers that save figures, tables, and data sets as
+#' **`.rds`** files via [base::saveRDS()]. Each function writes to its
+#' designated output directory.
+#'
+#' @param object The object to save (figure/table/data). Any R object supported
+#'   by [base::saveRDS()].
+#' @param name Name used to save the object (without file extension).
+#' @inheritParams use_scripts
+#' @param ... Additional arguments passed to [base::saveRDS()] (e.g.,
+#'   `compress`, `version`).
 #'
 #' @details
-#' Each function saves the object to a specific directory:
-#' * `save_data()` to `data/processed/`.
-#' * `save_table()` to `data/tables/`.
-#' * `save_figure()` to `data/figures/`.
+#' These helpers are called for their side effects and do not return a value.
 #'
-#' @param x The object (data, table, figure) to be saved.
-#' @param name A name for the object. Should only contain letters, numbers, and underscores.
-#' @param overwrite By default, all the `save_*` functions will not overwrite
-#'   existing files. Set to `TRUE` if you really want to do so.
-#' @param quiet If `TRUE`, suppresses messages about the saving process. Defaults to `FALSE`.
-#'
-#' @md
-#' @export
 #' @examples
 #' \dontrun{
-#' # Example of saving a data frame
-#' df <- data.frame(x = 1:10, y = rnorm(10))
-#' save_data(df, "my_dataset")
+#' # Figures
+#' save_figure(plot, "main_effect", compress = "xz")
+#'
+#' # Tables
+#' save_table(tbl, "baseline_summary")
+#'
+#' # Data (saved to data/processed/)
+#' save_data(df, "patients_clean", version = 3)
 #' }
-save_data <- function(x, name, overwrite = FALSE, quiet = FALSE, ...) {
-  save_skeleton(
-    x,
-    name = name,
-    type = "data",
-    overwrite = overwrite,
-    quiet = quiet,
-    ...
-  )
-}
+#'
+#' @seealso [base::saveRDS()]
+#' @md
+#' @name save_scripts
+NULL
 
-#' @rdname save_data
+#' @describeIn save_scripts Save a data object to `data/processed/`.
 #' @export
-save_table <- function(x, name, overwrite = FALSE, quiet = FALSE, ...) {
-  save_skeleton(
-    x,
-    name = name,
-    type = "table",
-    overwrite = overwrite,
-    quiet = quiet,
-    ...
-  )
+save_data <- function(object, name, overwrite = FALSE, ...) {
+  save_object(type = "data", object, name, overwrite, ...)
 }
 
-#' @rdname save_data
+#' @describeIn save_scripts Save a figure to `data/figures/`.
 #' @export
-save_figure <- function(x, name, overwrite = FALSE, quiet = FALSE, ...) {
-  save_skeleton(
-    x,
-    name = name,
-    type = "figure",
-    overwrite = overwrite,
-    quiet = quiet,
-    ...
-  )
+save_figure <- function(object, name, overwrite = FALSE, ...) {
+  save_object(type = "figure", object, name, overwrite, ...)
 }
 
-# Skeleton function to save any object to the appropriate directory ----
+#' @describeIn save_scripts Save a table to `data/tables/`.
+#' @export
+save_table <- function(object, name, overwrite = FALSE, ...) {
+  save_object(type = "table", object, name, overwrite, ...)
+}
 
-save_skeleton <- function(
-  x,
-  name,
-  type,
-  overwrite,
-  quiet,
-  ...
-) {
-  # Check the type validity
-  valid_types <- c("figure", "table", "data")
-  if (!type %in% valid_types) {
-    cli::cli_abort(
-      c(
-        "x" = "Unknown type {.val {type}}.",
-        "i" = "Supported types are {.val {valid_types}}."
-      )
-    )
-  }
-  # Check the name validity
-  usethis:::check_name(name)
-
-  # Ensure output directory exists
-  new_type <- ifelse(type == "data", "processed", paste0(type, "s"))
-  out_dir <- fs::path("data", new_type)
-  create_directory(out_dir, quiet = quiet)
-
-  # Create the file path
-  file_path <- fs::path(out_dir, .sanitize_name(name), ext = "rds")
+# Internal function to save an R object to the appropriate directory
+save_object <- function(type, object, name, overwrite, ...) {
+  # Create file path
+  dir_name <- ifelse(
+    type == "data",
+    "processed",
+    paste0(type, "s")
+  )
+  file_path <- fs::path("data", dir_name, name, ext = "rds")
   # Check if file already exists
-  usethis:::check_files_absent(file_path, overwrite = overwrite)
-
-  # Save the object
-  saveRDS(x, file = file_path, ...)
+  check_file_absent(file_path, overwrite = overwrite)
+  # Ensure the parent directory exists, create if not
+  check_dir_exists(fs::path_dir(file_path))
+  # Save the object as an RDS file
+  saveRDS(plot, file = file_path, ...)
   # Inform the user
-  if (!quiet) {
-    cli::cli_alert_success("Saving {.val {name}} to {.path {file_path}}.")
-  }
+  cli::cli_alert_success(
+    "{stringr::str_to_title(type)} saved to {.file {fs::path_rel(file_path)}}"
+  )
 }
