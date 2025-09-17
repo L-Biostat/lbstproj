@@ -1,3 +1,34 @@
+#' Export a figure to `results/figures/`
+#'
+#' @description
+#' Save a publication-ready figure to `results/figures/<name>.<ext>` using
+#' [ggplot2::ggsave()]. The parent directory is created if needed and an
+#' existing file is not overwritten unless `overwrite = TRUE`.
+#'
+#' @param fig A [ggplot2::ggplot] object.
+#' @param name Name used to save the figure (without file extension).
+#' @param ext Output format/extension. One of `"png"`, `"pdf"`, `"jpeg"`, `"tiff"`,
+#'   `"bmp"`, `"svg"`. Defaults to `"png"`. (Raster: png/jpeg/tiff/bmp; Vector: pdf/svg.)
+#' @param width,height Plot dimensions passed to [ggplot2::ggsave()] (in inches
+#'   by default; you can pass `units = "cm"` or `units = "mm"` via `...`).
+#' @inheritParams use_scripts
+#' @param ... Additional arguments forwarded to [ggplot2::ggsave()]
+#'   (e.g., `dpi`, `units`, `bg`, `device`).
+#'
+#' @details
+#' The function is called for its side effects and does not return a value.
+#'
+#' @examples
+#' \dontrun{
+#' library(ggplot2)
+#' p <- ggplot(mtcars, aes(mpg, wt)) + geom_point()
+#' export_figure(p, name = "scatter_mpg_wt", ext = "pdf", width = 7, height = 5)
+#' export_figure(p, name = "scatter_png", dpi = 300)  # defaults to PNG
+#' }
+#'
+#' @seealso [ggplot2::ggsave()]
+#' @md
+#' @export
 export_figure <- function(
   fig,
   name,
@@ -34,6 +65,41 @@ export_figure <- function(
   cli::cli_alert_success("Figure saved to {.file {file_path}}")
 }
 
+#' Export a table to `results/tables/`
+#'
+#' @description
+#' Save a formatted table to `results/tables/<name>.<ext>`. Supports `gt` tables
+#' via [gt::gtsave()] and `flextable` via the corresponding `save_as_*()` helpers.
+#' The parent directory is created if needed and an existing file is not
+#' overwritten unless `overwrite = TRUE`.
+#'
+#' @param tbl A [gt::gt()] table (`gt_tbl`) or a [flextable::flextable()] object.
+#' @param name Name used to save the table (without file extension).
+#' @param ext Output format/extension. One of `"docx"`, `"pdf"`, `"html"`, `"rtf"`.
+#' @inheritParams use_scripts
+#' @param landscape Logical; for `flextable` exports only, set page orientation
+#'   to landscape. Ignored for `gt` tables.
+#' @param ... Additional arguments forwarded to [gt::gtsave()] (for `gt`) or the
+#'   relevant `flextable::save_as_*()` function (for `flextable`).
+#'
+#' @details
+#' The function is called for its side effects and does not return a value.
+#'
+#' @examples
+#' \dontrun{
+#' library(gt)
+#' gt_tbl <- head(mtcars) |> gt()
+#' export_table(gt_tbl, name = "mtcars_head", ext = "html")
+#'
+#' library(flextable)
+#' ft <- flextable(head(iris))
+#' export_table(ft, name = "iris_doc", ext = "docx", landscape = TRUE)
+#' }
+#'
+#' @seealso [gt::gtsave()], [flextable::save_as_docx()], [flextable::save_as_pdf()],
+#'   [flextable::save_as_html()], [flextable::save_as_rtf()]
+#' @md
+#' @export
 export_table <- function(
   tbl,
   name,
