@@ -1,68 +1,101 @@
-# TODO: document functions
-export_table <- function(
-  x,
+export_figure <- function(
+  fig,
   name,
-  format,
+  ext = "png",
+  width = 8,
+  height = 6,
   overwrite = FALSE,
-  quiet = FALSE,
   ...
 ) {
-  # Check object class validity
-  check_tbl_class(x)
-
-  # Check format validity
-  check_format(format = format, type = "table")
-
-  # Check name validity
-  sane_name <- check_name(name)
-
-  # Check that files doesn't already exist and create directory if needed
-  check_dir_present(dir = "results/tables", quiet = quiet)
-  file_path <- fs::path("results", "tables", sane_name, ext = format)
-  check_files_absent(paths = file_path, overwrite = overwrite)
-
-  # Export based on class and format
-  if (inherits(x, "gt_tbl")) {
-    gt::gtsave(data = x, filename = file_path, ...)
-  } else if (inherits(x, "gt_tbl")) {
-    if (format == "docx") {
-      flextable::save_as_docx(x, path = file_path, ...)
-    } else if (format == "html") {
-      flextable::save_as_html(x, path = file_path, ...)
-    }
+  # Check fig is a ggplot object
+  if (!inherits(fig, "ggplot")) {
+    cli::cli_abort("{.arg fig} must be a {.cls ggplot} object")
   }
-
+  # Check extension is valid
+  valid_ext <- c("png", "pdf", "jpeg", "tiff", "bmp", "svg")
+  if (!(ext %in% valid_ext)) {
+    cli::cli_abort("{.arg ext} must be one of {.val {valid_ext}}")
+  }
+  # Create file path
+  file_path <- fs::path("results", "figures", name, ext = ext)
+  # Check if file already exists
+  check_file_absent(file_path, overwrite = overwrite)
+  # Ensure the parent directory exists, create if not
+  check_dir_exists(fs::path_dir(file_path))
+  # Save the figure
+  ggplot2::ggsave(
+    filename = file_path,
+    plot = fig,
+    width = width,
+    height = height,
+    ...
+  )
   # Inform user
-  cli_export_msg(type = "table", file_path = file_path, quiet = quiet)
+  cli::cli_alert_success("Figure saved to {.file {file_path}}")
 }
 
-export_figure <- function(
-  x,
+export_table <- function(
+  tbl,
   name,
-  format,
+  ext,
   overwrite = FALSE,
-  quiet = FALSE,
+  landscape = FALSE,
   ...
 ) {
-  # Check object class validity
-  check_fig_class(x)
-
-  # Check format validity
-  check_format(format = format, type = "figure")
-
-  # Check name validity
-  sane_name <- check_name(name)
-
-  # Check that files doesn't already exist and create directory if needed
-  check_dir_present(dir = "results/figures", quiet = quiet)
-  file_path <- fs::path("results", "figures", sane_name, ext = format)
-  check_files_absent(paths = file_path, overwrite = overwrite)
-
-  # Export based on class and format
-  if (inherits(x, "ggplot")) {
-    ggplot2::ggsave(filename = file_path, plot = x, device = format, ...)
-  } # other cases are checked above
-
+  # Check tbl is a gt table or a flextable object
+  if (!(inherits(tbl, "gt_tbl") || inherits(tbl, "flextable"))) {
+    cli::cli_abort(
+      "{.arg tbl} must be a {.cls gt_tbl} or {.cls flextable} object"
+    )
+  }
+  # Check extension is valid
+  valid_ext <- c("docx", "pdf", "html", "rtf")
+  if (!(ext %in% valid_ext)) {
+    cli::cli_abort("{.arg ext} must be one of {.val {valid_ext}}")
+  }
+  # Create file path
+  file_path <- fs::path("results", "tables", name, ext = ext)
+  # Check if file already exists
+  check_file_absent(file_path, overwrite = overwrite)
+  # Ensure the parent directory exists, create if not
+  check_dir_exists(fs::path_dir(file_path))
+  # Save the table based on the extension and class
+  if (inherits(tbl, "gt_tbl")) {
+    if (landscape) {
+      cli::cli_alert_warning(
+        "Landscape mode is not supported for gt tables. Ignoring {.arg landscape} argument."
+      )
+    }
+    gt::gtsave(data = tbl, filename = file_path, ...)
+  } else if (inherits(tbl, "flextable")) {
+    # Define page orientation if landscape is TRUE
+    if (landscape) {
+      pr <- officer::prop_section(
+        page_size = officer::page_size(orient = "landscape"),
+        type = "continuous"
+      )
+    } else {
+      pr <- NULL
+    }
+    # Save based on extension
+    switch(
+      ext,
+      docx = flextable::save_as_docx(
+        tbl,
+        path = file_path,
+        pr_section = pr,
+        ...
+      ),
+      pdf = flextable::save_as_pdf(tbl, path = file_path, pr_section = pr, ...),
+      html = flextable::save_as_html(
+        tbl,
+        path = file_path,
+        pr_section = pr,
+        ...
+      ),
+      rtf = flextable::save_as_rtf(tbl, path = file_path, pr_section = pr, ...)
+    )
+  }
   # Inform user
-  cli_export_msg(type = "figure", file_path = file_path, quiet = quiet)
+  cli::cli_alert_success("Table saved to {.file {file_path}}")
 }
