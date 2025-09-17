@@ -69,7 +69,6 @@ create_project <- function(
   )
   cli::cli_alert_info("Setting active project to {.path {full_path}}")
   rproj_file <- fs::dir_ls(path, type = "file", glob = "*.Rproj")
-  cli::cli_alert_info("Writing {.file {rproj_file}} ")
   cli::cli_alert_info("Creating project structure ")
 
   # Define the directories to be created
@@ -79,8 +78,8 @@ create_project <- function(
     "data/tables",
     "docs",
     "inst",
-    "output/figures",
-    "output/tables",
+    "results/figures",
+    "results/tables",
     "R/data",
     "R/figures",
     "report"

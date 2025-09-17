@@ -1,143 +1,97 @@
-#' Create a skeleton script
+#' Create a R script pre-filled with boilerplate code
 #'
-#' These functions set up a directory (if needed) and create a new R script from
-#' a template. The script serves as a starting point for preparing data,
-#' generating tables, creating figures, or writing helper functions in your
-#' project.
+#' @description
+#' A family of helpers that write a minimal R script into a project subfolder
+#' under `R/`: figures, tables, functions, and data.
+#'
+#' @param name Name of the script (without file extension).
+#' @param overwrite Whether to overwrite an existing file with the same name. Defaults to `FALSE`.
+#' @param open Whether to open the new file in the editor. Defaults to `TRUE` if in an interactive session (i.e. in RStudio and other IDEs).
 #'
 #' @details
-#' Depending on the function you use, the script will be placed in one of the
-#' following directories:
-#'  * `use_data()`: `R/data/`
-#'  * `use_table()`: `R/tables/`
-#'  * `use_figure()`: `R/figures/`
-#'  * `use_function()`: `R/functions/`
+#' These functions are called for their side effects: they create a new script,
+#' make parent directories if needed, and (optionally) open the file. They do
+#' not return a value.
 #'
-#' @param name Name of the dataset/table/figure/function. This will be sanitized
-#'   and used as the script file name.
-#' @param open Open the newly created file for editing? Happens in RStudio, if
-#'   applicable, or via [utils::file.edit()] otherwise.
-#' @param overwrite By default, all the `use_*` functions will not overwrite
-#'   existing files. Set to `TRUE` if you really want to do so.
-#'
+#' @examples
+#' \dontrun{
+#' use_figure("eda_hist01", overwrite = FALSE)
+#' use_table("summary_endpoints", open = FALSE)
+#' use_function("strings_utils")
+#' }
 #' @md
-#' @export
-use_data <- function(
-  name,
-  open = rlang::is_interactive(),
-  overwrite = FALSE
-) {
-  use_skeleton(name, open, type = "data", overwrite)
-}
+#' @name use_scripts
+NULL
 
-#' @rdname use_data
-#' @export
-use_table <- function(name, open = rlang::is_interactive(), overwrite = FALSE) {
-  use_skeleton(name, open, type = "table", overwrite)
-}
-
-#' @rdname use_data
+#' @describeIn use_scripts Create a figure script in `R/figures/`.
 #' @export
 use_figure <- function(
   name,
-  open = rlang::is_interactive(),
-  overwrite = FALSE
+  overwrite = FALSE,
+  open = rlang::is_interactive()
 ) {
-  use_skeleton(name, open, type = "figure", overwrite)
+  use_file(type = "figure", name = name, overwrite = overwrite)
 }
 
-#' @rdname use_data
+#' @describeIn use_scripts Create a table script in `R/tables/`.
+#' @export
+use_table <- function(name, overwrite = FALSE, open = rlang::is_interactive()) {
+  use_file(type = "table", name = name, overwrite = overwrite)
+}
+
+#' @describeIn use_scripts Create a function script in `R/functions/`.
 #' @export
 use_function <- function(
   name,
-  open = rlang::is_interactive(),
-  overwrite = FALSE
+  overwrite = FALSE,
+  open = rlang::is_interactive()
 ) {
-  use_skeleton(name, open, type = "function", overwrite)
+  use_file(type = "function", name = name, overwrite = overwrite)
 }
 
-# Helper functions --------------------------------------------------------------
-# All dot-functions are internal and DO NOT CHECK arguments. They are called
-# from use_skeleton() which does all the necessary checks.
-
-.sanitize_name <- function(name) {
-  usethis:::check_character(name)
-  gsub("[^a-zA-Z0-9_]+", "_", name)
+#' @describeIn use_scripts Create a data script in `R/data/`.
+#' @export
+use_data <- function(name, overwrite = FALSE, open = rlang::is_interactive()) {
+  use_file(type = "data", name = name, overwrite = overwrite)
 }
 
-.check_dir_exists <- function(type) {
-  if (type %in% c("figure", "table")) {
-    dir_path <- fs::path("R", paste0(type, "s"))
-  } else {
-    dir_path <- fs::path("R", type)
-  }
-  if (!fs::dir_exists(dir_path)) {
-    fs::dir_create(dir_path)
-    cli::cli_alert_info("Creating directory {.path {dir_path}}")
-  }
-}
-
-.generate_file_path <- function(type, name) {
-  good_name <- sanitize_name(name)
-  if (type %in% c("figure", "table")) {
-    file_path <- fs::path("R", paste0(type, "s"), good_name, ext = "R")
-  } else {
-    file_path <- fs::path("R", type, good_name, ext = "R")
-  }
-}
-
-.get_author <- function() {
-  # Check if the DESCRIPTION file exists
-  if (!fs::file_exists("DESCRIPTION")) {
-    cli::cli_alert_warning(
-      "No DESCRIPTION file found. Using a placeholder author name."
-    )
-    return("Your Name")
-  }
-  sub("\\s*<.*", "", desc::desc_get_author())
-}
-
-.fill_template <- function(type, name, file_path, open) {
-  usethis::use_template(
-    template = paste0(type, ".R"),
-    package = "lbstproj",
-    save_as = file_path,
-    data = list(
-      name = name,
-      date = format(Sys.Date(), "%d %b %Y"),
-      author = .get_author()
-    ),
-    ignore = FALSE,
-    open = open
+# Internal function to create a R-script file from a template based on type
+use_file <- function(type, name, overwrite, open) {
+  # Create file path
+  dir_name <- ifelse(
+    type == "data",
+    "data",
+    paste0(type, "s")
   )
-  # User message
-  cli::cli_alert_success("Writing file {.path {file_path}}")
-  cli::cli_alert_warning("Finish editing the script !")
-  if (type != "function") {
-    cli::cli_alert_info(
-      "Save your {.val {type}} using {.fn lbstproj::save_{type}}"
+  file_path <- fs::path_wd("R", dir_name, name, ext = "R")
+  # Check if file already exists
+  check_file_absent(file_path, overwrite = overwrite)
+  # Ensure the parent directory exists, create if not
+  check_dir_exists(fs::path_dir(file_path))
+  # Read the figure template
+  template <- readLines(
+    con = fs::path_package(
+      fs::path("inst", "templates", type, ext = "R"),
+      package = "lbstproj"
     )
+  )
+  # Generate data to use in the template
+  author <- desc::desc_get_author()
+  template_data <- list(
+    name = paste0(name, ".R"),
+    author = get_author(),
+    date = format(Sys.Date(), "%d %B %Y")
+  )
+  # Render the template with the data
+  rendered <- whisker::whisker.render(template = template, data = template_data)
+  # Write the rendered template to the figure path
+  writeLines(text = rendered, con = file_path)
+  # Open the file if requested
+  if (open) {
+    file.edit(file_path)
   }
-}
-
-use_skeleton <- function(name, open, type, overwrite) {
-  # Check the name is valid
-  usethis:::check_file_name(name)
-  # Check that type is valid
-  accepted_types <- c("data", "figure", "table", "function")
-  if (!type %in% accepted_types) {
-    cli::cli_abort(
-      "Invalid type {.val {type}}. Accepted types are: {.val {accepted_types}}."
-    )
-  }
-  # Create directory if it doesn't exist
-  .check_dir_exists(type)
-  # Generate file path
-  file_path <- .generate_file_path(type, name)
-  # Check if the file already exists
-  usethis:::check_file_name(file_path, overwrite)
-  # Fill the template
-  .fill_template(type, name, file_path, open)
-  # Return the file path invisibly
-  invisible(file_path)
+  # Inform the user
+  cli::cli_alert_success(
+    "{stringr::str_to_title(type)} created at {.file {fs::path_rel(file_path)}}"
+  )
 }
