@@ -96,7 +96,7 @@ export_figure <- function(
 #' export_table(ft, name = "iris_doc", ext = "docx", landscape = TRUE)
 #' }
 #'
-#' @seealso [gt::gtsave()], [flextable::save_as_docx()], [flextable::save_as_pdf()],
+#' @seealso [gt::gtsave()], [flextable::save_as_docx()],
 #'   [flextable::save_as_html()], [flextable::save_as_rtf()]
 #' @md
 #' @export
@@ -118,6 +118,11 @@ export_table <- function(
   valid_ext <- c("docx", "pdf", "html", "rtf")
   if (!(ext %in% valid_ext)) {
     cli::cli_abort("{.arg ext} must be one of {.val {valid_ext}}")
+  }
+  if (inherits(tbl, "flextable") & ext == "pdf") {
+    cli::cli_abort(
+      "{.cls flextable} objects can only be saved as {.val {setdiff(valid_ext, \"pdf\")}}"
+    )
   }
   # Create file path
   file_path <- fs::path("results", "tables", name, ext = ext)
@@ -152,7 +157,6 @@ export_table <- function(
         pr_section = pr,
         ...
       ),
-      pdf = flextable::save_as_pdf(tbl, path = file_path, pr_section = pr, ...),
       html = flextable::save_as_html(
         tbl,
         path = file_path,
