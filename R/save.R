@@ -64,7 +64,7 @@ save_object <- function(type, object, name, overwrite, ...) {
   # Ensure the parent directory exists, create if not
   check_dir_exists(fs::path_dir(file_path))
   # Save the object as an RDS file
-  saveRDS(plot, file = file_path, ...)
+  saveRDS(object, file = file_path, ...)
   # Inform the user
   cli::cli_alert_success(
     "{stringr::str_to_title(type)} saved to {.file {fs::path_rel(file_path)}}"
