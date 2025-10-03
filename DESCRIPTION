@@ -5,7 +5,6 @@ Title: Tools To Create, Maintain, And Use Standardized R Projects For The
 Version: 0.1.0
 Authors@R: 
     person("Alexandre", "Bohyn", , "alexandre.bohyn@kuleuven.be", role = c("aut", "cre"))
-License: CC0
 Depends: 
     R (>= 2.10)
 Imports: 

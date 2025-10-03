@@ -9,12 +9,13 @@
 #'
 #' ```
 #' ├── data
+#' │   ├── figures
 #' │   ├── processed
 #' │   ├── raw
 #' │   └── tables
-#' ├── inst
 #' ├── docs
-#' ├── output
+#' │   └── meetings
+#' ├── results
 #' │   ├── figures
 #' │   └── tables
 #' ├── R
@@ -22,14 +23,16 @@
 #' │   ├── figures
 #' │   └── tables
 #' └── report
+#'     └── utils
 #' ```
 #'
+#' @param path Path where the project should be created (default is current directory).
 #' @param title Title of the project.
 #' @param client Name of the client.
 #' @param department Department code or name.
 #' @param author Author name (first and last).
-#' @param version Project version (default is `1.0`).
-#' @param path Path where the project should be created (default is current directory).
+#' @param version Project version (default is `1.0.0`).
+#' @param open If `TRUE`, opens the new project in RStudio (default is `TRUE` if in interactive session).
 #'
 #' @return Invisibly returns the active project path.
 #' @md
@@ -42,17 +45,18 @@
 #'   client = "Client Name",
 #'   department = "DEP",
 #'   author = "Jane Doe",
-#'   version = 0.1,
+#'   version = "0.1.0",
 #'   path = "." # uses current directory
 #' )
 #' }
 create_project <- function(
-  title,
-  client,
-  department,
-  author,
-  version = 1.0,
-  path = "."
+  path = ".",
+  title = NULL,
+  client = NULL,
+  department = NULL,
+  author = NULL,
+  version = "1.0.0",
+  open = rlang::is_interactive()
 ) {
   # Check if the path exists
   full_path <- fs::path_abs(path)
@@ -68,6 +72,14 @@ create_project <- function(
   if (!ok) {
     cli::cli_abort("Project creation aborted by user.")
   }
+
+  # Prompt user for project information, if not provided
+  title <- title %||% readline(prompt = "Enter the project name: ")
+  author <- author %||% readline(prompt = "Enter the author's name: ")
+  client <- client %||%
+    readline(prompt = "Enter the client's name (if applicable): ")
+  department <- department %||%
+    readline(prompt = "Enter the client's department (if applicable): ")
 
   # Create project at specified path
   usethis::ui_silence(
@@ -86,15 +98,15 @@ create_project <- function(
     "data/processed",
     "data/raw",
     "data/tables",
-    "docs",
-    "inst",
+    "data/figures",
+    "docs/meetings",
     "results/figures",
     "results/tables",
     "R/data",
     "R/figures",
-    "report"
+    "report/utils"
   )
-  fs::dir_create(dirs)
+  fs::dir_create(fs::path(full_path, dirs))
 
   # Prepare DESCRIPTION fields
   author_names <- stringr::str_split_1(author, "\\s+")
@@ -124,6 +136,7 @@ create_project <- function(
       roxygen = FALSE
     )
   )
+  # Remove unnecessary fields added by default
   desc::desc_del("Description")
   desc::desc_del("License")
   cli::cli_alert_success("Project setup complete! Start working!")
