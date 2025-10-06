@@ -4,12 +4,23 @@
 #' Purpose      : description
 #' Files created:
 #'  - `data/tables/{{name}}.rds`
-#'  - `output/tables/{{name}}.docx/html` (optional)
+#'  - `results/tables/{{name}}.docx/html` (optional)
 #' Edits        :
 #'  - {{date}}: Created file.
 
-# Packages ----------------------------------------------------------------
+# File info ----------------------------------------------------------------------
 
+info <- get_info({{ id }})
 
-# Save table --------------------------------------------------------------
+# Packages -----------------------------------------------------------------------
 
+library(dplyr)
+
+# Generate figure ----------------------------------------------------------------
+
+tab <- NULL # Replace NULL with your table code
+
+# Save figure --------------------------------------------------------------------
+
+lbstproj::save_table(tab, name = "{{name}}")
+lbstproj::export_table(tab, name = "{{name}}", ext = "docx")
