@@ -4,7 +4,9 @@ Title: Tools To Create, Maintain, And Use Standardized R Projects For The
     L-Biostat Group.
 Version: 0.1.0
 Authors@R: 
-    person("Alexandre", "Bohyn", , "alexandre.bohyn@kuleuven.be", role = c("aut", "cre"))
+    person("Alexandre", "Bohyn", , "alexandre.bohyn@kuleuven.be", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-9776-7467"))
+License: CC BY 4.0
 Depends: 
     R (>= 2.10)
 Imports: 
