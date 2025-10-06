@@ -4,9 +4,19 @@
 \alias{create_project}
 \title{Create a new project with standard structure}
 \usage{
-create_project(title, client, department, author, version = 1, path = ".")
+create_project(
+  path = ".",
+  title = NULL,
+  client = NULL,
+  department = NULL,
+  author = NULL,
+  version = "1.0.0",
+  open = rlang::is_interactive()
+)
 }
 \arguments{
+\item{path}{Path where the project should be created (default is current directory).}
+
 \item{title}{Title of the project.}
 
 \item{client}{Name of the client.}
@@ -15,9 +25,9 @@ create_project(title, client, department, author, version = 1, path = ".")
 
 \item{author}{Author name (first and last).}
 
-\item{version}{Project version (default is \code{1.0}).}
+\item{version}{Project version (default is \verb{1.0.0}).}
 
-\item{path}{Path where the project should be created (default is current directory).}
+\item{open}{If \code{TRUE}, opens the new project in RStudio (default is \code{TRUE} if in interactive session).}
 }
 \value{
 Invisibly returns the active project path.
@@ -31,12 +41,13 @@ as title, client, department, author, and version.
 The following directory structure is created inside the project:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{├── data
+│   ├── figures
 │   ├── processed
 │   ├── raw
 │   └── tables
-├── inst
 ├── docs
-├── output
+│   └── meetings
+├── results
 │   ├── figures
 │   └── tables
 ├── R
@@ -44,6 +55,7 @@ The following directory structure is created inside the project:
 │   ├── figures
 │   └── tables
 └── report
+    └── utils
 }\if{html}{\out{</div>}}
 }
 \examples{
@@ -53,7 +65,7 @@ create_project(
   client = "Client Name",
   department = "DEP",
   author = "Jane Doe",
-  version = 0.1,
+  version = "0.1.0",
   path = "." # uses current directory
 )
 }
