@@ -9,3 +9,4 @@
 #' !! WARNING !!
 #' All functions should be called as `package::function()` to avoid confusion about
 #' which package the function came from.
+

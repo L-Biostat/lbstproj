@@ -7,11 +7,16 @@
 #' @param name Name of the script (without file extension).
 #' @param overwrite Whether to overwrite an existing file with the same name. Defaults to `FALSE`.
 #' @param open Whether to open the new file in the editor. Defaults to `TRUE` if in an interactive session (i.e. in RStudio and other IDEs).
+#' @param ... Additional arguments passed to the template rendering function. See details.
 #'
 #' @details
 #' These functions are called for their side effects: they create a new script,
 #' make parent directories if needed, and (optionally) open the file. They do
 #' not return a value.
+#'
+#' When creating a new table or a new figure script, you can pass the additional argument `id`.
+#' It will be used to retrieve caption and label information from the table of tables of the project.
+#' This allow dynamic changes to captions and labels in a single place (i.e. the table of tables).
 #'
 #' @examples
 #' \dontrun{
@@ -56,7 +61,7 @@ use_data <- function(name, overwrite = FALSE, open = rlang::is_interactive()) {
 }
 
 # Internal function to create a R-script file from a template based on type
-use_file <- function(type, name, overwrite, open) {
+use_file <- function(type, name, overwrite, open, ...) {
   # Create file path
   dir_name <- ifelse(
     type == "data",
@@ -77,10 +82,14 @@ use_file <- function(type, name, overwrite, open) {
   )
   # Generate data to use in the template
   author <- desc::desc_get_author()
-  template_data <- list(
-    name = paste0(name, ".R"),
-    author = get_author(),
-    date = format(Sys.Date(), "%d %B %Y")
+  template_data <- c(
+    list(
+      name = name,
+      author = get_author(),
+      date = format(Sys.Date(), "%d %B %Y")
+    ),
+    # Join the additional arguments passed to the function to the template data
+    rlang::dots_list()
   )
   # Render the template with the data
   rendered <- whisker::whisker.render(template = template, data = template_data)

@@ -139,7 +139,11 @@ create_project <- function(
   # Remove unnecessary fields added by default
   desc::desc_del("Description")
   desc::desc_del("License")
+
+  # Create an example table of tables (TOT)
+  create_tot()
+
   cli::cli_alert_success("Project setup complete! Start working!")
-  usethis::proj_activate(full_path)
+  # usethis::proj_activate(full_path)
   invisible(usethis::proj_get())
 }
