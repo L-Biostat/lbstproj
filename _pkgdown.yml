@@ -1,4 +1,25 @@
 url: ~
 template:
   bootstrap: 5
+reference:
+- title: General
+- contents:
+  - create_project
+- title: Using R
+  desc:  Generate an empty R script.
+- contents:
+  - starts_with("use_")
+- title: Saving
+  desc: Save tables and figures as R objects.
+- contents:
+  - starts_with("save_")
+- title: Exporting
+  desc: Export tables and figures to human-readable files.
+- contents:
+  - starts_with("export_")
+- title: Table of Tables (TOT)
+  desc: Create and use the TOT in the project.
+- contents:
+  - ends_with("_tot")
+  - get_info
 

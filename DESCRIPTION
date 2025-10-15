@@ -17,6 +17,7 @@ Depends:
     R (>= 2.10)
 Imports: 
     cli,
+    clipr (>= 0.8.0),
     desc (>= 1.4.3),
     fs (>= 1.6.5),
     glue,
