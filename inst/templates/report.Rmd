@@ -1,0 +1,36 @@
+---
+title: "{{title}}"
+subtitle: "{{client}} ({{department}})"
+author: "{{author}}"
+date: "{{date}}"
+output:
+  officedown::rdocx_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+    fig_width: 6
+    fig_height: 4
+---
+
+```{r knitr-setup}
+#| echo=FALSE
+
+knitr::opts_chunk$set(
+  echo = FALSE,
+  warning = FALSE,
+  message = FALSE,
+  fig.align = 'center',
+  out.width = '80%',
+  tbl.pos = "H"
+)
+```
+
+```{r pkg-loading}
+library(officer)
+library(flextable) # Needed to display flextables in Word
+library(gt) # Needed to display gt tables in Word
+```
+
+```{r}
+officer::block_toc()
+```
