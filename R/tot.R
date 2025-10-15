@@ -1,13 +1,12 @@
-# All functions related to the table of tables (TOT)
-
-#' Create a Table of Tables (TOT) Excel file in the project
+#' Create a Empty Table of Tables (TOT) Excel file in the project
 #'
 #' This function copies a template TOT Excel file from the `lbstproj` package
-#' to the `data/tot/` directory of your project.
+#' to the `data/tot/` directory of your project. The example TOT file contains
+#' an example row for guidance. It should be deleted before use.
 #'
 #' @inheritParams use_data
 #' @md
-create_tot <- function(overwrite = FALSE) {
+create_tot <- function(path, overwrite = FALSE) {
   # Find the path to the TOT excel file example in the `lbstproj` package
   tot_example_path <- fs::path_package(
     package = "lbstproj",
@@ -15,7 +14,7 @@ create_tot <- function(overwrite = FALSE) {
   )
 
   # Check that the `data/tot/` directory exists; if not, create it
-  tot_dir <- fs::path("data/tot/")
+  tot_dir <- fs::path(path, "data/tot/")
   check_dir_exists(tot_dir)
 
   # Check if the TOT file already exists
