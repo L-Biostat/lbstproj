@@ -63,6 +63,7 @@ create_project <- function(
   if (!fs::dir_exists(path)) {
     cli::cli_abort("The specified path {.path {full_path}} does not exist.")
   }
+
   # Ensure that user does want to create project there
   ok <- usethis::ui_yeah(
     paste0("Create project at `", full_path, "`?"),
@@ -70,18 +71,19 @@ create_project <- function(
     n_yes = 1
   )
   if (!ok) {
-    cli::cli_abort("Project creation aborted by user.")
+    cli::cli_abort("Cancelling project creation.")
   }
 
   # Prompt user for project information, if not provided
   title <- title %||% readline(prompt = "Enter the project name: ")
-  author <- author %||% readline(prompt = "Enter the author's name: ")
+  author <- author %||%
+    readline(prompt = "Enter the author's name (first and last): ")
   client <- client %||%
     readline(prompt = "Enter the client's name (if applicable): ")
   department <- department %||%
     readline(prompt = "Enter the client's department (if applicable): ")
 
-  # Create project at specified path
+  # Create project-specific files (.Rproj) at specified path
   usethis::ui_silence(
     usethis::create_project(
       path = path,
@@ -90,65 +92,44 @@ create_project <- function(
     )
   )
   cli::cli_alert_info("Setting active project to {.path {full_path}}")
-  rproj_file <- fs::dir_ls(path, type = "file", glob = "*.Rproj")
-  cli::cli_alert_info("Creating project structure ")
 
-  # Define the directories to be created
-  dirs <- c(
-    "data/processed",
-    "data/raw",
-    "data/tables",
-    "data/figures",
-    "docs/meetings",
-    "results/figures",
-    "results/tables",
-    "R/data",
-    "R/figures",
-    "report/utils"
-  )
-  fs::dir_create(fs::path(full_path, dirs))
+  # Create the project structure
+  create_structure(full_path, quiet = FALSE)
 
-  # Prepare DESCRIPTION fields
-  author_names <- stringr::str_split_1(author, "\\s+")
-  # Fallbacks in case only one name is supplied
-  given <- author_names[1]
-  family <- if (length(author_names) >= 1) author_names[-1] else author_names[1]
-
-  fields_list <- list(
-    Title = title,
-    Client = client,
-    Department = department,
-    Version = version,
-    "Authors@R" = utils::person(
-      given,
-      family,
-      role = c("aut", "cre")
-    )
+  # Define author as a person object
+  author_obj <- utils::person(
+    given = stringr::str_split_1(author, "\\s+")[1],
+    family = paste(stringr::str_split_1(author, "\\s+")[-1], collapse = " "),
+    role = c("aut", "cre")
   )
 
-  cli::cli_alert_info("Writing {.file DESCRIPTION}")
-
-  # Write DESCRIPTION quietly
-  usethis::ui_silence(
-    usethis::use_description(
-      fields = fields_list,
-      check_name = FALSE,
-      roxygen = FALSE
-    )
+  # Add the DESCRIPTION file
+  create_description(
+    path = full_path,
+    title = title,
+    client = client,
+    department = department,
+    author = author_obj,
+    version = version,
+    quiet = FALSE
   )
-  # Remove unnecessary fields added by default
-  desc::desc_del("Description")
-  desc::desc_del("License")
 
   # Create an example table of tables (TOT)
-  create_tot()
+  create_tot(path = full_path, overwrite = FALSE)
 
+  # Open the new project if requested
+  if (open) {
+    cli::cli_alert_info("Opening project in RStudio...")
+    rstudioapi::openProject(full_path, newSession = FALSE)
+  }
   cli::cli_alert_success("Project setup complete! Start working!")
-  # usethis::proj_activate(full_path)
   invisible(usethis::proj_get())
 }
 
 #' Create a DESCRIPTION file for the project
+#'
+#' @details This functions does not check arguments for validity. It assumes
+#' that they are checked in the `create_project()` function.
 create_description <- function(
   path,
   title,
@@ -176,10 +157,17 @@ create_description <- function(
   # Print the description to file
   d$write(file = desc_path)
   if (!quiet) {
-    cli::cli_alert_success("Created {.file DESCRIPTION} at {.path {desc_path}}")
+    cli::cli_alert_success("Writing {.file DESCRIPTION} file")
   }
 }
 
+#' Create the standard project structure
+#'
+#' `create_structure()` creates the standard folder structure for the project.
+#' Any folders that already exist will be skipped.
+#'
+#' @details This functions does not check arguments for validity. It assumes
+#' that they are checked in the `create_project()` function.
 create_structure <- function(path, quiet = FALSE) {
   # Define the directories to be created
   dirs <- c(
@@ -198,6 +186,64 @@ create_structure <- function(path, quiet = FALSE) {
   )
   fs::dir_create(fs::path(path, dirs))
   if (!quiet) {
-    cli::cli_alert_success("Created project structure at {.path {path}}")
+    cli::cli_alert_success("Creating project structure")
   }
+}
+
+#' Create a README.md file for the project
+#'
+#' Create a basic README.md file in the root of the project directory. It
+#' contains the project title, author, and a brief overview of the directory
+#' structure.
+#' If the file already exists, it will not be overwritten.
+#'
+#' @details This functions does not check arguments for validity. It assumes
+#' that they are checked in the `create_project()` function.
+create_readme <- function(path, title, author, quiet = FALSE) {
+  readme_path <- fs::path(path, "README.md")
+  if (fs::file_exists(readme_path)) {
+    if (!quiet) {
+      cli::cli_alert_info(
+        "{.file README.md} already exists, skipping creation."
+      )
+    }
+    return(invisible(NULL))
+  } else {
+    fs::file_create(readme_path)
+    readme_content <- c(
+      paste0("# ", title),
+      "",
+      paste0("**Author:** ", author),
+      "",
+      "## Project Overview",
+      "",
+      "A brief description of the project goes here.",
+      "",
+      "## Directory Structure",
+      "",
+      "```\n",
+      "├── data\n",
+      "│   ├── figures\n",
+      "│   ├── processed\n",
+      "│   ├── raw\n",
+      "│   └── tables\n",
+      "├── docs\n",
+      "│   └── meetings\n",
+      "├── results\n",
+      "│   ├── figures\n",
+      "│   └── tables\n",
+      "├── R\n",
+      "│   ├── data\n",
+      "│   ├── figures\n",
+      "│   └── tables\n",
+      "└── report\n",
+      "    └── utils\n",
+      "```"
+    )
+    writeLines(readme_content, con = readme_path)
+    if (!quiet) {
+      cli::cli_alert_success("Creating {.file README.md}")
+    }
+  }
+  invisible(NULL)
 }
