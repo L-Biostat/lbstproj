@@ -147,3 +147,57 @@ create_project <- function(
   # usethis::proj_activate(full_path)
   invisible(usethis::proj_get())
 }
+
+#' Create a DESCRIPTION file for the project
+create_description <- function(
+  path,
+  title,
+  client,
+  department,
+  author,
+  version,
+  quiet = FALSE
+) {
+  # Check that author is of class person
+  if (!inherits(author, "person")) {
+    cli::cli_abort("{.arg author} must be of class {.cls person}.")
+  }
+  # Create an empty DESCRIPTION file
+  desc_path <- fs::path(path, "DESCRIPTION")
+  fs::file_create(desc_path)
+  # Read it as a description object and populate fields
+  d <- desc::description$new(desc_path)
+  d$set("Package", fs::path_file(path)) # Use folder name as package name
+  d$set("Title", title)
+  d$set("Client", client)
+  d$set("Department", department)
+  d$set("Version", version)
+  d$set_authors(author)
+  # Print the description to file
+  d$write(file = desc_path)
+  if (!quiet) {
+    cli::cli_alert_success("Created {.file DESCRIPTION} at {.path {desc_path}}")
+  }
+}
+
+create_structure <- function(path, quiet = FALSE) {
+  # Define the directories to be created
+  dirs <- c(
+    # `data` folders
+    "data/processed",
+    "data/raw",
+    "data/tables",
+    "data/figures",
+    "docs/meetings",
+    "results/figures",
+    "results/tables",
+    "results/reports",
+    "R/data",
+    "R/figures",
+    "report/utils"
+  )
+  fs::dir_create(fs::path(path, dirs))
+  if (!quiet) {
+    cli::cli_alert_success("Created project structure at {.path {path}}")
+  }
+}
