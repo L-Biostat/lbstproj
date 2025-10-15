@@ -2,14 +2,15 @@
 % Please edit documentation in R/tot.R
 \name{create_tot}
 \alias{create_tot}
-\title{Create a Table of Tables (TOT) Excel file in the project}
+\title{Create a Empty Table of Tables (TOT) Excel file in the project}
 \usage{
-create_tot(overwrite = FALSE)
+create_tot(path, overwrite = FALSE)
 }
 \arguments{
 \item{overwrite}{Whether to overwrite an existing file with the same name. Defaults to \code{FALSE}.}
 }
 \description{
 This function copies a template TOT Excel file from the \code{lbstproj} package
-to the \verb{data/tot/} directory of your project.
+to the \verb{data/tot/} directory of your project. The example TOT file contains
+an example row for guidance. It should be deleted before use.
 }

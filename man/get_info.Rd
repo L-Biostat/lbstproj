@@ -7,7 +7,7 @@
 get_info(id)
 }
 \arguments{
-\item{id}{A positive integer representing the unique identifier of the item.}
+\item{id}{A positive integer representing the unique identifier of the item. Must be supplied, else the function will throw an error.}
 }
 \value{
 A list containing all columns from the TOT for the specified ID. The columns are (in order): id, type, name, caption

@@ -22,6 +22,8 @@ use_data(name, overwrite = FALSE, open = rlang::is_interactive())
 \item{overwrite}{Whether to overwrite an existing file with the same name. Defaults to \code{FALSE}.}
 
 \item{open}{Whether to open the new file in the editor. Defaults to \code{TRUE} if in an interactive session (i.e. in RStudio and other IDEs).}
+
+\item{...}{Additional arguments passed to the template rendering function. See details.}
 }
 \description{
 A family of helpers that write a minimal R script into a project subfolder
@@ -31,6 +33,10 @@ under \verb{R/}: figures, tables, functions, and data.
 These functions are called for their side effects: they create a new script,
 make parent directories if needed, and (optionally) open the file. They do
 not return a value.
+
+When creating a new table or a new figure script, you can pass the additional argument \code{id}.
+It will be used to retrieve caption and label information from the table of tables of the project.
+This allow dynamic changes to captions and labels in a single place (i.e. the table of tables).
 }
 \section{Functions}{
 \itemize{
