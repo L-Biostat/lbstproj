@@ -8,6 +8,7 @@ export_figure(
   fig,
   name,
   ext = "png",
+  print = NULL,
   width = 8,
   height = 6,
   overwrite = FALSE,
@@ -21,6 +22,8 @@ export_figure(
 
 \item{ext}{Output format/extension. One of \code{"png"}, \code{"pdf"}, \code{"jpeg"}, \code{"tiff"},
 \code{"bmp"}, \code{"svg"}. Defaults to \code{"png"}. (Raster: png/jpeg/tiff/bmp; Vector: pdf/svg.)}
+
+\item{print}{Whether to print (default: \code{TRUE}) a success message to the console. You can set a default print behavior for all functions in this family by setting the global option \code{export.print} to \code{TRUE} or \code{FALSE}.}
 
 \item{width, height}{Plot dimensions passed to \code{\link[ggplot2:ggsave]{ggplot2::ggsave()}} (in inches
 by default; you can pass \code{units = "cm"} or \code{units = "mm"} via \code{...}).}

@@ -4,7 +4,7 @@
 \alias{create_readme}
 \title{Create a README.md file for the project}
 \usage{
-create_readme(path, title, author, quiet = FALSE)
+create_readme(path, quiet = FALSE, overwrite = FALSE)
 }
 \description{
 Create a basic README.md file in the root of the project directory. It

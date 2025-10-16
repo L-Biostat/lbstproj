@@ -4,7 +4,15 @@
 \alias{export_table}
 \title{Export a table to \verb{results/tables/}}
 \usage{
-export_table(tbl, name, ext, overwrite = FALSE, landscape = FALSE, ...)
+export_table(
+  tbl,
+  name,
+  ext,
+  print = NULL,
+  overwrite = FALSE,
+  landscape = FALSE,
+  ...
+)
 }
 \arguments{
 \item{tbl}{A \code{\link[gt:gt]{gt::gt()}} table (\code{gt_tbl}) or a \code{\link[flextable:flextable]{flextable::flextable()}} object.}
@@ -12,6 +20,8 @@ export_table(tbl, name, ext, overwrite = FALSE, landscape = FALSE, ...)
 \item{name}{Name used to save the table (without file extension).}
 
 \item{ext}{Output format/extension. One of \code{"docx"}, \code{"pdf"}, \code{"html"}, \code{"rtf"}.}
+
+\item{print}{Whether to print (default: \code{TRUE}) a success message to the console. You can set a default print behavior for all functions in this family by setting the global option \code{export.print} to \code{TRUE} or \code{FALSE}.}
 
 \item{overwrite}{Whether to overwrite an existing file with the same name. Defaults to \code{FALSE}.}
 

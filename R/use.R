@@ -7,6 +7,7 @@
 #' @param name Name of the script (without file extension).
 #' @param overwrite Whether to overwrite an existing file with the same name. Defaults to `FALSE`.
 #' @param open Whether to open the new file in the editor. Defaults to `TRUE` if in an interactive session (i.e. in RStudio and other IDEs).
+#' @param print Whether to print (default: `TRUE`) a success message to the console. You can set a default print behavior for all functions in this family by setting the global option `use.print` to `TRUE` or `FALSE`.
 #' @param ... Additional arguments passed to the template rendering function. See details.
 #'
 #' @details
@@ -60,8 +61,16 @@ use_data <- function(name, overwrite = FALSE, open = rlang::is_interactive()) {
   use_file(type = "data", name = name, overwrite = overwrite, open = open)
 }
 
-# Internal function to create a R-script file from a template based on type
-use_file <- function(type, name, overwrite, open, ...) {
+#' Internal function to create a R-script file from a template based on type
+#' @keywords internal
+use_file <- function(type, name, overwrite, open, print = NULL, ...) {
+  # Check that type is valid
+  type <- rlang::arg_match(type, c("data", "figure", "table", "function"))
+  # Define print behavior
+  if (is.null(print)) {
+    # If global option is not set, default to TRUE
+    print <- getOption("save.print", TRUE)
+  }
   # Create file path
   dir_name <- ifelse(
     type == "data",
@@ -100,7 +109,9 @@ use_file <- function(type, name, overwrite, open, ...) {
     file.edit(file_path)
   }
   # Inform the user
-  cli::cli_alert_success(
-    "{stringr::str_to_title(type)} created at {.file {fs::path_rel(file_path)}}"
-  )
+  if (print) {
+    cli::cli_alert_success(
+      "{stringr::str_to_title(type)} created at {.file {fs::path_rel(file_path)}}"
+    )
+  }
 }
