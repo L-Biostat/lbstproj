@@ -1,6 +1,6 @@
 #' Get Information About an Item by ID
 #'
-#' Retrieves detailed information about an item from a table of tables (TOT) based on its ID.
+#' Retrieve information about an item from a table of tables (TOT) based on its ID.
 #'
 #' @param id A positive integer representing the unique identifier of the item. Must be supplied, else the function will throw an error.
 #'
@@ -8,8 +8,8 @@
 #'
 #' @examples
 #' \dontrun{
-#'  inf <- get_info(1)
-#'  print(inf$caption) # Access the caption of the item
+#'  info <- get_info(1)
+#'  print(info$caption) # Access the caption of the item
 #' }
 #' @export
 get_info <- function(id) {

@@ -5,7 +5,7 @@
 #'
 #' @return The path to the moved and renamed report file.
 run_report <- function() {
-  report_rmd_path <- fs::path("report", "report", ext = "Rmd")
+  report_rmd_path <- fs::path("reports", "report", ext = "Rmd")
   # Check if the report file exists
   if (!fs::file_exists(report_rmd_path)) {
     cli::cli_abort(
@@ -23,13 +23,9 @@ run_report <- function() {
     clean = TRUE,
     envir = new.env()
   )
-  cli::cli_bullets(
-    c(
-      "v" = "Report rendered at {.path {report_path}}."
-    )
-  )
+  cli::cli_alert_success("Report rendered at {.path {report_path}}.")
   # Move and rename the report to the results/reports/ directory
-  moved_path <- move_rename_report(old_name = report_path)
+  moved_path <- move_rename_report(old_path = report_path)
 }
 
 #' Moves a report to a different location and rename it uniquely
@@ -39,22 +35,49 @@ run_report <- function() {
 #' - the current date
 #' - the project version (from the DESCRIPTION file)
 #' - a unique identifier if a file with the same name already exists
-#'
 #' This function helps to archive reports systematically.
+#'
+#' @param old_path The current path of the report file to be moved (with extension in th
+#'     filename)
 #'
 #' @return The path to the moved and renamed report file.
 #' @md
-move_rename_report <- function(old_name = "report.docx") {
+move_rename_report <- function(old_path) {
   # Check if the report file exists
-  old_path <- fs::path("reports", old_name)
   if (!fs::file_exists(old_path)) {
     cli::cli_abort(
       c(
-        "x" = "Report file {.path reports/report.docx} does not exist.",
+        "x" = "Report file {.path {old_path}} does not exist.",
         "i" = "Use {.fn run_report} to create the report first."
       )
     )
   }
+
+  # Define the paths and names of the new report files
+  old_name <- fs::path_file(old_path)
+  extension <- fs::path_ext(old_name)
+  new_name <- build_report_name(extension = extension, counter = NULL)
+  new_path <- fs::path("results/reports", new_name)
+
+  # Ensure the results/reports directory exists
+  check_dir_exists("results/reports")
+
+  # Check for existing files and create a unique name if necessary
+  counter <- 1
+  while (fs::file_exists(new_name)) {
+    new_name <- build_report_name(extension = extension, counter = counter)
+    counter <- counter + 1
+  }
+
+  # Move and rename the report file
+  new_path <- fs::path("results/reports", new_name)
+  fs::file_move(old_path, new_path)
+
+  cli::cli_alert_success("Copying report to {.file {fs::path_rel(new_path)}}.")
+}
+
+#' Build a report file name with date, version, and optional counter and extension
+build_report_name <- function(extension, counter = NULL) {
   # Load project metadata from DESCRIPTION
   version <- desc::desc_get("Version")
   date <- format(Sys.Date(), "%Y_%m_%d")
@@ -66,34 +89,10 @@ move_rename_report <- function(old_name = "report.docx") {
     paste0("v", gsub("\\.", "_", version)),
     sep = "_"
   )
-  new_name <- fs::path(base_name, ext = fs::path_ext(old_name))
-
-  # Ensure the results/reports directory exists
-  check_dir_exists("results/reports")
-
-  # Check for existing files and create a unique name if necessary
-  counter <- 1
-  final_name <- new_name
-  while (fs::file_exists(final_name)) {
-    new_base_name <- paste0(
-      base_name,
-      "_",
-      sprintf("%03d", counter),
-      fs::path_ext(name, TRUE)
-    )
-    final_name <- fs::path(new_base_name, ext = fs::path_ext(old_name))
-    counter <- counter + 1
+  if (!is.null(counter)) {
+    base_name <- paste0(base_name, "_", sprintf("%03d", counter))
   }
+  new_name <- fs::path(base_name, ext = extension)
 
-  # Move and rename the report file
-  new_path <- fs::path("results/reports", final_name)
-  fs::file_move("reports/report.docx", new_path)
-
-  cli::cli_bullets(
-    c(
-      "v" = "Report moved and renamed to {.path {new_path}}."
-    )
-  )
-
-  return(new_path)
+  return(new_name)
 }
