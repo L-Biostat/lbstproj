@@ -1,4 +1,4 @@
-#' Create a new project with standard structure
+#' Create a new project with a standardized structure
 #'
 #' Sets up a new project at the specified path, including a predefined
 #' directory structure and a `DESCRIPTION` file containing metadata such
@@ -12,7 +12,8 @@
 #' │   ├── figures
 #' │   ├── processed
 #' │   ├── raw
-#' │   └── tables
+#' │   ├── tables
+#' │   └── tot
 #' ├── docs
 #' │   └── meetings
 #' ├── results
@@ -126,6 +127,36 @@ create_project <- function(
   invisible(usethis::proj_get())
 }
 
+#' Create the standard project structure
+#'
+#' `create_structure()` creates the standard folder structure for the project.
+#' Any folders that already exist will be skipped.
+#'
+#' @details This functions does not check arguments for validity. It assumes
+#' that they are checked in the `create_project()` function.
+create_structure <- function(path, quiet = FALSE) {
+  # Define the directories to be created
+  dirs <- c(
+    "data/processed",
+    "data/raw",
+    "data/tables",
+    "data/figures",
+    "data/tot",
+    "docs/meetings",
+    "results/figures",
+    "results/tables",
+    "results/reports",
+    "R/data",
+    "R/figures",
+    "report/utils"
+  )
+  fs::dir_create(fs::path(path, dirs))
+  if (!quiet) {
+    cli::cli_alert_info("Creating project structure")
+  }
+}
+
+
 #' Create a DESCRIPTION file for the project
 #'
 #' @details This functions does not check arguments for validity. It assumes
@@ -157,38 +188,48 @@ create_description <- function(
   # Print the description to file
   d$write(file = desc_path)
   if (!quiet) {
-    cli::cli_alert_success("Writing {.file DESCRIPTION} file")
+    cli::cli_alert_info("Writing {.file DESCRIPTION} file")
   }
 }
 
-#' Create the standard project structure
+#' Create a Empty Table of Tables (TOT) Excel file in the project
 #'
-#' `create_structure()` creates the standard folder structure for the project.
-#' Any folders that already exist will be skipped.
+#' This function copies a template TOT Excel file from the `lbstproj` package
+#' to the `data/tot/` directory of your project. The example TOT file contains
+#' an example row for guidance. It should be deleted before use.
 #'
-#' @details This functions does not check arguments for validity. It assumes
-#' that they are checked in the `create_project()` function.
-create_structure <- function(path, quiet = FALSE) {
-  # Define the directories to be created
-  dirs <- c(
-    # `data` folders
-    "data/processed",
-    "data/raw",
-    "data/tables",
-    "data/figures",
-    "docs/meetings",
-    "results/figures",
-    "results/tables",
-    "results/reports",
-    "R/data",
-    "R/figures",
-    "report/utils"
+#' @inheritParams use_data
+#' @md
+create_tot <- function(path, quiet = FALSE, overwrite = FALSE) {
+  # Find the path to the TOT excel file example in the `lbstproj` package
+  tot_example_path <- fs::path_package(
+    package = "lbstproj",
+    "extdata/table_of_tables.xlsx"
   )
-  fs::dir_create(fs::path(path, dirs))
+
+  # Check that the `data/tot/` directory exists; if not, create it
+  tot_dir <- fs::path(path, "data/tot/")
+  check_dir_exists(tot_dir)
+
+  # Check if the TOT file already exists
+  tot_xlsx_path <- fs::path(tot_dir, "table_of_tables.xlsx")
+  check_file_absent(tot_xlsx_path, overwrite)
+
+  # Copy the example TOT file to the project
+  fs::file_copy(
+    path = tot_example_path,
+    new_path = tot_dir,
+    overwrite = overwrite
+  )
+
+  # Inform the user
   if (!quiet) {
-    cli::cli_alert_success("Creating project structure")
+    cli::cli_alert_info(
+      "Writing {.file table_of_tables.xlsx} file to {.path {tot_dir}}"
+    )
   }
 }
+
 
 #' Create a README.md file for the project
 #'
@@ -199,51 +240,22 @@ create_structure <- function(path, quiet = FALSE) {
 #'
 #' @details This functions does not check arguments for validity. It assumes
 #' that they are checked in the `create_project()` function.
-create_readme <- function(path, title, author, quiet = FALSE) {
+create_readme <- function(path, quiet = FALSE, overwrite = FALSE) {
   readme_path <- fs::path(path, "README.md")
-  if (fs::file_exists(readme_path)) {
-    if (!quiet) {
-      cli::cli_alert_info(
-        "{.file README.md} already exists, skipping creation."
-      )
-    }
-    return(invisible(NULL))
-  } else {
-    fs::file_create(readme_path)
-    readme_content <- c(
-      paste0("# ", title),
-      "",
-      paste0("**Author:** ", author),
-      "",
-      "## Project Overview",
-      "",
-      "A brief description of the project goes here.",
-      "",
-      "## Directory Structure",
-      "",
-      "```\n",
-      "├── data\n",
-      "│   ├── figures\n",
-      "│   ├── processed\n",
-      "│   ├── raw\n",
-      "│   └── tables\n",
-      "├── docs\n",
-      "│   └── meetings\n",
-      "├── results\n",
-      "│   ├── figures\n",
-      "│   └── tables\n",
-      "├── R\n",
-      "│   ├── data\n",
-      "│   ├── figures\n",
-      "│   └── tables\n",
-      "└── report\n",
-      "    └── utils\n",
-      "```"
-    )
-    writeLines(readme_content, con = readme_path)
-    if (!quiet) {
-      cli::cli_alert_success("Creating {.file README.md}")
-    }
+  rd_template <- fs::path_package("lbstproj", "templates/README.md")
+  desc_file <- desc::description$new(file = fs::path(path, "DESCRIPTION"))
+  rd_temp_data <- list(
+    title = desc_file$get("Title"),
+    author = desc_file$get_author(),
+    client = desc_file$get("Client"),
+    department = desc_file$get("Department")
+  )
+  rd_content <- whisker::whisker.render(
+    template = readLines(rd_template),
+    data = rd_temp_data
+  )
+  writeLines(rd_content, con = readme_path)
+  if (!quiet) {
+    cli::cli_alert_success("Creating {.file README.md}")
   }
-  invisible(NULL)
 }
