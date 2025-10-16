@@ -1,3 +1,27 @@
+#' Run All R Scripts in ToT
+#'
+#' @description
+#' Run all R scripts listed in the Table of Tables (ToT) for a specified type (figure or table).
+#'
+#' @param skip Optional vector of non-negative integers corresponding to the `id` column in the ToT. Any scripts with these IDs will be skipped.
+#'
+#' @md
+#' @name run_all
+NULL
+
+#' @describeIn run_all run all scripts of type "figure"
+#' @export
+run_all_figures <- function(skip = NULL) {
+  run_all_programs("figure", skip)
+}
+
+#' @describeIn run_all run all scripts of type "table"
+#' @export
+run_all_tables <- function(skip = NULL) {
+  run_all_programs("table", skip)
+}
+
+
 run_all_programs <- function(type, skip = NULL) {
   # Check that type is valid
   type <- rlang::arg_match(type, c("figure", "table"))
@@ -21,22 +45,17 @@ run_all_programs <- function(type, skip = NULL) {
     "Found {cli::no(n_scripts)} {type}{cli::qty(n_scripts)}{?s} in ToT"
   )
 
-  # Source each figure
+  # Source each script with progress bar and message
   seq <- seq_len(n_scripts)
-  if (!is.null(skip)) {
-    seq <- seq[skip + 1:n]
-  }
   for (i in seq) {
-    row <- df[i, ]
+    script <- script_names[i]
     cli::cli_progress_step(
-      msg = "Generating {type} {.strong {i}/{n}}: {.emph {row$name}} ...",
-      msg_done = "Generated {type} {.strong {i}/{n}}: {.emph {row$name}}",
-      spinner = TRUE
+      "Generating {type} {.val {i}}: {.emph {script}}"
     )
     withr::with_options(
-      list(print_info = FALSE),
-      source(here::here(glue::glue("R/{type}s/{row$name}.R")))
+      list(save.print = FALSE, export.print = FALSE),
+      source(fs::path("R", type, script))
     )
-    cli::cli_process_done()
   }
+  cli::cli_progress_done()
 }

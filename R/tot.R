@@ -28,8 +28,8 @@ import_tot <- function(quiet = FALSE) {
 
   # Inform the user
   if (!quiet) {
-    cli::cli_alert_success(
-      "Table of tables (TOT) imported and saved to {.file {fs::path_rel(tot_path)}}"
+    cli::cli_alert_info(
+      "Importing Table of Tables (TOT) to {.file {fs::path_rel(tot_path)}}"
     )
   }
 
