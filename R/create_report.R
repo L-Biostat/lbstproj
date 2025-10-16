@@ -41,7 +41,7 @@ create_report <- function(overwrite = TRUE) {
   # Write the report to a file
   check_dir_exists("report")
   fs::file_create("report/report.Rmd")
-  writeLines(report, con = "reports/report.Rmd")
+  writeLines(report, con = "report/report.Rmd")
   cli::cli_bullets(
     c(
       "v" = "Writing report at {.path report/report.Rmd}.",
