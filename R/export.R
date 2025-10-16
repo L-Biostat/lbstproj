@@ -67,7 +67,7 @@ export_figure <- function(
     height = height,
     ...
   )
-  # Inform userµ
+  # Inform user
   if (print) {
     cli::cli_alert_success("Figure saved to {.file {file_path}}")
   }
