@@ -69,7 +69,7 @@ use_file <- function(type, name, overwrite, open, print = NULL, ...) {
   # Define print behavior
   if (is.null(print)) {
     # If global option is not set, default to TRUE
-    print <- getOption("save.print", TRUE)
+    print <- getOption("use.print", TRUE)
   }
   # Create file path
   dir_name <- ifelse(
