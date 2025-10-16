@@ -7,7 +7,7 @@
 move_rename_report(old_path)
 }
 \arguments{
-\item{old_path}{The current path of the report file to be moved (with extension in th
+\item{old_path}{The current path of the report file to be moved (with extension in the
 filename)}
 }
 \value{
