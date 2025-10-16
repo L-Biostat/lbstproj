@@ -1,4 +1,4 @@
-#' Globel options for the lbstproj package
+#' Global options for the lbstproj package
 #' @name lbstproj-options
 #'
 #' @section Global options for printing messages:
