@@ -64,13 +64,13 @@ move_rename_report <- function(old_path) {
 
   # Check for existing files and create a unique name if necessary
   counter <- 1
-  while (fs::file_exists(new_name)) {
+  while (fs::file_exists(new_path)) {
     new_name <- build_report_name(extension = extension, counter = counter)
+    new_path <- fs::path("results/reports", new_name)
     counter <- counter + 1
   }
 
   # Move and rename the report file
-  new_path <- fs::path("results/reports", new_name)
   fs::file_move(old_path, new_path)
 
   cli::cli_alert_success("Copying report to {.file {fs::path_rel(new_path)}}.")
