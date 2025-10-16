@@ -4,7 +4,7 @@
 \alias{create_report}
 \title{Create a Rmd report based on the table of tables (TOT)}
 \usage{
-create_report()
+create_report(overwrite = TRUE)
 }
 \description{
 Create a Rmd report based on the table of tables (TOT)
