@@ -9,7 +9,7 @@ create_programs <- function() {
   # List the figure-generating R scripts
   fig_scripts <- tot$name[tot$type == "figure"]
   # Create figure scripts
-  purrr::walk(fig_scipts, ~ use_figure(.x, overwrite = FALSE, open = FALSE))
+  purrr::walk(fig_scripts, ~ use_figure(.x, overwrite = FALSE, open = FALSE))
   # List the table-generating R scripts
   tab_scripts <- tot$name[tot$type == "table"]
   # Create table scripts
