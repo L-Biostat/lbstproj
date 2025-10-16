@@ -1,8 +1,11 @@
-#' Create a new project with a standardized structure
+#' Create a New Project
 #'
-#' Sets up a new project at the specified path, including a predefined
-#' directory structure and a `DESCRIPTION` file containing metadata such
-#' as title, client, department, author, and version.
+#' `create_project()` initializes a new project with a standardized structure at the
+#' specified path. It prompts the user for essential metadata if not provided.
+#' The function creates the necessary directories, a `DESCRIPTION` file, and an
+#' table of tables (TOT) Excel file.
+#' If the project is successfully created, it opens the new project in
+#' RStudio.
 #'
 #' @details
 #' The following directory structure is created inside the project:
@@ -42,12 +45,12 @@
 #' @examples
 #' \dontrun{
 #' create_project(
+#'   path = ".", # uses current directory
 #'   title = "Example Project",
 #'   client = "Client Name",
 #'   department = "DEP",
 #'   author = "Jane Doe",
-#'   version = "0.1.0",
-#'   path = "." # uses current directory
+#'   version = "0.1.0"
 #' )
 #' }
 create_project <- function(
