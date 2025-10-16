@@ -2,9 +2,9 @@
 % Please edit documentation in R/options.R
 \name{lbstproj-options}
 \alias{lbstproj-options}
-\title{Globel options for the lbstproj package}
+\title{Global options for the lbstproj package}
 \description{
-Globel options for the lbstproj package
+Global options for the lbstproj package
 }
 \section{Global options for printing messages}{
 
