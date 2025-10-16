@@ -54,7 +54,7 @@ run_all_programs <- function(type, skip = NULL) {
     )
     withr::with_options(
       list(save.print = FALSE, export.print = FALSE),
-      source(fs::path("R", type, script))
+      source(fs::path("R", type, script, ext = "R"))
     )
   }
   cli::cli_progress_done()
