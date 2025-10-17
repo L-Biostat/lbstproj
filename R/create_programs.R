@@ -11,16 +11,28 @@ create_programs <- function() {
   # List the figure-generating R scripts
   fig_scripts <- tot$name[tot$type == "figure"]
   # Create figure scripts
-  purrr::walk(fig_scripts, ~ use_figure(.x, overwrite = FALSE, open = FALSE))
+  purrr::walk(
+    .x = fig_scripts,
+    .f = ~ withr::with_options(
+      list(use.print = FALSE),
+      use_figure(.x, overwrite = FALSE, open = FALSE)
+    )
+  )
   # List the table-generating R scripts
   tab_scripts <- tot$name[tot$type == "table"]
   # Create table scripts
-  purrr::walk(tab_scripts, ~ use_table(.x, overwrite = FALSE, open = FALSE))
+  purrr::walk(
+    .x = tab_scripts,
+    .f = ~ withr::with_options(
+      list(use.print = FALSE),
+      use_table(.x, overwrite = FALSE, open = FALSE)
+    )
+  )
   # Inform the user
   cli::cli_bullets(
     c(
-      "i" = "Creating {length(fig_scripts)} figure{?s} scripts in {.path R/figures/}",
-      "i" = "Creating {length(tab_scripts)} table{?s} scripts in {.path R/tables/}"
+      "i" = "Creating {length(fig_scripts)} figure script{?s} in {.path R/figures/}",
+      "i" = "Creating {length(tab_scripts)} table script{?s} in {.path R/tables/}"
     )
   )
 }
