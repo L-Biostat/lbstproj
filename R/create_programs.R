@@ -3,6 +3,8 @@
 #' This functions loads the TOT and creates all the R scripts for figures and tables
 #' listed there in their respective directories in the `R` folder.
 #' Any existing scripts with the same names will NOT be overwritten.
+#'
+#' @export
 create_programs <- function() {
   # Load the table of tables
   tot <- load_tot()

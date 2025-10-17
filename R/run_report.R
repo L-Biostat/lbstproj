@@ -4,6 +4,8 @@
 #' Also move and rename the generated report to the `results/reports/` directory.
 #'
 #' @return The path to the moved and renamed report file.
+#'
+#' @export
 run_report <- function() {
   report_rmd_path <- fs::path("reports", "report", ext = "Rmd")
   # Check if the report file exists

@@ -1,4 +1,6 @@
 #'  Create a Rmd report based on the table of tables (TOT)
+#'
+#' @export
 create_report <- function(overwrite = TRUE) {
   # Check if the report file already exists
   check_file_absent("report/report.Rmd", overwrite = overwrite)
