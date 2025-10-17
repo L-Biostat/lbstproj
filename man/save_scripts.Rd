@@ -7,11 +7,11 @@
 \alias{save_table}
 \title{Save analysis objects as \code{.rds}}
 \usage{
-save_data(object, name, overwrite = FALSE, print = NULL, ...)
+save_data(object, name, overwrite = TRUE, print = NULL, ...)
 
-save_figure(object, name, overwrite = FALSE, print = NULL, ...)
+save_figure(object, name, overwrite = TRUE, print = NULL, ...)
 
-save_table(object, name, overwrite = FALSE, print = NULL, ...)
+save_table(object, name, overwrite = TRUE, print = NULL, ...)
 }
 \arguments{
 \item{object}{The object to save (figure/table/data). Any R object supported

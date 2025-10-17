@@ -11,7 +11,7 @@ export_figure(
   print = NULL,
   width = 8,
   height = 6,
-  overwrite = FALSE,
+  overwrite = TRUE,
   ...
 )
 }

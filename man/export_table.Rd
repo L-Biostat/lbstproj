@@ -9,7 +9,7 @@ export_table(
   name,
   ext,
   print = NULL,
-  overwrite = FALSE,
+  overwrite = TRUE,
   landscape = FALSE,
   ...
 )

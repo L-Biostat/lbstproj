@@ -38,7 +38,7 @@ not return a value.
 
 When creating a new table or a new figure script, you can pass the additional argument \code{id}.
 It will be used to retrieve caption and label information from the table of tables of the project.
-This allows dynamic changes to captions and labels in a single place (i.e. the table of tables).
+This allow dynamic changes to captions and labels in a single place (i.e. the table of tables).
 }
 \section{Functions}{
 \itemize{
