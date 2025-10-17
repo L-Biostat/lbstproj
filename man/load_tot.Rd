@@ -15,7 +15,7 @@ A tibble containing the TOT data with the following columns:
 \item \code{id}: Unique identifier for each item.
 \item \code{type}: Type of the item (either "table" or "figure").
 \item \code{name}: Name of the item.
-\item \code{title}: Title of the item.
+\item \code{caption}: Caption of the item.
 }
 }
 \description{

@@ -1,41 +1,3 @@
-# All functions related to the table of tables (TOT)
-
-#' Create a Table of Tables (TOT) Excel file in the project
-#'
-#' This function copies a template TOT Excel file from the `lbstproj` package
-#' to the `data/tot/` directory of your project.
-#'
-#' @inheritParams use_data
-#' @md
-create_tot <- function(overwrite = FALSE) {
-  # Find the path to the TOT excel file example in the `lbstproj` package
-  tot_example_path <- fs::path_package(
-    package = "lbstproj",
-    "extdata/table_of_tables.xlsx"
-  )
-
-  # Check that the `data/tot/` directory exists; if not, create it
-  tot_dir <- fs::path("data/tot/")
-  check_dir_exists(tot_dir)
-
-  # Check if the TOT file already exists
-  tot_xlsx_path <- fs::path(tot_dir, "table_of_tables.xlsx")
-  check_file_absent(tot_xlsx_path, overwrite)
-
-  # Copy the example TOT file to the project
-  fs::file_copy(
-    path = tot_example_path,
-    new_path = tot_dir,
-    overwrite = overwrite
-  )
-
-  # Inform the user
-  cli::cli_alert_success(
-    "Template TOT Excel file created at {.file {tot_xlsx_path}}"
-  )
-}
-
-
 #' Import the Table of Tables (TOT)
 #'
 #' Reads the TOT Excel file from `data/tot/table_of_tables.xlsx`, validates its structure,
@@ -66,8 +28,8 @@ import_tot <- function(quiet = FALSE) {
 
   # Inform the user
   if (!quiet) {
-    cli::cli_alert_success(
-      "Table of tables (TOT) imported and saved to {.file {fs::path_rel(tot_path)}}"
+    cli::cli_alert_info(
+      "Importing Table of Tables (TOT) to {.file {fs::path_rel(tot_path)}}"
     )
   }
 

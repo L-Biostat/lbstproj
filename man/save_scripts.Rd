@@ -7,11 +7,11 @@
 \alias{save_table}
 \title{Save analysis objects as \code{.rds}}
 \usage{
-save_data(object, name, overwrite = FALSE, ...)
+save_data(object, name, overwrite = TRUE, print = NULL, ...)
 
-save_figure(object, name, overwrite = FALSE, ...)
+save_figure(object, name, overwrite = TRUE, print = NULL, ...)
 
-save_table(object, name, overwrite = FALSE, ...)
+save_table(object, name, overwrite = TRUE, print = NULL, ...)
 }
 \arguments{
 \item{object}{The object to save (figure/table/data). Any R object supported
@@ -20,6 +20,8 @@ by \code{\link[base:readRDS]{base::saveRDS()}}.}
 \item{name}{Name used to save the object (without file extension).}
 
 \item{overwrite}{Whether to overwrite an existing file with the same name. Defaults to \code{FALSE}.}
+
+\item{print}{Whether to print (default: \code{TRUE}) a success message to the console. You can set a default print behavior for all functions in this family by setting the global option \code{save.print} to \code{TRUE} or \code{FALSE}.}
 
 \item{...}{Additional arguments passed to \code{\link[base:readRDS]{base::saveRDS()}} (e.g.,
 \code{compress}, \code{version}).}

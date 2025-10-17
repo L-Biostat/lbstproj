@@ -1,23 +1,34 @@
 Type: Package
 Package: lbstproj
-Title: Tools To Create, Maintain, And Use Standardized R Projects For The
-    L-Biostat Group.
+Title: Tools To Create And Use Standardized R Projects For The L-Biostat
+    Group.
 Version: 0.1.0
 Authors@R: 
     person("Alexandre", "Bohyn", , "alexandre.bohyn@kuleuven.be", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9776-7467"))
+Description: This package provides functions to easily start a new
+    statistical analysis project in R. It creates a standardized folder
+    structure and files, to allow for easier collaboration and
+    reproducible research.  It also provides functions to easily load and
+    preprocess data, generate and export figures and tables, and create
+    reports in various formats.
 License: CC BY 4.0
 Depends: 
     R (>= 2.10)
 Imports: 
-    cli (>= 3.6.2),
+    cli,
+    clipr (>= 0.8.0),
+    desc (>= 1.4.3),
     fs (>= 1.6.5),
+    glue,
+    lifecycle,
     officer (>= 0.6.7),
     readxl (>= 1.4.3),
-    rlang (>= 1.1.6),
+    rlang,
     stringr (>= 1.5.2),
     tibble (>= 3.2.1),
-    usethis (>= 3.1.0)
+    usethis (>= 3.1.0),
+    withr
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

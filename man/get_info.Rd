@@ -7,17 +7,17 @@
 get_info(id)
 }
 \arguments{
-\item{id}{A positive integer representing the unique identifier of the item.}
+\item{id}{A positive integer representing the unique identifier of the item. Must be supplied, else the function will throw an error.}
 }
 \value{
 A list containing all columns from the TOT for the specified ID. The columns are (in order): id, type, name, caption
 }
 \description{
-Retrieves detailed information about an item from a table of tables (TOT) based on its ID.
+Retrieve information about an item from a table of tables (TOT) based on its ID.
 }
 \examples{
 \dontrun{
- inf <- get_info(1)
- print(inf$caption) # Access the caption of the item
+ info <- get_info(1)
+ print(info$caption) # Access the caption of the item
 }
 }

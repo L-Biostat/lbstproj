@@ -12,6 +12,7 @@
 #' @param width,height Plot dimensions passed to [ggplot2::ggsave()] (in inches
 #'   by default; you can pass `units = "cm"` or `units = "mm"` via `...`).
 #' @inheritParams use_scripts
+#' @param print Whether to print (default: `TRUE`) a success message to the console. You can set a default print behavior for all functions in this family by setting the global option `export.print` to `TRUE` or `FALSE`.
 #' @param ... Additional arguments forwarded to [ggplot2::ggsave()]
 #'   (e.g., `dpi`, `units`, `bg`, `device`).
 #'
@@ -33,9 +34,10 @@ export_figure <- function(
   fig,
   name,
   ext = "png",
+  print = NULL,
   width = 8,
   height = 6,
-  overwrite = FALSE,
+  overwrite = TRUE,
   ...
 ) {
   # Check fig is a ggplot object
@@ -46,6 +48,10 @@ export_figure <- function(
   valid_ext <- c("png", "pdf", "jpeg", "tiff", "bmp", "svg")
   if (!(ext %in% valid_ext)) {
     cli::cli_abort("{.arg ext} must be one of {.val {valid_ext}}")
+  }
+  # Define printing behavior
+  if (is.null(print)) {
+    print <- getOption("export.print", TRUE)
   }
   # Create file path
   file_path <- fs::path("results", "figures", name, ext = ext)
@@ -62,7 +68,9 @@ export_figure <- function(
     ...
   )
   # Inform user
-  cli::cli_alert_success("Figure saved to {.file {file_path}}")
+  if (print) {
+    cli::cli_alert_success("Figure saved to {.file {file_path}}")
+  }
 }
 
 #' Export a table to `results/tables/`
@@ -77,6 +85,7 @@ export_figure <- function(
 #' @param name Name used to save the table (without file extension).
 #' @param ext Output format/extension. One of `"docx"`, `"pdf"`, `"html"`, `"rtf"`.
 #' @inheritParams use_scripts
+#' @param print Whether to print (default: `TRUE`) a success message to the console. You can set a default print behavior for all functions in this family by setting the global option `export.print` to `TRUE` or `FALSE`.
 #' @param landscape Logical; for `flextable` exports only, set page orientation
 #'   to landscape. Ignored for `gt` tables.
 #' @param ... Additional arguments forwarded to [gt::gtsave()] (for `gt`) or the
@@ -104,7 +113,8 @@ export_table <- function(
   tbl,
   name,
   ext,
-  overwrite = FALSE,
+  print = NULL,
+  overwrite = TRUE,
   landscape = FALSE,
   ...
 ) {
@@ -123,6 +133,10 @@ export_table <- function(
     cli::cli_abort(
       "{.cls flextable} objects can only be saved as {.val {setdiff(valid_ext, \"pdf\")}}"
     )
+  }
+  # Define printing behavior
+  if (is.null(print)) {
+    print <- getOption("export.print", TRUE)
   }
   # Create file path
   file_path <- fs::path("results", "tables", name, ext = ext)
@@ -167,5 +181,7 @@ export_table <- function(
     )
   }
   # Inform user
-  cli::cli_alert_success("Table saved to {.file {file_path}}")
+  if (print) {
+    cli::cli_alert_success("Table saved to {.file {file_path}}")
+  }
 }
