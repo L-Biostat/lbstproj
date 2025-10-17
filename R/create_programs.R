@@ -11,13 +11,14 @@ create_programs <- function() {
   # List the figure-generating R scripts
   fig_items <- tot$type == "figure"
   # Create figure scripts
-  purrr::walk(
-    .x = fig_items,
+  purrr::walk2(
+    .x = tot$name[fig_items],
+    .y = tot$id[fig_items],
     .f = ~ withr::with_options(
       list(use.print = FALSE),
       use_figure(
-        name = tot$name[.x],
-        id = tot$id[.x],
+        name = .x,
+        id = .y,
         overwrite = FALSE,
         open = FALSE
       )
@@ -26,13 +27,14 @@ create_programs <- function() {
   # List the table-generating R scripts
   tab_items <- tot$type == "table"
   # Create table scripts
-  purrr::walk(
-    .x = tab_items,
+  purrr::walk2(
+    .x = tot$name[tab_items],
+    .y = tot$id[tab_items],
     .f = ~ withr::with_options(
       list(use.print = FALSE),
       use_table(
-        name = tot$name[.x],
-        id = tot$id[.x],
+        name = .x,
+        id = .y,
         overwrite = FALSE,
         open = FALSE
       )
