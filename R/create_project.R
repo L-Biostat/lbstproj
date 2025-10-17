@@ -229,7 +229,10 @@ create_tot <- function(path, quiet = FALSE, overwrite = FALSE) {
   # Inform the user
   if (!quiet) {
     cli::cli_alert_info(
-      "Writing {.file table_of_tables.xlsx} file to {.path {tot_dir}}"
+      "Writing {.file table_of_tables.xlsx} file to {.path {fs::path_rel(tot_dir)}}"
+    )
+    cli::cli_alert_info(
+      "Start editing the TOT file to add your figures and tables !"
     )
   }
 }
