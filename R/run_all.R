@@ -41,7 +41,7 @@ run_all_programs <- function(type, skip = NULL) {
   } else {
     good_item_ids <- tot$type == type
   }
-  n_scripts <- sum(item_ids)
+  n_scripts <- sum(good_item_ids)
   cli::cli_alert_info(
     "Found {cli::no(n_scripts)} {type}{cli::qty(n_scripts)}{?s} in ToT"
   )

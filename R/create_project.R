@@ -163,7 +163,7 @@ create_structure <- function(path, quiet = FALSE) {
 
 #' Create a DESCRIPTION file for the project
 #'
-#' @details This functions does not check arguments for validity. It assumes
+#' @details This function does not check arguments for validity. It assumes
 #' that they are checked in the `create_project()` function.
 create_description <- function(
   path,
@@ -245,7 +245,7 @@ create_tot <- function(path, quiet = FALSE, overwrite = FALSE) {
 #' structure.
 #' If the file already exists, it will not be overwritten.
 #'
-#' @details This functions does not check arguments for validity. It assumes
+#' @details This function does not check arguments for validity. It assumes
 #' that they are checked in the `create_project()` function.
 create_readme <- function(path, quiet = FALSE, overwrite = FALSE) {
   readme_path <- fs::path(path, "README.md")
