@@ -35,19 +35,19 @@ NULL
 
 #' @describeIn save_scripts Save a data object to `data/processed/`.
 #' @export
-save_data <- function(object, name, overwrite = FALSE, print = NULL, ...) {
+save_data <- function(object, name, overwrite = TRUE, print = NULL, ...) {
   save_object(type = "data", object, name, overwrite, ...)
 }
 
 #' @describeIn save_scripts Save a figure to `data/figures/`.
 #' @export
-save_figure <- function(object, name, overwrite = FALSE, print = NULL, ...) {
+save_figure <- function(object, name, overwrite = TRUE, print = NULL, ...) {
   save_object(type = "figure", object, name, overwrite, ...)
 }
 
 #' @describeIn save_scripts Save a table to `data/tables/`.
 #' @export
-save_table <- function(object, name, overwrite = FALSE, print = NULL, ...) {
+save_table <- function(object, name, overwrite = TRUE, print = NULL, ...) {
   save_object(type = "table", object, name, overwrite, ...)
 }
 

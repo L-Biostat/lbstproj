@@ -37,7 +37,7 @@ export_figure <- function(
   print = NULL,
   width = 8,
   height = 6,
-  overwrite = FALSE,
+  overwrite = TRUE,
   ...
 ) {
   # Check fig is a ggplot object
@@ -114,7 +114,7 @@ export_table <- function(
   name,
   ext,
   print = NULL,
-  overwrite = FALSE,
+  overwrite = TRUE,
   landscape = FALSE,
   ...
 ) {
