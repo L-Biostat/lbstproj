@@ -29,7 +29,7 @@ run_report <- function(overwrite = FALSE) {
   )
   cli::cli_alert_success("Report rendered at {.path {report_path}}.")
   # Move and rename the report to the results/reports/ directory
-  moved_path <- move_rename_report(old_path = report_path)
+  moved_path <- move_rename_report(old_path = report_path, overwrite)
 }
 
 #' Moves a report to a different location and rename it uniquely

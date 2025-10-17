@@ -36,16 +36,18 @@ run_all_programs <- function(type, skip = NULL) {
   # Load the ToT
   tot <- load_tot()
   # Isolate corresponding scripts in the ToT
-  item_ids <- tot$type == type
   if (!is.null(skip)) {
-    item_ids <- item_ids & !(tot$id %in% skip)
+    good_item_ids <- tot$type == type & !(tot$id %in% skip)
+  } else {
+    good_item_ids <- tot$type == type
   }
-  n_scripts <- length(item_ids)
+  n_scripts <- sum(item_ids)
   cli::cli_alert_info(
     "Found {cli::no(n_scripts)} {type}{cli::qty(n_scripts)}{?s} in ToT"
   )
 
   # Source each script with progress bar and message
+  item_ids <- tot$id[good_item_ids]
   for (i in item_ids) {
     script <- tot$name[i]
     id <- tot$id[i]

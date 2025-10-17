@@ -43,8 +43,8 @@ create_programs <- function() {
   # Inform the user
   cli::cli_bullets(
     c(
-      "i" = "Creating {length(fig_scripts)} figure script{?s} in {.path R/figures/}",
-      "i" = "Creating {length(tab_scripts)} table script{?s} in {.path R/tables/}"
+      "i" = "Creating {sum(fig_items)} figure script{?s} in {.path R/figures/}",
+      "i" = "Creating {sum(tab_items)} table script{?s} in {.path R/tables/}"
     )
   )
 }
