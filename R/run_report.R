@@ -7,7 +7,7 @@
 #'
 #' @export
 run_report <- function() {
-  report_rmd_path <- fs::path("reports", "report", ext = "Rmd")
+  report_rmd_path <- fs::path("report", "report", ext = "Rmd")
   # Check if the report file exists
   if (!fs::file_exists(report_rmd_path)) {
     cli::cli_abort(
