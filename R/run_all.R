@@ -36,21 +36,21 @@ run_all_programs <- function(type, skip = NULL) {
   # Load the ToT
   tot <- load_tot()
   # Isolate corresponding scripts in the ToT
-  script_names <- tot$name[tot$type == type]
+  item_ids <- tot$type == type
   if (!is.null(skip)) {
-    script_names <- tot$name[tot$type == type & !(tot$id %in% (skip))]
+    item_ids <- item_ids & !(tot$id %in% skip)
   }
-  n_scripts <- length(script_names)
+  n_scripts <- length(item_ids)
   cli::cli_alert_info(
     "Found {cli::no(n_scripts)} {type}{cli::qty(n_scripts)}{?s} in ToT"
   )
 
   # Source each script with progress bar and message
-  seq <- seq_len(n_scripts)
-  for (i in seq) {
-    script <- script_names[i]
+  for (i in item_ids) {
+    script <- tot$name[i]
+    id <- tot$id[i]
     cli::cli_progress_step(
-      "Generating {type} {.val {i}}: {.emph {script}}"
+      "Generating {type} {.val {id}}: {.emph {script}}"
     )
     withr::with_options(
       list(save.print = FALSE, export.print = FALSE),

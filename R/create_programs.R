@@ -9,23 +9,33 @@ create_programs <- function() {
   # Load the table of tables
   tot <- load_tot()
   # List the figure-generating R scripts
-  fig_scripts <- tot$name[tot$type == "figure"]
+  fig_items <- tot$type == "figure"
   # Create figure scripts
   purrr::walk(
-    .x = fig_scripts,
+    .x = fig_items,
     .f = ~ withr::with_options(
       list(use.print = FALSE),
-      use_figure(.x, overwrite = FALSE, open = FALSE)
+      use_figure(
+        name = tot$name[.x],
+        id = tot$id[.x],
+        overwrite = FALSE,
+        open = FALSE
+      )
     )
   )
   # List the table-generating R scripts
-  tab_scripts <- tot$name[tot$type == "table"]
+  tab_items <- tot$type == "table"
   # Create table scripts
   purrr::walk(
-    .x = tab_scripts,
+    .x = tab_items,
     .f = ~ withr::with_options(
       list(use.print = FALSE),
-      use_table(.x, overwrite = FALSE, open = FALSE)
+      use_table(
+        name = tot$name[.x],
+        id = tot$id[.x],
+        overwrite = FALSE,
+        open = FALSE
+      )
     )
   )
   # Inform the user
