@@ -4,7 +4,10 @@
 \alias{run_report}
 \title{Render the report}
 \usage{
-run_report()
+run_report(overwrite = FALSE)
+}
+\arguments{
+\item{overwrite}{Logical; if \code{TRUE}, overwrite existing report files in the \verb{results/reports/} directory.    If \code{FALSE}, a unique name will be generated to avoid overwriting, by appending a counter to the filename (e.g. \verb{_001}, \verb{_002}, etc.). Default is \code{FALSE}.}
 }
 \value{
 The path to the moved and renamed report file.

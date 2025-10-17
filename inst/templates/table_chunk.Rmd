@@ -1,6 +1,6 @@
 ```{r {{id}} }
 #| tab.cap="{{caption}}"
 
-tab <- readRDS("{{path}}")
+tab <- readRDS(here("{{path}}"))
 tab
 ```

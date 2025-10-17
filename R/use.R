@@ -34,15 +34,27 @@ NULL
 use_figure <- function(
   name,
   overwrite = FALSE,
-  open = rlang::is_interactive()
+  open = rlang::is_interactive(),
+  ...
 ) {
-  use_file(type = "figure", name = name, overwrite = overwrite, open = open)
+  use_file(
+    type = "figure",
+    name = name,
+    overwrite = overwrite,
+    open = open,
+    ...
+  )
 }
 
 #' @describeIn use_scripts Create a table script in `R/tables/`.
 #' @export
-use_table <- function(name, overwrite = FALSE, open = rlang::is_interactive()) {
-  use_file(type = "table", name = name, overwrite = overwrite, open = open)
+use_table <- function(
+  name,
+  overwrite = FALSE,
+  open = rlang::is_interactive(),
+  ...
+) {
+  use_file(type = "table", name = name, overwrite = overwrite, open = open, ...)
 }
 
 #' @describeIn use_scripts Create a function script in `R/functions/`.
@@ -98,7 +110,7 @@ use_file <- function(type, name, overwrite, open, print = NULL, ...) {
       date = format(Sys.Date(), "%d %B %Y")
     ),
     # Join the additional arguments passed to the function to the template data
-    rlang::dots_list()
+    rlang::list2(...)
   )
   # Render the template with the data
   rendered <- whisker::whisker.render(template = template, data = template_data)

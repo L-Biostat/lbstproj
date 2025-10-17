@@ -1,5 +1,5 @@
 ```{r {{id}} }
 #| fig.cap="{{caption}}"
 
-knitr::include_graphics("{{path}}")
+knitr::include_graphics(here("{{path}}"))
 ```

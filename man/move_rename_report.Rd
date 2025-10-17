@@ -4,11 +4,13 @@
 \alias{move_rename_report}
 \title{Moves a report to a different location and rename it uniquely}
 \usage{
-move_rename_report(old_path)
+move_rename_report(old_path, overwrite = FALSE)
 }
 \arguments{
 \item{old_path}{The current path of the report file to be moved (with extension in the
 filename)}
+
+\item{overwrite}{Logical; if \code{TRUE}, overwrite existing report files in the \verb{results/reports/} directory.    If \code{FALSE}, a unique name will be generated to avoid overwriting, by appending a counter to the filename (e.g. \verb{_001}, \verb{_002}, etc.). Default is \code{FALSE}.}
 }
 \value{
 The path to the moved and renamed report file.

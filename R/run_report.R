@@ -3,10 +3,12 @@
 #' Render the Rmd report located at `report/report.Rmd` to the `report/` directory.
 #' Also move and rename the generated report to the `results/reports/` directory.
 #'
+#' @param overwrite Logical; if `TRUE`, overwrite existing report files in the `results/reports/` directory.	If `FALSE`, a unique name will be generated to avoid overwriting, by appending a counter to the filename (e.g. `_001`, `_002`, etc.). Default is `FALSE`.
+#'
 #' @return The path to the moved and renamed report file.
 #'
 #' @export
-run_report <- function() {
+run_report <- function(overwrite = FALSE) {
   report_rmd_path <- fs::path("report", "report", ext = "Rmd")
   # Check if the report file exists
   if (!fs::file_exists(report_rmd_path)) {
@@ -41,10 +43,11 @@ run_report <- function() {
 #'
 #' @param old_path The current path of the report file to be moved (with extension in the
 #'     filename)
+#' @inheritParams run_report
 #'
 #' @return The path to the moved and renamed report file.
 #' @md
-move_rename_report <- function(old_path) {
+move_rename_report <- function(old_path, overwrite = FALSE) {
   # Check if the report file exists
   if (!fs::file_exists(old_path)) {
     cli::cli_abort(
@@ -64,12 +67,15 @@ move_rename_report <- function(old_path) {
   # Ensure the results/reports directory exists
   check_dir_exists("results/reports")
 
-  # Check for existing files and create a unique name if necessary
-  counter <- 1
-  while (fs::file_exists(new_path)) {
-    new_name <- build_report_name(extension = extension, counter = counter)
-    new_path <- fs::path("results/reports", new_name)
-    counter <- counter + 1
+  # If the new file already exists, find a unique name by adding a counter
+  if (!overwrite) {
+    # Check for existing files and create a unique name if necessary
+    counter <- 1
+    while (fs::file_exists(new_path)) {
+      new_name <- build_report_name(extension = extension, counter = counter)
+      new_path <- fs::path("results/reports", new_name)
+      counter <- counter + 1
+    }
   }
 
   # Move and rename the report file

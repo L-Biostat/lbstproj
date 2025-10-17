@@ -26,7 +26,8 @@ knitr::opts_chunk$set(
 ```
 
 ```{r pkg-loading}
-library(officer)
+library(here) # To generate relative file paths
+library(officer) # To create Word document elements
 library(flextable) # Needed to display flextables in Word
 library(gt) # Needed to display gt tables in Word
 ```

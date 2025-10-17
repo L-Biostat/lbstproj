@@ -8,9 +8,9 @@
 \alias{use_data}
 \title{Create a R script pre-filled with boilerplate code}
 \usage{
-use_figure(name, overwrite = FALSE, open = rlang::is_interactive())
+use_figure(name, overwrite = FALSE, open = rlang::is_interactive(), ...)
 
-use_table(name, overwrite = FALSE, open = rlang::is_interactive())
+use_table(name, overwrite = FALSE, open = rlang::is_interactive(), ...)
 
 use_function(name, overwrite = FALSE, open = rlang::is_interactive())
 
@@ -23,9 +23,9 @@ use_data(name, overwrite = FALSE, open = rlang::is_interactive())
 
 \item{open}{Whether to open the new file in the editor. Defaults to \code{TRUE} if in an interactive session (i.e. in RStudio and other IDEs).}
 
-\item{print}{Whether to print (default: \code{TRUE}) a success message to the console. You can set a default print behavior for all functions in this family by setting the global option \code{use.print} to \code{TRUE} or \code{FALSE}.}
-
 \item{...}{Additional arguments passed to the template rendering function. See details.}
+
+\item{print}{Whether to print (default: \code{TRUE}) a success message to the console. You can set a default print behavior for all functions in this family by setting the global option \code{use.print} to \code{TRUE} or \code{FALSE}.}
 }
 \description{
 A family of helpers that write a minimal R script into a project subfolder
