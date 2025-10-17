@@ -151,6 +151,7 @@ create_structure <- function(path, quiet = FALSE) {
     "results/reports",
     "R/data",
     "R/figures",
+    "R/tables",
     "report/utils"
   )
   fs::dir_create(fs::path(path, dirs))
