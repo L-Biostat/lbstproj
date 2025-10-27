@@ -85,6 +85,7 @@ use_file <- function(type, name, overwrite, open, print = NULL, ...) {
   # Define print behavior
   if (is.null(print)) {
     # If global option is not set, default to TRUE
+    # This will print a success message after creating the file
     print <- getOption("use.print", TRUE)
   }
   # Create file path
@@ -94,8 +95,21 @@ use_file <- function(type, name, overwrite, open, print = NULL, ...) {
     paste0(type, "s")
   )
   file_path <- fs::path_wd("R", dir_name, name, ext = "R")
-  # Check if file already exists
-  check_file_absent(file_path, overwrite = overwrite)
+  # If the file already exists, skip unless overwrite is TRUE
+  if (fs::file_exists(file_path) & !overwrite) {
+    if (print) {
+      cli::cli_bullets(
+        c(
+          "!" = paste(
+            "{stringr::str_to_title(type)} {.file {fs::path_rel(file_path)}}",
+            "already exists."
+          ),
+          "i" = "Use {.code overwrite = TRUE} to overwrite it."
+        )
+      )
+    }
+    return(invisible(NULL))
+  }
   # Ensure the parent directory exists, create if not
   check_dir_exists(fs::path_dir(file_path))
   # Read the figure template
