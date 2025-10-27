@@ -4,7 +4,7 @@
 \name{lbstproj-package}
 \alias{lbstproj}
 \alias{lbstproj-package}
-\title{lbstproj: Tools To Create And Use Standardized R Projects For The L-Biostat Group.}
+\title{lbstproj: Tools To Create And Use Standardized R Projects For The L-Biostat Group}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 

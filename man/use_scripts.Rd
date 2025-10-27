@@ -19,26 +19,32 @@ use_data(name, overwrite = FALSE, open = rlang::is_interactive())
 \arguments{
 \item{name}{Name of the script (without file extension).}
 
-\item{overwrite}{Whether to overwrite an existing file with the same name. Defaults to \code{FALSE}.}
+\item{overwrite}{Whether to overwrite an existing file with the same name.
+Defaults to \code{FALSE}.}
 
-\item{open}{Whether to open the new file in the editor. Defaults to \code{TRUE} if in an interactive session (i.e. in RStudio and other IDEs).}
+\item{open}{Whether to open the new file in the editor. Defaults to \code{TRUE} if
+in an interactive session (i.e. in RStudio and other IDEs).}
 
-\item{...}{Additional arguments passed to the template rendering function. See details.}
+\item{...}{Additional arguments passed to the template rendering function.
+See details.}
 
-\item{print}{Whether to print (default: \code{TRUE}) a success message to the console. You can set a default print behavior for all functions in this family by setting the global option \code{use.print} to \code{TRUE} or \code{FALSE}.}
+\item{print}{Whether to print (default: \code{TRUE}) a success message to the
+console. You can set a default print behavior for all functions in this
+family by setting the global option \code{use.print} to \code{TRUE} or \code{FALSE}.}
 }
 \description{
-A family of helpers that write a minimal R script into a project subfolder
-under \verb{R/}: figures, tables, functions, and data.
+A family of helpers that write a minimal R script into a project
+subfolder under \verb{R/}: figures, tables, functions, and data.
 }
 \details{
-These functions are called for their side effects: they create a new script,
-make parent directories if needed, and (optionally) open the file. They do
-not return a value.
+These functions are called for their side effects: they create a new
+script, make parent directories if needed, and (optionally) open the file.
+They do not return a value.
 
-When creating a new table or a new figure script, you can pass the additional argument \code{id}.
-It will be used to retrieve caption and label information from the table of tables of the project.
-This allow dynamic changes to captions and labels in a single place (i.e. the table of tables).
+When creating a new table or a new figure script, you can pass the additional
+argument \code{id}. It will be used to retrieve caption and label information from
+the table of tables of the project. This allow dynamic changes to captions
+and labels in a single place (i.e. the table of tables).
 }
 \section{Functions}{
 \itemize{

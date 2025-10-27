@@ -6,6 +6,13 @@
 \usage{
 create_readme(path, quiet = FALSE, overwrite = FALSE)
 }
+\arguments{
+\item{path}{Path to the project directory.}
+
+\item{quiet}{If \code{TRUE}, suppresses messages (default is \code{FALSE}).}
+
+\item{overwrite}{If \code{TRUE}, overwrites existing README.md file}
+}
 \description{
 Create a basic README.md file in the root of the project directory. It
 contains the project title, author, and a brief overview of the directory
@@ -13,6 +20,7 @@ structure.
 If the file already exists, it will not be overwritten.
 }
 \details{
-This functions does not check arguments for validity. It assumes
+This function does not check arguments for validity. It assumes
 that they are checked in the \code{create_project()} function.
 }
+\keyword{internal}

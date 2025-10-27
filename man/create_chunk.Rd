@@ -11,11 +11,14 @@ create_chunk(id, type, copy = TRUE, print = TRUE, pad = FALSE)
 
 \item{type}{The type of the entry, either "figure" or "table"}
 
-\item{copy}{Logical, whether to copy the chunk to the clipboard (default: TRUE if in interactive mode)}
+\item{copy}{Logical, whether to copy the chunk to the clipboard (default:
+TRUE if in interactive mode)}
 
-\item{print}{Logical, whether to print the chunk to the console (default: TRUE)}
+\item{print}{Logical, whether to print the chunk to the console (default:
+TRUE)}
 
-\item{pad}{Logical, whether to pad the chunk with blank lines before and after and a pagebreak after (default: FALSE)}
+\item{pad}{Logical, whether to pad the chunk with blank lines before and
+after and a pagebreak after (default: FALSE)}
 }
 \value{
 The rendered Rmd chunk as a character string, invisibly

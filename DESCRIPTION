@@ -1,7 +1,7 @@
 Type: Package
 Package: lbstproj
 Title: Tools To Create And Use Standardized R Projects For The L-Biostat
-    Group.
+    Group
 Version: 0.1.0
 Authors@R: 
     person("Alexandre", "Bohyn", , "alexandre.bohyn@kuleuven.be", role = c("aut", "cre"),
@@ -28,6 +28,7 @@ Imports:
     stringr (>= 1.5.2),
     tibble (>= 3.2.1),
     usethis (>= 3.1.0),
+    utils (>= 4.4.2),
     withr
 Encoding: UTF-8
 LazyData: true

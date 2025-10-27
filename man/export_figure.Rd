@@ -20,15 +20,19 @@ export_figure(
 
 \item{name}{Name used to save the figure (without file extension).}
 
-\item{ext}{Output format/extension. One of \code{"png"}, \code{"pdf"}, \code{"jpeg"}, \code{"tiff"},
-\code{"bmp"}, \code{"svg"}. Defaults to \code{"png"}. (Raster: png/jpeg/tiff/bmp; Vector: pdf/svg.)}
+\item{ext}{Output format/extension. One of \code{"png"}, \code{"pdf"}, \code{"jpeg"},
+\code{"tiff"}, \code{"bmp"}, \code{"svg"}. Defaults to \code{"png"}. (Raster:
+png/jpeg/tiff/bmp; Vector: pdf/svg.)}
 
-\item{print}{Whether to print (default: \code{TRUE}) a success message to the console. You can set a default print behavior for all functions in this family by setting the global option \code{export.print} to \code{TRUE} or \code{FALSE}.}
+\item{print}{Whether to print (default: \code{TRUE}) a success message to the
+console. You can set a default print behavior for all functions in this
+family by setting the global option \code{export.print} to \code{TRUE} or \code{FALSE}.}
 
 \item{width, height}{Plot dimensions passed to \code{\link[ggplot2:ggsave]{ggplot2::ggsave()}} (in inches
 by default; you can pass \code{units = "cm"} or \code{units = "mm"} via \code{...}).}
 
-\item{overwrite}{Whether to overwrite an existing file with the same name. Defaults to \code{FALSE}.}
+\item{overwrite}{Whether to overwrite an existing file with the same name.
+Defaults to \code{FALSE}.}
 
 \item{...}{Additional arguments forwarded to \code{\link[ggplot2:ggsave]{ggplot2::ggsave()}}
 (e.g., \code{dpi}, \code{units}, \code{bg}, \code{device}).}

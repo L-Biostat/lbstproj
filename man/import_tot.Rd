@@ -10,6 +10,6 @@ import_tot(quiet = FALSE)
 Invisibly returns the TOT data as a tibble.
 }
 \description{
-Reads the TOT Excel file from \code{data/tot/table_of_tables.xlsx}, validates its structure,
-and saves it as an RDS file in \code{data/tot/tot.rds}.
+Reads the TOT Excel file from \code{data/tot/table_of_tables.xlsx}, validates its
+structure, and saves it as an RDS file in \code{data/tot/tot.rds}.
 }

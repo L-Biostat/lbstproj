@@ -14,10 +14,25 @@ create_description(
   quiet = FALSE
 )
 }
+\arguments{
+\item{path}{Path where the project should be created (default is current
+directory).}
+
+\item{title}{Title of the project.}
+
+\item{client}{Name of the client.}
+
+\item{department}{Department code or name.}
+
+\item{author}{Author name (first and last).}
+
+\item{version}{Project version (default is \verb{1.0.0}).}
+}
 \description{
 Create a DESCRIPTION file for the project
 }
 \details{
-This functions does not check arguments for validity. It assumes
+This function does not check arguments for validity. It assumes
 that they are checked in the \code{create_project()} function.
 }
+\keyword{internal}

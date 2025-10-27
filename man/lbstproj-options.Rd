@@ -9,9 +9,12 @@ Global options for the lbstproj package
 \section{Global options for printing messages}{
 
 \itemize{
-\item \code{options(save.print = TRUE)} (default): print messages when saving figures and tables.
-\item \code{options(export.print = TRUE)} (default): print messages when exporting figures and tables.
-\item \code{options(use.print = TRUE)} (default): print messages when creating a new R script.
+\item \code{options(save.print = TRUE)} (default): print messages when saving figures
+and tables.
+\item \code{options(export.print = TRUE)} (default): print messages when exporting
+figures and tables.
+\item \code{options(use.print = TRUE)} (default): print messages when creating a new R
+script.
 }
 }
 

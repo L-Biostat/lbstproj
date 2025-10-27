@@ -15,7 +15,8 @@ create_project(
 )
 }
 \arguments{
-\item{path}{Path where the project should be created (default is current directory).}
+\item{path}{Path where the project should be created (default is current
+directory).}
 
 \item{title}{Title of the project.}
 
@@ -27,18 +28,18 @@ create_project(
 
 \item{version}{Project version (default is \verb{1.0.0}).}
 
-\item{open}{If \code{TRUE}, opens the new project in RStudio (default is \code{TRUE} if in interactive session).}
+\item{open}{If \code{TRUE}, opens the new project in RStudio (default is \code{TRUE} if
+in interactive session).}
 }
 \value{
 Invisibly returns the active project path.
 }
 \description{
-\code{create_project()} initializes a new project with a standardized structure at the
-specified path. It prompts the user for essential metadata if not provided.
-The function creates the necessary directories, a \code{DESCRIPTION} file, and an
-table of tables (TOT) Excel file.
-If the project is successfully created, it opens the new project in
-RStudio.
+\code{create_project()} initializes a new project with a standardized structure at
+the specified path. It prompts the user for essential metadata if not
+provided. The function creates the necessary directories, a \code{DESCRIPTION}
+file, and an table of tables (TOT) Excel file. If the project is successfully
+created, it opens the new project in RStudio.
 }
 \details{
 The following directory structure is created inside the project:

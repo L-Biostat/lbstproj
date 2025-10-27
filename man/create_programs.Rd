@@ -7,7 +7,7 @@
 create_programs()
 }
 \description{
-This functions loads the TOT and creates all the R scripts for figures and tables
-listed there in their respective directories in the \code{R} folder.
-Any existing scripts with the same names will NOT be overwritten.
+This function loads the TOT and creates all the R scripts for figures and
+tables listed there in their respective directories in the \code{R} folder. Any
+existing scripts with the same names will NOT be overwritten.
 }

@@ -7,12 +7,16 @@
 run_report(overwrite = FALSE)
 }
 \arguments{
-\item{overwrite}{Logical; if \code{TRUE}, overwrite existing report files in the \verb{results/reports/} directory.    If \code{FALSE}, a unique name will be generated to avoid overwriting, by appending a counter to the filename (e.g. \verb{_001}, \verb{_002}, etc.). Default is \code{FALSE}.}
+\item{overwrite}{Logical; if \code{TRUE}, overwrite existing report files in the
+\verb{results/reports/} directory. If \code{FALSE}, a unique name will be generated
+to avoid overwriting, by appending a counter to the filename (e.g. \verb{_001},
+\verb{_002}, etc.). Default is \code{FALSE}.}
 }
 \value{
-The path to the moved and renamed report file.
+The path to the moved and renamed report file, invisibly.
 }
 \description{
-Render the Rmd report located at \code{report/report.Rmd} to the \verb{report/} directory.
-Also move and rename the generated report to the \verb{results/reports/} directory.
+Render the Rmd report located at \code{report/report.Rmd} to the \verb{report/}
+directory. Also move and rename the generated report to the
+\verb{results/reports/} directory.
 }

@@ -6,11 +6,13 @@
 \usage{
 create_structure(path, quiet = FALSE)
 }
+\arguments{
+\item{path}{Path to the project directory.}
+}
 \description{
 \code{create_structure()} creates the standard folder structure for the project.
-Any folders that already exist will be skipped.
+Any folders that already exist will be skipped. This functions does not check
+arguments for validity. It assumes that they are checked in the
+\code{create_project()} function.
 }
-\details{
-This functions does not check arguments for validity. It assumes
-that they are checked in the \code{create_project()} function.
-}
+\keyword{internal}

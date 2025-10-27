@@ -11,10 +11,12 @@ run_all_figures(skip = NULL)
 run_all_tables(skip = NULL)
 }
 \arguments{
-\item{skip}{Optional vector of non-negative integers corresponding to the \code{id} column in the ToT. Any scripts with these IDs will be skipped.}
+\item{skip}{Optional vector of non-negative integers corresponding to the
+\code{id} column in the ToT. Any scripts with these IDs will be skipped.}
 }
 \description{
-Run all R scripts listed in the Table of Tables (ToT) for a specified type (figure or table).
+Run all R scripts listed in the Table of Tables (ToT) for a
+specified type (figure or table).
 }
 \section{Functions}{
 \itemize{

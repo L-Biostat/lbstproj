@@ -7,10 +7,12 @@
 create_tot(path, quiet = FALSE, overwrite = FALSE)
 }
 \arguments{
-\item{overwrite}{Whether to overwrite an existing file with the same name. Defaults to \code{FALSE}.}
+\item{overwrite}{Whether to overwrite an existing file with the same name.
+Defaults to \code{FALSE}.}
 }
 \description{
 This function copies a template TOT Excel file from the \code{lbstproj} package
 to the \verb{data/tot/} directory of your project. The example TOT file contains
 an example row for guidance. It should be deleted before use.
 }
+\keyword{internal}

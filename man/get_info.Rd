@@ -7,13 +7,16 @@
 get_info(id)
 }
 \arguments{
-\item{id}{A positive integer representing the unique identifier of the item. Must be supplied, else the function will throw an error.}
+\item{id}{A positive integer representing the unique identifier of the item.
+Must be supplied, else the function will throw an error.}
 }
 \value{
-A list containing all columns from the TOT for the specified ID. The columns are (in order): id, type, name, caption
+A list containing all columns from the TOT for the specified ID. The
+columns are (in order): id, type, name, caption
 }
 \description{
-Retrieve information about an item from a table of tables (TOT) based on its ID.
+Retrieve information about an item from a table of tables (TOT) based on its
+ID.
 }
 \examples{
 \dontrun{

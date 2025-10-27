@@ -7,7 +7,9 @@
 load_tot(refresh = TRUE)
 }
 \arguments{
-\item{refresh}{Logical; if \code{TRUE}, re-imports the TOT from the Excel file using \code{import_tot()}. Default is \code{TRUE} because the TOT may be updated frequently.}
+\item{refresh}{Logical; if \code{TRUE}, re-imports the TOT from the Excel file
+using \code{import_tot()}. Default is \code{TRUE} because the TOT may be updated
+frequently.}
 }
 \value{
 A tibble containing the TOT data with the following columns:

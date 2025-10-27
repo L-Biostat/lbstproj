@@ -15,15 +15,20 @@ export_table(
 )
 }
 \arguments{
-\item{tbl}{A \code{\link[gt:gt]{gt::gt()}} table (\code{gt_tbl}) or a \code{\link[flextable:flextable]{flextable::flextable()}} object.}
+\item{tbl}{A \code{\link[gt:gt]{gt::gt()}} table (\code{gt_tbl}) or a \code{\link[flextable:flextable]{flextable::flextable()}}
+object.}
 
 \item{name}{Name used to save the table (without file extension).}
 
-\item{ext}{Output format/extension. One of \code{"docx"}, \code{"pdf"}, \code{"html"}, \code{"rtf"}.}
+\item{ext}{Output format/extension. One of \code{"docx"}, \code{"pdf"}, \code{"html"},
+\code{"rtf"}.}
 
-\item{print}{Whether to print (default: \code{TRUE}) a success message to the console. You can set a default print behavior for all functions in this family by setting the global option \code{export.print} to \code{TRUE} or \code{FALSE}.}
+\item{print}{Whether to print (default: \code{TRUE}) a success message to the
+console. You can set a default print behavior for all functions in this
+family by setting the global option \code{export.print} to \code{TRUE} or \code{FALSE}.}
 
-\item{overwrite}{Whether to overwrite an existing file with the same name. Defaults to \code{FALSE}.}
+\item{overwrite}{Whether to overwrite an existing file with the same name.
+Defaults to \code{FALSE}.}
 
 \item{landscape}{Logical; for \code{flextable} exports only, set page orientation
 to landscape. Ignored for \code{gt} tables.}
@@ -32,13 +37,14 @@ to landscape. Ignored for \code{gt} tables.}
 relevant \verb{flextable::save_as_*()} function (for \code{flextable}).}
 }
 \description{
-Save a formatted table to \verb{results/tables/<name>.<ext>}. Supports \code{gt} tables
-via \code{\link[gt:gtsave]{gt::gtsave()}} and \code{flextable} via the corresponding \verb{save_as_*()} helpers.
-The parent directory is created if needed and an existing file is not
-overwritten unless \code{overwrite = TRUE}.
+Save a formatted table to \verb{results/tables/<name>.<ext>}.
+Supports \code{gt} tables via \code{\link[gt:gtsave]{gt::gtsave()}} and \code{flextable} via the corresponding
+\verb{save_as_*()} helpers. The parent directory is created if needed and an
+existing file is not overwritten unless \code{overwrite = TRUE}.
 }
 \details{
-The function is called for its side effects and does not return a value.
+The function is called for its side effects and does not return a
+value.
 }
 \examples{
 \dontrun{

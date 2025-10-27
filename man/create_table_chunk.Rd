@@ -9,11 +9,14 @@ create_table_chunk(id, copy = TRUE, print = TRUE, pad = FALSE)
 \arguments{
 \item{id}{The id of the figure as specified in the table of tables (TOT)}
 
-\item{copy}{Logical, whether to copy the chunk to the clipboard (default: TRUE if in interactive mode)}
+\item{copy}{Logical, whether to copy the chunk to the clipboard (default:
+TRUE if in interactive mode)}
 
-\item{print}{Logical, whether to print the chunk to the console (default: TRUE)}
+\item{print}{Logical, whether to print the chunk to the console (default:
+TRUE)}
 
-\item{pad}{Logical, whether to pad the chunk with blank lines before and after and a pagebreak after (default: FALSE)}
+\item{pad}{Logical, whether to pad the chunk with blank lines before and
+after and a pagebreak after (default: FALSE)}
 }
 \description{
 Create a Rmd code chunk to insert a table
