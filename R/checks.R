@@ -1,4 +1,4 @@
-# Check directories and files ----------------------------------------------------
+# Check directories and files ---------------------------------------------
 
 check_dir_exists <- function(dir) {
   # If dir does not exist, create it and warn user
@@ -21,17 +21,21 @@ check_file_absent <- function(file_path, overwrite) {
   }
 }
 
-# Check object names -------------------------------------------------------------
+# Check object names ------------------------------------------------------
 
 check_name <- function(name) {
-  usethis:::check_character(name)
-  usethis:::check_name(name)
+  if (!rlang::is_character(name)) {
+    cli::cli_abort("{.arg name} must be a character string.")
+  }
   new_name <- gsub("[^a-zA-Z0-9_]+", "_", name)
   if (new_name != name) {
     cli::cli_warn(
       c(
         "!" = "The name {.val {name}} has been sanitized to {.val {new_name}}.",
-        "i" = "Only alphanumeric characters and underscores are allowed. Change the name to remove this error."
+        "i" = paste(
+          "Only alphanumeric characters and underscores are allowed.",
+          "Change the name to remove this error."
+        )
       )
     )
   }

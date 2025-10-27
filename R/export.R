@@ -7,12 +7,15 @@
 #'
 #' @param fig A [ggplot2::ggplot] object.
 #' @param name Name used to save the figure (without file extension).
-#' @param ext Output format/extension. One of `"png"`, `"pdf"`, `"jpeg"`, `"tiff"`,
-#'   `"bmp"`, `"svg"`. Defaults to `"png"`. (Raster: png/jpeg/tiff/bmp; Vector: pdf/svg.)
+#' @param ext Output format/extension. One of `"png"`, `"pdf"`, `"jpeg"`,
+#'   `"tiff"`, `"bmp"`, `"svg"`. Defaults to `"png"`. (Raster:
+#'   png/jpeg/tiff/bmp; Vector: pdf/svg.)
 #' @param width,height Plot dimensions passed to [ggplot2::ggsave()] (in inches
 #'   by default; you can pass `units = "cm"` or `units = "mm"` via `...`).
 #' @inheritParams use_scripts
-#' @param print Whether to print (default: `TRUE`) a success message to the console. You can set a default print behavior for all functions in this family by setting the global option `export.print` to `TRUE` or `FALSE`.
+#' @param print Whether to print (default: `TRUE`) a success message to the
+#'   console. You can set a default print behavior for all functions in this
+#'   family by setting the global option `export.print` to `TRUE` or `FALSE`.
 #' @param ... Additional arguments forwarded to [ggplot2::ggsave()]
 #'   (e.g., `dpi`, `units`, `bg`, `device`).
 #'
@@ -75,24 +78,27 @@ export_figure <- function(
 
 #' Export a table to `results/tables/`
 #'
-#' @description
-#' Save a formatted table to `results/tables/<name>.<ext>`. Supports `gt` tables
-#' via [gt::gtsave()] and `flextable` via the corresponding `save_as_*()` helpers.
-#' The parent directory is created if needed and an existing file is not
-#' overwritten unless `overwrite = TRUE`.
+#' @description Save a formatted table to `results/tables/<name>.<ext>`.
+#' Supports `gt` tables via [gt::gtsave()] and `flextable` via the corresponding
+#' `save_as_*()` helpers. The parent directory is created if needed and an
+#' existing file is not overwritten unless `overwrite = TRUE`.
 #'
-#' @param tbl A [gt::gt()] table (`gt_tbl`) or a [flextable::flextable()] object.
+#' @param tbl A [gt::gt()] table (`gt_tbl`) or a [flextable::flextable()]
+#'   object.
 #' @param name Name used to save the table (without file extension).
-#' @param ext Output format/extension. One of `"docx"`, `"pdf"`, `"html"`, `"rtf"`.
+#' @param ext Output format/extension. One of `"docx"`, `"pdf"`, `"html"`,
+#'   `"rtf"`.
 #' @inheritParams use_scripts
-#' @param print Whether to print (default: `TRUE`) a success message to the console. You can set a default print behavior for all functions in this family by setting the global option `export.print` to `TRUE` or `FALSE`.
+#' @param print Whether to print (default: `TRUE`) a success message to the
+#'   console. You can set a default print behavior for all functions in this
+#'   family by setting the global option `export.print` to `TRUE` or `FALSE`.
 #' @param landscape Logical; for `flextable` exports only, set page orientation
 #'   to landscape. Ignored for `gt` tables.
 #' @param ... Additional arguments forwarded to [gt::gtsave()] (for `gt`) or the
 #'   relevant `flextable::save_as_*()` function (for `flextable`).
 #'
-#' @details
-#' The function is called for its side effects and does not return a value.
+#' @details The function is called for its side effects and does not return a
+#' value.
 #'
 #' @examples
 #' \dontrun{
@@ -129,9 +135,12 @@ export_table <- function(
   if (!(ext %in% valid_ext)) {
     cli::cli_abort("{.arg ext} must be one of {.val {valid_ext}}")
   }
-  if (inherits(tbl, "flextable") & ext == "pdf") {
+  if (inherits(tbl, "flextable") && ext == "pdf") {
     cli::cli_abort(
-      "{.cls flextable} objects can only be saved as {.val {setdiff(valid_ext, \"pdf\")}}"
+      paste(
+        "{.cls flextable} objects can only be saved as",
+        "{.val {setdiff(valid_ext, \"pdf\")}}"
+      )
     )
   }
   # Define printing behavior
@@ -148,7 +157,10 @@ export_table <- function(
   if (inherits(tbl, "gt_tbl")) {
     if (landscape) {
       cli::cli_alert_warning(
-        "Landscape mode is not supported for gt tables. Ignoring {.arg landscape} argument."
+        paste(
+          "Landscape mode is not supported for gt tables.",
+          "Ignoring {.arg landscape} argument."
+        )
       )
     }
     gt::gtsave(data = tbl, filename = file_path, ...)

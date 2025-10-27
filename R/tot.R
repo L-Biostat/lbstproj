@@ -1,7 +1,7 @@
 #' Import the Table of Tables (TOT)
 #'
-#' Reads the TOT Excel file from `data/tot/table_of_tables.xlsx`, validates its structure,
-#' and saves it as an RDS file in `data/tot/tot.rds`.
+#' Reads the TOT Excel file from `data/tot/table_of_tables.xlsx`, validates its
+#' structure, and saves it as an RDS file in `data/tot/tot.rds`.
 #'
 #' @return Invisibly returns the TOT data as a tibble.
 #' @export
@@ -23,7 +23,8 @@ import_tot <- function(quiet = FALSE) {
 
   # Save the TOT data as an RDS file in the project
   tot_path <- fs::path("data/tot/tot.rds")
-  check_file_absent(tot_path, overwrite = TRUE) # Always overwrite the existing TOT RDS file
+  # Always overwrite the existing TOT RDS file
+  check_file_absent(tot_path, overwrite = TRUE)
   saveRDS(tot_data, file = tot_path)
 
   # Inform the user
@@ -41,7 +42,9 @@ import_tot <- function(quiet = FALSE) {
 #'
 #' Simple wrapper function to load the TOT RDS file.
 #'
-#' @param refresh Logical; if `TRUE`, re-imports the TOT from the Excel file using `import_tot()`. Default is `TRUE` because the TOT may be updated frequently.
+#' @param refresh Logical; if `TRUE`, re-imports the TOT from the Excel file
+#'   using `import_tot()`. Default is `TRUE` because the TOT may be updated
+#'   frequently.
 #'
 #' @examples
 #' \dontrun{
@@ -58,7 +61,10 @@ load_tot <- function(refresh = TRUE) {
   tot_path <- fs::path("data/tot/tot.rds")
   if (!fs::file_exists(tot_path)) {
     cli::cli_abort(
-      "The TOT {.val rds} file does not exist. Please import it using {.fn import_tot}."
+      paste(
+        "The TOT {.val rds} file does not exist.",
+        "Please import it using {.fn import_tot}."
+      )
     )
   }
   # If refresh is TRUE, re-import the TOT from the Excel file

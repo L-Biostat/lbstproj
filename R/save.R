@@ -1,7 +1,6 @@
 #' Save analysis objects as `.rds`
 #'
-#' @description
-#' A family of helpers that save figures, tables, and data sets as
+#' @description A family of helpers that save figures, tables, and data sets as
 #' **`.rds`** files via [base::saveRDS()]. Each function writes to its
 #' designated output directory.
 #'
@@ -9,12 +8,14 @@
 #'   by [base::saveRDS()].
 #' @param name Name used to save the object (without file extension).
 #' @inheritParams use_scripts
-#' @param print Whether to print (default: `TRUE`) a success message to the console. You can set a default print behavior for all functions in this family by setting the global option `save.print` to `TRUE` or `FALSE`.
+#' @param print Whether to print (default: `TRUE`) a success message to the
+#'   console. You can set a default print behavior for all functions in this
+#'   family by setting the global option `save.print` to `TRUE` or `FALSE`.
 #' @param ... Additional arguments passed to [base::saveRDS()] (e.g.,
 #'   `compress`, `version`).
 #'
-#' @details
-#' These helpers are called for their side effects and do not return a value.
+#' @details These helpers are called for their side effects and do not return a
+#' value.
 #'
 #' @examples
 #' \dontrun{

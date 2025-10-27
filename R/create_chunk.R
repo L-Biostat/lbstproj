@@ -2,9 +2,12 @@
 #'
 #' @param id The id of the figure as specified in the table of tables (TOT)
 #' @param type The type of the entry, either "figure" or "table"
-#' @param print Logical, whether to print the chunk to the console (default: TRUE)
-#' @param copy Logical, whether to copy the chunk to the clipboard (default: TRUE if in interactive mode)
-#' @param pad Logical, whether to pad the chunk with blank lines before and after and a pagebreak after (default: FALSE)
+#' @param print Logical, whether to print the chunk to the console (default:
+#'   TRUE)
+#' @param copy Logical, whether to copy the chunk to the clipboard (default:
+#'   TRUE if in interactive mode)
+#' @param pad Logical, whether to pad the chunk with blank lines before and
+#'   after and a pagebreak after (default: FALSE)
 #'
 #' @return The rendered Rmd chunk as a character string, invisibly
 create_chunk <- function(id, type, copy = TRUE, print = TRUE, pad = FALSE) {
@@ -15,7 +18,8 @@ create_chunk <- function(id, type, copy = TRUE, print = TRUE, pad = FALSE) {
   # Throw error if the corresponding entry is not a figure
   if (details$type != type) {
     cli::cli_abort(
-      "The entry with id {.val {id}} is not a {.val {type}} but a {.val {details$type}}."
+      "The entry with id {.val {id}} is not a {.val {type}} but a
+      {.val {details$type}}."
     )
   }
   # Load the figure chunk template
@@ -45,9 +49,11 @@ create_chunk <- function(id, type, copy = TRUE, print = TRUE, pad = FALSE) {
     rendered_chunk <- c("", rendered_chunk, "", "\\newpage", "")
   }
   # If needed, print the chunk to the console
-  if (print) cat(rendered_chunk, sep = "\n")
+  if (print) {
+    cat(rendered_chunk, sep = "\n")
+  }
   # Copy the chunk to the clipboard if in interactive mode
-  if (rlang::is_interactive() & copy) {
+  if (rlang::is_interactive() && copy) {
     clipr::write_clip(rendered_chunk, allow_non_interactive = FALSE)
     cli::cli_alert_success("The chunk has been copied to the clipboard.")
   }

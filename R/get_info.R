@@ -1,10 +1,13 @@
 #' Get Information About an Item by ID
 #'
-#' Retrieve information about an item from a table of tables (TOT) based on its ID.
+#' Retrieve information about an item from a table of tables (TOT) based on its
+#' ID.
 #'
-#' @param id A positive integer representing the unique identifier of the item. Must be supplied, else the function will throw an error.
+#' @param id A positive integer representing the unique identifier of the item.
+#'   Must be supplied, else the function will throw an error.
 #'
-#' @return A list containing all columns from the TOT for the specified ID. The columns are (in order): id, type, name, caption
+#' @return A list containing all columns from the TOT for the specified ID. The
+#'   columns are (in order): id, type, name, caption
 #'
 #' @examples
 #' \dontrun{
@@ -25,7 +28,7 @@ get_info <- function(id) {
   if (!id %in% tot$id) {
     cli::cli_abort(
       c(
-        "x" = "No entry with id {.val {id}} found in the Table of Tables (TOT).",
+        "x" = "No entry with id {.val {id}} found in the TOT.",
         "i" = "Update the TOT and import it again using {.fn import_tot}."
       )
     )

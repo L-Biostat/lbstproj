@@ -1,9 +1,10 @@
 #' Run All R Scripts in ToT
 #'
-#' @description
-#' Run all R scripts listed in the Table of Tables (ToT) for a specified type (figure or table).
+#' @description Run all R scripts listed in the Table of Tables (ToT) for a
+#' specified type (figure or table).
 #'
-#' @param skip Optional vector of non-negative integers corresponding to the `id` column in the ToT. Any scripts with these IDs will be skipped.
+#' @param skip Optional vector of non-negative integers corresponding to the
+#'   `id` column in the ToT. Any scripts with these IDs will be skipped.
 #'
 #' @md
 #' @name run_all

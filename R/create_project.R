@@ -1,11 +1,10 @@
 #' Create a New Project
 #'
-#' `create_project()` initializes a new project with a standardized structure at the
-#' specified path. It prompts the user for essential metadata if not provided.
-#' The function creates the necessary directories, a `DESCRIPTION` file, and an
-#' table of tables (TOT) Excel file.
-#' If the project is successfully created, it opens the new project in
-#' RStudio.
+#' `create_project()` initializes a new project with a standardized structure at
+#' the specified path. It prompts the user for essential metadata if not
+#' provided. The function creates the necessary directories, a `DESCRIPTION`
+#' file, and an table of tables (TOT) Excel file. If the project is successfully
+#' created, it opens the new project in RStudio.
 #'
 #' @details
 #' The following directory structure is created inside the project:
@@ -30,13 +29,15 @@
 #'     └── utils
 #' ```
 #'
-#' @param path Path where the project should be created (default is current directory).
+#' @param path Path where the project should be created (default is current
+#'   directory).
 #' @param title Title of the project.
 #' @param client Name of the client.
 #' @param department Department code or name.
 #' @param author Author name (first and last).
 #' @param version Project version (default is `1.0.0`).
-#' @param open If `TRUE`, opens the new project in RStudio (default is `TRUE` if in interactive session).
+#' @param open If `TRUE`, opens the new project in RStudio (default is `TRUE` if
+#'   in interactive session).
 #'
 #' @return Invisibly returns the active project path.
 #' @md
@@ -133,10 +134,13 @@ create_project <- function(
 #' Create the standard project structure
 #'
 #' `create_structure()` creates the standard folder structure for the project.
-#' Any folders that already exist will be skipped.
+#' Any folders that already exist will be skipped. This functions does not check
+#' arguments for validity. It assumes that they are checked in the
+#' `create_project()` function.
 #'
-#' @details This functions does not check arguments for validity. It assumes
-#' that they are checked in the `create_project()` function.
+#' @param path Path to the project directory.
+#'
+#' @keywords internal
 create_structure <- function(path, quiet = FALSE) {
   # Define the directories to be created
   dirs <- c(
@@ -165,6 +169,10 @@ create_structure <- function(path, quiet = FALSE) {
 #'
 #' @details This function does not check arguments for validity. It assumes
 #' that they are checked in the `create_project()` function.
+#'
+#' @inheritParams create_project
+#'
+#' @keywords internal
 create_description <- function(
   path,
   title,
@@ -203,7 +211,8 @@ create_description <- function(
 #' an example row for guidance. It should be deleted before use.
 #'
 #' @inheritParams use_data
-#' @md
+#'
+#' @keywords internal
 create_tot <- function(path, quiet = FALSE, overwrite = FALSE) {
   # Find the path to the TOT excel file example in the `lbstproj` package
   tot_example_path <- fs::path_package(
@@ -229,7 +238,8 @@ create_tot <- function(path, quiet = FALSE, overwrite = FALSE) {
   # Inform the user
   if (!quiet) {
     cli::cli_alert_info(
-      "Writing {.file table_of_tables.xlsx} file to {.path {fs::path_rel(tot_dir)}}"
+      "Writing {.file table_of_tables.xlsx} file to
+      {.path {fs::path_rel(tot_dir)}}"
     )
     cli::cli_alert_info(
       "Start editing the TOT file to add your figures and tables !"
@@ -245,8 +255,14 @@ create_tot <- function(path, quiet = FALSE, overwrite = FALSE) {
 #' structure.
 #' If the file already exists, it will not be overwritten.
 #'
+#' @param path Path to the project directory.
+#' @param quiet If `TRUE`, suppresses messages (default is `FALSE`).
+#' @param overwrite If `TRUE`, overwrites existing README.md file
+#'
 #' @details This function does not check arguments for validity. It assumes
 #' that they are checked in the `create_project()` function.
+#'
+#' @keywords internal
 create_readme <- function(path, quiet = FALSE, overwrite = FALSE) {
   readme_path <- fs::path(path, "README.md")
   rd_template <- fs::path_package("lbstproj", "templates/README.md")

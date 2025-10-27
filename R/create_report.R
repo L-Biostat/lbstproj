@@ -12,7 +12,6 @@ create_report <- function(overwrite = TRUE) {
     )
   )
   # Generate template data from the DESCRIPTION file
-  desc <- desc::desc(file = "DESCRIPTION")
   template_data <- list(
     title = desc::desc_get("Title"),
     author = get_author(),
