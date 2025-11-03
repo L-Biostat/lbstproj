@@ -73,7 +73,7 @@ create_project <- function(
   # Ensure that user does want to create project at this path
   if (!force) {
     ok <- usethis::ui_yeah(
-      paste0("Create project at `", fs::path(path), "`?"),
+      paste0("Create project at `", fs::path_abs(path), "`?"),
       n_no = 1,
       n_yes = 1
     )
@@ -232,9 +232,9 @@ create_tot <- function(quiet = FALSE) {
   # Inform the user
   if (!quiet) {
     cli::cli_alert_info(
-      c(
-        "Writing {.file fs::path_file(tot_example_path)} file",
-        "to {.path fs::path_rel(tot_dir)}"
+      paste(
+        "Writing {.file {fs::path_file(tot_example_path)}} file",
+        "to {.path {fs::path_rel(tot_dir)}}"
       )
     )
   }
