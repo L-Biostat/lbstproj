@@ -20,7 +20,8 @@
 #' │   └── meetings
 #' ├── results
 #' │   ├── figures
-#' │   └── tables
+#' │   ├── tables
+#' │   └── reports
 #' ├── R
 #' │   ├── data
 #' │   ├── figures
@@ -38,6 +39,10 @@
 #' @param version Project version (default is `1.0.0`).
 #' @param open If `TRUE`, opens the new project in RStudio (default is `TRUE` if
 #'   in interactive session).
+#' @param force If `TRUE`, skips the confirmation prompt before creating the
+#'  project (default is `FALSE`).
+#' @param quiet If `TRUE`, suppresses informational messages during project
+#'  creation (default is `FALSE`).
 #'
 #' @return Invisibly returns the active project path.
 #' @md
@@ -61,20 +66,20 @@ create_project <- function(
   department = NULL,
   author = NULL,
   version = "1.0.0",
-  open = rlang::is_interactive()
+  open = rlang::is_interactive(),
+  force = FALSE,
+  quiet = FALSE
 ) {
-  # Check if the path exists
-  full_path <- fs::path_abs(path)
-  if (!fs::dir_exists(path)) {
-    cli::cli_abort("The specified path {.path {full_path}} does not exist.")
+  # Ensure that user does want to create project at this path
+  if (!force) {
+    ok <- usethis::ui_yeah(
+      paste0("Create project at `", fs::path(path), "`?"),
+      n_no = 1,
+      n_yes = 1
+    )
+  } else {
+    ok <- TRUE
   }
-
-  # Ensure that user does want to create project there
-  ok <- usethis::ui_yeah(
-    paste0("Create project at `", full_path, "`?"),
-    n_no = 1,
-    n_yes = 1
-  )
   if (!ok) {
     cli::cli_abort("Cancelling project creation.")
   }
@@ -88,18 +93,12 @@ create_project <- function(
   department <- department %||%
     readline(prompt = "Enter the client's department (if applicable): ")
 
-  # Create project-specific files (.Rproj) at specified path
-  usethis::ui_silence(
-    usethis::create_project(
-      path = path,
-      rstudio = TRUE,
-      open = FALSE
-    )
-  )
-  cli::cli_alert_info("Setting active project to {.path {full_path}}")
+  # Set the given path as the active project, and create RStudio project
+  usethis::proj_set(path, force = TRUE) # Forcing is needed for a new project
+  usethis::use_rstudio()
 
   # Create the project structure
-  create_structure(full_path, quiet = FALSE)
+  create_structure(quiet = quiet)
 
   # Define author as a person object
   author_obj <- utils::person(
@@ -110,38 +109,35 @@ create_project <- function(
 
   # Add the DESCRIPTION file
   create_description(
-    path = full_path,
     title = title,
     client = client,
     department = department,
     author = author_obj,
     version = version,
-    quiet = FALSE
+    quiet = quiet
   )
 
   # Create an example table of tables (TOT)
-  create_tot(path = full_path, overwrite = FALSE)
+  create_tot(quiet = quiet)
 
   # Open the new project if requested
-  if (open) {
-    cli::cli_alert_info("Opening project in RStudio...")
-    rstudioapi::openProject(full_path, newSession = FALSE)
+  if (open && rstudioapi::isAvailable()) {
+    cli::cli_alert_success("Opening project in RStudio")
+    rstudioapi::openProject(usethis::proj_get(), newSession = TRUE)
   }
-  cli::cli_alert_success("Project setup complete! Start working!")
+  if (!quiet) {
+    cli::cli_alert_success("{.strong Project setup complete! Start working!}")
+  }
   invisible(usethis::proj_get())
 }
 
 #' Create the standard project structure
 #'
 #' `create_structure()` creates the standard folder structure for the project.
-#' Any folders that already exist will be skipped. This functions does not check
-#' arguments for validity. It assumes that they are checked in the
-#' `create_project()` function.
-#'
-#' @param path Path to the project directory.
+#' Any folders that already exist will be skipped.
 #'
 #' @keywords internal
-create_structure <- function(path, quiet = FALSE) {
+create_structure <- function(quiet = FALSE) {
   # Define the directories to be created
   dirs <- c(
     "data/processed",
@@ -158,23 +154,23 @@ create_structure <- function(path, quiet = FALSE) {
     "R/tables",
     "report/utils"
   )
-  fs::dir_create(fs::path(path, dirs))
+  fs::dir_create(usethis::proj_path(dirs))
   if (!quiet) {
-    cli::cli_alert_info("Creating project structure")
+    cli::cli_alert_success("Creating project structure")
   }
 }
 
 
 #' Create a DESCRIPTION file for the project
 #'
-#' @details This function does not check arguments for validity. It assumes
-#' that they are checked in the `create_project()` function.
-#'
-#' @inheritParams create_project
+#' `create_description()` creates a `DESCRIPTION` file in the project, using the
+#' project root directory as "package name" and adding the fields: Title,
+#' Author, Client, and Department. The function does not check arguments for
+#' validity. It assumes that they are checked in the `create_project()`
+#' function.
 #'
 #' @keywords internal
 create_description <- function(
-  path,
   title,
   client,
   department,
@@ -186,18 +182,17 @@ create_description <- function(
   if (!inherits(author, "person")) {
     cli::cli_abort("{.arg author} must be of class {.cls person}.")
   }
-  # Create an empty DESCRIPTION file
-  desc_path <- fs::path(path, "DESCRIPTION")
+  # Create an empty DESCRIPTION file (this avoids prefilling the file)
+  desc_path <- usethis::proj_path("DESCRIPTION")
   fs::file_create(desc_path)
   # Read it as a description object and populate fields
   d <- desc::description$new(desc_path)
-  d$set("Package", fs::path_file(path)) # Use folder name as package name
+  d$set("Package", fs::path_file(usethis::proj_get()), check = FALSE)
   d$set("Title", title)
   d$set("Client", client)
   d$set("Department", department)
   d$set("Version", version)
   d$set_authors(author)
-  # Print the description to file
   d$write(file = desc_path)
   if (!quiet) {
     cli::cli_alert_info("Writing {.file DESCRIPTION} file")
@@ -206,14 +201,17 @@ create_description <- function(
 
 #' Create a Empty Table of Tables (TOT) Excel file in the project
 #'
-#' This function copies a template TOT Excel file from the `lbstproj` package
+#' `create_tot()` copies a template TOT Excel file from the `lbstproj` package
 #' to the `data/tot/` directory of your project. The example TOT file contains
 #' an example row for guidance. It should be deleted before use.
 #'
-#' @inheritParams use_data
+#' @details
+#' If a "data/tot/" directory does not exist, it will be created.
+#' If a TOT file already exists in the target directory, it will be overwritten.
+#'
 #'
 #' @keywords internal
-create_tot <- function(path, quiet = FALSE, overwrite = FALSE) {
+create_tot <- function(quiet = FALSE) {
   # Find the path to the TOT excel file example in the `lbstproj` package
   tot_example_path <- fs::path_package(
     package = "lbstproj",
@@ -221,64 +219,23 @@ create_tot <- function(path, quiet = FALSE, overwrite = FALSE) {
   )
 
   # Check that the `data/tot/` directory exists; if not, create it
-  tot_dir <- fs::path(path, "data/tot/")
+  tot_dir <- usethis::proj_path("data/tot")
   check_dir_exists(tot_dir)
-
-  # Check if the TOT file already exists
-  tot_xlsx_path <- fs::path(tot_dir, "table_of_tables.xlsx")
-  check_file_absent(tot_xlsx_path, overwrite)
 
   # Copy the example TOT file to the project
   fs::file_copy(
     path = tot_example_path,
     new_path = tot_dir,
-    overwrite = overwrite
+    overwrite = TRUE
   )
 
   # Inform the user
   if (!quiet) {
     cli::cli_alert_info(
-      "Writing {.file table_of_tables.xlsx} file to
-      {.path {fs::path_rel(tot_dir)}}"
+      c(
+        "Writing {.file fs::path_file(tot_example_path)} file",
+        "to {.path fs::path_rel(tot_dir)}"
+      )
     )
-    cli::cli_alert_info(
-      "Start editing the TOT file to add your figures and tables !"
-    )
-  }
-}
-
-
-#' Create a README.md file for the project
-#'
-#' Create a basic README.md file in the root of the project directory. It
-#' contains the project title, author, and a brief overview of the directory
-#' structure.
-#' If the file already exists, it will not be overwritten.
-#'
-#' @param path Path to the project directory.
-#' @param quiet If `TRUE`, suppresses messages (default is `FALSE`).
-#' @param overwrite If `TRUE`, overwrites existing README.md file
-#'
-#' @details This function does not check arguments for validity. It assumes
-#' that they are checked in the `create_project()` function.
-#'
-#' @keywords internal
-create_readme <- function(path, quiet = FALSE, overwrite = FALSE) {
-  readme_path <- fs::path(path, "README.md")
-  rd_template <- fs::path_package("lbstproj", "templates/README.md")
-  desc_file <- desc::description$new(file = fs::path(path, "DESCRIPTION"))
-  rd_temp_data <- list(
-    title = desc_file$get("Title"),
-    author = desc_file$get_author(),
-    client = desc_file$get("Client"),
-    department = desc_file$get("Department")
-  )
-  rd_content <- whisker::whisker.render(
-    template = readLines(rd_template),
-    data = rd_temp_data
-  )
-  writeLines(rd_content, con = readme_path)
-  if (!quiet) {
-    cli::cli_alert_success("Creating {.file README.md}")
   }
 }
