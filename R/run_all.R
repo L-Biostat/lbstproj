@@ -28,37 +28,71 @@ run_all_programs <- function(type, skip = NULL) {
   type <- rlang::arg_match(type, c("figure", "table"))
   # Check that skip is a vector of non-negative integers if non-NULL
   if (!is.null(skip)) {
-    if (!is.numeric(skip) || any(skip < 0) || any(skip != as.integer(skip))) {
-      cli::cli_abort("{.arg skip} must be a vector of non-negative integers.")
+    if (!is.numeric(skip) || skip < 0 || rlang::is_integerish(skip)) {
+      cli::cli_abort(
+        "{.arg skip} must be a positive integer.",
+        call = rlang::caller_env()
+      )
     }
   }
+  # List all R files
+  dirname <- fs::path("R", paste0(type, "s"))
+  files <- fs::dir_ls(
+    dirname,
+    type = "file",
+    glob = "*.R",
+    recurse = FALSE
+  ) |>
+    fs::path_file()
+  # List corresponding files in TOT
+  tot <- load_tot()
+  tot_files <- tot$name[tot$type == type] |>
+    fs::path(ext = "R")
+  # Compare files
+  compare_files(type, files, tot_files)
+
   # Printed message
   cli::cli_h1("Generating all {type}s\n")
-  # Load the ToT
-  tot <- load_tot()
-  # Isolate corresponding scripts in the ToT
-  if (!is.null(skip)) {
-    good_item_ids <- tot$type == type & !(tot$id %in% skip)
-  } else {
-    good_item_ids <- tot$type == type
-  }
-  n_scripts <- sum(good_item_ids)
   cli::cli_alert_info(
-    "Found {cli::no(n_scripts)} {type}{cli::qty(n_scripts)}{?s} in ToT"
+    "Found {length(files)} {type}{cli::qty(length(files))}{?s} in {dirname}"
   )
 
   # Source each script with progress bar and message
-  item_ids <- tot$id[good_item_ids]
-  for (i in item_ids) {
-    script <- tot$name[i]
-    id <- tot$id[i]
-    cli::cli_progress_step(
-      "Generating {type} {.val {id}}: {.emph {script}}"
-    )
+  for (f in files) {
+    script <- f |>
+      fs::path_file() |>
+      fs::path_ext_remove()
+    cli::cli_progress_step("Generating {type} {.strong {script}}")
     withr::with_options(
       list(save.print = FALSE, export.print = FALSE),
       source(fs::path("R", paste0(type, "s"), script, ext = "R"))
     )
+    Sys.sleep(runif(1))
+    cli::cli_progress_done()
   }
-  cli::cli_progress_done()
+}
+
+compare_files <- function(type, files, tot_files) {
+  dir_name <- fs::path("R", paste0(type, "s"))
+  # Compare
+  only_in_dir <- setdiff(files, tot_files)
+  only_in_tot <- setdiff(tot_files, files)
+  if (length(only_in_dir) > 0) {
+    f <- cli::cli_vec(
+      only_in_dir,
+      list("vec-trunc" = 3, "vec-trunc-style" = "head")
+    )
+    cli::cli_alert_warning(
+      "Found {length(f)} file{?s} in {dir_name} but not in the ToT: {f}"
+    )
+  }
+  if (length(only_in_tot) > 0) {
+    f <- cli::cli_vec(
+      only_in_tot,
+      list("vec-trunc" = 3, "vec-trunc-style" = "head")
+    )
+    cli::cli_alert_warning(
+      "Found {length(f)} file{?s} in the ToT but not in {dir_name}: {f}"
+    )
+  }
 }
