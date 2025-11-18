@@ -97,7 +97,7 @@ run_all <- function(dir, skip = NULL) {
 compare_with_tot <- function(dir, files) {
   # List all files in the ToT
   tot <- load_tot()
-  tot_files <- tot$name[tot$type == dir] |>
+  tot_files <- tot$name[tot$type == sub("s$", "", dir)] |>
     fs::path(ext = "R")
   # Remove parent path from the file names
   r_files <- files |>
