@@ -4,24 +4,52 @@
 \alias{run_all}
 \alias{run_all_figures}
 \alias{run_all_tables}
-\title{Run All R Scripts in ToT}
+\title{Run All R Scripts}
 \usage{
+run_all(dir, skip = NULL)
+
 run_all_figures(skip = NULL)
 
 run_all_tables(skip = NULL)
 }
 \arguments{
-\item{skip}{Optional vector of non-negative integers corresponding to the
-\code{id} column in the ToT. Any scripts with these IDs will be skipped.}
+\item{dir}{Character. The directory to run the scripts from. Must be an
+existing directory in the \code{R} folder of the project. For example,
+\code{"figures"} will run all scripts in \code{R/figures}.}
+
+\item{skip}{Optional integer. Number of scripts to skip from the start.
+Default is \code{NULL} meaning all scripts are run.}
 }
 \description{
-Run all R scripts listed in the Table of Tables (ToT) for a
-specified type (figure or table).
+Run all R scripts in a directory in the \code{R} folder.
+
+The functions \code{run_all_figures()} and \code{run_all_tables()} are wrappers
+around the more general \code{run_all()} function to run all R scripts in the
+\code{R/figures} or \code{R/tables} directories, respectively.
+
+For these two cases, the function checks for discrepancies between the files
+in the directory and the table of tables (ToT) before running the scripts
+and throws a warning if any are found.
+}
+\details{
+All R scripts are found by matching \verb{*.R} in the respective
+directory. Therefore, any file ending in \code{.r} (techically valid but not
+recommended) will be ignored.
 }
 \section{Functions}{
 \itemize{
-\item \code{run_all_figures()}: run all scripts of type "figure"
+\item \code{run_all_figures()}: run all R scripts in \code{R/figures}
 
-\item \code{run_all_tables()}: run all scripts of type "table"
+\item \code{run_all_tables()}: run all R scripts in \code{R/tables}
 
 }}
+\examples{
+\dontrun{
+run_all("figures")
+run_all_figures() # equivalent to previous
+run_all("data")
+run_all("directory-that-does-not-exist") # throws an error
+run_all_tables(skip = 3) # starts from the 4th script
+}
+
+}
