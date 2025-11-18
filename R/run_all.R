@@ -6,13 +6,13 @@
 #'   around the more general `run_all()` function to run all R scripts in the
 #'   `R/figures` or `R/tables` directories, respectively.
 #'
-#'   For these two case, the function checks for discrepancies between the files
+#'   For these two cases, the function checks for discrepancies between the files
 #'   in the directory and the table of tables (ToT) before running the scripts
 #'   and throws a warning if any are found.
 #'
 #' @param dir Character. The directory to run the scripts from. Must be an
 #'   existing directory in the `R` folder of the project. For example,
-#'   `"figure"` will run all scripts in `R/figures`.
+#'   `"figures"` will run all scripts in `R/figures`.
 #' @param skip Optional integer. Number of scripts to skip from the start.
 #'   Default is `NULL` meaning all scripts are run.
 #'
@@ -42,7 +42,7 @@ run_all <- function(dir, skip = NULL) {
   }
   # Check that skip is a non-negative integer if non-NULL
   if (!is.null(skip)) {
-    if (!is.numeric(skip) || skip < 0 || !rlang::is_integerish(skip)) {
+    if (!is.numeric(skip) || skip <= 0 || !rlang::is_integerish(skip)) {
       cli::cli_abort(
         "{.arg skip} must be a positive integer.",
         call = rlang::caller_env()
@@ -58,7 +58,7 @@ run_all <- function(dir, skip = NULL) {
   )
   n_files <- length(files)
   # If the directory is `figures` or `tables`, compare with the TOT
-  if (dir %in% c("figure", "table")) {
+  if (dir %in% c("figures", "tables")) {
     compare_with_tot(dir, files)
   }
   # Printed message
@@ -97,7 +97,7 @@ run_all <- function(dir, skip = NULL) {
 compare_with_tot <- function(dir, files) {
   # List all files in the ToT
   tot <- load_tot()
-  tot_files <- tot$name[tot$dir == dir] |>
+  tot_files <- tot$name[tot$type == dir] |>
     fs::path(ext = "R")
   # Remove parent path from the file names
   r_files <- files |>
@@ -131,11 +131,11 @@ compare_with_tot <- function(dir, files) {
 #' @describeIn run_all run all R scripts in `R/figures`
 #' @export
 run_all_figures <- function(skip = NULL) {
-  run_all_programs("figures", skip)
+  run_all("figures", skip)
 }
 
 #' @describeIn run_all run all R scripts in `R/tables`
 #' @export
 run_all_tables <- function(skip = NULL) {
-  run_all_programs("tables", skip)
+  run_all("tables", skip)
 }

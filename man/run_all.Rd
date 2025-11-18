@@ -15,7 +15,7 @@ run_all_tables(skip = NULL)
 \arguments{
 \item{dir}{Character. The directory to run the scripts from. Must be an
 existing directory in the \code{R} folder of the project. For example,
-\code{"figure"} will run all scripts in \code{R/figures}.}
+\code{"figures"} will run all scripts in \code{R/figures}.}
 
 \item{skip}{Optional integer. Number of scripts to skip from the start.
 Default is \code{NULL} meaning all scripts are run.}
@@ -27,7 +27,7 @@ The functions \code{run_all_figures()} and \code{run_all_tables()} are wrappers
 around the more general \code{run_all()} function to run all R scripts in the
 \code{R/figures} or \code{R/tables} directories, respectively.
 
-For these two case, the function checks for discrepancies between the files
+For these two cases, the function checks for discrepancies between the files
 in the directory and the table of tables (ToT) before running the scripts
 and throws a warning if any are found.
 }
@@ -49,6 +49,7 @@ run_all("figures")
 run_all_figures() # equivalent to previous
 run_all("data")
 run_all("directory-that-does-not-exist") # throws an error
+run_all_tables(skip = 3) # starts from the 4th script
 }
 
 }
