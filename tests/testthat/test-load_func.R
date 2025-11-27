@@ -1,3 +1,22 @@
+test_that("Error when no directory", {
+  tmp <- local_create_project()
+  fs::dir_delete(fs::path(tmp, "R/functions"))
+  # Check if error when R/functions does not exist
+  expect_error(
+    load_all_functions(),
+    "does not exist"
+  )
+})
+
+test_that("Warning when no functions in directory", {
+  tmp <- local_create_project()
+  # Check if error when R/functions does not exist
+  expect_message(
+    load_all_functions(),
+    "No function files found"
+  )
+})
+
 test_that("All functions are loaded", {
   tmp <- local_create_project()
   # Create two functions
@@ -9,6 +28,7 @@ test_that("All functions are loaded", {
   expect_true(exists("a", mode = "function"))
   expect_true(exists("b", mode = "function"))
 })
+
 
 test_that("Only a single function is loaded", {
   tmp <- local_create_project()

@@ -22,8 +22,21 @@ NULL
 #' @export
 load_all_functions <- function() {
   fn_dir <- usethis::proj_path("R/functions")
+  # Check that dir exists
+  if (!fs::dir_exists(fn_dir)) {
+    cli::cli_abort(
+      "Directory {.path {fs::path_rel(fn_dir)}} does not exist."
+    )
+  }
   # List all functions (*.R files) in `R/functions`
   fn_files <- fs::dir_ls(fn_dir, glob = "*.R")
+  # Exit early if directory is empty
+  if (length(fn_files) == 0) {
+    cli::cli_alert_warning(
+      "No function files found in {.path {fs::path_rel(fn_dir)}}."
+    )
+    return(invisible())
+  }
   # Source each function file
   purrr::walk(fn_files, source)
 }
