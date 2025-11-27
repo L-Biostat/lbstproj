@@ -15,7 +15,7 @@ local_create_project <- function(dir = tempdir(), env = parent.frame()) {
     quiet = TRUE
   )
   # Defer the deletion of the new project directory at the end of the parent call
-  withr::defer(fs::dir_delete(dir), envir = env) # -A
+  withr::defer(fs::dir_delete(dir), envir = env)
 
   # Defer the restoration of the old project at the end of the parent call
   withr::defer(
