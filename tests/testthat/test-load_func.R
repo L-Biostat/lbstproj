@@ -45,7 +45,7 @@ test_that("Only a single function is loaded", {
 
 test_that("Absolute file paths fail", {
   tmp <- local_create_project()
-  # Create one functions
+  # Create one function
   writeLines("a <- function() {}", fs::path(tmp, "R/functions/a.R"))
   # Check if error when loading with absolute path
   expect_error(
@@ -57,7 +57,7 @@ test_that("Wrong file paths fail", {
   tmp <- local_create_project()
   # Create two functions
   writeLines("a <- function() {}", fs::path(tmp, "R/functions/a.R"))
-  # Check if error when loading with absolute path
+  # Check if error when loading a non-existent file
   expect_error(
     load_function("c.R"),
     "does not exist"

@@ -18,7 +18,7 @@
 #' @name load_func
 NULL
 
-#' @describeIn load_func Load all functions files.
+#' @describeIn load_func Load all function files.
 #' @export
 load_all_functions <- function() {
   fn_dir <- usethis::proj_path("R/functions")

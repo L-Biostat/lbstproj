@@ -95,7 +95,6 @@ create_project <- function(
     readline(prompt = "Enter the client's department (if applicable): ")
 
   # Set the given path as the active project, and create RStudio project
-  # fs::file_create(path, ".here")
   if (!quiet) {
     usethis::proj_set(path, force = TRUE) # Forcing is needed for a new project
     usethis::use_rstudio(line_ending = "windows", reformat = TRUE)
