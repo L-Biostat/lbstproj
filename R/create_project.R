@@ -25,6 +25,7 @@
 #' ├── R
 #' │   ├── data
 #' │   ├── figures
+#' │   ├── functions
 #' │   └── tables
 #' └── report
 #'     └── utils
@@ -94,8 +95,15 @@ create_project <- function(
     readline(prompt = "Enter the client's department (if applicable): ")
 
   # Set the given path as the active project, and create RStudio project
-  usethis::proj_set(path, force = TRUE) # Forcing is needed for a new project
-  usethis::use_rstudio()
+  if (!quiet) {
+    usethis::proj_set(path, force = TRUE) # Forcing is needed for a new project
+    usethis::use_rstudio(line_ending = "windows", reformat = TRUE)
+  } else {
+    usethis::ui_silence({
+      usethis::proj_set(path, force = TRUE) # Forcing is needed for a new project
+      usethis::use_rstudio(line_ending = "windows", reformat = TRUE)
+    })
+  }
 
   # Create the project structure
   create_structure(quiet = quiet)
@@ -151,6 +159,7 @@ create_structure <- function(quiet = FALSE) {
     "results/reports",
     "R/data",
     "R/figures",
+    "R/functions",
     "R/tables",
     "report/utils"
   )
