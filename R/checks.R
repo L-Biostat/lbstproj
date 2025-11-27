@@ -27,17 +27,13 @@ check_name <- function(name) {
   if (!rlang::is_character(name)) {
     cli::cli_abort("{.arg name} must be a character string.")
   }
-  new_name <- gsub("[^a-zA-Z0-9_]+", "_", name)
-  if (new_name != name) {
-    cli::cli_warn(
-      c(
-        "!" = "The name {.val {name}} has been sanitized to {.val {new_name}}.",
-        "i" = paste(
-          "Only alphanumeric characters and underscores are allowed.",
-          "Change the name to remove this error."
-        )
+  if (!grepl("^[A-Za-z][A-Za-z0-9_]*$", name)) {
+    cli::cli_abort(
+      paste(
+        "{.arg name} must start with a letter and contain only letters,",
+        "numbers or underscores."
       )
     )
   }
-  return(new_name)
+  return(invisible(name))
 }

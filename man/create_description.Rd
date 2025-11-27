@@ -4,35 +4,13 @@
 \alias{create_description}
 \title{Create a DESCRIPTION file for the project}
 \usage{
-create_description(
-  path,
-  title,
-  client,
-  department,
-  author,
-  version,
-  quiet = FALSE
-)
-}
-\arguments{
-\item{path}{Path where the project should be created (default is current
-directory).}
-
-\item{title}{Title of the project.}
-
-\item{client}{Name of the client.}
-
-\item{department}{Department code or name.}
-
-\item{author}{Author name (first and last).}
-
-\item{version}{Project version (default is \verb{1.0.0}).}
+create_description(title, client, department, author, version, quiet = FALSE)
 }
 \description{
-Create a DESCRIPTION file for the project
-}
-\details{
-This function does not check arguments for validity. It assumes
-that they are checked in the \code{create_project()} function.
+\code{create_description()} creates a \code{DESCRIPTION} file in the project, using the
+project root directory as "package name" and adding the fields: Title,
+Author, Client, and Department. The function does not check arguments for
+validity. It assumes that they are checked in the \code{create_project()}
+function.
 }
 \keyword{internal}

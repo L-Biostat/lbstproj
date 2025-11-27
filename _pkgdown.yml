@@ -5,10 +5,10 @@ reference:
 - title: General
 - contents:
   - create_project
-- title: Using R
-  desc:  Generate an empty R script.
+- title: Creating R scripts
+  desc:  Generate a R script based on a template.
 - contents:
-  - starts_with("use_")
+  - starts_with("create_")
 - title: Saving
   desc: Save tables and figures as R objects.
 - contents:

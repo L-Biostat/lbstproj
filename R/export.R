@@ -12,7 +12,7 @@
 #'   png/jpeg/tiff/bmp; Vector: pdf/svg.)
 #' @param width,height Plot dimensions passed to [ggplot2::ggsave()] (in inches
 #'   by default; you can pass `units = "cm"` or `units = "mm"` via `...`).
-#' @inheritParams use_scripts
+#' @inheritParams create_scripts
 #' @param print Whether to print (default: `TRUE`) a success message to the
 #'   console. You can set a default print behavior for all functions in this
 #'   family by setting the global option `export.print` to `TRUE` or `FALSE`.
@@ -88,7 +88,7 @@ export_figure <- function(
 #' @param name Name used to save the table (without file extension).
 #' @param ext Output format/extension. One of `"docx"`, `"pdf"`, `"html"`,
 #'   `"rtf"`.
-#' @inheritParams use_scripts
+#' @inheritParams create_scripts
 #' @param print Whether to print (default: `TRUE`) a success message to the
 #'   console. You can set a default print behavior for all functions in this
 #'   family by setting the global option `export.print` to `TRUE` or `FALSE`.

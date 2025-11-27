@@ -11,7 +11,9 @@ create_project(
   department = NULL,
   author = NULL,
   version = "1.0.0",
-  open = rlang::is_interactive()
+  open = rlang::is_interactive(),
+  force = FALSE,
+  quiet = FALSE
 )
 }
 \arguments{
@@ -30,6 +32,12 @@ directory).}
 
 \item{open}{If \code{TRUE}, opens the new project in RStudio (default is \code{TRUE} if
 in interactive session).}
+
+\item{force}{If \code{TRUE}, skips the confirmation prompt before creating the
+project (default is \code{FALSE}).}
+
+\item{quiet}{If \code{TRUE}, suppresses informational messages during project
+creation (default is \code{FALSE}).}
 }
 \value{
 Invisibly returns the active project path.
@@ -54,7 +62,8 @@ The following directory structure is created inside the project:
 │   └── meetings
 ├── results
 │   ├── figures
-│   └── tables
+│   ├── tables
+│   └── reports
 ├── R
 │   ├── data
 │   ├── figures

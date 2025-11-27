@@ -31,8 +31,8 @@ create_programs <- function() {
     .x = tot$name[fig_items],
     .y = tot$id[fig_items],
     .f = ~ withr::with_options(
-      list(use.print = TRUE),
-      use_figure(
+      list(use.print = FALSE),
+      create_figure(
         name = .x,
         id = .y,
         overwrite = FALSE,
@@ -63,8 +63,8 @@ create_programs <- function() {
     .x = tot$name[tab_items],
     .y = tot$id[tab_items],
     .f = ~ withr::with_options(
-      list(use.print = TRUE),
-      use_table(
+      list(use.print = FALSE),
+      create_table(
         name = .x,
         id = .y,
         overwrite = FALSE,

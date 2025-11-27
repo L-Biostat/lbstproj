@@ -7,7 +7,7 @@
 #' @param object The object to save (figure/table/data). Any R object supported
 #'   by [base::saveRDS()].
 #' @param name Name used to save the object (without file extension).
-#' @inheritParams use_scripts
+#' @inheritParams create_scripts
 #' @param print Whether to print (default: `TRUE`) a success message to the
 #'   console. You can set a default print behavior for all functions in this
 #'   family by setting the global option `save.print` to `TRUE` or `FALSE`.

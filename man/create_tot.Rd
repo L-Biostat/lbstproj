@@ -4,15 +4,15 @@
 \alias{create_tot}
 \title{Create a Empty Table of Tables (TOT) Excel file in the project}
 \usage{
-create_tot(path, quiet = FALSE, overwrite = FALSE)
-}
-\arguments{
-\item{overwrite}{Whether to overwrite an existing file with the same name.
-Defaults to \code{FALSE}.}
+create_tot(quiet = FALSE)
 }
 \description{
-This function copies a template TOT Excel file from the \code{lbstproj} package
+\code{create_tot()} copies a template TOT Excel file from the \code{lbstproj} package
 to the \verb{data/tot/} directory of your project. The example TOT file contains
 an example row for guidance. It should be deleted before use.
+}
+\details{
+If a "data/tot/" directory does not exist, it will be created.
+If a TOT file already exists in the target directory, it will be overwritten.
 }
 \keyword{internal}
