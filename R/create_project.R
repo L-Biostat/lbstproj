@@ -204,7 +204,7 @@ create_description <- function(
   d$set_authors(author)
   d$write(file = desc_path)
   if (!quiet) {
-    cli::cli_alert_info("Writing {.file DESCRIPTION} file")
+    cli::cli_alert_success("Writing {.file DESCRIPTION}")
   }
 }
 
@@ -240,10 +240,10 @@ create_tot <- function(quiet = FALSE) {
 
   # Inform the user
   if (!quiet) {
-    cli::cli_alert_info(
+    cli::cli_alert_success(
       paste(
-        "Writing {.file {fs::path_file(tot_example_path)}} file",
-        "to {.path {fs::path_rel(tot_dir)}}"
+        "Writing {.file {fs::path_file(tot_example_path)}}",
+        "to {.path {fs::path_rel(tot_dir, start = proj_path())}}"
       )
     )
   }
