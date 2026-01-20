@@ -21,7 +21,7 @@ directory.
 }
 \section{Functions}{
 \itemize{
-\item \code{load_all_functions()}: Load all functions files.
+\item \code{load_all_functions()}: Load all function files.
 
 \item \code{load_function()}: Load a single function file.
 

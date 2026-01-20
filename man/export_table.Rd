@@ -27,9 +27,6 @@ object.}
 console. You can set a default print behavior for all functions in this
 family by setting the global option \code{export.print} to \code{TRUE} or \code{FALSE}.}
 
-\item{overwrite}{Whether to overwrite an existing file with the same name.
-Defaults to \code{FALSE}.}
-
 \item{landscape}{Logical; for \code{flextable} exports only, set page orientation
 to landscape. Ignored for \code{gt} tables.}
 
