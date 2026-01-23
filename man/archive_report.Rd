@@ -13,8 +13,8 @@ archive_report(file = "report.html", overwrite = FALSE)
 Defaults to \code{FALSE}, so an error is raised if the archive file already exists.}
 }
 \description{
-Moves a rendered report from the \verb{report/} directory to the \verb{results/reports/} and
-renames it to include the current date and project version. This function is
-typically used after rendering a report with \code{\link[=run_report]{run_report()}}, to save a copy of the
-rendered output.
+Moves a rendered report from the \verb{report/} directory to the
+\verb{results/reports/} directory and renames it to include the current date and
+project version. This function is typically used after rendering a report
+with \code{\link[=run_report]{run_report()}}, to save a copy of the rendered output.
 }

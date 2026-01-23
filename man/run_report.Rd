@@ -2,32 +2,36 @@
 % Please edit documentation in R/run_report.R
 \name{run_report}
 \alias{run_report}
-\title{Render a report}
+\title{Render a Rmd/qmd report}
 \usage{
 run_report(file = "report.qmd", ...)
 }
 \arguments{
-\item{file}{The name of the report file to render. Default is \code{"report.qmd"}, the
-default name created by \code{\link[=create_report]{create_report()}}.}
+\item{file}{The name of the report file to render. Default is \code{"report.qmd"}.
+If this file isn't found, the function looks for a file with the same name
+but with a \code{.Rmd} extension before throwing an error.}
 
-\item{...}{Additional arguments passed to the rendering function. For R Markdown
-files, these are passed to \code{\link[rmarkdown:render]{rmarkdown::render()}}. For Quarto files, these are
-passed to \code{\link[quarto:quarto_render]{quarto::quarto_render()}}.}
+\item{...}{Additional arguments passed to the rendering function. For R
+Markdown files, these are passed to \code{\link[rmarkdown:render]{rmarkdown::render()}}. For Quarto
+files, these are passed to \code{\link[quarto:quarto_render]{quarto::quarto_render()}}.}
 }
 \description{
 Renders a report file located in the \verb{report/} directory. The report can be
 either an R Markdown (\code{.Rmd}) or Quarto (\code{.qmd}) file. The rendered output
-is saved in the same \verb{report/} directory.
+is saved in the same \verb{report/} directory under the same name (with a
+different extension).
 }
 \details{
-All report files are render to a file with the same name. If such a file already
-exists, it will be overwritten without warning. If you want to keep a copy of the
-rendered report, use the \code{\link[=archive_report]{archive_report()}} function after rendering to move it to
-the \verb{results/reports/} directory with a unique name.
+All report files are render to a file with the same name. If such a file
+already exists, it will be overwritten without warning. If you want to keep a
+copy of the rendered report, use the \code{\link[=archive_report]{archive_report()}} function after
+rendering to move it to the \verb{results/reports/} directory with a unique name.
 }
 \examples{
+\dontrun{
 # Default usage
 run_report()
 # Rendering a specific R Markdown file to pdf
 run_report(file = "pdf_report.Rmd", output_format = "pdf_document")
+}
 }
