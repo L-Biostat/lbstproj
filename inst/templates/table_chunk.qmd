@@ -1,0 +1,8 @@
+```{r tbl-{{id}} }
+#| label: "{{id}}"
+#| tbl-cap: "{{caption}}"
+#| tbl-pos: "H"
+
+tab <- readRDS(here("{{path}}"))
+tab
+```
