@@ -31,9 +31,6 @@ family by setting the global option \code{export.print} to \code{TRUE} or \code{
 \item{width, height}{Plot dimensions passed to \code{\link[ggplot2:ggsave]{ggplot2::ggsave()}} (in inches
 by default; you can pass \code{units = "cm"} or \code{units = "mm"} via \code{...}).}
 
-\item{overwrite}{Whether to overwrite an existing file with the same name.
-Defaults to \code{FALSE}.}
-
 \item{...}{Additional arguments forwarded to \code{\link[ggplot2:ggsave]{ggplot2::ggsave()}}
 (e.g., \code{dpi}, \code{units}, \code{bg}, \code{device}).}
 }

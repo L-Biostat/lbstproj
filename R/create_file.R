@@ -87,12 +87,14 @@ create_file <- function(type, name, open, print = NULL, ...) {
   file_path <- usethis::proj_path("R", dir, name, ext = "R")
   # If the file already exists skips the rest
   if (fs::file_exists(file_path)) {
-    cli::cli_alert_warning(
-      paste(
-        "File {.file {fs::path_rel(file_path, proj_get())}} already exists.",
-        "Skipping creation."
+    if (print) {
+      cli::cli_alert_warning(
+        paste(
+          "File {.file {fs::path_rel(file_path, proj_get())}} already exists.",
+          "Skipping creation."
+        )
       )
-    )
+    }
     return(invisible(NULL))
   } else {
     check_dir_exists(fs::path_dir(file_path))

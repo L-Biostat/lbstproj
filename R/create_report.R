@@ -1,13 +1,19 @@
-#'  Create a Rmd report based on the table of tables (TOT)
+#' Create a quarto report based on the table of tables (TOT)
+#'
+#' Creates a quarto report by using a html-report template and including all
+#' elements found in the TOT in the order they appear. All captions and labels
+#' are taken from the TOT, so any changes to those will be reflected in the
+#' report when it is rendered.
+#'
+#' The report is created in `report/report.qmd`. If a report already exists, it
+#' will be overwritten.
 #'
 #' @export
-create_report <- function(overwrite = TRUE) {
-  # Check if the report file already exists
-  check_file_absent("report/report.Rmd", overwrite = overwrite)
+create_report <- function() {
   # Load the report template
   template <- readLines(
     con = fs::path_package(
-      fs::path("templates", "report", ext = "Rmd"),
+      fs::path("templates", "report", ext = "qmd"),
       package = "lbstproj"
     )
   )
@@ -21,13 +27,11 @@ create_report <- function(overwrite = TRUE) {
   )
   # Render the template with the data
   report_basis <- whisker::whisker.render(template, template_data)
-
   # Load the table of tables (TOT)
   tot <- load_tot()
   # Create chunks for all figures and tables in the TOT
-  chunks <- purrr::map2(
+  chunks <- purrr::map(
     .x = tot$id,
-    .y = tot$type,
     .f = ~ create_chunk(
       id = .x,
       type = .y,
@@ -41,11 +45,11 @@ create_report <- function(overwrite = TRUE) {
   report <- c(report_basis, chunks)
   # Write the report to a file
   check_dir_exists("report")
-  fs::file_create("report/report.Rmd")
-  writeLines(report, con = "report/report.Rmd")
+  fs::file_create("report/report.qmd")
+  writeLines(report, con = "report/report.qmd")
   cli::cli_bullets(
     c(
-      "v" = "Writing report at {.path report/report.Rmd}.",
+      "v" = "Writing report at {.path report/report.qmd}.",
       "i" = "Use {.fn run_report} to render the report."
     )
   )

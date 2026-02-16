@@ -10,6 +10,13 @@
 
 This package provides functions to easily start a new statistical analysis project in R. It creates a standardized folder structure and files, to allow for easier collaboration and reproducible research. It also provides functions to easily load and preprocess data, generate and export figures and tables, and create reports in various formats.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://l-biostat.github.io/lbstproj/}
+}
+
+}
 \author{
 \strong{Maintainer}: Alexandre Bohyn \email{alexandre.bohyn@kuleuven.be} (\href{https://orcid.org/0000-0001-9776-7467}{ORCID})
 

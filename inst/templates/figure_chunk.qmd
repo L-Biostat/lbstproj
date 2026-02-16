@@ -1,0 +1,6 @@
+```{r fig-{{id}} }
+#| label: "{{id}}"
+#| fig-cap: "{{caption}}"
+
+knitr::include_graphics(here("{{path}}"))
+```

@@ -67,6 +67,7 @@ The following directory structure is created inside the project:
 ├── R
 │   ├── data
 │   ├── figures
+│   ├── functions
 │   └── tables
 └── report
     └── utils

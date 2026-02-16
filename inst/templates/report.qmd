@@ -1,0 +1,23 @@
+---
+title: "{{title}}"
+subtitle: "{{client}} ({{department}})"
+author: "{{author}}"
+date: "{{date}}"
+format:
+  html:
+    embed-resources: true
+    toc: true
+    toc-location: left-body
+    number-sections: true
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r pkg}
+library(here) # To generate relative file paths
+library(gt) # Needed to display gt tables in Word
+```
+
+{{<pagebreak>}}
