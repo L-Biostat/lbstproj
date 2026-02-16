@@ -1,28 +1,28 @@
-# Standardized way to create a Rmd code chunk to insert a figure or a table
+# Create a quarto code chunk from the TOT
 
-Standardized way to create a Rmd code chunk to insert a figure or a
-table
+Generate the quarto code chunk to include a figure or table in a report
+based on the information in the table of tables (TOT). The TOT-element
+is identified from its ID. The chunk includes the correct path to the
+element as well as the caption and a quarto-safe chunk label (starting
+with `tbl` for tables and `fig` for figures to allow for
+cross-referencing).
 
 ## Usage
 
 ``` r
-create_chunk(id, type, copy = TRUE, print = TRUE, pad = FALSE)
+create_chunk(id, copy = TRUE, print = TRUE, pad = FALSE)
 ```
 
 ## Arguments
 
 - id:
 
-  The id of the figure as specified in the table of tables (TOT)
-
-- type:
-
-  The type of the entry, either "figure" or "table"
+  The id of the element as specified in the table of tables (TOT)
 
 - copy:
 
   Logical, whether to copy the chunk to the clipboard (default: TRUE if
-  in interactive mode)
+  in interactive mode, FALSE otherwise)
 
 - print:
 
@@ -31,8 +31,8 @@ create_chunk(id, type, copy = TRUE, print = TRUE, pad = FALSE)
 - pad:
 
   Logical, whether to pad the chunk with blank lines before and after
-  and a pagebreak after (default: FALSE)
+  and add a page break after (default: FALSE)
 
 ## Value
 
-The rendered Rmd chunk as a character string, invisibly
+The rendered quarto chunk as a character string, invisibly

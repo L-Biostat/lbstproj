@@ -6,6 +6,12 @@ files, to allow for easier collaboration and reproducible research. It
 also provides functions to easily load and preprocess data, generate and
 export figures and tables, and create reports in various formats.
 
+## See also
+
+Useful links:
+
+- <https://l-biostat.github.io/lbstproj/>
+
 ## Author
 
 **Maintainer**: Alexandre Bohyn <alexandre.bohyn@kuleuven.be>

@@ -6,15 +6,15 @@ subfolder under `R/`: figures, tables, functions, and data.
 ## Usage
 
 ``` r
-create_figure(name, overwrite = FALSE, open = rlang::is_interactive(), ...)
+create_figure(name, open = rlang::is_interactive(), ...)
 
-create_table(name, overwrite = FALSE, open = rlang::is_interactive(), ...)
+create_table(name, open = rlang::is_interactive(), ...)
 
-create_function(name, overwrite = FALSE, open = rlang::is_interactive())
+create_function(name, open = rlang::is_interactive(), ...)
 
-create_data(name, overwrite = FALSE, open = rlang::is_interactive())
+create_data(name, open = rlang::is_interactive(), ...)
 
-create_model(name, overwrite = FALSE, open = rlang::is_interactive())
+create_model(name, open = rlang::is_interactive(), ...)
 ```
 
 ## Arguments
@@ -22,11 +22,6 @@ create_model(name, overwrite = FALSE, open = rlang::is_interactive())
 - name:
 
   Name of the script (without file extension).
-
-- overwrite:
-
-  Whether to overwrite an existing file with the same name. Defaults to
-  `FALSE`.
 
 - open:
 
@@ -72,7 +67,7 @@ tables).
 
 ``` r
 if (FALSE) { # \dontrun{
-create_figure("eda_hist01", overwrite = FALSE)
+create_figure("eda_hist01")
 create_table("summary_endpoints", open = FALSE)
 create_function("strings_utils")
 } # }

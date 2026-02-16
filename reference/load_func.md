@@ -21,7 +21,7 @@ load_function(name)
 
 ## Functions
 
-- `load_all_functions()`: Load all functions files.
+- `load_all_functions()`: Load all function files.
 
 - `load_function()`: Load a single function file.
 

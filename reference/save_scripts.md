@@ -26,11 +26,6 @@ save_table(object, name, overwrite = TRUE, print = NULL, ...)
 
   Name used to save the object (without file extension).
 
-- overwrite:
-
-  Whether to overwrite an existing file with the same name. Defaults to
-  `FALSE`.
-
 - print:
 
   Whether to print (default: `TRUE`) a success message to the console.

@@ -2,7 +2,7 @@ pandoc: 3.1.11
 pkgdown: 2.2.0
 pkgdown_sha: ~
 articles: {}
-last_built: 2026-01-12T15:19Z
+last_built: 2026-02-16T13:32Z
 urls:
   reference: https://l-biostat.github.io/lbstproj/reference
   article: https://l-biostat.github.io/lbstproj/articles

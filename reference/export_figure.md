@@ -46,11 +46,6 @@ export_figure(
   Plot dimensions passed to `ggplot2::ggsave()` (in inches by default;
   you can pass `units = "cm"` or `units = "mm"` via `...`).
 
-- overwrite:
-
-  Whether to overwrite an existing file with the same name. Defaults to
-  `FALSE`.
-
 - ...:
 
   Additional arguments forwarded to `ggplot2::ggsave()` (e.g., `dpi`,

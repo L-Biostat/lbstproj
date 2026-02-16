@@ -39,11 +39,6 @@ export_table(
   You can set a default print behavior for all functions in this family
   by setting the global option `export.print` to `TRUE` or `FALSE`.
 
-- overwrite:
-
-  Whether to overwrite an existing file with the same name. Defaults to
-  `FALSE`.
-
 - landscape:
 
   Logical; for `flextable` exports only, set page orientation to
