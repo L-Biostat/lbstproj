@@ -243,7 +243,7 @@ create_tot <- function(quiet = FALSE) {
     cli::cli_alert_success(
       paste(
         "Writing {.file {fs::path_file(tot_example_path)}}",
-        "to {.path {fs::path_rel(tot_dir, start = proj_path())}}"
+        "to {.path {fs::path_rel(tot_dir, start = usethis::proj_path())}}"
       )
     )
   }
