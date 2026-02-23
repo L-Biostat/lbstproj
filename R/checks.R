@@ -5,6 +5,9 @@
 #' directory already exists, the function silently ends.
 #'
 #' @param dir Character. The path of the directory to check/create.
+#' @param confirm Logical. If `TRUE`, prompts the user for confirmation before
+#'   creating the directory. If `FALSE`, creates the directory without
+#'   confirmation.
 #' @param print Logical. If `TRUE`, prints a message to the CLI about the
 #'   creation status of the directory. Defaults to the global option `use.print`
 #'   (which defaults to `TRUE`).
@@ -12,34 +15,49 @@
 #' @return Invisibly returns the relative path of the directory if it exists or
 #'
 #' @keywords internal
-ensure_dir_exists <- function(dir, print = getOption("use.print", TRUE)) {
+#' @importFrom usethis ui_yeah
+#' @importFrom rlang is_interactive
+ensure_dir_exists <- function(
+  dir,
+  confirm = TRUE,
+  print = getOption("use.print", TRUE)
+) {
   dir_rel_path <- proj_rel_path(dir)
+
   if (fs::dir_exists(dir)) {
     return(invisible(dir))
   }
-  if (!interactive()) {
-    cli::cli_abort(
-      "Directory {dir_rel_path} does not exist and session is non-interactive."
-    )
+
+  # Non-interactive sessions: never ask, never abort -> create silently
+  if (!is_interactive() || !isTRUE(confirm)) {
+    fs::dir_create(dir, recurse = TRUE)
+
+    if (isTRUE(print)) {
+      cli::cli_alert_success("Created directory {dir_rel_path}.")
+    }
+
+    return(invisible(dir_rel_path))
   }
-  ok <- usethis::ui_yeah(
+
+  # Interactive + confirm = TRUE: ask
+  ok <- ui_yeah(
     x = "Directory {dir_rel_path} does not exist. Create it?",
     yes = c("Yes"),
     no = c("No"),
     shuffle = FALSE
   )
+
   if (!isTRUE(ok)) {
-    if (isTRUE(print))
+    if (isTRUE(print)) {
       cli::cli_alert_warning("Aborted. Directory was not created.")
+    }
     return(invisible(NULL))
   }
 
   fs::dir_create(dir, recurse = TRUE)
 
   if (isTRUE(print)) {
-    cli::cli_alert_success(
-      "Created directory {dir_rel_path}."
-    )
+    cli::cli_alert_success("Created directory {dir_rel_path}.")
   }
 
   invisible(dir_rel_path)

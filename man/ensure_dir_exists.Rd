@@ -4,10 +4,14 @@
 \alias{ensure_dir_exists}
 \title{Ensure directory exists}
 \usage{
-ensure_dir_exists(dir, print = getOption("use.print", TRUE))
+ensure_dir_exists(dir, confirm = TRUE, print = getOption("use.print", TRUE))
 }
 \arguments{
 \item{dir}{Character. The path of the directory to check/create.}
+
+\item{confirm}{Logical. If \code{TRUE}, prompts the user for confirmation before
+creating the directory. If \code{FALSE}, creates the directory without
+confirmation.}
 
 \item{print}{Logical. If \code{TRUE}, prints a message to the CLI about the
 creation status of the directory. Defaults to the global option \code{use.print}
