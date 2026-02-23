@@ -25,7 +25,12 @@ data <- NULL # Load processed data here
 
 tab <- NULL # Replace NULL with your table code
 
+# Add caption to table ----------------------------------------------------
+
+tab_lbl <- tab |>
+  gt::tab_header(title = info$caption)
+
 # Save figure -------------------------------------------------------------
 
-lbstproj::save_table(tab, name = "{{name}}")
-lbstproj::export_table(tab, name = "{{name}}", ext = "docx")
+lbstproj::save_table(tab_lbl, name = "{{name}}")
+lbstproj::export_table(tab_lbl, name = "{{name}}", ext = "docx")
