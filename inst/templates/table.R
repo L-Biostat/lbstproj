@@ -21,11 +21,16 @@ library(gt)
 
 data <- NULL # Load processed data here
 
-# Generate figure ---------------------------------------------------------
+# Generate table ----------------------------------------------------------
 
 tab <- NULL # Replace NULL with your table code
 
-# Save figure -------------------------------------------------------------
+# Add caption to table ----------------------------------------------------
 
-lbstproj::save_table(tab, name = "{{name}}")
-lbstproj::export_table(tab, name = "{{name}}", ext = "docx")
+tab_lbl <- tab |>
+  gt::tab_header(title = info$caption)
+
+# Save and export table ---------------------------------------------------
+
+lbstproj::save_table(tab_lbl, name = "{{name}}")
+lbstproj::export_table(tab_lbl, name = "{{name}}", ext = "docx")
