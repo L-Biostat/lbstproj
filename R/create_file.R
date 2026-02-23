@@ -1,140 +1,110 @@
-#' Create a R script pre-filled with boilerplate code
+#' Create an R script from a template
 #'
-#' @description A family of helpers that write a minimal R script into a project
-#' subfolder under `R/`: figures, tables, functions, and data.
+#' Uses dedicated templates for `data`, `figure`, and `table`. Any other `type`
+#' uses the default template `file.R`.
 #'
-#' @param name Name of the script (without file extension).
-#' @param open Whether to open the new file in the editor. Defaults to `TRUE` if
-#'   in an interactive session (i.e. in RStudio and other IDEs).
-#' @param print Whether to print (default: `TRUE`) a success message to the
-#'   console. You can set a default print behavior for all functions in this
-#'   family by setting the global option `use.print` to `TRUE` or `FALSE`.
-#' @param ... Additional arguments passed to the template rendering function.
-#'   See details.
+#' Files are created under `R/<type>s/` (e.g. `R/figures/` for `type =
+#' "figure"`), except `type = "data"` which goes to `R/data/`, or `type =
+#' "analysis"` which goes to `R/analysis/`.
 #'
-#' @details These functions are called for their side effects: they create a new
-#' script, make parent directories if needed, and (optionally) open the file.
-#' They do not return a value.
+#' If the target directory does not exist, the user is asked to confirm its
+#' creation.
 #'
-#' When creating a new *table* or a new *figure* script, you can pass the additional
-#' argument `id`. It will be used to retrieve caption and label information from
-#' the table of tables of the project. This allow dynamic changes to captions
-#' and labels in a single place (i.e. the table of tables).
+#' @param type Character scalar. Used to choose both the subdirectory and the
+#'   template.
+#' @param name File name (with or without `.R`).
+#' @param open Logical. Open the file after creation.
+#' @param print Logical. Print informative messages about file creation.
+#'   Value taken from the global option `use.print` (which defaults to `TRUE`).
+#' @param ... Additional fields passed to the template renderer (whisker).
 #'
-#' @examples
-#' \dontrun{
-#' create_figure("eda_hist01")
-#' create_table("summary_endpoints", open = FALSE)
-#' create_function("strings_utils")
-#' }
-#' @md
-#' @name create_scripts
-NULL
-
-#' @describeIn create_scripts Create a figure script in `R/figures/`.
+#' @return Invisibly returns the created file path, or `NULL` if
+#'   skipped/aborted.
 #' @export
-create_figure <- function(name, open = rlang::is_interactive(), ...) {
-  create_file(
-    type = "figure",
-    name = name,
-    open = open,
-    ...
-  )
-}
-
-#' @describeIn create_scripts Create a table script in `R/tables/`.
-#' @export
-create_table <- function(name, open = rlang::is_interactive(), ...) {
-  create_file(type = "table", name = name, open = open, ...)
-}
-
-#' @describeIn create_scripts Create a function script in `R/functions/`.
-#' @export
-create_function <- function(name, open = rlang::is_interactive(), ...) {
-  create_file(type = "function", name = name, open = open, ...)
-}
-
-#' @describeIn create_scripts Create a data script in `R/data/`.
-#' @export
-create_data <- function(name, open = rlang::is_interactive(), ...) {
-  create_file(type = "data", name = name, open = open, ...)
-}
-
-#' @describeIn create_scripts Create a model script in `R/models/`.
-#' @export
-create_model <- function(name, open = rlang::is_interactive(), ...) {
-  create_file(type = "model", name = name, open = open, ...)
-}
-
-#' Internal function to create a R-script file from a template based on type
-#' @keywords internal
-create_file <- function(type, name, open, print = NULL, ...) {
-  # Check that type is valid
-  type <- rlang::arg_match(
-    type,
-    c("data", "figure", "table", "function", "model")
-  )
-  # Define print behavior
-  if (is.null(print)) {
-    # If global option is not set, defaults to TRUE
-    # This will print a success message after creating the file
-    print <- getOption("use.print", TRUE)
-  }
-  # Create file path
-  name <- gsub("\\.[rR]$", "", name)
+create_file <- function(
+  type,
+  name,
+  open = TRUE,
+  print = getOption("use.print", TRUE),
+  ...
+) {
+  # --- defaults ----------------------------------------------------------------
+  # Normalize inputs
+  type <- as.character(type)[1]
+  name <- gsub("\\.[rR]$", "", as.character(name)[1])
   check_name(name)
-  dir <- ifelse(type == "data", "data", paste0(type, "s"))
-  file_path <- usethis::proj_path("R", dir, name, ext = "R")
-  # If the file already exists skips the rest
+
+  # Subdirectory rule: figure -> figures, table -> tables, etc.
+  # Special-cases: data -> data; analysis -> analysis
+  subdir <- switch(
+    type,
+    data = "data",
+    analysis = "analysis",
+    paste0(type, "s")
+  )
+
+  dir_path <- usethis::proj_path("R", subdir)
+
+  # Ensure directory exists (asks user if needed)
+  dir_path <- ensure_dir_exists(dir_path, print = print)
+  if (is.null(dir_path)) return(invisible(NULL))
+
+  file_path <- fs::path(dir_path, fs::path_ext_set(name, "R"))
+  rel_file_path <- proj_rel_path(file_path)
+
+  # --- skip if file already exists --------------------------------------------
   if (fs::file_exists(file_path)) {
-    if (print) {
+    if (isTRUE(print)) {
       cli::cli_alert_warning(
-        paste(
-          "File {.file {fs::path_rel(file_path, proj_get())}} already exists.",
-          "Skipping creation."
-        )
+        "File {.file {rel_file_path}} already exists. Skipping creation."
       )
     }
     return(invisible(NULL))
-  } else {
-    check_dir_exists(fs::path_dir(file_path))
-    fs::file_create(file_path)
   }
-  # Fill the corresponding template with appropriate data
+
+  # --- choose template ---------------------------------------------------------
+  template_key <- if (type %in% c("data", "figure", "table")) type else "file"
   template_path <- fs::path_package(
     "lbstproj",
     "templates",
-    paste0(type, ".R")
+    paste0(template_key, ".R")
   )
-  template_file <- readLines(template_path)
+
+  if (!fs::file_exists(template_path)) {
+    cli::cli_abort("Template {.file {template_path}} not found.")
+  }
+
+  # --- render template ---------------------------------------------------------
+  template_file <- readLines(template_path, warn = FALSE)
+
   template_data <- c(
     list(
       name = name,
+      type = type,
       author = get_author(),
       date = format(Sys.Date(), "%d %b %Y")
     ),
-    rlang::list2()
+    rlang::list2(...)
   )
-  output_file <- whisker::whisker.render(
-    template_file,
-    template_data
-  )
+
+  output_file <- whisker::whisker.render(template_file, template_data)
   writeLines(output_file, con = file_path)
-  # Open the file if requested
-  if (open) {
+
+  # --- open in editor if requested --------------------------------------------
+  if (isTRUE(open)) {
     if (rstudioapi::isAvailable() && rstudioapi::hasFun("navigateToFile")) {
       rstudioapi::navigateToFile(file_path)
     } else {
       utils::file.edit(file_path)
     }
   }
-  # Inform the user
-  if (print) {
+
+  # --- user feedback -----------------------------------------------------------
+  if (isTRUE(print)) {
     cli::cli_alert_success(
-      paste(
-        "{stringr::str_to_title(type)} created at",
-        "{.file {fs::path_rel(file_path)}}"
-      )
+      "{stringr::str_to_title(type)} script created at {.file {rel_file_path}}"
     )
   }
+
+  invisible(file_path)
 }

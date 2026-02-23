@@ -7,21 +7,22 @@
 create_programs(dry_run = TRUE, print = TRUE)
 }
 \arguments{
-\item{dry_run}{Logical. If \code{TRUE}, no files are created and the function
-only reports what would be generated. Defaults to \code{TRUE}.}
+\item{dry_run}{Logical. If \code{TRUE}, no files are created and the function only
+reports what would be generated. Defaults to \code{TRUE}.}
 
 \item{print}{Logical. If \code{TRUE}, prints a report to the CLI about the
 synchronization status between TOT and disk, and about the new file
-created. Defaults to \code{TRUE}.}
+created. Value taken from the global option \code{use.print} (which defaults to
+\code{TRUE}).}
 }
 \value{
-Invisibly returns \code{NULL}. The function is called for its side
-effects (file creation and CLI reporting).
+Invisibly returns \code{NULL}. The function is called for its side effects
+(file creation and CLI reporting).
 }
 \description{
 This function loads the TOT and creates all the R scripts for figures and
-tables listed there in their respective directories in the \code{R} folder.
-Any existing scripts with the same names will NOT be overwritten.
+tables listed there in their respective directories in the \code{R} folder. Any
+existing scripts with the same names will NOT be overwritten.
 }
 \examples{
 \dontrun{

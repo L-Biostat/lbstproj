@@ -2,11 +2,34 @@
 % Please edit documentation in R/create_file.R
 \name{create_file}
 \alias{create_file}
-\title{Internal function to create a R-script file from a template based on type}
+\title{Create an R script from a template}
 \usage{
-create_file(type, name, open, print = NULL, ...)
+create_file(type, name, open = TRUE, print = getOption("use.print", TRUE), ...)
+}
+\arguments{
+\item{type}{Character scalar. Used to choose both the subdirectory and the
+template.}
+
+\item{name}{File name (with or without \code{.R}).}
+
+\item{open}{Logical. Open the file after creation.}
+
+\item{print}{Logical. Print informative messages about file creation.
+Value taken from the global option \code{use.print} (which defaults to \code{TRUE}).}
+
+\item{...}{Additional fields passed to the template renderer (whisker).}
+}
+\value{
+Invisibly returns the created file path, or \code{NULL} if
+skipped/aborted.
 }
 \description{
-Internal function to create a R-script file from a template based on type
+Uses dedicated templates for \code{data}, \code{figure}, and \code{table}. Any other \code{type}
+uses the default template \code{file.R}.
 }
-\keyword{internal}
+\details{
+Files are created under \verb{R/<type>s/} (e.g. \verb{R/figures/} for \code{type = "figure"}), except \code{type = "data"} which goes to \verb{R/data/}, or \code{type = "analysis"} which goes to \verb{R/analysis/}.
+
+If the target directory does not exist, the user is asked to confirm its
+creation.
+}

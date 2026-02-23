@@ -1,17 +1,18 @@
 #' Create all R scripts listed in the table of tables (TOT)
 #'
 #' This function loads the TOT and creates all the R scripts for figures and
-#' tables listed there in their respective directories in the `R` folder.
-#' Any existing scripts with the same names will NOT be overwritten.
+#' tables listed there in their respective directories in the `R` folder. Any
+#' existing scripts with the same names will NOT be overwritten.
 #'
-#' @param dry_run Logical. If `TRUE`, no files are created and the function
-#'   only reports what would be generated. Defaults to `TRUE`.
+#' @param dry_run Logical. If `TRUE`, no files are created and the function only
+#'   reports what would be generated. Defaults to `TRUE`.
 #' @param print Logical. If `TRUE`, prints a report to the CLI about the
 #'   synchronization status between TOT and disk, and about the new file
-#'   created. Defaults to `TRUE`.
+#'   created. Value taken from the global option `use.print` (which defaults to
+#'   `TRUE`).
 #'
-#' @return Invisibly returns `NULL`. The function is called for its side
-#'   effects (file creation and CLI reporting).
+#' @return Invisibly returns `NULL`. The function is called for its side effects
+#'   (file creation and CLI reporting).
 #'
 #' @examples
 #' \dontrun{
@@ -56,13 +57,11 @@ create_programs <- function(dry_run = TRUE, print = TRUE) {
   specs <- list(
     figures = list(
       tot_type = "figure",
-      dir = "R/figures",
-      creator = create_figure
+      dir = "R/figures"
     ),
     tables = list(
       tot_type = "table",
-      dir = "R/tables",
-      creator = create_table
+      dir = "R/tables"
     )
   )
 
@@ -101,14 +100,12 @@ create_programs <- function(dry_run = TRUE, print = TRUE) {
         .y = tot$id[items],
         # Always generate files with `use.print = FALSE` to avoid printing
         # messages from `create_figure()` and `create_table()`
-        .f = ~ withr::with_options(
-          list(use.print = FALSE),
-          s$creator(
-            name = .x,
-            id = .y,
-            overwrite = FALSE,
-            open = FALSE
-          )
+        .f = ~ create_file(
+          type = s$tot_type,
+          name = .x,
+          open = FALSE,
+          print = FALSE,
+          id = .y
         )
       )
     }
