@@ -1,75 +1,118 @@
 #' Create all R scripts listed in the table of tables (TOT)
 #'
 #' This function loads the TOT and creates all the R scripts for figures and
-#' tables listed there in their respective directories in the `R` folder. Any
-#' existing scripts with the same names will NOT be overwritten.
+#' tables listed there in their respective directories in the `R` folder.
+#' Any existing scripts with the same names will NOT be overwritten.
+#'
+#' @param dry_run Logical. If `TRUE`, no files are created and the function
+#'   only reports what would be generated. Defaults to `TRUE`.
+#' @param print Logical. If `TRUE`, prints a report to the CLI about the
+#'   synchronization status between TOT and disk, and about the new file
+#'   created. Defaults to `TRUE`.
+#'
+#' @return Invisibly returns `NULL`. The function is called for its side
+#'   effects (file creation and CLI reporting).
+#'
+#' @examples
+#' \dontrun{
+#' # Hypothetical project structure:
+#' # R/
+#' # ├── figures/
+#' # │   └── fig_01_flowchart.R
+#' # └── tables/
+#' #     └── tab_01_baseline.R
+#'
+#' # TOT contains:
+#' #   - fig_01_flowchart
+#' #   - fig_02_primary
+#' #   - tab_01_baseline
+#' #   - tab_02_primary
+#'
+#' # Dry run (no files created)
+#' create_programs()
+#'
+#' # Example CLI output:
+#' #
+#' # Figures
+#' # ℹ Figures: 2 in TOT, 1 on disk, 1 matched.
+#' # ℹ Figures: would generate 1 missing program (keeping 1 existing).
+#' # ℹ Figures: would create 1 program in R/figures.
+#' # • R/figures/fig_02_primary.R
+#' #
+#' # Tables
+#' # ℹ Tables: 2 in TOT, 1 on disk, 1 matched.
+#' # ℹ Tables: would generate 1 missing program (keeping 1 existing).
+#' # ℹ Tables: would create 1 program in R/tables.
+#' # • R/tables/tab_02_primary.R
+#'
+#' # Actual creation
+#' create_programs(dry_run = FALSE)
+#' }
 #'
 #' @export
-create_programs <- function() {
-  # Load the table of tables
+create_programs <- function(dry_run = TRUE, print = TRUE) {
   tot <- load_tot()
 
-  ## FIGURES
-  cli::cli_h2("Figures")
-  # List the figure-generating R scripts
-  fig_items <- tot$type == "figure"
-  # Find those already created
-  fig_created <- fs::dir_ls("R/figures") |>
-    fs::path_file() |>
-    fs::path_ext_remove() |>
-    intersect(tot$name[fig_items])
-  fig_to_create <- setdiff(tot$name[fig_items], fig_created)
-  cli::cli_bullets(
-    c(
-      "i" = "Found {sum(fig_items)} figure{?s} in the TOT",
-      "i" = "{length(fig_created)} already exist{?s} in {.path R/figures/}",
-      "i" = "Creating {length(fig_to_create)} new figure script{?s} in {.path R/figures/}"
-    )
-  )
-  # Create figure scripts
-  purrr::walk2(
-    .x = tot$name[fig_items],
-    .y = tot$id[fig_items],
-    .f = ~ withr::with_options(
-      list(use.print = FALSE),
-      create_figure(
-        name = .x,
-        id = .y,
-        overwrite = FALSE,
-        open = FALSE
-      )
+  specs <- list(
+    figures = list(
+      tot_type = "figure",
+      dir = "R/figures",
+      creator = create_figure
+    ),
+    tables = list(
+      tot_type = "table",
+      dir = "R/tables",
+      creator = create_table
     )
   )
 
-  ## TABLES
-  cli::cli_h2("Tables")
-  # List the table-generating R scripts
-  tab_items <- tot$type == "table"
-  # Find those already created
-  tab_created <- fs::dir_ls("R/tables") |>
-    fs::path_file() |>
-    fs::path_ext_remove() |>
-    intersect(tot$name[tab_items])
-  tab_to_create <- setdiff(tot$name[tab_items], tab_created)
-  cli::cli_bullets(
-    c(
-      "i" = "Found {sum(tab_items)} table{?s} in the TOT",
-      "i" = "{length(tab_created)} already exist{?s} in {.path R/tables/}",
-      "i" = "Creating {length(tab_to_create)} new table script{?s} in {.path R/tables/}"
-    )
-  )
-  # Create table scripts
-  purrr::walk2(
-    .x = tot$name[tab_items],
-    .y = tot$id[tab_items],
-    .f = ~ withr::with_options(
-      list(use.print = FALSE),
-      create_table(
-        name = .x,
-        id = .y,
-        overwrite = FALSE,
-        open = FALSE
+  for (type in names(specs)) {
+    s <- specs[[type]]
+
+    items <- tot$type == s$tot_type
+
+    disk <- character()
+    if (fs::dir_exists(s$dir)) {
+      disk <- fs::dir_ls(s$dir, type = "file", glob = "*.R")
+    }
+
+    expected <- fs::path(s$dir, tot$name[items], ext = "R")
+
+    created <- intersect(disk, expected)
+    to_create <- setdiff(expected, created)
+    extra <- setdiff(disk, expected)
+
+    if (print) {
+      cli_report_program(
+        type = type,
+        n_tot = sum(items),
+        n_disk = length(disk),
+        matched = fs::path_file(created),
+        new = fs::path_file(to_create),
+        extra = fs::path_file(extra),
+        dry_run = dry_run
       )
-    )
-  )
+    }
+
+    if (!dry_run) {
+      # Create scripts (won't overwrite)
+      purrr::walk2(
+        .x = tot$name[items],
+        .y = tot$id[items],
+        # Always generate files with `use.print = FALSE` to avoid printing
+        # messages from `create_figure()` and `create_table()`
+        .f = ~ withr::with_options(
+          list(use.print = FALSE),
+          s$creator(
+            name = .x,
+            id = .y,
+            overwrite = FALSE,
+            open = FALSE
+          )
+        )
+      )
+    }
+  }
+
+  invisible(NULL)
 }
