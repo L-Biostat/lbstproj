@@ -18,12 +18,13 @@
 local_lbstproj_project <- function(
   with_tot = FALSE,
   tot_data = NULL,
-  empty_dirs = TRUE,
-  rproj_name = "fakeproject.Rproj"
+  empty_dirs = TRUE
 ) {
   root <- fs::dir_create(fs::file_temp(pattern = "lbstproj-test-"))
+  # random project name
+  rproj_name <- paste0("fakeproject", round(runif(1) * 100), ".Rproj")
 
-  # Robust: always restore previous wd after the test finishes
+  # Always restore wd + cleanup even if the test fails
   withr::local_dir(root, .local_envir = parent.frame())
 
   # ---- Minimal project structure ----
@@ -96,6 +97,8 @@ local_lbstproj_project <- function(
       path = tot_path
     )
   }
+
+  usethis::local_project(root, .local_envir = parent.frame(), quiet = TRUE)
 
   invisible(root)
 }
