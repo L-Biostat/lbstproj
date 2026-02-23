@@ -33,3 +33,33 @@ Files are created under \verb{R/<type>s/} (e.g. \verb{R/figures/} for \code{type
 If the target directory does not exist, the user is asked to confirm its
 creation.
 }
+\examples{
+#' @examples
+\dontrun{
+# Hypothetical project layout:
+# .
+# └─ R/
+#    ├─ figures/
+#    └─ tables/
+
+# 1) Create a figure script in `R/figures/`
+create_file(type = "figure", name = "hr_by_age")
+# > ✓ Figure script created at R/figures/qrs_duration_by_sex.R
+
+# 2) Create a table script in `R/tables/`
+create_file(type = "table", name = "baseline_characteristics.R")
+# > ✓ Table script created at R/tables/baseline_characteristics.R
+
+# 3) Create an analysis script (uses default template) in R/analysis/
+#    If R/analysis does not exist, you will be prompted:
+create_file(type = "analysis", name = "primary_model")
+# > ? Directory R/analysis does not exist. Create it? [Y/n]:
+# > ✓ Created directory R/analysis.
+# > ✓ Analysis script created at R/analysis/primary_model.R
+
+# 4) Calling again does not overwrite
+create_file(type = "analysis", name = "primary_model")
+> ! File R/analysis/primary_model.R already exists. Skipping creation.
+}
+
+}
