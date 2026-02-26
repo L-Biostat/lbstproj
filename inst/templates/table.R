@@ -1,4 +1,4 @@
-#' Name         : {{name}}
+#' Name         : {{name}}.R
 #' Author       : {{author}}
 #' Date         : {{date}}
 #' Purpose      : description

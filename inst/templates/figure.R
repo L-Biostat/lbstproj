@@ -1,8 +1,9 @@
-#' Name         : {{name}}
+#' Name         : {{name}}.R
 #' Author       : {{author}}
 #' Date         : {{date}}
 #' Purpose      : description
-#' Files created: `results/figures/{{name}}.png/pdf`
+#' Files created:
+#'  - `results/figures/{{name}}.png/pdf`
 #' Edits        :
 #'  - {{date}}: Created file.
 
