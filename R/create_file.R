@@ -74,8 +74,8 @@ create_file <- function(
 
   dir_path <- usethis::proj_path("R", subdir)
 
-  # Ensure directory exists (asks user if needed)
-  dir_path <- ensure_dir_exists(dir_path, print = print)
+  # Ensure directory exists (create it if needed)
+  dir_path <- ensure_dir_exists(dir_path)
   if (is.null(dir_path)) return(invisible(NULL))
 
   file_path <- fs::path(dir_path, fs::path_ext_set(name, "R"))

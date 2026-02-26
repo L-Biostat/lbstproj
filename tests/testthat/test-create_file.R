@@ -46,7 +46,7 @@ test_that("Data files are created", {
 test_that("Analysis files are created", {
   local_lbstproj_project(with_tot = FALSE)
 
-  ensure_dir_exists("R/analysis", confirm = FALSE)
+  ensure_dir_exists("R/analysis")
 
   create_file(
     type = "analysis",
