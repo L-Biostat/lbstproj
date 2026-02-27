@@ -86,13 +86,17 @@ create_project <- function(
   }
 
   # Prompt user for project information, if not provided
-  title <- title %||% readline(prompt = "Enter the project name: ")
-  author <- author %||%
-    readline(prompt = "Enter the author's name (first and last): ")
+  cli::cli_text("Enter project information:")
+  cli::cli_alert_info(
+    "Default values are shown in [brackets]. Press {.key Enter} to accept the default."
+  )
+  title <- title %||% readline(prompt = "Project name: ")
+  author <- prompt_author(author)
+  email <- prompt_email(email)
   client <- client %||%
-    readline(prompt = "Enter the client's name (if applicable): ")
+    readline(prompt = "Client's name (if applicable): ")
   department <- department %||%
-    readline(prompt = "Enter the client's department (if applicable): ")
+    readline(prompt = "Client's department (if applicable): ")
 
   # Set the given path as the active project, and create RStudio project
   if (!quiet) {
@@ -112,6 +116,7 @@ create_project <- function(
   author_obj <- utils::person(
     given = stringr::str_split_1(author, "\\s+")[1],
     family = paste(stringr::str_split_1(author, "\\s+")[-1], collapse = " "),
+    email = email,
     role = c("aut", "cre")
   )
 
@@ -247,4 +252,40 @@ create_tot <- function(quiet = FALSE) {
       )
     )
   }
+}
+
+prompt_author <- function(author) {
+  if (!is.null(author)) {
+    return(author)
+  }
+  default_author <- Sys.getenv("LBSTPROJ_AUTHOR", unset = NA)
+  prompt <- "Author's name"
+  if (!is.na(default_author)) {
+    prompt <- paste0(prompt, " [", default_author, "]: ")
+    new_author <- readline(prompt = prompt)
+    if (nzchar(new_author)) {
+      return(new_author)
+    } else {
+      return(default_author)
+    }
+  }
+  readline(paste0(prompt, ": "))
+}
+
+prompt_email <- function(email) {
+  if (!is.null(email)) {
+    return(email)
+  }
+  default_email <- Sys.getenv("LBSTPROJ_EMAIL", unset = NA)
+  prompt <- "Author's email address"
+  if (!is.na(default_email)) {
+    prompt <- paste0(prompt, " [", default_email, "]: ")
+    new_email <- readline(prompt = prompt)
+    if (nzchar(new_email)) {
+      return(new_email)
+    } else {
+      return(default_email)
+    }
+  }
+  readline(paste0(prompt, ": "))
 }
