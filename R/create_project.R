@@ -17,7 +17,6 @@
 #' │   ├── tables
 #' │   └── tot
 #' ├── docs
-#' │   └── meetings
 #' ├── results
 #' │   ├── figures
 #' │   ├── tables
@@ -66,6 +65,7 @@ create_project <- function(
   client = NULL,
   department = NULL,
   author = NULL,
+  email = NULL,
   version = "1.0.0",
   open = rlang::is_interactive(),
   force = FALSE,
@@ -158,7 +158,7 @@ create_structure <- function(quiet = FALSE) {
     "data/tables",
     "data/figures",
     "data/tot",
-    "docs/meetings",
+    "docs",
     "results/figures",
     "results/tables",
     "results/reports",
@@ -169,6 +169,15 @@ create_structure <- function(quiet = FALSE) {
     "report/utils"
   )
   fs::dir_create(usethis::proj_path(dirs))
+  # Copy basic docs to the "docs/" folder
+  for (filename in c("costing.docx", "meeting_notes.docx")) {
+    if (!fs::file_exists(usethis::proj_path("docs", filename))) {
+      fs::file_copy(
+        path = fs::path_package("lbstproj", "extdata", filename),
+        new_path = usethis::proj_path("docs", filename)
+      )
+    }
+  }
   if (!quiet) {
     cli::cli_alert_success("Creating project structure")
   }
@@ -233,22 +242,22 @@ create_tot <- function(quiet = FALSE) {
   )
 
   # Check that the `data/tot/` directory exists; if not, create it
-  tot_dir <- usethis::proj_path("data/tot")
-  check_dir_exists(tot_dir)
+  tot_dir <- "data/tot"
+  fs::dir_create(usethis::proj_path(tot_dir))
 
   # Copy the example TOT file to the project
   fs::file_copy(
     path = tot_example_path,
-    new_path = tot_dir,
-    overwrite = TRUE
+    new_path = usethis::proj_path(tot_dir, "table_of_tables.xlsx"),
+    overwrite = FALSE
   )
 
   # Inform the user
   if (!quiet) {
     cli::cli_alert_success(
       paste(
-        "Writing {.file {fs::path_file(tot_example_path)}}",
-        "to {.path {fs::path_rel(tot_dir, start = usethis::proj_path())}}"
+        "Writing {.file table_of_tables.xlsx}",
+        "to {.path tot_dir}"
       )
     )
   }
