@@ -51,6 +51,40 @@ ensure_dir_exists <- function(path, create = TRUE) {
   invisible(path)
 }
 
+#' Ensure a file does not exist
+#'
+#' @description
+#' Verify if the path to a file exists and throws an error if it the case. This is used
+#' purely for validation purposes.
+#'
+#' @param file *Character*. File path. Must be relative to active project
+#'   and not absolute.
+#'
+#' @return Invisibly returns the normalized path to the file, relative to
+#'   the active project.
+#'
+#' @keywords internal
+ensure_file_does_not_exist <- function(file) {
+  # Ensure path is a string
+  check_string(file)
+  # Normalize path just in case
+  file <- fs::path_norm(file)
+  # Errors if the path is absolute
+  if (fs::is_absolute_path(file)) {
+    cli::cli_abort(
+      "Path must be relative to the active project, not absolute."
+    )
+  }
+  # Error if it exists
+  if (fs::file_exists(file)) {
+    cli::cli_abort(
+      "File {.path {file}} already exists and will not be overwritten."
+    )
+  }
+  # Invisible return of the file path
+  invisible(file)
+}
+
 #' Validate the name of a script
 #'
 #' Ensures that the name of a R script only contains valid characters (letters, numbers, underscores, and hyphens) and remove any potential extension.

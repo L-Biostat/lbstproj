@@ -2,36 +2,42 @@
 % Please edit documentation in R/create_file.R
 \name{create_file}
 \alias{create_file}
-\title{Create an R script from a template}
+\title{Create an R file from a template}
 \usage{
-create_file(type, name, open = TRUE, print = getOption("use.print", TRUE), ...)
+create_file(
+  type,
+  name,
+  open = TRUE,
+  quiet = getOption("lbstproj.quiet", FALSE),
+  ...
+)
 }
 \arguments{
-\item{type}{Character scalar. Used to choose both the subdirectory and the
+\item{type}{\emph{Character}. Used to choose both the subdirectory and the
 template.}
 
-\item{name}{File name (with or without \code{.R}).}
+\item{name}{\emph{Character}. File name (with or without \code{.R}).}
 
-\item{open}{Logical. Open the file after creation.}
+\item{open}{\emph{Logical}. Open the file after creation.}
 
-\item{print}{Logical. Print informative messages about file creation.
-Value taken from the global option \code{use.print} (which defaults to \code{TRUE}).}
+\item{quiet}{\emph{Logical}. If \code{TRUE}, suppress informational messages. Important
+messages (e.g. directory creation or errors) are still shown.
 
-\item{...}{Additional fields passed to the template renderer (whisker).}
+\emph{Default}: \code{TRUE} unless the global option \code{lbstproj.quiet} is set otherwise.}
+
+\item{...}{Additional fields passed as data to the file template.}
 }
 \value{
-Invisibly returns the created file path, or \code{NULL} if
-skipped/aborted.
+Invisibly returns the path of the file created.
 }
 \description{
-Uses dedicated templates for \code{data}, \code{figure}, and \code{table}. Any other \code{type}
-uses the default template \code{file.R}.
-}
-\details{
-Files are created under \verb{R/<type>s/} (e.g. \verb{R/figures/} for \code{type = "figure"}), except \code{type = "data"} which goes to \verb{R/data/}, or \code{type = "analysis"} which goes to \verb{R/analysis/}.
+Create a R file from a template. Dedicated templates are used
+for \code{type} \code{"data"}, \code{"figure"}, and \code{"table"}. Any other \code{type} uses the
+default template.
 
-If the target directory does not exist, the user is asked to confirm its
-creation.
+Files are created under \verb{R/<type>(s)/} (e.g. \verb{R/figures/} for \code{type = "figure"}), except \code{type = "data"} which goes to \verb{R/data/}, or \code{type = "analysis"} which goes to \verb{R/analysis/}.
+
+If the target directory does not exist, it will be created automatically.
 }
 \examples{
 #' @examples
@@ -42,24 +48,21 @@ creation.
 #    ├─ figures/
 #    └─ tables/
 
-# 1) Create a figure script in `R/figures/`
+# 1) Create a figure file in `R/figures/`
 create_file(type = "figure", name = "hr_by_age")
-# > ✓ Figure script created at R/figures/hr_by_age.R
+# > ✓ Figure file created at 'R/figures/hr_by_age.R'
 
-# 2) Create a table script in `R/tables/`
+# 2) Create a table file in `R/tables/`
 create_file(type = "table", name = "baseline_characteristics.R")
-# > ✓ Table script created at R/tables/baseline_characteristics.R
+# > ✓ Table file created at 'R/tables/baseline_characteristics.R'
 
-# 3) Create an analysis script (uses default template) in R/analysis/
-#    If `R/analysis` does not exist, you will be prompted:
-create_file(type = "analysis", name = "primary_model")
-# > ? Directory `R/analysis` does not exist. Create it? [Y/n]:
-# > ✓ Created directory R/analysis.
-# > ✓ Analysis script created at R/analysis/primary_model.R
+# 3) Create an analysis file (uses default template) in R/analysis/
+# > ℹ Created directory 'R/analysis'.
+# > ✓ Analysis file created at 'R/analysis/primary_model.R'.
 
 # 4) Calling again does not overwrite
 create_file(type = "analysis", name = "primary_model")
-# > ! File R/analysis/primary_model.R already exists. Skipping creation.
+# > ! File 'R/analysis/primary_model.R' already exists and will not be overwritten.
 }
 
 }

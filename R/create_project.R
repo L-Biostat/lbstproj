@@ -17,7 +17,6 @@
 #' │   ├── tables
 #' │   └── tot
 #' ├── docs
-#' │   └── meetings
 #' ├── results
 #' │   ├── figures
 #' │   ├── tables
@@ -66,6 +65,7 @@ create_project <- function(
   client = NULL,
   department = NULL,
   author = NULL,
+  email = NULL,
   version = "1.0.0",
   open = rlang::is_interactive(),
   force = FALSE,
@@ -86,13 +86,17 @@ create_project <- function(
   }
 
   # Prompt user for project information, if not provided
-  title <- title %||% readline(prompt = "Enter the project name: ")
-  author <- author %||%
-    readline(prompt = "Enter the author's name (first and last): ")
+  cli::cli_text("Enter project information:")
+  cli::cli_alert_info(
+    "Default values are shown in [brackets]. Press {.key Enter} to accept the default."
+  )
+  title <- title %||% readline(prompt = "Project name: ")
+  author <- prompt_author(author)
+  email <- prompt_email(email)
   client <- client %||%
-    readline(prompt = "Enter the client's name (if applicable): ")
+    readline(prompt = "Client's name (if applicable): ")
   department <- department %||%
-    readline(prompt = "Enter the client's department (if applicable): ")
+    readline(prompt = "Client's department (if applicable): ")
 
   # Set the given path as the active project, and create RStudio project
   if (!quiet) {
@@ -112,6 +116,7 @@ create_project <- function(
   author_obj <- utils::person(
     given = stringr::str_split_1(author, "\\s+")[1],
     family = paste(stringr::str_split_1(author, "\\s+")[-1], collapse = " "),
+    email = email,
     role = c("aut", "cre")
   )
 
@@ -153,7 +158,7 @@ create_structure <- function(quiet = FALSE) {
     "data/tables",
     "data/figures",
     "data/tot",
-    "docs/meetings",
+    "docs",
     "results/figures",
     "results/tables",
     "results/reports",
@@ -164,6 +169,15 @@ create_structure <- function(quiet = FALSE) {
     "report/utils"
   )
   fs::dir_create(usethis::proj_path(dirs))
+  # Copy basic docs to the "docs/" folder
+  for (filename in c("costing.docx", "meeting_notes.docx")) {
+    if (!fs::file_exists(usethis::proj_path("docs", filename))) {
+      fs::file_copy(
+        path = fs::path_package("lbstproj", "extdata", filename),
+        new_path = usethis::proj_path("docs", filename)
+      )
+    }
+  }
   if (!quiet) {
     cli::cli_alert_success("Creating project structure")
   }
@@ -228,23 +242,59 @@ create_tot <- function(quiet = FALSE) {
   )
 
   # Check that the `data/tot/` directory exists; if not, create it
-  tot_dir <- usethis::proj_path("data/tot")
-  check_dir_exists(tot_dir)
+  tot_dir <- "data/tot"
+  fs::dir_create(usethis::proj_path(tot_dir))
 
   # Copy the example TOT file to the project
   fs::file_copy(
     path = tot_example_path,
-    new_path = tot_dir,
-    overwrite = TRUE
+    new_path = usethis::proj_path(tot_dir, "table_of_tables.xlsx"),
+    overwrite = FALSE
   )
 
   # Inform the user
   if (!quiet) {
     cli::cli_alert_success(
       paste(
-        "Writing {.file {fs::path_file(tot_example_path)}}",
-        "to {.path {fs::path_rel(tot_dir, start = usethis::proj_path())}}"
+        "Writing {.file table_of_tables.xlsx}",
+        "to {.path tot_dir}"
       )
     )
   }
+}
+
+prompt_author <- function(author) {
+  if (!is.null(author)) {
+    return(author)
+  }
+  default_author <- Sys.getenv("LBSTPROJ_AUTHOR", unset = NA)
+  prompt <- "Author's name"
+  if (!is.na(default_author)) {
+    prompt <- paste0(prompt, " [", default_author, "]: ")
+    new_author <- readline(prompt = prompt)
+    if (nzchar(new_author)) {
+      return(new_author)
+    } else {
+      return(default_author)
+    }
+  }
+  readline(paste0(prompt, ": "))
+}
+
+prompt_email <- function(email) {
+  if (!is.null(email)) {
+    return(email)
+  }
+  default_email <- Sys.getenv("LBSTPROJ_EMAIL", unset = NA)
+  prompt <- "Author's email address"
+  if (!is.na(default_email)) {
+    prompt <- paste0(prompt, " [", default_email, "]: ")
+    new_email <- readline(prompt = prompt)
+    if (nzchar(new_email)) {
+      return(new_email)
+    } else {
+      return(default_email)
+    }
+  }
+  readline(paste0(prompt, ": "))
 }

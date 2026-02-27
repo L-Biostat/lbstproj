@@ -3,13 +3,11 @@
 # │  lbstproj  │
 # └────────────┘
 #
-# checks.R:
-# Quick checks for types or values
+# create_from_tot.R:
+# Create all files and directories from the table of contents (TOT) in the
+# project
 # -------------------------------------------------------------------------
 
-check_string <- function(x) {
-  arg <- deparse(substitute(x))
-  if (!rlang::is_string(x)) {
-    cli::cli_abort("{.arg {arg}} must be a single character string.")
-  }
-}
+#' Create all scripts listed in the Table of Tables (TOT)
+#'
+#'
