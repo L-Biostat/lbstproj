@@ -271,7 +271,7 @@ create_tot <- function(quiet = FALSE) {
     cli::cli_alert_success(
       paste(
         "Writing {.file table_of_tables.xlsx}",
-        "to {.path tot_dir}"
+        "to {.path {tot_dir}}"
       )
     )
   }
