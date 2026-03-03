@@ -37,6 +37,7 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
+<li class="nav-item"><a class="nav-link" href="articles/lbstproj.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
       </ul>
 <ul class="navbar-nav">
@@ -52,7 +53,8 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header">
-<img src="logo.png" class="logo" alt=""><h1 id="lbstproj-">lbstproj <a class="anchor" aria-label="anchor" href="#lbstproj-"></a>
+<img src="logo.png" class="logo" alt=""><h1 id="lbstproj-img-srcmanfigureslogopng-alignright-height120-alt-">lbstproj <code>&lt;img src="man/figures/logo.png" align="right" height="120" alt="" /&gt;</code>
+<a class="anchor" aria-label="anchor" href="#lbstproj-img-srcmanfigureslogopng-alignright-height120-alt-"></a>
 </h1>
 </div>
 <!-- badges: start -->
@@ -75,6 +77,40 @@
 <span><span class="co">## basic example code</span></span></code></pre></div>
 </div>
 </div>
+<div class="section level1">
+<h1 id="roadmap">Roadmap<a class="anchor" aria-label="anchor" href="#roadmap"></a>
+</h1>
+<p>Below is a list of all functions that need to be in the package, along with their status:</p>
+<ul class="task-list">
+<li><label><input type="checkbox" checked><code>create_project</code></label></li>
+<li>
+<label><input type="checkbox"><code>create_file(type, quiet)</code></label>
+<ul class="task-list">
+<li><label><input type="checkbox"><code>save_figure(quiet)</code></label></li>
+<li><label><input type="checkbox"><code>save_table(quiet, export)</code></label></li>
+</ul>
+</li>
+<li>
+<label><input type="checkbox"><code>create_from_tot</code></label>
+<ul class="task-list">
+<li><label><input type="checkbox"><code>import_tot</code></label></li>
+<li><label><input type="checkbox"><code>load_tot</code></label></li>
+<li><label><input type="checkbox"><code>get_info</code></label></li>
+<li><label><input type="checkbox"><code>get_caption_list</code></label></li>
+</ul>
+</li>
+<li><label><input type="checkbox"><code>run_all_files(type, glob)</code></label></li>
+<li>
+<label><input type="checkbox"><code>create_report(type = c("Rmd", "qmd"))</code></label>
+<ul class="task-list">
+<li><label><input type="checkbox"><code>create_code_chunk</code></label></li>
+</ul>
+</li>
+<li><label><input type="checkbox"><code>render_report</code></label></li>
+<li><label><input type="checkbox"><code>archive_report</code></label></li>
+</ul>
+</div>
+
   </main><aside class="col-md-3"><div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">

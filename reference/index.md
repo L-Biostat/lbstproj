@@ -8,6 +8,9 @@
 - [`create_chunk()`](https://l-biostat.github.io/lbstproj/reference/create_chunk.md)
   : Create a quarto code chunk from the TOT
 
+- [`create_file()`](https://l-biostat.github.io/lbstproj/reference/create_file.md)
+  : Create an R file from a template
+
 - [`create_programs()`](https://l-biostat.github.io/lbstproj/reference/create_programs.md)
   : Create all R scripts listed in the table of tables (TOT)
 
@@ -16,13 +19,6 @@
 
 - [`create_report()`](https://l-biostat.github.io/lbstproj/reference/create_report.md)
   : Create a quarto report based on the table of tables (TOT)
-
-- [`create_figure()`](https://l-biostat.github.io/lbstproj/reference/create_scripts.md)
-  [`create_table()`](https://l-biostat.github.io/lbstproj/reference/create_scripts.md)
-  [`create_function()`](https://l-biostat.github.io/lbstproj/reference/create_scripts.md)
-  [`create_data()`](https://l-biostat.github.io/lbstproj/reference/create_scripts.md)
-  [`create_model()`](https://l-biostat.github.io/lbstproj/reference/create_scripts.md)
-  : Create a R script pre-filled with boilerplate code
 
 - [`export_figure()`](https://l-biostat.github.io/lbstproj/reference/export_figure.md)
   :
@@ -35,7 +31,7 @@
   Export a table to `results/tables/`
 
 - [`get_info()`](https://l-biostat.github.io/lbstproj/reference/get_info.md)
-  : Get Information About an Item by ID
+  : Get information from the Table of Tables (TOT)
 
 - [`import_tot()`](https://l-biostat.github.io/lbstproj/reference/import_tot.md)
   : Import the Table of Tables (TOT)
@@ -62,6 +58,9 @@
 
 - [`run_report()`](https://l-biostat.github.io/lbstproj/reference/run_report.md)
   : Render a Rmd/qmd report
+
+- [`save_data()`](https://l-biostat.github.io/lbstproj/reference/save_data.md)
+  : Save a processed dataset to the project
 
 - [`save_report()`](https://l-biostat.github.io/lbstproj/reference/save_report.md)
   : Save a report file

@@ -16,6 +16,7 @@ create_project(
   client = NULL,
   department = NULL,
   author = NULL,
+  email = NULL,
   version = "1.0.0",
   open = rlang::is_interactive(),
   force = FALSE,
@@ -80,7 +81,6 @@ The following directory structure is created inside the project:
     │   ├── tables
     │   └── tot
     ├── docs
-    │   └── meetings
     ├── results
     │   ├── figures
     │   ├── tables

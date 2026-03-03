@@ -1,4 +1,4 @@
-# lbstproj
+# lbstproj `<img src="man/figures/logo.png" align="right" height="120" alt="" />`
 
 `lbstproj` provides tools to create, maintain, and use standardized R
 projects for the L-Biostat group.
@@ -22,6 +22,39 @@ library(lbstproj)
 ## basic example code
 ```
 
+# Roadmap
+
+Below is a list of all functions that need to be in the package, along
+with their status:
+
+`create_project`
+
+`create_file(type, quiet)`
+
+`save_figure(quiet)`
+
+`save_table(quiet, export)`
+
+`create_from_tot`
+
+`import_tot`
+
+`load_tot`
+
+`get_info`
+
+`get_caption_list`
+
+`run_all_files(type, glob)`
+
+`create_report(type = c("Rmd", "qmd"))`
+
+`create_code_chunk`
+
+`render_report`
+
+`archive_report`
+
 # Package index
 
 ## All functions
@@ -32,6 +65,9 @@ library(lbstproj)
 - [`create_chunk()`](https://l-biostat.github.io/lbstproj/reference/create_chunk.md)
   : Create a quarto code chunk from the TOT
 
+- [`create_file()`](https://l-biostat.github.io/lbstproj/reference/create_file.md)
+  : Create an R file from a template
+
 - [`create_programs()`](https://l-biostat.github.io/lbstproj/reference/create_programs.md)
   : Create all R scripts listed in the table of tables (TOT)
 
@@ -40,13 +76,6 @@ library(lbstproj)
 
 - [`create_report()`](https://l-biostat.github.io/lbstproj/reference/create_report.md)
   : Create a quarto report based on the table of tables (TOT)
-
-- [`create_figure()`](https://l-biostat.github.io/lbstproj/reference/create_scripts.md)
-  [`create_table()`](https://l-biostat.github.io/lbstproj/reference/create_scripts.md)
-  [`create_function()`](https://l-biostat.github.io/lbstproj/reference/create_scripts.md)
-  [`create_data()`](https://l-biostat.github.io/lbstproj/reference/create_scripts.md)
-  [`create_model()`](https://l-biostat.github.io/lbstproj/reference/create_scripts.md)
-  : Create a R script pre-filled with boilerplate code
 
 - [`export_figure()`](https://l-biostat.github.io/lbstproj/reference/export_figure.md)
   :
@@ -59,7 +88,7 @@ library(lbstproj)
   Export a table to `results/tables/`
 
 - [`get_info()`](https://l-biostat.github.io/lbstproj/reference/get_info.md)
-  : Get Information About an Item by ID
+  : Get information from the Table of Tables (TOT)
 
 - [`import_tot()`](https://l-biostat.github.io/lbstproj/reference/import_tot.md)
   : Import the Table of Tables (TOT)
@@ -87,6 +116,9 @@ library(lbstproj)
 - [`run_report()`](https://l-biostat.github.io/lbstproj/reference/run_report.md)
   : Render a Rmd/qmd report
 
+- [`save_data()`](https://l-biostat.github.io/lbstproj/reference/save_data.md)
+  : Save a processed dataset to the project
+
 - [`save_report()`](https://l-biostat.github.io/lbstproj/reference/save_report.md)
   : Save a report file
 
@@ -97,3 +129,8 @@ library(lbstproj)
 
   Save analysis objects as `.rds`
 
+# Articles
+
+### All vignettes
+
+- [lbstproj](https://l-biostat.github.io/lbstproj/articles/lbstproj.md):

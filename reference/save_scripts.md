@@ -8,7 +8,12 @@ writes to its designated output directory.
 ## Usage
 
 ``` r
-save_data(object, name, overwrite = TRUE, print = NULL, ...)
+save_data(
+  data,
+  name,
+  overwrite = TRUE,
+  quiet = getOption("lbstproj.quiet", FALSE)
+)
 
 save_figure(object, name, overwrite = TRUE, print = NULL, ...)
 
@@ -17,14 +22,14 @@ save_table(object, name, overwrite = TRUE, print = NULL, ...)
 
 ## Arguments
 
+- name:
+
+  Name used to save the object (without file extension).
+
 - object:
 
   The object to save (figure/table/data). Any R object supported by
   [`base::saveRDS()`](https://rdrr.io/r/base/readRDS.html).
-
-- name:
-
-  Name used to save the object (without file extension).
 
 - print:
 
@@ -45,7 +50,8 @@ value.
 
 ## Functions
 
-- `save_data()`: Save a data object to `data/processed/`.
+- [`save_data()`](https://l-biostat.github.io/lbstproj/reference/save_data.html):
+  Save a data object to `data/processed/`.
 
 - `save_figure()`: Save a figure to `data/figures/`.
 
