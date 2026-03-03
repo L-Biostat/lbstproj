@@ -32,7 +32,7 @@ Invisibly returns the path of the file created.
 }
 \description{
 Create a R file from a template. Dedicated templates are used
-for \code{type} \code{"data"}, \code{"figure"}, and \code{"table"}. Any other \code{type} uses the
+when \code{type} is \code{"data"}, \code{"figure"}, or \code{"table"}. Any other \code{type} uses the
 default template.
 
 Files are created under \verb{R/<type>(s)/} (e.g. \verb{R/figures/} for \code{type = "figure"}), except \code{type = "data"} which goes to \verb{R/data/}, or \code{type = "analysis"} which goes to \verb{R/analysis/}.
@@ -40,7 +40,6 @@ Files are created under \verb{R/<type>(s)/} (e.g. \verb{R/figures/} for \code{ty
 If the target directory does not exist, it will be created automatically.
 }
 \examples{
-#' @examples
 \dontrun{
 # Hypothetical project layout:
 # .

@@ -99,13 +99,12 @@ validate_file_name <- function(name) {
   check_string(name)
   # Remove any .r/.R extension if present
   name <- fs::path_ext_remove(name)
-  # Ensure only alphabetic characters, numbers, underscores, and hyphens
-  # are present
-  if (!grepl("^[a-zA-Z0-9_-]+$", name)) {
+  # Ensure only alphabetic characters, numbers, and hyphens are present
+  if (!grepl("^[a-zA-Z0-9-]+$", name)) {
     cli::cli_abort(
       c(
         "File name {.val {name}} is invalid.",
-        "i" = "Only letters, numbers, underscores, and hyphens are allowed."
+        "i" = "Only letters, numbers, and hyphens are allowed."
       )
     )
   }

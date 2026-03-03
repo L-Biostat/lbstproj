@@ -36,8 +36,9 @@ create_project(
 ```
 
 ```{r generate-data-file, echo=FALSE}
-data <- gtsummary::trial |> 
-  write.csv(fs::path(tmp_proj_dir, "data/raw", "trial.csv"))
+# data <- gtsummary::trial |>
+#   write.csv(fs::path(tmp_proj_dir, "data/raw", "trial.csv"))
+# IMPORT FROM CSV EXTDATA
 ```
 
 ```{r}
