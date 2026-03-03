@@ -7,17 +7,22 @@
 \alias{save_table}
 \title{Save analysis objects as \code{.rds}}
 \usage{
-save_data(object, name, overwrite = TRUE, print = NULL, ...)
+save_data(
+  data,
+  name,
+  overwrite = TRUE,
+  quiet = getOption("lbstproj.quiet", FALSE)
+)
 
 save_figure(object, name, overwrite = TRUE, print = NULL, ...)
 
 save_table(object, name, overwrite = TRUE, print = NULL, ...)
 }
 \arguments{
+\item{name}{Name used to save the object (without file extension).}
+
 \item{object}{The object to save (figure/table/data). Any R object supported
 by \code{\link[base:readRDS]{base::saveRDS()}}.}
-
-\item{name}{Name used to save the object (without file extension).}
 
 \item{print}{Whether to print (default: \code{TRUE}) a success message to the
 console. You can set a default print behavior for all functions in this

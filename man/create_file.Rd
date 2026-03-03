@@ -2,11 +2,66 @@
 % Please edit documentation in R/create_file.R
 \name{create_file}
 \alias{create_file}
-\title{Internal function to create a R-script file from a template based on type}
+\title{Create an R file from a template}
 \usage{
-create_file(type, name, open, print = NULL, ...)
+create_file(
+  type,
+  name,
+  open = TRUE,
+  quiet = getOption("lbstproj.quiet", FALSE),
+  ...
+)
+}
+\arguments{
+\item{type}{\emph{Character}. Used to choose both the subdirectory and the
+template.}
+
+\item{name}{\emph{Character}. File name (with or without \code{.R}).}
+
+\item{open}{\emph{Logical}. Open the file after creation.}
+
+\item{quiet}{\emph{Logical}. If \code{TRUE}, suppress informational messages. Important
+messages (e.g. directory creation or errors) are still shown.
+
+\emph{Default}: \code{TRUE} unless the global option \code{lbstproj.quiet} is set otherwise.}
+
+\item{...}{Additional fields passed as data to the file template.}
+}
+\value{
+Invisibly returns the path of the file created.
 }
 \description{
-Internal function to create a R-script file from a template based on type
+Create a R file from a template. Dedicated templates are used
+when \code{type} is \code{"data"}, \code{"figure"}, or \code{"table"}. Any other \code{type} uses the
+default template.
+
+Files are created under \verb{R/<type>(s)/} (e.g. \verb{R/figures/} for \code{type = "figure"}), except \code{type = "data"} which goes to \verb{R/data/}, or \code{type = "analysis"} which goes to \verb{R/analysis/}.
+
+If the target directory does not exist, it will be created automatically.
 }
-\keyword{internal}
+\examples{
+\dontrun{
+# Hypothetical project layout:
+# .
+# └─ R/
+#    ├─ figures/
+#    └─ tables/
+
+# 1) Create a figure file in `R/figures/`
+create_file(type = "figure", name = "hr_by_age")
+# > ✓ Figure file created at 'R/figures/hr_by_age.R'
+
+# 2) Create a table file in `R/tables/`
+create_file(type = "table", name = "baseline_characteristics.R")
+# > ✓ Table file created at 'R/tables/baseline_characteristics.R'
+
+# 3) Create an analysis file (uses default template) in R/analysis/
+# > ℹ Created directory 'R/analysis'.
+# > ✓ Analysis file created at 'R/analysis/primary_model.R'.
+
+# 4) Calling again does not overwrite
+create_file(type = "analysis", name = "primary_model")
+# > ! File 'R/analysis/primary_model.R' already exists and will not be overwritten.
+}
+
+}

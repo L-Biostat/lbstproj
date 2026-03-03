@@ -1,0 +1,47 @@
+---
+title: "lbstproj"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{lbstproj}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+# Define a temporary project folder and create it
+tmp_proj_dir <- fs::path(tempdir(), "mock-lbstproj")
+fs::dir_create(tmp_proj_dir)
+
+# Define it as the working directory for the vignette
+knitr::opts_knit$set(root.dir = tmp_proj_dir)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r project-setup}
+library(lbstproj)
+
+create_project(
+  # path = ".",
+  path = tmp_proj_dir,
+  title = "FAKE trial",
+  client = "John Doe",
+  department = "DPT",
+  author = "Jane Doe",
+  open = FALSE,
+  force = TRUE
+)
+```
+
+```{r generate-data-file, echo=FALSE}
+# data <- gtsummary::trial |>
+#   write.csv(fs::path(tmp_proj_dir, "data/raw", "trial.csv"))
+# IMPORT FROM CSV EXTDATA
+```
+
+```{r}
+fs::dir_tree(fs::path("data"))
+```
+

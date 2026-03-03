@@ -1,4 +1,4 @@
-#' Name         : {{name}}
+#' Name         : {{name}}.R
 #' Author       : {{author}}
 #' Date         : {{date}}
 #' Purpose      : description
@@ -15,17 +15,22 @@ info <- get_info({{ id }})
 # Packages ----------------------------------------------------------------
 
 library(dplyr)
-library(flextable)
+library(gt)
 
 # Load data ---------------------------------------------------------------
 
 data <- NULL # Load processed data here
 
-# Generate figure ---------------------------------------------------------
+# Generate table ----------------------------------------------------------
 
 tab <- NULL # Replace NULL with your table code
 
-# Save figure -------------------------------------------------------------
+# Add caption to table ----------------------------------------------------
 
-lbstproj::save_table(tab, name = "{{name}}")
-lbstproj::export_table(tab, name = "{{name}}", ext = "docx")
+tab_lbl <- tab |>
+  gt::tab_header(title = info$caption)
+
+# Save and export table ---------------------------------------------------
+
+lbstproj::save_table(tab_lbl, name = "{{name}}")
+lbstproj::export_table(tab_lbl, name = "{{name}}", ext = "docx")

@@ -1,8 +1,9 @@
-#' Name         : {{name}}
+#' Name         : {{name}}.R
 #' Author       : {{author}}
 #' Date         : {{date}}
 #' Purpose      : description
-#' Files created: `data/processed/{{name}}.rds`
+#' Files created:
+#'  - `data/processed/{{name}}.rds`
 #' Edits        :
 #'  - {{date}}: Created file.
 
