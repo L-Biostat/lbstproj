@@ -1,5 +1,0 @@
-# If you do not have the `lbstproj` package installed, run the following command
-# remotes::install_github("L-BioStat/lbstproj", upgrade = "never")
-
-library(lbstproj)
-. <- usethis::proj_get() # Sets the active project for the current session
