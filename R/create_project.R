@@ -112,6 +112,20 @@ create_project <- function(
   # Create the project structure
   create_structure(quiet = quiet)
 
+  # Add a .Rprofile file to the project root
+  rprofile_path <- usethis::proj_path(".Rprofile")
+  if (!fs::file_exists(rprofile_path)) {
+    writeLines(
+      c(
+        "# If you do not have the `lbstproj` package installed, run the following command",
+        "# remotes::install_github(\"L-BioStat/lbstproj\", upgrade = \"never\")",
+        "library(lbstproj)",
+        ". <- usethis::proj_get() # Sets the active project for the current session"
+      ),
+      con = rprofile_path
+    )
+  }
+
   # Define author as a person object
   author_obj <- utils::person(
     given = stringr::str_split_1(author, "\\s+")[1],
@@ -257,7 +271,7 @@ create_tot <- function(quiet = FALSE) {
     cli::cli_alert_success(
       paste(
         "Writing {.file table_of_tables.xlsx}",
-        "to {.path tot_dir}"
+        "to {.path {tot_dir}}"
       )
     )
   }

@@ -38,7 +38,7 @@ load_all_functions <- function() {
     return(invisible())
   }
   # Source each function file
-  purrr::walk(fn_files, source)
+  invisible(Map(source, fn_files))
 }
 
 #' @describeIn load_func Load a single function file.

@@ -95,19 +95,21 @@ create_programs <- function(dry_run = TRUE, print = TRUE) {
 
     if (!dry_run) {
       # Create scripts (won't overwrite)
-      purrr::walk2(
-        .x = tot$name[items],
-        .y = tot$id[items],
-        # Always generate files with `use.print = FALSE` to avoid printing
-        # messages from `create_figure()` and `create_table()`
-        .f = ~ create_file(
-          type = s$tot_type,
-          name = .x,
-          open = FALSE,
-          print = FALSE,
-          id = .y
-        )
-      )
+      invisible(Map(
+        # Always generate files with use.print = FALSE to avoid printing
+        # messages from create_figure() and create_table()
+        function(x, y) {
+          create_file(
+            type = s$tot_type,
+            name = x,
+            open = FALSE,
+            print = FALSE,
+            id = y
+          )
+        },
+        tot$name[items],
+        tot$id[items]
+      ))
     }
   }
 
