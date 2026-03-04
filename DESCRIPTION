@@ -37,7 +37,8 @@ RoxygenNote: 7.3.2
 Suggests: 
     knitr,
     rmarkdown,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    writexl
 Config/testthat/edition: 3
 URL: https://l-biostat.github.io/lbstproj/
 VignetteBuilder: knitr
