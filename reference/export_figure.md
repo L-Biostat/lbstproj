@@ -1,8 +1,9 @@
 # Export a figure to `results/figures/`
 
 Save a publication-ready figure to `results/figures/<name>.<ext>` using
-`ggplot2::ggsave()`. The parent directory is created if needed and an
-existing file is not overwritten unless `overwrite = TRUE`.
+[`ggplot2::ggsave()`](https://ggplot2.tidyverse.org/reference/ggsave.html).
+The parent directory is created if needed and an existing file is not
+overwritten unless `overwrite = TRUE`.
 
 ## Usage
 
@@ -23,7 +24,9 @@ export_figure(
 
 - fig:
 
-  A ggplot2::ggplot object.
+  A
+  [ggplot2::ggplot](https://ggplot2.tidyverse.org/reference/ggplot.html)
+  object.
 
 - name:
 
@@ -43,13 +46,16 @@ export_figure(
 
 - width, height:
 
-  Plot dimensions passed to `ggplot2::ggsave()` (in inches by default;
-  you can pass `units = "cm"` or `units = "mm"` via `...`).
+  Plot dimensions passed to
+  [`ggplot2::ggsave()`](https://ggplot2.tidyverse.org/reference/ggsave.html)
+  (in inches by default; you can pass `units = "cm"` or `units = "mm"`
+  via `...`).
 
 - ...:
 
-  Additional arguments forwarded to `ggplot2::ggsave()` (e.g., `dpi`,
-  `units`, `bg`, `device`).
+  Additional arguments forwarded to
+  [`ggplot2::ggsave()`](https://ggplot2.tidyverse.org/reference/ggsave.html)
+  (e.g., `dpi`, `units`, `bg`, `device`).
 
 ## Details
 
@@ -57,7 +63,7 @@ The function is called for its side effects and does not return a value.
 
 ## See also
 
-`ggplot2::ggsave()`
+[`ggplot2::ggsave()`](https://ggplot2.tidyverse.org/reference/ggsave.html)
 
 ## Examples
 

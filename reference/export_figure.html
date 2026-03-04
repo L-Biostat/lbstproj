@@ -37,7 +37,7 @@ existing file is not overwritten unless overwrite = TRUE."><meta property="og:im
 
     <div class="ref-description section level2">
     <p>Save a publication-ready figure to <code>results/figures/&lt;name&gt;.&lt;ext&gt;</code> using
-<code>ggplot2::ggsave()</code>. The parent directory is created if needed and an
+<code><a href="https://ggplot2.tidyverse.org/reference/ggsave.html" class="external-link">ggplot2::ggsave()</a></code>. The parent directory is created if needed and an
 existing file is not overwritten unless <code>overwrite = TRUE</code>.</p>
     </div>
 
@@ -60,7 +60,7 @@ existing file is not overwritten unless <code>overwrite = TRUE</code>.</p>
 
 
 <dl><dt id="arg-fig">fig<a class="anchor" aria-label="anchor" href="#arg-fig"></a></dt>
-<dd><p>A ggplot2::ggplot object.</p></dd>
+<dd><p>A <a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot</a> object.</p></dd>
 
 
 <dt id="arg-name">name<a class="anchor" aria-label="anchor" href="#arg-name"></a></dt>
@@ -80,12 +80,12 @@ family by setting the global option <code>export.print</code> to <code>TRUE</cod
 
 
 <dt id="arg-width-height">width, height<a class="anchor" aria-label="anchor" href="#arg-width-height"></a></dt>
-<dd><p>Plot dimensions passed to <code>ggplot2::ggsave()</code> (in inches
+<dd><p>Plot dimensions passed to <code><a href="https://ggplot2.tidyverse.org/reference/ggsave.html" class="external-link">ggplot2::ggsave()</a></code> (in inches
 by default; you can pass <code>units = "cm"</code> or <code>units = "mm"</code> via <code>...</code>).</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Additional arguments forwarded to <code>ggplot2::ggsave()</code>
+<dd><p>Additional arguments forwarded to <code><a href="https://ggplot2.tidyverse.org/reference/ggsave.html" class="external-link">ggplot2::ggsave()</a></code>
 (e.g., <code>dpi</code>, <code>units</code>, <code>bg</code>, <code>device</code>).</p></dd>
 
 </dl></div>
@@ -95,14 +95,14 @@ by default; you can pass <code>units = "cm"</code> or <code>units = "mm"</code> 
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code>ggplot2::ggsave()</code></p></div>
+    <div class="dont-index"><p><code><a href="https://ggplot2.tidyverse.org/reference/ggsave.html" class="external-link">ggplot2::ggsave()</a></code></p></div>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">mpg</span>, <span class="va">wt</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="va">wt</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">export_figure</span><span class="op">(</span><span class="va">p</span>, name <span class="op">=</span> <span class="st">"scatter_mpg_wt"</span>, ext <span class="op">=</span> <span class="st">"pdf"</span>, width <span class="op">=</span> <span class="fl">7</span>, height <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">export_figure</span><span class="op">(</span><span class="va">p</span>, name <span class="op">=</span> <span class="st">"scatter_png"</span>, dpi <span class="op">=</span> <span class="fl">300</span><span class="op">)</span>  <span class="co"># defaults to PNG</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>

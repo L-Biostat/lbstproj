@@ -3,7 +3,7 @@ pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   lbstproj: lbstproj.html
-last_built: 2026-03-03T15:02Z
+last_built: 2026-03-04T10:21Z
 urls:
   reference: https://l-biostat.github.io/lbstproj/reference
   article: https://l-biostat.github.io/lbstproj/articles

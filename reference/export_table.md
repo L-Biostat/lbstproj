@@ -1,9 +1,11 @@
 # Export a table to `results/tables/`
 
 Save a formatted table to `results/tables/<name>.<ext>`. Supports `gt`
-tables via `gt::gtsave()` and `flextable` via the corresponding
-`save_as_*()` helpers. The parent directory is created if needed and an
-existing file is not overwritten unless `overwrite = TRUE`.
+tables via
+[`gt::gtsave()`](https://gt.rstudio.com/reference/gtsave.html) and
+`flextable` via the corresponding `save_as_*()` helpers. The parent
+directory is created if needed and an existing file is not overwritten
+unless `overwrite = TRUE`.
 
 ## Usage
 
@@ -23,7 +25,8 @@ export_table(
 
 - tbl:
 
-  A `gt::gt()` table (`gt_tbl`) or a `flextable::flextable()` object.
+  A [`gt::gt()`](https://gt.rstudio.com/reference/gt.html) table
+  (`gt_tbl`) or a `flextable::flextable()` object.
 
 - name:
 
@@ -46,8 +49,10 @@ export_table(
 
 - ...:
 
-  Additional arguments forwarded to `gt::gtsave()` (for `gt`) or the
-  relevant `flextable::save_as_*()` function (for `flextable`).
+  Additional arguments forwarded to
+  [`gt::gtsave()`](https://gt.rstudio.com/reference/gtsave.html) (for
+  `gt`) or the relevant `flextable::save_as_*()` function (for
+  `flextable`).
 
 ## Details
 
@@ -55,8 +60,9 @@ The function is called for its side effects and does not return a value.
 
 ## See also
 
-`gt::gtsave()`, `flextable::save_as_docx()`,
-`flextable::save_as_html()`, `flextable::save_as_rtf()`
+[`gt::gtsave()`](https://gt.rstudio.com/reference/gtsave.html),
+`flextable::save_as_docx()`, `flextable::save_as_html()`,
+`flextable::save_as_rtf()`
 
 ## Examples
 

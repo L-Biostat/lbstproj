@@ -24,7 +24,8 @@ run_report(file = "report.qmd", ...)
   Additional arguments passed to the rendering function. For R Markdown
   files, these are passed to
   [`rmarkdown::render()`](https://pkgs.rstudio.com/rmarkdown/reference/render.html).
-  For Quarto files, these are passed to `quarto::quarto_render()`.
+  For Quarto files, these are passed to
+  [`quarto::quarto_render()`](https://quarto-dev.github.io/quarto-r/reference/quarto_render.html).
 
 ## Details
 

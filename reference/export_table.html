@@ -39,7 +39,7 @@ existing file is not overwritten unless overwrite = TRUE."><meta property="og:im
 
     <div class="ref-description section level2">
     <p>Save a formatted table to <code>results/tables/&lt;name&gt;.&lt;ext&gt;</code>.
-Supports <code>gt</code> tables via <code>gt::gtsave()</code> and <code>flextable</code> via the corresponding
+Supports <code>gt</code> tables via <code><a href="https://gt.rstudio.com/reference/gtsave.html" class="external-link">gt::gtsave()</a></code> and <code>flextable</code> via the corresponding
 <code>save_as_*()</code> helpers. The parent directory is created if needed and an
 existing file is not overwritten unless <code>overwrite = TRUE</code>.</p>
     </div>
@@ -62,7 +62,7 @@ existing file is not overwritten unless <code>overwrite = TRUE</code>.</p>
 
 
 <dl><dt id="arg-tbl">tbl<a class="anchor" aria-label="anchor" href="#arg-tbl"></a></dt>
-<dd><p>A <code>gt::gt()</code> table (<code>gt_tbl</code>) or a <code>flextable::flextable()</code>
+<dd><p>A <code><a href="https://gt.rstudio.com/reference/gt.html" class="external-link">gt::gt()</a></code> table (<code>gt_tbl</code>) or a <code>flextable::flextable()</code>
 object.</p></dd>
 
 
@@ -87,7 +87,7 @@ to landscape. Ignored for <code>gt</code> tables.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Additional arguments forwarded to <code>gt::gtsave()</code> (for <code>gt</code>) or the
+<dd><p>Additional arguments forwarded to <code><a href="https://gt.rstudio.com/reference/gtsave.html" class="external-link">gt::gtsave()</a></code> (for <code>gt</code>) or the
 relevant <code>flextable::save_as_*()</code> function (for <code>flextable</code>).</p></dd>
 
 </dl></div>
@@ -98,7 +98,7 @@ value.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code>gt::gtsave()</code>, <code>flextable::save_as_docx()</code>,
+    <div class="dont-index"><p><code><a href="https://gt.rstudio.com/reference/gtsave.html" class="external-link">gt::gtsave()</a></code>, <code>flextable::save_as_docx()</code>,
 <code>flextable::save_as_html()</code>, <code>flextable::save_as_rtf()</code></p></div>
     </div>
 
@@ -106,7 +106,7 @@ value.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://gt.rstudio.com" class="external-link">gt</a></span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">gt_tbl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">gt</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">gt_tbl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://gt.rstudio.com/reference/gt.html" class="external-link">gt</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">export_table</span><span class="op">(</span><span class="va">gt_tbl</span>, name <span class="op">=</span> <span class="st">"mtcars_head"</span>, ext <span class="op">=</span> <span class="st">"html"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ardata-fr.github.io/flextable-book/" class="external-link">flextable</a></span><span class="op">)</span></span></span>

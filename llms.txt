@@ -1,4 +1,4 @@
-# lbstproj `<img src="man/figures/logo.png" align="right" height="120" alt="" />`
+# lbstproj
 
 `lbstproj` provides tools to create, maintain, and use standardized R
 projects for the L-Biostat group.

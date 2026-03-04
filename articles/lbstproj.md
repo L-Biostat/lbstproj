@@ -16,12 +16,12 @@ create_project(
 #> Enter project information:
 #> ℹ Default values are shown in [brackets]. Press [Enter] to accept the default.
 #> Author's email address:
-#> ✔ Setting active project to "/tmp/RtmpprfsmK/mock-lbstproj".
+#> ✔ Setting active project to "/tmp/Rtmpenb9JU/mock-lbstproj".
 #> ✔ Writing mock-lbstproj.Rproj.
 #> ✔ Adding ".Rproj.user" to .gitignore.
 #> ✔ Creating project structure
 #> ✔ Writing DESCRIPTION
-#> ✔ Writing table_of_tables.xlsx to tot_dir
+#> ✔ Writing table_of_tables.xlsx to data/tot
 #> ✔ Project setup complete! Start working!
 ```
 
