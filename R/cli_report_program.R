@@ -125,10 +125,10 @@ cli_report_program <- function(
 
   if (n_new == 0) {
     if (n_tot == 0) {
-      cli::cli_alert_info("{label}: none declared in TOT — nothing to do.")
+      cli::cli_alert_info("{label}: none declared in TOT - nothing to do.")
     } else {
       cli::cli_alert_success(
-        "{label}: all programs already exist — nothing to generate."
+        "{label}: all programs already exist - nothing to generate."
       )
     }
 
@@ -152,7 +152,7 @@ cli_report_program <- function(
     inform_extras()
   } else {
     cli::cli_alert_info(
-      "{label}: no existing programs matched TOT — {if (dry_run) 'would generate' else 'generating'} all {n_new}."
+      "{label}: no existing programs matched TOT - {if (dry_run) 'would generate' else 'generating'} all {n_new}."
     )
 
     if (n_disk > 0) {
