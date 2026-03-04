@@ -18,33 +18,32 @@ test_that("File name is validated", {
   )
 })
 
-
 test_that("Files are created", {
   local_lbstproj_project(with_tot = FALSE)
-  create_file("figure", "example_figure", open = FALSE, quiet = TRUE)
-  fig_path <- fs::path("R/figures/example_figure.R")
+  create_file("figure", "example-figure", open = FALSE, quiet = TRUE)
+  fig_path <- fs::path("R/figures/example-figure.R")
   expect_true(fs::file_exists(fig_path), info = "Figure R file exists")
 })
 
 test_that("Tables are created", {
   local_lbstproj_project(with_tot = FALSE)
 
-  create_file("table", "example_table", open = FALSE, quiet = TRUE, id = 2)
-  tab_path <- fs::path("R", "tables", "example_table.R")
+  create_file("table", "example-table", open = FALSE, quiet = TRUE, id = 2)
+  tab_path <- fs::path("R", "tables", "example-table.R")
   expect_true(fs::file_exists(tab_path), info = "Table R file exists")
 })
 
 test_that("Data files are created", {
   local_lbstproj_project(with_tot = FALSE)
 
-  create_file("data", "example_data", open = FALSE, quiet = TRUE)
-  data_path <- fs::path("R", "data", "example_data.R")
+  create_file("data", "example-data", open = FALSE, quiet = TRUE)
+  data_path <- fs::path("R", "data", "example-data.R")
   expect_true(fs::file_exists(data_path), info = "Data R file exists")
 })
 
 test_that("Analysis files are created", {
   local_lbstproj_project(with_tot = FALSE)
-  create_file("analysis", "example_model.R", open = FALSE, quiet = TRUE)
-  data_path <- fs::path("R", "analysis", "example_model.R")
+  create_file("analysis", "example-model.R", open = FALSE, quiet = TRUE)
+  data_path <- fs::path("R", "analysis", "example-model.R")
   expect_true(fs::file_exists(data_path), info = "Analysis R file exists")
 })

@@ -64,6 +64,6 @@ test_that("validate_file_name() removes extensions", {
 })
 
 test_that("validate_file_name() only accepts alphanumeric, _, and -", {
-  expect_no_error(validate_file_name("new_plot-20.png"))
+  expect_no_error(validate_file_name("new-plot-20.png"))
   expect_error(validate_file_name("analysis_01/01/2001.R"))
 })

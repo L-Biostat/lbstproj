@@ -15,16 +15,11 @@ import_tot <- function(quiet = FALSE) {
   }
   tot_data <- readxl::read_excel(tot_xlsx_path) |>
     tibble::as_tibble()
-  # Remove the `comments` column if it exists
-  tot_data <- tot_data |>
-    dplyr::select(-dplyr::any_of("comment"))
 
   # TODO: Add validation of the TOT data structures
 
   # Save the TOT data as an RDS file in the project
   tot_path <- fs::path("data/tot/tot.rds")
-  # Always overwrite the existing TOT RDS file
-  check_file_absent(tot_path, overwrite = TRUE)
   saveRDS(tot_data, file = tot_path)
 
   # Inform the user

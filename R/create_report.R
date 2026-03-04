@@ -30,15 +30,18 @@ create_report <- function() {
   # Load the table of tables (TOT)
   tot <- load_tot()
   # Create chunks for all figures and tables in the TOT
-  chunks <- purrr::map(
-    .x = tot$id,
-    .f = ~ create_chunk(
-      id = .x,
-      type = .y,
-      print = FALSE,
-      pad = TRUE,
-      copy = FALSE
-    )
+  chunks <- Map(
+    function(id, type) {
+      create_chunk(
+        id = id,
+        type = type,
+        print = FALSE,
+        pad = TRUE,
+        copy = FALSE
+      )
+    },
+    tot$id,
+    tot$type
   ) |>
     unlist()
   # Combine the report basis and the chunks
