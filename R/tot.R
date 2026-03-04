@@ -15,9 +15,6 @@ import_tot <- function(quiet = FALSE) {
   }
   tot_data <- readxl::read_excel(tot_xlsx_path) |>
     tibble::as_tibble()
-  # Remove the `comments` column if it exists
-  tot_data <- tot_data |>
-    dplyr::select(-dplyr::any_of("comment"))
 
   # TODO: Add validation of the TOT data structures
 
