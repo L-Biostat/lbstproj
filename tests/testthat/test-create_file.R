@@ -18,7 +18,6 @@ test_that("File name is validated", {
   )
 })
 
-
 test_that("Files are created", {
   local_lbstproj_project(with_tot = FALSE)
   create_file("figure", "example-figure", open = FALSE, quiet = TRUE)

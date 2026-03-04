@@ -111,7 +111,7 @@ cli_report_program <- function(
     # If there are no new files, we can skip the rest of this function
     if (length(new) == 0) return(invisible(NULL))
 
-    bullets <- setNames(
+    bullets <- stats::setNames(
       paste0("{.file ", fs::path(dir_, new), "}"), # File paths
       rep("*", length(new)) # Bullet style (asterisk for each new file)
     )

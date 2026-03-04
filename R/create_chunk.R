@@ -50,7 +50,7 @@ create_chunk <- function(id, copy = TRUE, print = TRUE, pad = FALSE) {
   }
   # Copy the chunk to the clipboard if in interactive mode
   if (rlang::is_interactive() && copy) {
-    writeClipboard(rendered_chunk)
+    utils::writeClipboard(rendered_chunk)
     cli::cli_alert_success("The chunk has been copied to the clipboard.")
   }
   # Return the rendered chunk invisibly
