@@ -1,0 +1,133 @@
+# tests/testthat/test-tot.R
+
+# ---- validate_tot() ----------------------------------------------------------
+
+test_that("validate_tot() passes with a valid TOT", {
+  valid_tot <- data.frame(
+    id = c("1", "2"),
+    type = c("figure", "table"),
+    name = c("fig1", "tab1"),
+    caption = c("Figure 1", "Table 1"),
+    stringsAsFactors = FALSE
+  )
+  result <- expect_invisible(lbstproj:::validate_tot(valid_tot))
+  expect_equal(result, valid_tot)
+})
+
+test_that("validate_tot() errors on missing required columns", {
+  bad_tot <- data.frame(
+    id = "1",
+    name = "fig1",
+    caption = "Figure 1",
+    stringsAsFactors = FALSE
+  ) # 'type' column missing
+  expect_error(lbstproj:::validate_tot(bad_tot), "missing required column")
+})
+
+test_that("validate_tot() errors on all missing required columns", {
+  bad_tot <- data.frame(x = 1)
+  expect_error(lbstproj:::validate_tot(bad_tot), "missing required column")
+})
+
+test_that("validate_tot() errors on NA values in required columns", {
+  na_tot <- data.frame(
+    id = c("1", NA),
+    type = c("figure", "table"),
+    name = c("fig1", "tab1"),
+    caption = c("Figure 1", "Table 1"),
+    stringsAsFactors = FALSE
+  )
+  expect_error(lbstproj:::validate_tot(na_tot), "contains missing values")
+})
+
+test_that("validate_tot() errors on invalid type values", {
+  bad_type_tot <- data.frame(
+    id = c("1", "2"),
+    type = c("figure", "chart"),
+    name = c("fig1", "chart1"),
+    caption = c("Figure 1", "Chart 1"),
+    stringsAsFactors = FALSE
+  )
+  expect_error(lbstproj:::validate_tot(bad_type_tot), "invalid value")
+})
+
+test_that("validate_tot() errors on duplicate id values", {
+  dup_id_tot <- data.frame(
+    id = c("1", "1"),
+    type = c("figure", "table"),
+    name = c("fig1", "tab1"),
+    caption = c("Figure 1", "Table 1"),
+    stringsAsFactors = FALSE
+  )
+  expect_error(lbstproj:::validate_tot(dup_id_tot), "duplicate value")
+})
+
+test_that("validate_tot() errors on duplicate name values", {
+  dup_name_tot <- data.frame(
+    id = c("1", "2"),
+    type = c("figure", "table"),
+    name = c("fig1", "fig1"),
+    caption = c("Figure 1", "Figure 1 again"),
+    stringsAsFactors = FALSE
+  )
+  expect_error(lbstproj:::validate_tot(dup_name_tot), "duplicate value")
+})
+
+# ---- import_tot() ------------------------------------------------------------
+
+test_that("import_tot() succeeds with a valid TOT Excel file", {
+  local_lbstproj_project(with_tot = TRUE)
+  expect_no_error(import_tot(quiet = TRUE))
+})
+
+test_that("import_tot() errors when Excel file is missing", {
+  local_lbstproj_project(with_tot = FALSE)
+  expect_error(import_tot(), "does not exist")
+})
+
+test_that("import_tot() errors when TOT is missing required columns", {
+  bad_data <- data.frame(
+    id = "1",
+    name = "fig1",
+    caption = "Figure 1",
+    stringsAsFactors = FALSE
+  )
+  local_lbstproj_project(with_tot = TRUE, tot_data = bad_data)
+  expect_error(import_tot(quiet = TRUE), "missing required column")
+})
+
+test_that("import_tot() errors when TOT has invalid type values", {
+  bad_data <- data.frame(
+    id = "1",
+    type = "chart",
+    name = "chart1",
+    caption = "A chart",
+    stringsAsFactors = FALSE
+  )
+  local_lbstproj_project(with_tot = TRUE, tot_data = bad_data)
+  expect_error(import_tot(quiet = TRUE), "invalid value")
+})
+
+test_that("import_tot() errors when TOT has duplicate id values", {
+  bad_data <- data.frame(
+    id = c("1", "1"),
+    type = c("figure", "table"),
+    name = c("fig1", "tab1"),
+    caption = c("Figure 1", "Table 1"),
+    stringsAsFactors = FALSE
+  )
+  local_lbstproj_project(with_tot = TRUE, tot_data = bad_data)
+  expect_error(import_tot(quiet = TRUE), "duplicate value")
+})
+
+test_that("import_tot() errors when TOT has duplicate name values", {
+  bad_data <- data.frame(
+    id = c("1", "2"),
+    type = c("figure", "table"),
+    name = c("fig1", "fig1"),
+    caption = c("Figure 1", "Figure 1b"),
+    stringsAsFactors = FALSE
+  )
+  local_lbstproj_project(with_tot = TRUE, tot_data = bad_data)
+  expect_error(import_tot(quiet = TRUE), "duplicate value")
+})
