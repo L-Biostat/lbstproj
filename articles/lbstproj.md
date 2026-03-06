@@ -16,7 +16,7 @@ create_project(
 #> Enter project information:
 #> ℹ Default values are shown in [brackets]. Press [Enter] to accept the default.
 #> Author's email address:
-#> ✔ Setting active project to "/tmp/Rtmpenb9JU/mock-lbstproj".
+#> ✔ Setting active project to "/tmp/RtmpYZDTRt/mock-lbstproj".
 #> ✔ Writing mock-lbstproj.Rproj.
 #> ✔ Adding ".Rproj.user" to .gitignore.
 #> ✔ Creating project structure

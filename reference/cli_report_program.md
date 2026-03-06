@@ -46,10 +46,6 @@ cli_report_program(
 
   Logical.
 
-- max_print:
-
-  Integer. Max number of filenames to print.
-
 ## Value
 
 Invisibly returns a list with counts.
