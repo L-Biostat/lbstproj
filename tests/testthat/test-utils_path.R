@@ -67,3 +67,40 @@ test_that("validate_file_name() only accepts alphanumeric, _, and -", {
   expect_no_error(validate_file_name("new-plot-20.png"))
   expect_error(validate_file_name("analysis_01/01/2001.R"))
 })
+
+# CHECK OVERWRITE ----------------------------------------------------------------
+
+test_that("check_can_overwrite() does nothing when file does not exist", {
+  local_lbstproj_project(with_tot = FALSE)
+
+  path <- fs::path("data", "processed", "test.rds")
+
+  expect_no_error(
+    check_can_overwrite(path, overwrite = FALSE)
+  )
+})
+
+test_that("check_can_overwrite() errors when file exists and overwrite = FALSE", {
+  local_lbstproj_project(with_tot = FALSE)
+
+  ensure_dir_exists("data/processed", create = TRUE)
+  path <- fs::path("data", "processed", "test.rds")
+  saveRDS(data.frame(x = 1), path)
+
+  expect_error(
+    check_can_overwrite(path, overwrite = FALSE),
+    "already exists"
+  )
+})
+
+test_that("check_can_overwrite() does not error when file exists and overwrite = TRUE", {
+  local_lbstproj_project(with_tot = FALSE)
+
+  ensure_dir_exists("data/processed", create = TRUE)
+  path <- fs::path("data", "processed", "test.rds")
+  saveRDS(data.frame(x = 1), path)
+
+  expect_no_error(
+    check_can_overwrite(path, overwrite = TRUE)
+  )
+})

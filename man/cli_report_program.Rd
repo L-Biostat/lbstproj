@@ -28,8 +28,6 @@ cli_report_program(
 \item{extra}{Character vector of filenames on disk but not in TOT.}
 
 \item{dry_run}{Logical.}
-
-\item{max_print}{Integer. Max number of filenames to print.}
 }
 \value{
 Invisibly returns a list with counts.

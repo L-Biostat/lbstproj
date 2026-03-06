@@ -111,3 +111,22 @@ validate_file_name <- function(name) {
   # Returns the name
   name
 }
+
+#' Check if a file can be overwritten
+#'
+#' @param path *Character*. Path of the file to check
+#' @param overwrite *Logical*. Whether the file can be overwritten or not.
+#' @param what *Character*. The type of file being checked. This is only used to customize the error message if the file can't be overwritten.
+#'
+#'   *Default*: `"File"`. A generic description
+#' @return Invisibly return the path of the file
+#'
+#' @keywords internal
+check_can_overwrite <- function(path, overwrite, what = "File") {
+  if (fs::file_exists(path) && !overwrite) {
+    cli::cli_abort(
+      "{what} {.file {path}} already exists and {.arg overwrite} is set to {.val FALSE}."
+    )
+  }
+  invisible(path)
+}

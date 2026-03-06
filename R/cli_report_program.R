@@ -7,7 +7,6 @@
 #' @param new Character vector of filenames to create.
 #' @param extra Character vector of filenames on disk but not in TOT.
 #' @param dry_run Logical.
-#' @param max_print Integer. Max number of filenames to print.
 #'
 #' @keywords internal
 #'
