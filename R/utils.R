@@ -7,7 +7,3 @@ get_author <- function() {
     return(paste(author$given, author$family))
   }
 }
-
-proj_rel_path <- function(path) {
-  fs::path_rel(path, start = usethis::proj_get())
-}

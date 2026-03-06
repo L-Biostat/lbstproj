@@ -131,3 +131,22 @@ test_that("import_tot() errors when TOT has duplicate name values", {
   local_lbstproj_project(with_tot = TRUE, tot_data = bad_data)
   expect_error(import_tot(quiet = TRUE), "duplicate value")
 })
+
+
+# ---- load_tot() ----------------------------------------------------------------
+
+test_that("load_tot() errors when there is no TOT rds file", {
+  local_lbstproj_project(with_tot = FALSE)
+  expect_error(
+    load_tot(),
+    "does not exist"
+  )
+})
+
+test_that("load_tot() actually returns the TOT", {
+  tmp <- local_lbstproj_project(with_tot = TRUE)
+  import_tot(quiet = TRUE)
+  tot_file <- readRDS(fs::path(tmp, "data/tot", "tot", ext = "rds"))
+  tot_fn <- load_tot()
+  expect_identical(tot_file, tot_fn)
+})
