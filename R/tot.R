@@ -7,7 +7,7 @@
 #' @export
 import_tot <- function(quiet = FALSE) {
   # Read the TOT Excel file
-  tot_xlsx_path <- fs::path("data/tot/table_of_tables.xlsx")
+  tot_xlsx_path <- usethis::proj_path("data/tot/table_of_tables.xlsx")
   if (!fs::file_exists(tot_xlsx_path)) {
     cli::cli_abort(
       "The TOT file does not exist. Please create it using {.fn create_tot}."
