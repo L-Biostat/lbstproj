@@ -30,11 +30,8 @@ get_info <- function(id = NULL, name = NULL) {
       "Please provide either {.arg id} or {.arg name}, but not both."
     )
   }
-  # TODO: validate entries once the TOT structure is decided
-
   # Load the TOT
   tot <- load_tot()
-
   # Function to check for no matching entry
   no_entry <- function(x, type) {
     if (nrow(entry) == 0) {
@@ -43,7 +40,6 @@ get_info <- function(id = NULL, name = NULL) {
       )
     }
   }
-
   # Find the matching entry
   if (!is.null(id)) {
     entry <- tot[tot$id == id, ]
