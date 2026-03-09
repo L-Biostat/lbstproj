@@ -116,19 +116,19 @@ import_tot <- function(quiet = FALSE) {
 #' @export
 #' @md
 load_tot <- function(refresh = TRUE) {
-  tot_path <- fs::path("data/tot/tot.rds")
-  if (!fs::file_exists(tot_path)) {
-    cli::cli_abort(
-      paste(
-        "The TOT {.val rds} file does not exist.",
-        "Please import it using {.fn import_tot}."
-      )
-    )
-  }
+  tot_path <- usethis::proj_path("data/tot/tot.rds")
   # If refresh is TRUE, re-import the TOT from the Excel file
   if (refresh) {
     tot <- import_tot(quiet = TRUE) # Invisible return of the TOT
   } else {
+    if (!fs::file_exists(tot_path)) {
+      cli::cli_abort(
+        paste(
+          "The TOT {.val rds} file does not exist.",
+          "Please import it using {.fn import_tot}."
+        )
+      )
+    }
     tot <- readRDS(tot_path)
   }
   return(tot)

@@ -69,12 +69,7 @@ create_file <- function(
 
   # Subdirectory rule: figure -> figures, table -> tables, etc.
   # Special-cases: data -> data; analysis -> analysis
-  subdir <- switch(
-    type,
-    data = "data",
-    analysis = "analysis",
-    paste0(type, "s")
-  )
+  subdir <- type_to_subdir(type)
 
   # Create directory path and ensure it exists
   dir_path <- fs::path("R", subdir)

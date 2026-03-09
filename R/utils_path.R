@@ -112,6 +112,26 @@ validate_file_name <- function(name) {
   name
 }
 
+#' Map a file type to its R subdirectory
+#'
+#' Converts a `type` string (as used in [create_file()] and [run_all_files()])
+#' to the corresponding subdirectory name inside `R/`.
+#'
+#' @param type *Character*. The file type (e.g. `"figure"`, `"table"`,
+#'   `"data"`, `"analysis"`).
+#'
+#' @return *Character*. The subdirectory name.
+#'
+#' @keywords internal
+type_to_subdir <- function(type) {
+  switch(
+    type,
+    data = "data",
+    analysis = "analysis",
+    paste0(type, "s")
+  )
+}
+
 #' Check if a file can be overwritten
 #'
 #' @param path *Character*. Path of the file to check
