@@ -33,6 +33,7 @@ local_lbstproj_project <- function(
   fs::dir_create("data/processed")
   fs::dir_create("data/tot")
   fs::dir_create("R")
+  fs::dir_create("report")
 
   if (empty_dirs) {
     fs::dir_create("R/figures")
