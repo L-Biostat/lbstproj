@@ -1,47 +1,581 @@
 ---
-title: "lbstproj"
+title: "Getting started with lbstproj"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{lbstproj}
+  %\VignetteIndexEntry{Getting started with lbstproj}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
-# Define a temporary project folder and create it
-tmp_proj_dir <- fs::path(tempdir(), "mock-lbstproj")
+```{r setup, include=FALSE}
+tmp_proj_dir <- fs::path(tempdir(), "fake-trial")
 fs::dir_create(tmp_proj_dir)
 
-# Define it as the working directory for the vignette
 knitr::opts_knit$set(root.dir = tmp_proj_dir)
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.width = 5,
+  fig.height = 4,
+  out.width = "70%"
 )
 ```
 
-```{r project-setup}
+## Introduction
+
+This tutorial walks through a complete `lbstproj` workflow using a fake oncology
+project. We use the `trial` dataset — a simulated randomized clinical trial of
+200 patients assigned to **Drug A** or **Drug B** — to demonstrate how to:
+
+1. Scaffold a standardized project
+2. Register outputs in the **Table of Tables** (TOT)
+3. Write and run data preparation, figure, and table scripts
+4. Generate a self-contained report
+
+---
+
+## 1. Create a project
+
+`create_project()` builds the full directory structure and adds a `DESCRIPTION`
+file and a blank Table of Tables. We pass `force = TRUE` and `open = FALSE` to
+skip interactive prompts.
+
+```{r project-setup, message=FALSE}
 library(lbstproj)
 
 create_project(
-  # path = ".",
   path = tmp_proj_dir,
-  title = "FAKE trial",
+  title = "Fake oncology trial",
   client = "John Doe",
-  department = "DPT",
+  department = "Oncology",
   author = "Jane Doe",
+  email = "jane.doe@university.com",
   open = FALSE,
   force = TRUE
 )
 ```
 
-```{r generate-data-file, echo=FALSE}
-# data <- gtsummary::trial |>
-#   write.csv(fs::path(tmp_proj_dir, "data/raw", "trial.csv"))
-# IMPORT FROM CSV EXTDATA
+The project now has the following structure:
+
+```{r dir-tree}
+fs::dir_tree(tmp_proj_dir, recurse = TRUE)
 ```
 
-```{r}
-fs::dir_tree(fs::path("data"))
+| Folder            | Purpose |
+|-------------------|---------|
+| `data/raw/`       | Raw input files (CSV, Excel, …) |
+| `data/processed/` | Cleaned datasets saved as `.rds` |
+| `data/tables/`    | GT tables saved as `.rds` |
+| `data/tot/`       | The Table of Tables (Excel + cached `.rds`) |
+| `R/data/`         | Data preparation scripts |
+| `R/figures/`      | Figure scripts |
+| `R/tables/`       | Table scripts |
+| `results/figures/`| Final PNG/PDF figures |
+| `results/tables/` | Word tables (`.docx`) |
+| `report/`         | Quarto report |
+
+---
+
+## 2. Import raw data
+
+The `trial` dataset is bundled with `lbstproj` as a CSV. Copy it to `data/raw/`:
+
+```{r import-raw, echo=FALSE}
+fs::file_copy(
+  fs::path_package("lbstproj", "extdata", "trial.csv"),
+  fs::path(tmp_proj_dir, "data", "raw", "trial.csv"),
+  overwrite = TRUE
+)
+```
+
+```r
+# In a real project you would place your raw data file in data/raw/ manually.
+fs::file_copy("path/to/trial.csv", "data/raw/trial.csv")
+```
+
+```{r show-raw-data}
+trial_raw <- read.csv("data/raw/trial.csv")
+head(trial_raw)
+```
+
+The dataset has `r nrow(trial_raw)` patients with eight variables: treatment arm
+(`trt`), `age`, biomarker level (`marker`), tumour stage (`stage`), histological
+grade (`grade`), binary `response`, and survival endpoints (`death`, `ttdeath`).
+
+---
+
+## 3. The Table of Tables
+
+The **Table of Tables** (TOT) is the central registry of every output your
+project will produce. It lives in `data/tot/table_of_tables.xlsx` and has four
+columns:
+
+| Column    | Description |
+|-----------|-------------|
+| `id`      | Short unique identifier (referenced inside scripts) |
+| `type`    | `"figure"` or `"table"` |
+| `name`    | File name used for saving (letters, numbers, hyphens only) |
+| `caption` | Caption that appears in the report |
+
+For this project we plan two figures and two tables:
+
+```{r show-tot-data}
+tot_data <- data.frame(
+  id = c("fig-01", "fig-02", "tab-01", "tab-02"),
+  type = c("figure", "figure", "table", "table"),
+  name = c("fig-age-dist", "fig-response", "tab-baseline", "tab-response"),
+  caption = c(
+    "Age distribution by treatment arm.",
+    "Tumour response rate by treatment arm.",
+    "Baseline patient characteristics by treatment arm.",
+    "Tumour response rates by treatment arm."
+  ),
+  stringsAsFactors = FALSE
+)
+tot_data
+```
+
+```{r write-tot, echo=FALSE}
+writexl::write_xlsx(
+  list(tot = tot_data),
+  path = fs::path(tmp_proj_dir, "data", "tot", "table_of_tables.xlsx")
+)
+```
+
+After filling in the spreadsheet, call `import_tot()` to validate it and cache
+it as an `.rds` file:
+
+```{r import-tot}
+import_tot()
+```
+
+You can always inspect the TOT with `load_tot()`:
+
+```{r load-tot}
+load_tot()
+```
+
+---
+
+## 4. Create analysis scripts
+
+`create_from_tot()` reads the TOT and generates stub R scripts for each entry.
+Always do a **dry run** first to preview what will be created:
+
+```{r create-from-tot-dry}
+create_from_tot(dry_run = TRUE)
+```
+
+Once satisfied, run without `dry_run` to create the stubs:
+
+```{r create-from-tot-actual}
+create_from_tot(dry_run = FALSE)
+```
+
+Each stub is pre-filled with a header, `get_info()` to retrieve TOT metadata,
+library calls, and placeholder comments:
+
+```{r show-stub, echo=FALSE, comment=""}
+cat(
+  readLines(fs::path(tmp_proj_dir, "R", "figures", "fig-age-dist.R")),
+  sep = "\n"
+)
+```
+
+You fill in the placeholder sections with your analysis. The next sections show
+the completed scripts for our oncology project.
+
+---
+
+## 5. Data preparation
+
+All cleaning and reshaping happens in `R/data/`. The script below loads the raw
+CSV, coerces categorical variables to factors, and saves the result with
+`save_data()`.
+
+```{r data-script-display, eval=FALSE}
+# R/data/trial-clean.R
+
+library(dplyr)
+
+# Load raw data ---------------------------------------------------------------
+raw <- read.csv("data/raw/trial.csv")
+
+# Clean -----------------------------------------------------------------------
+trial <- raw |>
+  mutate(
+    trt = factor(trt),
+    stage = factor(stage),
+    grade = factor(grade, levels = c("I", "II", "III"))
+  )
+
+# Save ------------------------------------------------------------------------
+save_data(trial, name = "trial-clean")
+```
+
+```{r run-data-script, echo=FALSE, message=FALSE}
+writeLines(
+  c(
+    'library(dplyr)',
+    'raw <- read.csv("data/raw/trial.csv")',
+    'trial <- raw |>',
+    '  mutate(',
+    '    trt   = factor(trt),',
+    '    stage = factor(stage),',
+    '    grade = factor(grade, levels = c("I", "II", "III"))',
+    '  )',
+    'lbstproj::save_data(trial, name = "trial-clean")'
+  ),
+  fs::path(tmp_proj_dir, "R", "data", "trial-clean.R")
+)
+
+withr::with_options(list(lbstproj.quiet = TRUE), {
+  source(fs::path(tmp_proj_dir, "R", "data", "trial-clean.R"))
+})
+```
+
+After running the script you can inspect the processed dataset:
+
+```{r show-processed-data}
+trial <- readRDS("data/processed/trial-clean.rds")
+dplyr::glimpse(trial)
+```
+
+---
+
+## 6. Figures
+
+### Figure 1 — Age distribution
+
+```{r fig-age-script-display, eval=FALSE}
+# R/figures/fig-age-dist.R
+
+library(dplyr)
+library(ggplot2)
+
+info <- get_info("fig-01")
+trial <- readRDS("data/processed/trial-clean.rds")
+
+fig <- ggplot(trial, aes(x = trt, y = age, fill = trt)) +
+  geom_violin(alpha = 0.4, trim = FALSE) +
+  geom_boxplot(width = 0.15, alpha = 0.8, outlier.shape = NA) +
+  scale_fill_brewer(palette = "Set2") +
+  labs(x = "Treatment arm", y = "Age (years)") +
+  theme_minimal(base_size = 12) +
+  theme(legend.position = "none")
+
+save_figure(fig, name = "fig-age-dist", width = 5, height = 4)
+```
+
+```{r run-fig-age, echo=FALSE, message=FALSE, warning=FALSE}
+fig_age_script <- c(
+  'library(dplyr)',
+  'library(ggplot2)',
+  'info  <- lbstproj::get_info("fig-01")',
+  'trial <- readRDS("data/processed/trial-clean.rds")',
+  'fig <- ggplot(trial, aes(x = trt, y = age, fill = trt)) +',
+  '  geom_violin(alpha = 0.4, trim = FALSE) +',
+  '  geom_boxplot(width = 0.15, alpha = 0.8, outlier.shape = NA) +',
+  '  scale_fill_brewer(palette = "Set2") +',
+  '  labs(x = "Treatment arm", y = "Age (years)") +',
+  '  theme_minimal(base_size = 12) +',
+  '  theme(legend.position = "none")',
+  'lbstproj::save_figure(fig, name = "fig-age-dist", width = 5, height = 4)'
+)
+writeLines(
+  fig_age_script,
+  fs::path(tmp_proj_dir, "R", "figures", "fig-age-dist.R")
+)
+
+withr::with_options(list(lbstproj.quiet = TRUE), {
+  source(fs::path(tmp_proj_dir, "R", "figures", "fig-age-dist.R"))
+})
+fig_age_dist <- fig
+```
+
+```{r show-fig-age, echo=FALSE, fig.cap="Age distribution by treatment arm."}
+fig_age_dist
+```
+
+### Figure 2 — Response rate
+
+```{r fig-response-script-display, eval=FALSE}
+# R/figures/fig-response.R
+
+library(dplyr)
+library(ggplot2)
+
+info <- get_info("fig-02")
+trial <- readRDS("data/processed/trial-clean.rds")
+
+response_rate <- trial |>
+  group_by(trt) |>
+  summarise(rate = mean(response, na.rm = TRUE) * 100, .groups = "drop")
+
+fig <- ggplot(response_rate, aes(x = trt, y = rate, fill = trt)) +
+  geom_col(width = 0.5, alpha = 0.8) +
+  scale_fill_brewer(palette = "Set2") +
+  scale_y_continuous(
+    limits = c(0, 100),
+    labels = scales::label_percent(scale = 1)
+  ) +
+  labs(x = "Treatment arm", y = "Response rate (%)") +
+  theme_minimal(base_size = 12) +
+  theme(legend.position = "none")
+
+save_figure(fig, name = "fig-response", width = 5, height = 4)
+```
+
+```{r run-fig-response, echo=FALSE, message=FALSE, warning=FALSE}
+fig_resp_script <- c(
+  'library(dplyr)',
+  'library(ggplot2)',
+  'info  <- lbstproj::get_info("fig-02")',
+  'trial <- readRDS("data/processed/trial-clean.rds")',
+  'response_rate <- trial |>',
+  '  group_by(trt) |>',
+  '  summarise(rate = mean(response, na.rm = TRUE) * 100, .groups = "drop")',
+  'fig <- ggplot(response_rate, aes(x = trt, y = rate, fill = trt)) +',
+  '  geom_col(width = 0.5, alpha = 0.8) +',
+  '  scale_fill_brewer(palette = "Set2") +',
+  '  scale_y_continuous(limits = c(0, 100)) +',
+  '  labs(x = "Treatment arm", y = "Response rate (%)") +',
+  '  theme_minimal(base_size = 12) +',
+  '  theme(legend.position = "none")',
+  'lbstproj::save_figure(fig, name = "fig-response", width = 5, height = 4)'
+)
+writeLines(
+  fig_resp_script,
+  fs::path(tmp_proj_dir, "R", "figures", "fig-response.R")
+)
+
+withr::with_options(list(lbstproj.quiet = TRUE), {
+  source(fs::path(tmp_proj_dir, "R", "figures", "fig-response.R"))
+})
+fig_response <- fig
+```
+
+```{r show-fig-response, echo=FALSE, fig.cap="Tumour response rate by treatment arm."}
+fig_response
+```
+
+---
+
+## 7. Tables
+
+Tables are saved as `gt` objects and optionally exported to Word. The workflow
+below uses `gtsummary` to produce publication-ready summaries, then converts to
+`gt` with `as_gt()` before saving.
+
+### Table 1 — Baseline characteristics
+
+```{r tab-baseline-script-display, eval=FALSE}
+# R/tables/tab-baseline.R
+
+library(dplyr)
+library(gtsummary)
+
+info <- get_info("tab-01")
+trial <- readRDS("data/processed/trial-clean.rds")
+
+tab <- trial |>
+  select(trt, age, stage, grade) |>
+  tbl_summary(
+    by = trt,
+    label = list(
+      age ~ "Age (years)",
+      stage ~ "Tumour stage",
+      grade ~ "Grade"
+    )
+  ) |>
+  add_overall() |>
+  add_p() |>
+  modify_header(label ~ "**Characteristic**") |>
+  bold_labels() |>
+  as_gt() |>
+  gt::tab_header(title = info$caption)
+
+save_table(tab, name = "tab-baseline", export = FALSE)
+```
+
+```{r run-tab-baseline, echo=FALSE, message=FALSE, warning=FALSE}
+tab_bl_script <- c(
+  'library(dplyr)',
+  'library(gtsummary)',
+  'info  <- lbstproj::get_info("tab-01")',
+  'trial <- readRDS("data/processed/trial-clean.rds")',
+  'tab <- trial |>',
+  '  select(trt, age, stage, grade) |>',
+  '  tbl_summary(',
+  '    by    = trt,',
+  '    label = list(',
+  '      age   ~ "Age (years)",',
+  '      stage ~ "Tumour stage",',
+  '      grade ~ "Grade"',
+  '    )',
+  '  ) |>',
+  '  add_overall() |>',
+  '  add_p() |>',
+  '  modify_header(label ~ "**Characteristic**") |>',
+  '  bold_labels() |>',
+  '  as_gt() |>',
+  '  gt::tab_header(title = info$caption)',
+  'lbstproj::save_table(tab, name = "tab-baseline", export = FALSE)'
+)
+writeLines(
+  tab_bl_script,
+  fs::path(tmp_proj_dir, "R", "tables", "tab-baseline.R")
+)
+
+withr::with_options(list(lbstproj.quiet = TRUE), {
+  source(fs::path(tmp_proj_dir, "R", "tables", "tab-baseline.R"))
+})
+```
+
+```{r show-tab-baseline}
+readRDS("data/tables/tab-baseline.rds")
+```
+
+### Table 2 — Response rates
+
+```{r tab-response-script-display, eval=FALSE}
+# R/tables/tab-response.R
+
+library(dplyr)
+library(gtsummary)
+
+info <- get_info("tab-02")
+trial <- readRDS("data/processed/trial-clean.rds")
+
+tab <- trial |>
+  select(trt, response) |>
+  mutate(
+    response = factor(response, levels = c(1, 0), labels = c("Yes", "No"))
+  ) |>
+  tbl_summary(
+    by = trt,
+    label = list(response ~ "Tumour response")
+  ) |>
+  add_p() |>
+  modify_header(label ~ "**Variable**") |>
+  bold_labels() |>
+  as_gt() |>
+  gt::tab_header(title = info$caption)
+
+save_table(tab, name = "tab-response", export = FALSE)
+```
+
+```{r run-tab-response, echo=FALSE, message=FALSE, warning=FALSE}
+tab_resp_script <- c(
+  'library(dplyr)',
+  'library(gtsummary)',
+  'info  <- lbstproj::get_info("tab-02")',
+  'trial <- readRDS("data/processed/trial-clean.rds")',
+  'tab <- trial |>',
+  '  select(trt, response) |>',
+  '  mutate(response = factor(response, levels = c(1, 0), labels = c("Yes", "No"))) |>',
+  '  tbl_summary(',
+  '    by    = trt,',
+  '    label = list(response ~ "Tumour response")',
+  '  ) |>',
+  '  add_p() |>',
+  '  modify_header(label ~ "**Variable**") |>',
+  '  bold_labels() |>',
+  '  as_gt() |>',
+  '  gt::tab_header(title = info$caption)',
+  'lbstproj::save_table(tab, name = "tab-response", export = FALSE)'
+)
+writeLines(
+  tab_resp_script,
+  fs::path(tmp_proj_dir, "R", "tables", "tab-response.R")
+)
+
+withr::with_options(list(lbstproj.quiet = TRUE), {
+  source(fs::path(tmp_proj_dir, "R", "tables", "tab-response.R"))
+})
+```
+
+```{r show-tab-response}
+readRDS("data/tables/tab-response.rds")
+```
+
+---
+
+## 8. Running all outputs
+
+Once all scripts are written, `run_all_figures()` and `run_all_tables()` source
+every script in `R/figures/` and `R/tables/` in alphabetical order. They also
+cross-check the file list against the TOT and warn you about any discrepancies.
+
+```{r run-all-figures, message=FALSE, warning=FALSE}
+run_all_figures()
+```
+
+```{r run-all-tables, message=FALSE, warning=FALSE}
+run_all_tables()
+```
+
+---
+
+## 9. Generating the report
+
+### Create the report scaffold
+
+`create_report()` reads the TOT and generates a Quarto file at `report/report.qmd`
+with a code chunk for every figure and table, in the order they appear in the TOT.
+
+```{r create-report}
+create_report(output_type = "html")
+```
+
+The generated file looks like this (excerpt):
+
+```{r show-report, echo=FALSE, comment=""}
+report_lines <- readLines(fs::path(tmp_proj_dir, "report", "report.qmd"))
+cat(report_lines[seq_len(min(40L, length(report_lines)))], sep = "\n")
+```
+
+### Render the report
+
+Call `run_report()` to render the Quarto file to HTML (or DOCX):
+
+```{r run-report, eval=FALSE}
+run_report()
+```
+
+After reviewing the HTML report, archive it to `results/reports/` with a
+date-stamped filename using `archive_report()`:
+
+```{r archive-report, eval=FALSE}
+archive_report()
+```
+
+---
+
+## Summary
+
+Here is the full `lbstproj` workflow at a glance:
+
+```{r workflow-summary, eval=FALSE}
+library(lbstproj)
+
+# 1 — Scaffold the project
+create_project(path = ".", title = "My project", author = "Jane Doe")
+
+# 2 — Fill in data/tot/table_of_tables.xlsx, then import it
+import_tot()
+
+# 3 — Generate script stubs for every TOT entry
+create_from_tot(dry_run = FALSE)
+
+# 4 — Fill in the scripts, then run them all
+run_all_files("data")
+run_all_figures()
+run_all_tables()
+
+# 5 — Build and render the report
+create_report(output_type = "html")
+run_report()
+archive_report()
 ```
 

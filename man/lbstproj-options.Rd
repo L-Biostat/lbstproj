@@ -2,19 +2,40 @@
 % Please edit documentation in R/options.R
 \name{lbstproj-options}
 \alias{lbstproj-options}
-\title{Global options for the lbstproj package}
+\title{Package-wide options for lbstproj}
 \description{
-Global options for the lbstproj package
+\code{lbstproj} exposes one global option that controls whether informational
+messages are printed by package functions.
 }
-\section{Global options for printing messages}{
+\section{Options}{
 
 \itemize{
-\item \code{options(save.print = TRUE)} (default): print messages when saving figures
-and tables.
-\item \code{options(export.print = TRUE)} (default): print messages when exporting
-figures and tables.
-\item \code{options(use.print = TRUE)} (default): print messages when creating a new R
-script.
+\item \strong{\code{lbstproj.quiet}} (\code{logical}, default \code{FALSE}) — When \code{TRUE},
+suppresses all informational messages (e.g. "Saved to …", "Importing
+TOT …") across every function in the package.
+
+Individual functions also accept a \code{quiet} argument that overrides this
+option for a single call.
 }
+}
+
+\section{Usage}{
+
+
+Silence messages for an entire session:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{options(lbstproj.quiet = TRUE)
+}\if{html}{\out{</div>}}
+
+Restore the default (verbose) behaviour:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{options(lbstproj.quiet = FALSE)
+}\if{html}{\out{</div>}}
+
+Override the option for a single call:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{save_figure(fig, name = "my-fig", quiet = TRUE)   # silent
+save_figure(fig, name = "my-fig", quiet = FALSE)  # verbose
+}\if{html}{\out{</div>}}
 }
 

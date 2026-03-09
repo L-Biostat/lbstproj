@@ -1,25 +1,73 @@
 url: https://l-biostat.github.io/lbstproj/
+
 template:
   bootstrap: 5
-# reference:
-# - title: General
-# - contents:
-#   - create_project
-# - title: Creating R scripts
-#   desc:  Generate a R script based on a template.
-# - contents:
-#   - starts_with("create_")
-# - title: Saving
-#   desc: Save tables and figures as R objects.
-# - contents:
-#   - starts_with("save_")
-# - title: Exporting
-#   desc: Export tables and figures to human-readable files.
-# - contents:
-#   - starts_with("export_")
-# - title: Table of Tables (TOT)
-#   desc: Create and use the TOT in the project.
-# - contents:
-#   - ends_with("_tot")
-#   - get_info
+  bslib:
+    primary:         "#1B4E8C"   # navy  — hex border, Sigma, "L-Biostat"
+    link-color:      "#1B4E8C"
+    headings-color:  "#1B4E8C"
+    code-color:      "#2CB5C0"   # teal  — ribbon accent
+    code-bg:         "#eef8fa"
+    pkgdown-nav-background: "#1B4E8C"
+home:
+  title: lbstproj
+  description: >
+    Tools to create and manage standardized statistical analysis projects
+    for the L-Biostat group.
+
+navbar:
+  structure:
+    left:  [intro, reference, articles]
+    right: [github]
+  components:
+    intro:
+      text: Get started
+      href: articles/lbstproj.html
+
+articles:
+  - title: ~
+    contents:
+      - lbstproj
+
+reference:
+  - title: Project setup
+    desc: Initialize a new project with a standard folder structure.
+    contents:
+      - create_project
+
+  - title: Creating scripts
+    desc: Generate R script stubs from templates.
+    contents:
+      - create_file
+      - create_from_tot
+
+  - title: Saving outputs
+    desc: Save figures, tables, and datasets to standardized locations.
+    contents:
+      - save_outputs
+
+  - title: Table of Tables
+    desc: Import and load the Table of Tables (TOT) metadata registry.
+    contents:
+      - import_tot
+      - load_tot
+      - get_info
+
+  - title: Running scripts
+    desc: Source all scripts of a given type in batch.
+    contents:
+      - run_all_files
+
+  - title: Reporting
+    desc: Generate, render, and archive Quarto reports.
+    contents:
+      - create_report
+      - create_chunk
+      - run_report
+      - archive_report
+
+  - title: Options
+    desc: Package-level global options.
+    contents:
+      - lbstproj-options
 
