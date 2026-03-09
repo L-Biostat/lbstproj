@@ -1,14 +1,28 @@
-# Global options for the lbstproj package
+# Package-wide options for lbstproj
 
-Global options for the lbstproj package
+`lbstproj` exposes one global option that controls whether informational
+messages are printed by package functions.
 
-## Global options for printing messages
+## Options
 
-- `options(save.print = TRUE)` (default): print messages when saving
-  figures and tables.
+- **`lbstproj.quiet`** (`logical`, default `FALSE`) — When `TRUE`,
+  suppresses all informational messages (e.g. "Saved to …", "Importing
+  TOT …") across every function in the package.
 
-- `options(export.print = TRUE)` (default): print messages when
-  exporting figures and tables.
+  Individual functions also accept a `quiet` argument that overrides
+  this option for a single call.
 
-- `options(use.print = TRUE)` (default): print messages when creating a
-  new R script.
+## Usage
+
+Silence messages for an entire session:
+
+    options(lbstproj.quiet = TRUE)
+
+Restore the default (verbose) behaviour:
+
+    options(lbstproj.quiet = FALSE)
+
+Override the option for a single call:
+
+    save_figure(fig, name = "my-fig", quiet = TRUE)   # silent
+    save_figure(fig, name = "my-fig", quiet = FALSE)  # verbose

@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>lbstproj • lbstproj</title>
+<title>Getting started with lbstproj • lbstproj</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
 <link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
@@ -15,7 +15,7 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="lbstproj">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Getting started with lbstproj">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -36,12 +36,9 @@
       <ul class="navbar-nav me-auto">
 <li class="active nav-item"><a class="nav-link" href="../articles/lbstproj.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="nav-item"><a class="nav-link" href="../articles/index.html">Articles</a></li>
       </ul>
-<ul class="navbar-nav">
-<li class="nav-item"><form class="form-inline" role="search">
- <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
-</form></li>
-      </ul>
+<ul class="navbar-nav"></ul>
 </div>
 
 
@@ -53,7 +50,7 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>lbstproj</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>Getting started with lbstproj</h1>
             
       
 
@@ -62,39 +59,1639 @@
 
     
     
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
+<p>This tutorial walks through a complete <code>lbstproj</code> workflow
+using a fake oncology project. We use the <code>trial</code> dataset — a
+simulated randomized clinical trial of 200 patients assigned to
+<strong>Drug A</strong> or <strong>Drug B</strong> — to demonstrate how
+to:</p>
+<ol style="list-style-type: decimal">
+<li>Scaffold a standardized project</li>
+<li>Register outputs in the <strong>Table of Tables</strong> (TOT)</li>
+<li>Write and run data preparation, figure, and table scripts</li>
+<li>Generate a self-contained report</li>
+</ol>
+<hr>
+</div>
+<div class="section level2">
+<h2 id="create-a-project">1. Create a project<a class="anchor" aria-label="anchor" href="#create-a-project"></a>
+</h2>
+<p><code><a href="../reference/create_project.html">create_project()</a></code> builds the full directory structure and
+adds a <code>DESCRIPTION</code> file and a blank Table of Tables. We
+pass <code>force = TRUE</code> and <code>open = FALSE</code> to skip
+interactive prompts.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://l-biostat.github.io/lbstproj/">lbstproj</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/create_project.html">create_project</a></span><span class="op">(</span></span>
-<span>  <span class="co"># path = ".",</span></span>
 <span>  path <span class="op">=</span> <span class="va">tmp_proj_dir</span>,</span>
-<span>  title <span class="op">=</span> <span class="st">"FAKE trial"</span>,</span>
+<span>  title <span class="op">=</span> <span class="st">"Fake oncology trial"</span>,</span>
 <span>  client <span class="op">=</span> <span class="st">"John Doe"</span>,</span>
-<span>  department <span class="op">=</span> <span class="st">"DPT"</span>,</span>
+<span>  department <span class="op">=</span> <span class="st">"Oncology"</span>,</span>
 <span>  author <span class="op">=</span> <span class="st">"Jane Doe"</span>,</span>
+<span>  email <span class="op">=</span> <span class="st">"jane.doe@university.com"</span>,</span>
 <span>  open <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  force <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; Enter project information:</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Default values are shown in [brackets]. Press <span style="color: #0000BB;">[Enter]</span> to accept the default.</span></span>
-<span><span class="co">#&gt; Author's email address:</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Setting active project to <span style="color: #0000BB;">"/tmp/Rtmpb2Od1I/mock-lbstproj"</span>.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Writing <span style="color: #0000BB;">mock-lbstproj.Rproj</span>.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Adding <span style="color: #0000BB;">".Rproj.user"</span> to <span style="color: #0000BB;">.gitignore</span>.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Creating project structure</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Writing <span style="color: #0000BB;">DESCRIPTION</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Writing <span style="color: #0000BB;">table_of_tables.xlsx</span> to <span style="color: #0000BB;">data/tot</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="font-weight: bold;">Project setup complete! Start working!</span></span></span></code></pre></div>
+<span><span class="op">)</span></span></code></pre></div>
+<p>The project now has the following structure:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/path.html" class="external-link">path</a></span><span class="op">(</span><span class="st">"data"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">data</span></span></span>
-<span><span class="co">#&gt; ├── <span style="color: #0000BB; font-weight: bold;">figures</span></span></span>
-<span><span class="co">#&gt; ├── <span style="color: #0000BB; font-weight: bold;">processed</span></span></span>
-<span><span class="co">#&gt; ├── <span style="color: #0000BB; font-weight: bold;">raw</span></span></span>
-<span><span class="co">#&gt; ├── <span style="color: #0000BB; font-weight: bold;">tables</span></span></span>
-<span><span class="co">#&gt; └── <span style="color: #0000BB; font-weight: bold;">tot</span></span></span>
-<span><span class="co">#&gt;     └── table_of_tables.xlsx</span></span></code></pre></div>
-  </main>
+<code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="va">tmp_proj_dir</span>, recurse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">/tmp/Rtmpnf14c5/fake-trial</span></span></span>
+<span><span class="co">#&gt; ├── DESCRIPTION</span></span>
+<span><span class="co">#&gt; ├── <span style="color: #0000BB; font-weight: bold;">R</span></span></span>
+<span><span class="co">#&gt; │   ├── <span style="color: #0000BB; font-weight: bold;">data</span></span></span>
+<span><span class="co">#&gt; │   ├── <span style="color: #0000BB; font-weight: bold;">figures</span></span></span>
+<span><span class="co">#&gt; │   ├── <span style="color: #0000BB; font-weight: bold;">functions</span></span></span>
+<span><span class="co">#&gt; │   └── <span style="color: #0000BB; font-weight: bold;">tables</span></span></span>
+<span><span class="co">#&gt; ├── <span style="color: #0000BB; font-weight: bold;">data</span></span></span>
+<span><span class="co">#&gt; │   ├── <span style="color: #0000BB; font-weight: bold;">figures</span></span></span>
+<span><span class="co">#&gt; │   ├── <span style="color: #0000BB; font-weight: bold;">processed</span></span></span>
+<span><span class="co">#&gt; │   ├── <span style="color: #0000BB; font-weight: bold;">raw</span></span></span>
+<span><span class="co">#&gt; │   ├── <span style="color: #0000BB; font-weight: bold;">tables</span></span></span>
+<span><span class="co">#&gt; │   └── <span style="color: #0000BB; font-weight: bold;">tot</span></span></span>
+<span><span class="co">#&gt; │       └── table_of_tables.xlsx</span></span>
+<span><span class="co">#&gt; ├── <span style="color: #0000BB; font-weight: bold;">docs</span></span></span>
+<span><span class="co">#&gt; │   ├── costing.docx</span></span>
+<span><span class="co">#&gt; │   └── meeting_notes.docx</span></span>
+<span><span class="co">#&gt; ├── fake-trial.Rproj</span></span>
+<span><span class="co">#&gt; ├── <span style="color: #0000BB; font-weight: bold;">report</span></span></span>
+<span><span class="co">#&gt; │   └── <span style="color: #0000BB; font-weight: bold;">utils</span></span></span>
+<span><span class="co">#&gt; └── <span style="color: #0000BB; font-weight: bold;">results</span></span></span>
+<span><span class="co">#&gt;     ├── <span style="color: #0000BB; font-weight: bold;">figures</span></span></span>
+<span><span class="co">#&gt;     ├── <span style="color: #0000BB; font-weight: bold;">reports</span></span></span>
+<span><span class="co">#&gt;     └── <span style="color: #0000BB; font-weight: bold;">tables</span></span></span></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th>Folder</th>
+<th>Purpose</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>data/raw/</code></td>
+<td>Raw input files (CSV, Excel, …)</td>
+</tr>
+<tr class="even">
+<td><code>data/processed/</code></td>
+<td>Cleaned datasets saved as <code>.rds</code>
+</td>
+</tr>
+<tr class="odd">
+<td><code>data/tables/</code></td>
+<td>GT tables saved as <code>.rds</code>
+</td>
+</tr>
+<tr class="even">
+<td><code>data/tot/</code></td>
+<td>The Table of Tables (Excel + cached <code>.rds</code>)</td>
+</tr>
+<tr class="odd">
+<td><code>R/data/</code></td>
+<td>Data preparation scripts</td>
+</tr>
+<tr class="even">
+<td><code>R/figures/</code></td>
+<td>Figure scripts</td>
+</tr>
+<tr class="odd">
+<td><code>R/tables/</code></td>
+<td>Table scripts</td>
+</tr>
+<tr class="even">
+<td><code>results/figures/</code></td>
+<td>Final PNG/PDF figures</td>
+</tr>
+<tr class="odd">
+<td><code>results/tables/</code></td>
+<td>Word tables (<code>.docx</code>)</td>
+</tr>
+<tr class="even">
+<td><code>report/</code></td>
+<td>Quarto report</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</div>
+<div class="section level2">
+<h2 id="import-raw-data">2. Import raw data<a class="anchor" aria-label="anchor" href="#import-raw-data"></a>
+</h2>
+<p>The <code>trial</code> dataset is bundled with <code>lbstproj</code>
+as a CSV. Copy it to <code>data/raw/</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># In a real project you would place your raw data file in data/raw/ manually.</span></span>
+<span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/copy.html" class="external-link">file_copy</a></span><span class="op">(</span><span class="st">"path/to/trial.csv"</span>, <span class="st">"data/raw/trial.csv"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">trial_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"data/raw/trial.csv"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">trial_raw</span><span class="op">)</span></span>
+<span><span class="co">#&gt;      trt age marker stage grade response death ttdeath</span></span>
+<span><span class="co">#&gt; 1 Drug A  23  0.160    T1    II        0     0   24.00</span></span>
+<span><span class="co">#&gt; 2 Drug B   9  1.107    T2     I        1     0   24.00</span></span>
+<span><span class="co">#&gt; 3 Drug A  31  0.277    T1    II        0     0   24.00</span></span>
+<span><span class="co">#&gt; 4 Drug A  NA  2.067    T3   III        1     1   17.64</span></span>
+<span><span class="co">#&gt; 5 Drug A  51  2.767    T4   III        1     1   16.43</span></span>
+<span><span class="co">#&gt; 6 Drug B  39  0.613    T4     I        0     1   15.64</span></span></code></pre></div>
+<p>The dataset has 200 patients with eight variables: treatment arm
+(<code>trt</code>), <code>age</code>, biomarker level
+(<code>marker</code>), tumour stage (<code>stage</code>), histological
+grade (<code>grade</code>), binary <code>response</code>, and survival
+endpoints (<code>death</code>, <code>ttdeath</code>).</p>
+<hr>
+</div>
+<div class="section level2">
+<h2 id="the-table-of-tables">3. The Table of Tables<a class="anchor" aria-label="anchor" href="#the-table-of-tables"></a>
+</h2>
+<p>The <strong>Table of Tables</strong> (TOT) is the central registry of
+every output your project will produce. It lives in
+<code>data/tot/table_of_tables.xlsx</code> and has four columns:</p>
+<table class="table">
+<colgroup>
+<col width="45%">
+<col width="54%">
+</colgroup>
+<thead><tr class="header">
+<th>Column</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>id</code></td>
+<td>Short unique identifier (referenced inside scripts)</td>
+</tr>
+<tr class="even">
+<td><code>type</code></td>
+<td>
+<code>"figure"</code> or <code>"table"</code>
+</td>
+</tr>
+<tr class="odd">
+<td><code>name</code></td>
+<td>File name used for saving (letters, numbers, hyphens only)</td>
+</tr>
+<tr class="even">
+<td><code>caption</code></td>
+<td>Caption that appears in the report</td>
+</tr>
+</tbody>
+</table>
+<p>For this project we plan two figures and two tables:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tot_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fig-01"</span>, <span class="st">"fig-02"</span>, <span class="st">"tab-01"</span>, <span class="st">"tab-02"</span><span class="op">)</span>,</span>
+<span>  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"figure"</span>, <span class="st">"figure"</span>, <span class="st">"table"</span>, <span class="st">"table"</span><span class="op">)</span>,</span>
+<span>  name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fig-age-dist"</span>, <span class="st">"fig-response"</span>, <span class="st">"tab-baseline"</span>, <span class="st">"tab-response"</span><span class="op">)</span>,</span>
+<span>  caption <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"Age distribution by treatment arm."</span>,</span>
+<span>    <span class="st">"Tumour response rate by treatment arm."</span>,</span>
+<span>    <span class="st">"Baseline patient characteristics by treatment arm."</span>,</span>
+<span>    <span class="st">"Tumour response rates by treatment arm."</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">tot_data</span></span>
+<span><span class="co">#&gt;       id   type         name                                            caption</span></span>
+<span><span class="co">#&gt; 1 fig-01 figure fig-age-dist                 Age distribution by treatment arm.</span></span>
+<span><span class="co">#&gt; 2 fig-02 figure fig-response             Tumour response rate by treatment arm.</span></span>
+<span><span class="co">#&gt; 3 tab-01  table tab-baseline Baseline patient characteristics by treatment arm.</span></span>
+<span><span class="co">#&gt; 4 tab-02  table tab-response            Tumour response rates by treatment arm.</span></span></code></pre></div>
+<p>After filling in the spreadsheet, call <code><a href="../reference/import_tot.html">import_tot()</a></code> to
+validate it and cache it as an <code>.rds</code> file:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/import_tot.html">import_tot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Importing Table of Tables (TOT) to <span style="color: #0000BB;">data/tot/tot.rds</span></span></span></code></pre></div>
+<p>You can always inspect the TOT with <code><a href="../reference/load_tot.html">load_tot()</a></code>:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/load_tot.html">load_tot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 4</span></span></span>
+<span><span class="co">#&gt;   id     type   name         caption                                           </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> fig-01 figure fig-age-dist Age distribution by treatment arm.                </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> fig-02 figure fig-response Tumour response rate by treatment arm.            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> tab-01 table  tab-baseline Baseline patient characteristics by treatment arm.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> tab-02 table  tab-response Tumour response rates by treatment arm.</span></span></code></pre></div>
+<hr>
+</div>
+<div class="section level2">
+<h2 id="create-analysis-scripts">4. Create analysis scripts<a class="anchor" aria-label="anchor" href="#create-analysis-scripts"></a>
+</h2>
+<p><code><a href="../reference/create_from_tot.html">create_from_tot()</a></code> reads the TOT and generates stub R
+scripts for each entry. Always do a <strong>dry run</strong> first to
+preview what will be created:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/create_from_tot.html">create_from_tot</a></span><span class="op">(</span>dry_run <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Figures</span> ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Figures: 2 in TOT, 0 on disk, 0 matched.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Figures: would generate 2 missing programs.</span></span>
+<span><span class="co">#&gt; → info</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="color: #0000BB;">R/figures/fig-age-dist.R</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="color: #0000BB;">R/figures/fig-response.R</span></span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Tables</span> ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Tables: 2 in TOT, 0 on disk, 0 matched.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Tables: would generate 2 missing programs.</span></span>
+<span><span class="co">#&gt; → info</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="color: #0000BB;">R/tables/tab-baseline.R</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="color: #0000BB;">R/tables/tab-response.R</span></span></span></code></pre></div>
+<p>Once satisfied, run without <code>dry_run</code> to create the
+stubs:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/create_from_tot.html">create_from_tot</a></span><span class="op">(</span>dry_run <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Figures</span> ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Figures: 2 in TOT, 0 on disk, 0 matched.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Figures: generating 2 missing programs.</span></span>
+<span><span class="co">#&gt; → success</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="color: #0000BB;">R/figures/fig-age-dist.R</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="color: #0000BB;">R/figures/fig-response.R</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="font-weight: bold;">Fig-Age-Dist</span> file created at <span style="color: #0000BB;">R/figures/fig-age-dist.R</span>.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="font-weight: bold;">Fig-Response</span> file created at <span style="color: #0000BB;">R/figures/fig-response.R</span>.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Tables</span> ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Tables: 2 in TOT, 0 on disk, 0 matched.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Tables: generating 2 missing programs.</span></span>
+<span><span class="co">#&gt; → success</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="color: #0000BB;">R/tables/tab-baseline.R</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="color: #0000BB;">R/tables/tab-response.R</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="font-weight: bold;">Tab-Baseline</span> file created at <span style="color: #0000BB;">R/tables/tab-baseline.R</span>.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="font-weight: bold;">Tab-Response</span> file created at <span style="color: #0000BB;">R/tables/tab-response.R</span>.</span></span></code></pre></div>
+<p>Each stub is pre-filled with a header, <code><a href="../reference/get_info.html">get_info()</a></code> to
+retrieve TOT metadata, library calls, and placeholder comments:</p>
+<pre><code><span><span class="co">#' Name         : fig-age-dist.R</span></span>
+<span><span class="co">#' Author       : Jane Doe</span></span>
+<span><span class="co">#' Date         : 09 Mar 2026</span></span>
+<span><span class="co">#' Purpose      : description</span></span>
+<span><span class="co">#' Files created:</span></span>
+<span><span class="co">#'  - `results/figures/fig-age-dist.png/pdf`</span></span>
+<span><span class="co">#' Edits        :</span></span>
+<span><span class="co">#'  - 09 Mar 2026: Created file.</span></span>
+<span></span>
+<span><span class="co"># File info ---------------------------------------------------------------</span></span>
+<span></span>
+<span><span class="va">info</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_info.html">get_info</a></span><span class="op">(</span><span class="va">fig</span><span class="op">-</span><span class="fl">01</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Packages ----------------------------------------------------------------</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Load data ---------------------------------------------------------------</span></span>
+<span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="cn">NULL</span> <span class="co"># Load processed data here</span></span>
+<span></span>
+<span><span class="co"># Generate figure ---------------------------------------------------------</span></span>
+<span></span>
+<span><span class="va">fig</span> <span class="op">&lt;-</span> <span class="cn">NULL</span> <span class="co"># Replace NULL with your figure code, e.g. ggplot(data) + ...</span></span>
+<span></span>
+<span><span class="co"># Save figure -------------------------------------------------------------</span></span>
+<span></span>
+<span><span class="fu">lbstproj</span><span class="fu">::</span><span class="fu">export_figure</span><span class="op">(</span><span class="va">fig</span>, name <span class="op">=</span> <span class="st">"fig-age-dist"</span>, ext <span class="op">=</span> <span class="st">"png"</span><span class="op">)</span></span></code></pre>
+<p>You fill in the placeholder sections with your analysis. The next
+sections show the completed scripts for our oncology project.</p>
+<hr>
+</div>
+<div class="section level2">
+<h2 id="data-preparation">5. Data preparation<a class="anchor" aria-label="anchor" href="#data-preparation"></a>
+</h2>
+<p>All cleaning and reshaping happens in <code>R/data/</code>. The
+script below loads the raw CSV, coerces categorical variables to
+factors, and saves the result with <code><a href="../reference/save_outputs.html">save_data()</a></code>.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># R/data/trial-clean.R</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Load raw data ---------------------------------------------------------------</span></span>
+<span><span class="va">raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"data/raw/trial.csv"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Clean -----------------------------------------------------------------------</span></span>
+<span><span class="va">trial</span> <span class="op">&lt;-</span> <span class="va">raw</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    trt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">trt</span><span class="op">)</span>,</span>
+<span>    stage <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">stage</span><span class="op">)</span>,</span>
+<span>    grade <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">grade</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"I"</span>, <span class="st">"II"</span>, <span class="st">"III"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Save ------------------------------------------------------------------------</span></span>
+<span><span class="fu"><a href="../reference/save_outputs.html">save_data</a></span><span class="op">(</span><span class="va">trial</span>, name <span class="op">=</span> <span class="st">"trial-clean"</span><span class="op">)</span></span></code></pre></div>
+<p>After running the script you can inspect the processed dataset:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">trial</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"data/processed/trial-clean.rds"</span><span class="op">)</span></span>
+<span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">trial</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Rows: 200</span></span>
+<span><span class="co">#&gt; Columns: 8</span></span>
+<span><span class="co">#&gt; $ trt      <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> Drug A<span style="color: #949494;">, </span>Drug B<span style="color: #949494;">, </span>Drug A<span style="color: #949494;">, </span>Drug A<span style="color: #949494;">, </span>Drug A<span style="color: #949494;">, </span>Drug B<span style="color: #949494;">, </span>Drug A<span style="color: #949494;">, </span>Drug …</span></span>
+<span><span class="co">#&gt; $ age      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 23<span style="color: #949494;">, </span>9<span style="color: #949494;">, </span>31<span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span>51<span style="color: #949494;">, </span>39<span style="color: #949494;">, </span>37<span style="color: #949494;">, </span>32<span style="color: #949494;">, </span>31<span style="color: #949494;">, </span>34<span style="color: #949494;">, </span>42<span style="color: #949494;">, </span>63<span style="color: #949494;">, </span>54<span style="color: #949494;">, </span>21<span style="color: #949494;">, </span>48<span style="color: #949494;">, </span>71…</span></span>
+<span><span class="co">#&gt; $ marker   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.160<span style="color: #949494;">, </span>1.107<span style="color: #949494;">, </span>0.277<span style="color: #949494;">, </span>2.067<span style="color: #949494;">, </span>2.767<span style="color: #949494;">, </span>0.613<span style="color: #949494;">, </span>0.354<span style="color: #949494;">, </span>1.739<span style="color: #949494;">, </span>0.144…</span></span>
+<span><span class="co">#&gt; $ stage    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> T1<span style="color: #949494;">, </span>T2<span style="color: #949494;">, </span>T1<span style="color: #949494;">, </span>T3<span style="color: #949494;">, </span>T4<span style="color: #949494;">, </span>T4<span style="color: #949494;">, </span>T1<span style="color: #949494;">, </span>T1<span style="color: #949494;">, </span>T1<span style="color: #949494;">, </span>T3<span style="color: #949494;">, </span>T1<span style="color: #949494;">, </span>T3<span style="color: #949494;">, </span>T4<span style="color: #949494;">, </span>T4<span style="color: #949494;">, </span>T1<span style="color: #949494;">, </span>T…</span></span>
+<span><span class="co">#&gt; $ grade    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> II<span style="color: #949494;">, </span>I<span style="color: #949494;">, </span>II<span style="color: #949494;">, </span>III<span style="color: #949494;">, </span>III<span style="color: #949494;">, </span>I<span style="color: #949494;">, </span>II<span style="color: #949494;">, </span>I<span style="color: #949494;">, </span>II<span style="color: #949494;">, </span>I<span style="color: #949494;">, </span>III<span style="color: #949494;">, </span>I<span style="color: #949494;">, </span>III<span style="color: #949494;">, </span>I<span style="color: #949494;">, </span>I<span style="color: #949494;">, </span>III<span style="color: #949494;">,</span>…</span></span>
+<span><span class="co">#&gt; $ response <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 0<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0…</span></span>
+<span><span class="co">#&gt; $ death    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0…</span></span>
+<span><span class="co">#&gt; $ ttdeath  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 24.00<span style="color: #949494;">, </span>24.00<span style="color: #949494;">, </span>24.00<span style="color: #949494;">, </span>17.64<span style="color: #949494;">, </span>16.43<span style="color: #949494;">, </span>15.64<span style="color: #949494;">, </span>24.00<span style="color: #949494;">, </span>18.43<span style="color: #949494;">, </span>24.00…</span></span></code></pre></div>
+<hr>
+</div>
+<div class="section level2">
+<h2 id="figures">6. Figures<a class="anchor" aria-label="anchor" href="#figures"></a>
+</h2>
+<div class="section level3">
+<h3 id="figure-1-age-distribution">Figure 1 — Age distribution<a class="anchor" aria-label="anchor" href="#figure-1-age-distribution"></a>
+</h3>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># R/figures/fig-age-dist.R</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">info</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_info.html">get_info</a></span><span class="op">(</span><span class="st">"fig-01"</span><span class="op">)</span></span>
+<span><span class="va">trial</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"data/processed/trial-clean.rds"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">fig</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">trial</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">trt</span>, y <span class="op">=</span> <span class="va">age</span>, fill <span class="op">=</span> <span class="va">trt</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html" class="external-link">geom_violin</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.4</span>, trim <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html" class="external-link">geom_boxplot</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.15</span>, alpha <span class="op">=</span> <span class="fl">0.8</span>, outlier.shape <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set2"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Treatment arm"</span>, y <span class="op">=</span> <span class="st">"Age (years)"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/save_outputs.html">save_figure</a></span><span class="op">(</span><span class="va">fig</span>, name <span class="op">=</span> <span class="st">"fig-age-dist"</span>, width <span class="op">=</span> <span class="fl">5</span>, height <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; Warning: Removed 11 rows containing non-finite outside the scale range</span></span>
+<span><span class="co">#&gt; (`stat_ydensity()`).</span></span>
+<span><span class="co">#&gt; Warning: Removed 11 rows containing non-finite outside the scale range</span></span>
+<span><span class="co">#&gt; (`stat_boxplot()`).</span></span></code></pre>
+<div class="figure">
+<img src="lbstproj_files/figure-html/show-fig-age-1.png" class="r-plt" alt="Age distribution by treatment arm." width="70%"><p class="caption">
+Age distribution by treatment arm.
+</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="figure-2-response-rate">Figure 2 — Response rate<a class="anchor" aria-label="anchor" href="#figure-2-response-rate"></a>
+</h3>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># R/figures/fig-response.R</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">info</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_info.html">get_info</a></span><span class="op">(</span><span class="st">"fig-02"</span><span class="op">)</span></span>
+<span><span class="va">trial</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"data/processed/trial-clean.rds"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">response_rate</span> <span class="op">&lt;-</span> <span class="va">trial</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">trt</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>rate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">response</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span>, .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">fig</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">response_rate</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">trt</span>, y <span class="op">=</span> <span class="va">rate</span>, fill <span class="op">=</span> <span class="va">trt</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_col</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.5</span>, alpha <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set2"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span></span>
+<span>    limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span>,</span>
+<span>    labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_percent.html" class="external-link">label_percent</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Treatment arm"</span>, y <span class="op">=</span> <span class="st">"Response rate (%)"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/save_outputs.html">save_figure</a></span><span class="op">(</span><span class="va">fig</span>, name <span class="op">=</span> <span class="st">"fig-response"</span>, width <span class="op">=</span> <span class="fl">5</span>, height <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="lbstproj_files/figure-html/show-fig-response-1.png" class="r-plt" alt="Tumour response rate by treatment arm." width="70%"><p class="caption">
+Tumour response rate by treatment arm.
+</p>
+</div>
+<hr>
+</div>
+</div>
+<div class="section level2">
+<h2 id="tables">7. Tables<a class="anchor" aria-label="anchor" href="#tables"></a>
+</h2>
+<p>Tables are saved as <code>gt</code> objects and optionally exported
+to Word. The workflow below uses <code>gtsummary</code> to produce
+publication-ready summaries, then converts to <code>gt</code> with
+<code><a href="https://www.danieldsjoberg.com/gtsummary/reference/as_gt.html" class="external-link">as_gt()</a></code> before saving.</p>
+<div class="section level3">
+<h3 id="table-1-baseline-characteristics">Table 1 — Baseline characteristics<a class="anchor" aria-label="anchor" href="#table-1-baseline-characteristics"></a>
+</h3>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># R/tables/tab-baseline.R</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ddsjoberg/gtsummary" class="external-link">gtsummary</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">info</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_info.html">get_info</a></span><span class="op">(</span><span class="st">"tab-01"</span><span class="op">)</span></span>
+<span><span class="va">trial</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"data/processed/trial-clean.rds"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">tab</span> <span class="op">&lt;-</span> <span class="va">trial</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">trt</span>, <span class="va">age</span>, <span class="va">stage</span>, <span class="va">grade</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_summary.html" class="external-link">tbl_summary</a></span><span class="op">(</span></span>
+<span>    by <span class="op">=</span> <span class="va">trt</span>,</span>
+<span>    label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      <span class="va">age</span> <span class="op">~</span> <span class="st">"Age (years)"</span>,</span>
+<span>      <span class="va">stage</span> <span class="op">~</span> <span class="st">"Tumour stage"</span>,</span>
+<span>      <span class="va">grade</span> <span class="op">~</span> <span class="st">"Grade"</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/add_overall.html" class="external-link">add_overall</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/add_p.html" class="external-link">add_p</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/modify.html" class="external-link">modify_header</a></span><span class="op">(</span><span class="va">label</span> <span class="op">~</span> <span class="st">"**Characteristic**"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/bold_italicize_labels_levels.html" class="external-link">bold_labels</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/as_gt.html" class="external-link">as_gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/tab_header.html" class="external-link">tab_header</a></span><span class="op">(</span>title <span class="op">=</span> <span class="va">info</span><span class="op">$</span><span class="va">caption</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/save_outputs.html">save_table</a></span><span class="op">(</span><span class="va">tab</span>, name <span class="op">=</span> <span class="st">"tab-baseline"</span>, export <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"data/tables/tab-baseline.rds"</span><span class="op">)</span></span></code></pre></div>
+<div id="mwlefoodfi" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#mwlefoodfi table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#mwlefoodfi thead, #mwlefoodfi tbody, #mwlefoodfi tfoot, #mwlefoodfi tr, #mwlefoodfi td, #mwlefoodfi th {
+  border-style: none;
+}
+
+#mwlefoodfi p {
+  margin: 0;
+  padding: 0;
+}
+
+#mwlefoodfi .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#mwlefoodfi .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#mwlefoodfi .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#mwlefoodfi .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#mwlefoodfi .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#mwlefoodfi .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mwlefoodfi .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#mwlefoodfi .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#mwlefoodfi .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#mwlefoodfi .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#mwlefoodfi .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#mwlefoodfi .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#mwlefoodfi .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#mwlefoodfi .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#mwlefoodfi .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#mwlefoodfi .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#mwlefoodfi .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#mwlefoodfi .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#mwlefoodfi .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mwlefoodfi .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#mwlefoodfi .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#mwlefoodfi .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#mwlefoodfi .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mwlefoodfi .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#mwlefoodfi .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#mwlefoodfi .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mwlefoodfi .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mwlefoodfi .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#mwlefoodfi .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mwlefoodfi .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#mwlefoodfi .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mwlefoodfi .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#mwlefoodfi .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mwlefoodfi .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#mwlefoodfi .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mwlefoodfi .gt_left {
+  text-align: left;
+}
+
+#mwlefoodfi .gt_center {
+  text-align: center;
+}
+
+#mwlefoodfi .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#mwlefoodfi .gt_font_normal {
+  font-weight: normal;
+}
+
+#mwlefoodfi .gt_font_bold {
+  font-weight: bold;
+}
+
+#mwlefoodfi .gt_font_italic {
+  font-style: italic;
+}
+
+#mwlefoodfi .gt_super {
+  font-size: 65%;
+}
+
+#mwlefoodfi .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#mwlefoodfi .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#mwlefoodfi .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#mwlefoodfi .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#mwlefoodfi .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#mwlefoodfi .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#mwlefoodfi .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#mwlefoodfi .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#mwlefoodfi div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="table gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_heading">
+<td colspan="5" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Baseline patient characteristics by treatment arm.</td>
+    </tr>
+<tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="label"><span class="gt_from_md"><strong>Characteristic</strong></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_0">
+<span class="gt_from_md"><strong>Overall</strong><br>
+N = 200</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span>
+</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_1">
+<span class="gt_from_md"><strong>Drug A</strong><br>
+N = 98</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span>
+</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_2">
+<span class="gt_from_md"><strong>Drug B</strong><br>
+N = 102</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span>
+</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="p.value"><span class="gt_from_md"><strong>p-value</strong></span></th>
+    </tr>
+</thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="label" class="gt_row gt_left" style="font-weight: bold;">Age (years)</td>
+<td headers="stat_0" class="gt_row gt_center">47 (38, 57)</td>
+<td headers="stat_1" class="gt_row gt_center">46 (37, 60)</td>
+<td headers="stat_2" class="gt_row gt_center">48 (39, 56)</td>
+<td headers="p.value" class="gt_row gt_center"><br></td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">    Unknown</td>
+<td headers="stat_0" class="gt_row gt_center">11</td>
+<td headers="stat_1" class="gt_row gt_center">7</td>
+<td headers="stat_2" class="gt_row gt_center">4</td>
+<td headers="p.value" class="gt_row gt_center"><br></td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left" style="font-weight: bold;">Tumour stage</td>
+<td headers="stat_0" class="gt_row gt_center"><br></td>
+<td headers="stat_1" class="gt_row gt_center"><br></td>
+<td headers="stat_2" class="gt_row gt_center"><br></td>
+<td headers="p.value" class="gt_row gt_center"><br></td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">    T1</td>
+<td headers="stat_0" class="gt_row gt_center">53 (27%)</td>
+<td headers="stat_1" class="gt_row gt_center">28 (29%)</td>
+<td headers="stat_2" class="gt_row gt_center">25 (25%)</td>
+<td headers="p.value" class="gt_row gt_center"><br></td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">    T2</td>
+<td headers="stat_0" class="gt_row gt_center">54 (27%)</td>
+<td headers="stat_1" class="gt_row gt_center">25 (26%)</td>
+<td headers="stat_2" class="gt_row gt_center">29 (28%)</td>
+<td headers="p.value" class="gt_row gt_center"><br></td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">    T3</td>
+<td headers="stat_0" class="gt_row gt_center">43 (22%)</td>
+<td headers="stat_1" class="gt_row gt_center">22 (22%)</td>
+<td headers="stat_2" class="gt_row gt_center">21 (21%)</td>
+<td headers="p.value" class="gt_row gt_center"><br></td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">    T4</td>
+<td headers="stat_0" class="gt_row gt_center">50 (25%)</td>
+<td headers="stat_1" class="gt_row gt_center">23 (23%)</td>
+<td headers="stat_2" class="gt_row gt_center">27 (26%)</td>
+<td headers="p.value" class="gt_row gt_center"><br></td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left" style="font-weight: bold;">Grade</td>
+<td headers="stat_0" class="gt_row gt_center"><br></td>
+<td headers="stat_1" class="gt_row gt_center"><br></td>
+<td headers="stat_2" class="gt_row gt_center"><br></td>
+<td headers="p.value" class="gt_row gt_center"><br></td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">    I</td>
+<td headers="stat_0" class="gt_row gt_center">68 (34%)</td>
+<td headers="stat_1" class="gt_row gt_center">35 (36%)</td>
+<td headers="stat_2" class="gt_row gt_center">33 (32%)</td>
+<td headers="p.value" class="gt_row gt_center"><br></td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">    II</td>
+<td headers="stat_0" class="gt_row gt_center">68 (34%)</td>
+<td headers="stat_1" class="gt_row gt_center">32 (33%)</td>
+<td headers="stat_2" class="gt_row gt_center">36 (35%)</td>
+<td headers="p.value" class="gt_row gt_center"><br></td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">    III</td>
+<td headers="stat_0" class="gt_row gt_center">64 (32%)</td>
+<td headers="stat_1" class="gt_row gt_center">31 (32%)</td>
+<td headers="stat_2" class="gt_row gt_center">33 (32%)</td>
+<td headers="p.value" class="gt_row gt_center"><br></td>
+</tr>
+</tbody>
+<tfoot><tr class="gt_footnotes">
+<td class="gt_footnote" colspan="5">
+<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> <span class="gt_from_md">Median (Q1, Q3); n (%)</span>
+</td>
+    </tr></tfoot>
+</table>
+</div>
+</div>
+<div class="section level3">
+<h3 id="table-2-response-rates">Table 2 — Response rates<a class="anchor" aria-label="anchor" href="#table-2-response-rates"></a>
+</h3>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># R/tables/tab-response.R</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ddsjoberg/gtsummary" class="external-link">gtsummary</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">info</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_info.html">get_info</a></span><span class="op">(</span><span class="st">"tab-02"</span><span class="op">)</span></span>
+<span><span class="va">trial</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"data/processed/trial-clean.rds"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">tab</span> <span class="op">&lt;-</span> <span class="va">trial</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">trt</span>, <span class="va">response</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    response <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">response</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Yes"</span>, <span class="st">"No"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_summary.html" class="external-link">tbl_summary</a></span><span class="op">(</span></span>
+<span>    by <span class="op">=</span> <span class="va">trt</span>,</span>
+<span>    label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">response</span> <span class="op">~</span> <span class="st">"Tumour response"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/add_p.html" class="external-link">add_p</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/modify.html" class="external-link">modify_header</a></span><span class="op">(</span><span class="va">label</span> <span class="op">~</span> <span class="st">"**Variable**"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/bold_italicize_labels_levels.html" class="external-link">bold_labels</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/as_gt.html" class="external-link">as_gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/tab_header.html" class="external-link">tab_header</a></span><span class="op">(</span>title <span class="op">=</span> <span class="va">info</span><span class="op">$</span><span class="va">caption</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/save_outputs.html">save_table</a></span><span class="op">(</span><span class="va">tab</span>, name <span class="op">=</span> <span class="st">"tab-response"</span>, export <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"data/tables/tab-response.rds"</span><span class="op">)</span></span></code></pre></div>
+<div id="dbirslsqjl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#dbirslsqjl table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#dbirslsqjl thead, #dbirslsqjl tbody, #dbirslsqjl tfoot, #dbirslsqjl tr, #dbirslsqjl td, #dbirslsqjl th {
+  border-style: none;
+}
+
+#dbirslsqjl p {
+  margin: 0;
+  padding: 0;
+}
+
+#dbirslsqjl .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#dbirslsqjl .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#dbirslsqjl .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#dbirslsqjl .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#dbirslsqjl .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#dbirslsqjl .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dbirslsqjl .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#dbirslsqjl .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#dbirslsqjl .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#dbirslsqjl .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#dbirslsqjl .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#dbirslsqjl .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#dbirslsqjl .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#dbirslsqjl .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#dbirslsqjl .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#dbirslsqjl .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#dbirslsqjl .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#dbirslsqjl .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#dbirslsqjl .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dbirslsqjl .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#dbirslsqjl .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#dbirslsqjl .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#dbirslsqjl .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dbirslsqjl .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#dbirslsqjl .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#dbirslsqjl .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dbirslsqjl .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dbirslsqjl .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#dbirslsqjl .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dbirslsqjl .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#dbirslsqjl .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dbirslsqjl .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#dbirslsqjl .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dbirslsqjl .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#dbirslsqjl .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dbirslsqjl .gt_left {
+  text-align: left;
+}
+
+#dbirslsqjl .gt_center {
+  text-align: center;
+}
+
+#dbirslsqjl .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#dbirslsqjl .gt_font_normal {
+  font-weight: normal;
+}
+
+#dbirslsqjl .gt_font_bold {
+  font-weight: bold;
+}
+
+#dbirslsqjl .gt_font_italic {
+  font-style: italic;
+}
+
+#dbirslsqjl .gt_super {
+  font-size: 65%;
+}
+
+#dbirslsqjl .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#dbirslsqjl .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#dbirslsqjl .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#dbirslsqjl .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#dbirslsqjl .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#dbirslsqjl .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#dbirslsqjl .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#dbirslsqjl .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#dbirslsqjl div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="table gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_heading">
+<td colspan="4" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Tumour response rates by treatment arm.</td>
+    </tr>
+<tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="label"><span class="gt_from_md"><strong>Variable</strong></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_1">
+<span class="gt_from_md"><strong>Drug A</strong><br>
+N = 98</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span>
+</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_2">
+<span class="gt_from_md"><strong>Drug B</strong><br>
+N = 102</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span>
+</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="p.value"><span class="gt_from_md"><strong>p-value</strong></span></th>
+    </tr>
+</thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="label" class="gt_row gt_left" style="font-weight: bold;">Tumour response</td>
+<td headers="stat_1" class="gt_row gt_center">28 (29%)</td>
+<td headers="stat_2" class="gt_row gt_center">33 (34%)</td>
+<td headers="p.value" class="gt_row gt_center"><br></td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">    Unknown</td>
+<td headers="stat_1" class="gt_row gt_center">3</td>
+<td headers="stat_2" class="gt_row gt_center">4</td>
+<td headers="p.value" class="gt_row gt_center"><br></td>
+</tr>
+</tbody>
+<tfoot><tr class="gt_footnotes">
+<td class="gt_footnote" colspan="4">
+<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> <span class="gt_from_md">n (%)</span>
+</td>
+    </tr></tfoot>
+</table>
+</div>
+<hr>
+</div>
+</div>
+<div class="section level2">
+<h2 id="running-all-outputs">8. Running all outputs<a class="anchor" aria-label="anchor" href="#running-all-outputs"></a>
+</h2>
+<p>Once all scripts are written, <code><a href="../reference/run_all_files.html">run_all_figures()</a></code> and
+<code><a href="../reference/run_all_files.html">run_all_tables()</a></code> source every script in
+<code>R/figures/</code> and <code>R/tables/</code> in alphabetical
+order. They also cross-check the file list against the TOT and warn you
+about any discrepancies.</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/run_all_files.html">run_all_figures</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/run_all_files.html">run_all_tables</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<hr>
+</div>
+<div class="section level2">
+<h2 id="generating-the-report">9. Generating the report<a class="anchor" aria-label="anchor" href="#generating-the-report"></a>
+</h2>
+<div class="section level3">
+<h3 id="create-the-report-scaffold">Create the report scaffold<a class="anchor" aria-label="anchor" href="#create-the-report-scaffold"></a>
+</h3>
+<p><code><a href="../reference/create_report.html">create_report()</a></code> reads the TOT and generates a Quarto
+file at <code>report/report.qmd</code> with a code chunk for every
+figure and table, in the order they appear in the TOT.</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/create_report.html">create_report</a></span><span class="op">(</span>output_type <span class="op">=</span> <span class="st">"html"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Writing report to <span style="color: #0000BB;">report/report.qmd</span>.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `run_report()` to render the report.</span></span></code></pre></div>
+<p>The generated file looks like this (excerpt):</p>
+<pre><code>---
+title: "Fake oncology trial"
+subtitle: "John Doe (Oncology)"
+author: "Jane Doe"
+date: "09 March 2026"
+format:
+  html:
+    embed-resources: true
+    toc: true
+    toc-location: left-body
+    number-sections: true
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r pkg}
+library(here) # To generate relative file paths
+library(gt) # Needed to display gt tables in Word
+
+# Create list of captions
+tot &lt;- readRDS("tot.rds")
+caption_list &lt;- setNames(as.list(tot$caption), tot$name)
+
+# Define function to add caption to tables
+add_caption &lt;- gt::tab_header
+```
+
+
+
+ ```{r fig-fig-age-dist }
+#| fig-cap: !expr 'caption_list[["fig-age-dist"]]'
+
+knitr::include_graphics(here("results/figures/fig-age-dist.png"))
+``` 
+{{&lt; pagebreak &gt;}}</code></pre>
+</div>
+<div class="section level3">
+<h3 id="render-the-report">Render the report<a class="anchor" aria-label="anchor" href="#render-the-report"></a>
+</h3>
+<p>Call <code><a href="../reference/run_report.html">run_report()</a></code> to render the Quarto file to HTML (or
+DOCX):</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/run_report.html">run_report</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>After reviewing the HTML report, archive it to
+<code>results/reports/</code> with a date-stamped filename using
+<code><a href="../reference/archive_report.html">archive_report()</a></code>:</p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/archive_report.html">archive_report</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<hr>
+</div>
+</div>
+<div class="section level2">
+<h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
+</h2>
+<p>Here is the full <code>lbstproj</code> workflow at a glance:</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://l-biostat.github.io/lbstproj/">lbstproj</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># 1 — Scaffold the project</span></span>
+<span><span class="fu"><a href="../reference/create_project.html">create_project</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"."</span>, title <span class="op">=</span> <span class="st">"My project"</span>, author <span class="op">=</span> <span class="st">"Jane Doe"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># 2 — Fill in data/tot/table_of_tables.xlsx, then import it</span></span>
+<span><span class="fu"><a href="../reference/import_tot.html">import_tot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># 3 — Generate script stubs for every TOT entry</span></span>
+<span><span class="fu"><a href="../reference/create_from_tot.html">create_from_tot</a></span><span class="op">(</span>dry_run <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># 4 — Fill in the scripts, then run them all</span></span>
+<span><span class="fu"><a href="../reference/run_all_files.html">run_all_files</a></span><span class="op">(</span><span class="st">"data"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/run_all_files.html">run_all_figures</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/run_all_files.html">run_all_tables</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># 5 — Build and render the report</span></span>
+<span><span class="fu"><a href="../reference/create_report.html">create_report</a></span><span class="op">(</span>output_type <span class="op">=</span> <span class="st">"html"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/run_report.html">run_report</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/archive_report.html">archive_report</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 

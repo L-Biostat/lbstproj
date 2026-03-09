@@ -47,6 +47,10 @@ create_project(
 
   Author name (first and last).
 
+- email:
+
+  Author email.
+
 - version:
 
   Project version (default is `1.0.0`).

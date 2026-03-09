@@ -10,17 +10,33 @@ to save a copy of the rendered output.
 ## Usage
 
 ``` r
-archive_report(file = "report.html", overwrite = FALSE)
+archive_report(
+  file = "report.html",
+  overwrite = FALSE,
+  quiet = getOption("lbstproj.quiet", FALSE)
+)
 ```
 
 ## Arguments
 
 - file:
 
-  The name of the report file to archive. Default is `"report.html"`.
+  *Character*. The name of the report file to archive.
+
+  *Default*: `"report.html"`, since this is the default file name in the
+  report generation process.
 
 - overwrite:
 
-  Logical indicating whether to overwrite an existing archive file.
-  Defaults to `FALSE`, so an error is raised if the archive file already
+  *Logical*. Indicate whether to overwrite an existing archive file.
+
+  *Default*: `FALSE`, an error is raised if the archive file already
   exists.
+
+- quiet:
+
+  *Logical*. If `TRUE`, suppress informational messages. Important
+  messages (e.g. directory creation or errors) are still shown.
+
+  *Default*: `FALSE` unless the global option `lbstproj.quiet` is set
+  otherwise.
