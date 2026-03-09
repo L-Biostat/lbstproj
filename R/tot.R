@@ -65,6 +65,10 @@ validate_tot <- function(tot_data) {
 #' Reads the TOT Excel file from `data/tot/table_of_tables.xlsx`, validates its
 #' structure, and saves it as an RDS file in `data/tot/tot.rds`.
 #'
+#' @param quiet Logical. If `TRUE`, suppress informational messages.
+#'
+#'   *Default*: `FALSE` unless the global option `lbstproj.quiet` is set otherwise. The default option can be changed using `options(lbstproj.quiet = TRUE)`
+#'
 #' @return Invisibly returns the TOT data as a tibble.
 #' @export
 import_tot <- function(quiet = FALSE) {

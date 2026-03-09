@@ -2,26 +2,33 @@
 % Please edit documentation in R/run_report.R
 \name{run_report}
 \alias{run_report}
-\title{Render a Rmd/qmd report}
+\title{Render a quarto report}
 \usage{
-run_report(file = "report.qmd", ...)
+run_report(
+  file = "report.qmd",
+  quiet = getOption("lbstproj.quiet", FALSE),
+  ...
+)
 }
 \arguments{
-\item{file}{The name of the report file to render. Default is \code{"report.qmd"}.
-If this file isn't found, the function looks for a file with the same name
-but with a \code{.Rmd} extension before throwing an error.}
+\item{file}{\emph{Character}. The name of the report file to render. If this file isn't found, the
+function throws an error.
 
-\item{...}{Additional arguments passed to the rendering function. For R
-Markdown files, these are passed to \code{\link[rmarkdown:render]{rmarkdown::render()}}. For Quarto
-files, these are passed to \code{\link[quarto:quarto_render]{quarto::quarto_render()}}.}
+\emph{Default}: \code{"report.qmd"}, the default name produced by \code{\link[=create_report]{create_report()}}}
+
+\item{quiet}{\emph{Logical}. If \code{TRUE}, suppress informational messages. Important
+messages (e.g. directory creation or errors) are still shown.
+
+\emph{Default}: \code{FALSE} unless the global option \code{lbstproj.quiet} is set otherwise.}
+
+\item{...}{Additional arguments passed to the rendering function, in this case,
+\code{\link[quarto:quarto_render]{quarto::quarto_render()}}.}
 }
 \description{
-Renders a report file located in the \verb{report/} directory. The report can be
-either an R Markdown (\code{.Rmd}) or Quarto (\code{.qmd}) file. The rendered output
-is saved in the same \verb{report/} directory under the same name (with a
+Renders a quarto (\code{.qmd}) report file located in the \verb{report/} directory. The
+rendered output is saved in the same \verb{report/} directory under the same name (with a
 different extension).
-}
-\details{
+
 All report files are render to a file with the same name. If such a file
 already exists, it will be overwritten without warning. If you want to keep a
 copy of the rendered report, use the \code{\link[=archive_report]{archive_report()}} function after
@@ -31,7 +38,7 @@ rendering to move it to the \verb{results/reports/} directory with a unique name
 \dontrun{
 # Default usage
 run_report()
-# Rendering a specific R Markdown file to pdf
-run_report(file = "pdf_report.Rmd", output_format = "pdf_document")
+# Rendering a specific file to a specific name
+run_report(file = "new_report.qmd", output_file = "final_report_FINAL_v3.0")
 }
 }

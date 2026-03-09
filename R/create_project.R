@@ -36,6 +36,7 @@
 #' @param client Name of the client.
 #' @param department Department code or name.
 #' @param author Author name (first and last).
+#' @param email Author email.
 #' @param version Project version (default is `1.0.0`).
 #' @param open If `TRUE`, opens the new project in RStudio (default is `TRUE` if
 #'   in interactive session).

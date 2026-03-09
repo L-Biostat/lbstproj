@@ -23,6 +23,7 @@ Imports:
     glue,
     gt (>= 1.3.0),
     lifecycle,
+    purrr,
     quarto (>= 1.4),
     readxl (>= 1.4.3),
     rlang,
@@ -38,10 +39,12 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Suggests: 
+    gtsummary (>= 2.0.0),
     knitr,
     rmarkdown,
     testthat (>= 3.0.0),
     writexl
+Config/Needs/website: gtsummary, writexl
 Config/testthat/edition: 3
 URL: https://l-biostat.github.io/lbstproj/
 VignetteBuilder: knitr

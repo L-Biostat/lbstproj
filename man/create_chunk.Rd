@@ -4,27 +4,46 @@
 \alias{create_chunk}
 \title{Create a quarto code chunk from the TOT}
 \usage{
-create_chunk(id, copy = TRUE, print = TRUE, pad = FALSE)
+create_chunk(
+  output_type = "html",
+  id = NULL,
+  name = NULL,
+  print = TRUE,
+  pad = TRUE
+)
 }
 \arguments{
-\item{id}{The id of the element as specified in the table of tables (TOT)}
+\item{output_type}{\emph{Character}. Output format to use when building the
+code chunk. Should match the output type of the report. Only \code{"docx"} or \code{"html"}
+are supported.
 
-\item{copy}{Logical, whether to copy the chunk to the clipboard (default:
-TRUE if in interactive mode, FALSE otherwise)}
+\emph{Default}: \code{"html"}}
 
-\item{print}{Logical, whether to print the chunk to the console (default:
-TRUE)}
+\item{id}{\emph{Character}. Identifier of the element in the TOT. Either this or the
+\code{name} must be provided but not both.}
 
-\item{pad}{Logical, whether to pad the chunk with blank lines before and
-after and add a page break after (default: FALSE)}
+\item{name}{\emph{Character}. Name of the element in the TOT. Either this or the
+\code{id} must be provided but not both.}
+
+\item{print}{\emph{Logical}. If \code{TRUE}, print the generated chunk to the console.
+
+\emph{Default}: \code{TRUE} to allow for quick visual check.}
+
+\item{pad}{\emph{Logical}. If \code{TRUE}, add blank lines before and after the chunk
+and insert a page break after it.
+
+\emph{Default}: \code{TRUE}}
 }
 \value{
 The rendered quarto chunk as a character string, invisibly
 }
 \description{
-Generate the quarto code chunk  to include a figure or table in a report
-based on the information in the table of tables (TOT). The TOT-element is
-identified from its ID. The chunk includes the correct path to the element as
-well as the caption and a quarto-safe chunk label (starting with \code{tbl} for
-tables and \code{fig} for figures to allow for cross-referencing).
+Generate the quarto code chunk to include a figure or table in a report
+based on the information stored in the table of tables (TOT). The element
+can be identified by its \code{id} or \code{name}. The chunk includes the correct path to the
+element as well as the caption and a quarto-safe chunk label (starting with \code{tbl}
+for tables and \code{fig} for figures to allow for cross-referencing).
+
+If the function is called from Rstudio or the console, the code chunk is always
+copied to the clipboard to easily paste it in the report file if needed.
 }

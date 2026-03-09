@@ -6,6 +6,11 @@
 \usage{
 import_tot(quiet = FALSE)
 }
+\arguments{
+\item{quiet}{Logical. If \code{TRUE}, suppress informational messages.
+
+\emph{Default}: \code{FALSE} unless the global option \code{lbstproj.quiet} is set otherwise. The default option can be changed using \code{options(lbstproj.quiet = TRUE)}}
+}
 \value{
 Invisibly returns the TOT data as a tibble.
 }

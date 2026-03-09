@@ -2,17 +2,30 @@
 % Please edit documentation in R/create_report.R
 \name{create_report}
 \alias{create_report}
-\title{Create a quarto report based on the table of tables (TOT)}
+\title{Create a Quarto report from the TOT}
 \usage{
-create_report()
+create_report(output_type = "html", quiet = getOption("lbstproj.quiet", FALSE))
+}
+\arguments{
+\item{output_type}{\emph{Character}. Output format of the report template.
+Must be one of \code{"html"} or \code{"docx"}.
+
+\emph{Default}: \code{"html"}.}
+
+\item{quiet}{\emph{Logical}. If \code{TRUE}, suppress informational messages. Important
+messages (e.g. directory creation or errors) are still shown.
+
+\emph{Default}: \code{FALSE} unless the global option \code{lbstproj.quiet} is set otherwise.}
+}
+\value{
+Invisibly returns the path to the generated report file.
 }
 \description{
-Creates a quarto report by using a html-report template and including all
-elements found in the TOT in the order they appear. All captions and labels
-are taken from the TOT, so any changes to those will be reflected in the
-report when it is rendered.
-}
-\details{
-The report is created in \code{report/report.qmd}. If a report already exists, it
-will be overwritten.
+Create a Quarto report by combining a report template with all
+figures and tables listed in the table of tables (TOT), in the order they appear.
+
+Captions and labels are taken from the TOT, so updates to the TOT are reflected
+automatically in the generated report.
+
+The report is written to \code{report/report.qmd}.
 }

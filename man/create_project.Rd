@@ -29,6 +29,8 @@ directory).}
 
 \item{author}{Author name (first and last).}
 
+\item{email}{Author email.}
+
 \item{version}{Project version (default is \verb{1.0.0}).}
 
 \item{open}{If \code{TRUE}, opens the new project in RStudio (default is \code{TRUE} if
