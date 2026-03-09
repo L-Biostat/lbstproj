@@ -11,7 +11,7 @@
 - [`create_file()`](https://l-biostat.github.io/lbstproj/reference/create_file.md)
   : Create an R file from a template
 
-- [`create_programs()`](https://l-biostat.github.io/lbstproj/reference/create_programs.md)
+- [`create_from_tot()`](https://l-biostat.github.io/lbstproj/reference/create_from_tot.md)
   : Create all R scripts listed in the table of tables (TOT)
 
 - [`create_project()`](https://l-biostat.github.io/lbstproj/reference/create_project.md)
@@ -41,10 +41,10 @@
 - [`proj_rel()`](https://l-biostat.github.io/lbstproj/reference/proj_rel.md)
   : Project-relative path
 
-- [`run_all()`](https://l-biostat.github.io/lbstproj/reference/run_all.md)
-  [`run_all_figures()`](https://l-biostat.github.io/lbstproj/reference/run_all.md)
-  [`run_all_tables()`](https://l-biostat.github.io/lbstproj/reference/run_all.md)
-  : Run All R Scripts
+- [`run_all_files()`](https://l-biostat.github.io/lbstproj/reference/run_all_files.md)
+  [`run_all_figures()`](https://l-biostat.github.io/lbstproj/reference/run_all_files.md)
+  [`run_all_tables()`](https://l-biostat.github.io/lbstproj/reference/run_all_files.md)
+  : Run R Scripts in a Project Subdirectory
 
 - [`run_report()`](https://l-biostat.github.io/lbstproj/reference/run_report.md)
   : Render a Rmd/qmd report
