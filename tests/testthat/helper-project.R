@@ -50,7 +50,10 @@ local_lbstproj_project <- function(
       "Package: fakeproject",
       "Version: 0.0.0",
       "Description: Temporary test project",
-      "License: MIT"
+      "License: MIT",
+      "Title: Parkinson",
+      "Client: Jane Doe",
+      "Department: DEP"
     ),
     "DESCRIPTION"
   )
