@@ -150,3 +150,10 @@ check_can_overwrite <- function(path, overwrite, what = "File") {
   }
   invisible(path)
 }
+
+# Return path relative to the active project root.
+#
+# @keywords internal
+proj_rel <- function(path) {
+  fs::path_rel(path, start = usethis::proj_get())
+}

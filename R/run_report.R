@@ -55,7 +55,8 @@ run_report <- function(
     )
   }
   # Depending on the file type, use different rendering functions
-  if (fs::path_ext(file_path) == "qmd") {
+  ext <- fs::path_ext(file_path)
+  if (ext == "qmd") {
     quarto::quarto_render(
       input = rel_path,
       ...
