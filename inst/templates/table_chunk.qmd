@@ -1,8 +1,5 @@
-```{r tbl-{{id}} }
-#| label: "{{id}}"
-#| tbl-cap: "{{caption}}"
-#| tbl-pos: "H"
-
+```{r {{tab_prefix}}-{{name}} }
 tab <- readRDS(here("{{path}}"))
-tab
+tab |>
+  add_caption(caption_list[["{{name}}"]])
 ```

@@ -18,6 +18,13 @@ execute:
 ```{r pkg}
 library(here) # To generate relative file paths
 library(gt) # Needed to display gt tables in Word
+
+# Create list of captions
+tot <- readRDS("tot.rds")
+caption_list <- setNames(as.list(tot$caption), tot$name)
+
+# Define function to add caption to tables
+add_caption <- gt::tab_header
 ```
 
 {{<pagebreak>}}

@@ -1,3 +1,12 @@
+# -------------------------------------------------------------------------
+# ┌────────────┐
+# │  lbstproj  │
+# └────────────┘
+#
+# utils.R:
+# small utility helpers
+# -------------------------------------------------------------------------
+
 get_author <- function() {
   author <- desc::desc_get_author(role = "cre")
   # If family name is missing, return the whole name

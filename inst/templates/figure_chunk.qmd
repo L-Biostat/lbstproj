@@ -1,6 +1,5 @@
-```{r fig-{{id}} }
-#| label: "{{id}}"
-#| fig-cap: "{{caption}}"
+```{r fig-{{name}} }
+#| fig-cap: !expr 'caption_list[["{{name}}"]]'
 
 knitr::include_graphics(here("{{path}}"))
 ```

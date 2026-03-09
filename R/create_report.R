@@ -47,7 +47,7 @@ create_report <- function() {
   # Combine the report basis and the chunks
   report <- c(report_basis, chunks)
   # Write the report to a file
-  check_dir_exists("report")
+  ensure_dir_exists("report")
   fs::file_create("report/report.qmd")
   writeLines(report, con = "report/report.qmd")
   cli::cli_bullets(
