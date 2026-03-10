@@ -1,4 +1,4 @@
-test_that("create_report() creates report/report.qmd and returns its path invisibly", {
+test_that("create_report() creates report/html_report.qmd and returns its path invisibly", {
   local_lbstproj_project(with_tot = TRUE)
 
   out <- create_report(
@@ -6,8 +6,8 @@ test_that("create_report() creates report/report.qmd and returns its path invisi
     quiet = TRUE
   )
 
-  expect_equal(out, invisible(fs::path("report", "report.qmd")))
-  expect_true(fs::file_exists(fs::path("report", "report.qmd")))
+  expect_equal(out, invisible(fs::path("report", "html_report.qmd")))
+  expect_true(fs::file_exists(fs::path("report", "html_report.qmd")))
 })
 
 
@@ -19,7 +19,7 @@ test_that("create_report() writes report metadata from DESCRIPTION", {
     quiet = TRUE
   )
 
-  report <- readLines(fs::path("report", "report.qmd"))
+  report <- readLines(fs::path("report", "html_report.qmd"))
 
   expect_true(any(grepl(desc::desc_get("Title"), report, fixed = TRUE)))
   expect_true(any(grepl(desc::desc_get("Client"), report, fixed = TRUE)))
@@ -38,7 +38,7 @@ test_that("create_report() includes all TOT entries in the order they appear", {
   )
 
   report <- paste(
-    readLines(fs::path("report", "report.qmd")),
+    readLines(fs::path("report", "html_report.qmd")),
     collapse = "\n"
   )
 
@@ -73,7 +73,7 @@ test_that("create_report() uses tbl- prefix for tables in html output", {
   )
 
   report <- paste(
-    readLines(fs::path("report", "report.qmd")),
+    readLines(fs::path("report", "html_report.qmd")),
     collapse = "\n"
   )
 
@@ -99,7 +99,7 @@ test_that("create_report() uses tab- prefix for tables in word output", {
   )
 
   report <- paste(
-    readLines(fs::path("report", "report.qmd")),
+    readLines(fs::path("report", "docx_report.qmd")),
     collapse = "\n"
   )
 
@@ -122,7 +122,7 @@ test_that("create_report() includes the expected paths for figures and tables", 
   )
 
   report <- paste(
-    readLines(fs::path("report", "report.qmd")),
+    readLines(fs::path("report", "html_report.qmd")),
     collapse = "\n"
   )
 
@@ -175,14 +175,14 @@ test_that("create_report() overwrites an existing report", {
   local_lbstproj_project(with_tot = TRUE)
 
   fs::dir_create("report")
-  writeLines("old report", "report/report.qmd")
+  writeLines("old report", "report/html_report.qmd")
 
   create_report(
     output_type = "html",
     quiet = TRUE
   )
 
-  report <- readLines("report/report.qmd")
+  report <- readLines("report/html_report.qmd")
 
   expect_false(identical(report, "old report"))
 })

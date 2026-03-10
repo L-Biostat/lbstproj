@@ -57,7 +57,7 @@ create_report <- function(
   report <- c(report_basis, chunks)
   # Write the report to a file
   ensure_dir_exists("report", create = TRUE)
-  report_path <- fs::path("report", "report.qmd")
+  report_path <- fs::path("report", paste0(output_type, "_report"), ext = "qmd")
   writeLines(report, con = report_path)
   # Inform the user if needed
   if (!quiet) {
