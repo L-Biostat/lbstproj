@@ -9,7 +9,7 @@ Initialize a new project with a standard folder structure.
 
 ## Creating scripts
 
-Generate R script stubs from templates.
+Generate R script from templates.
 
 - [`create_file()`](https://l-biostat.github.io/lbstproj/reference/create_file.md)
   : Create an R file from a template

@@ -40,7 +40,7 @@ The project now has the following structure:
 
 ``` r
 fs::dir_tree(tmp_proj_dir, recurse = TRUE)
-#> /tmp/Rtmp1Hqjhb/fake-trial
+#> /tmp/RtmpLjI4XE/fake-trial
 #> ├── DESCRIPTION
 #> ├── R
 #> │   ├── data
@@ -189,7 +189,7 @@ create_from_tot(dry_run = TRUE)
 #> 
 #> ℹ Figures: 2 in TOT, 0 on disk, 0 matched.
 #> ℹ Figures: would generate 2 missing programs.
-#> → info
+#> → Figures: would create 2 programs in R/figures.
 #> • R/figures/fig-age-dist.R
 #> • R/figures/fig-km.R
 #> 
@@ -197,7 +197,7 @@ create_from_tot(dry_run = TRUE)
 #> 
 #> ℹ Tables: 2 in TOT, 0 on disk, 0 matched.
 #> ℹ Tables: would generate 2 missing programs.
-#> → info
+#> → Tables: would create 2 programs in R/tables.
 #> • R/tables/tab-baseline.R
 #> • R/tables/tab-response.R
 ```
@@ -211,9 +211,7 @@ create_from_tot(dry_run = FALSE)
 #> 
 #> ℹ Figures: 2 in TOT, 0 on disk, 0 matched.
 #> ℹ Figures: generating 2 missing programs.
-#> → success
-#> • R/figures/fig-age-dist.R
-#> • R/figures/fig-km.R
+#> → Figures: created 2 programs in R/figures.
 #> ✔ Fig-Age-Dist file created at R/figures/fig-age-dist.R.
 #> ✔ Fig-Km file created at R/figures/fig-km.R.
 #> 
@@ -221,9 +219,7 @@ create_from_tot(dry_run = FALSE)
 #> 
 #> ℹ Tables: 2 in TOT, 0 on disk, 0 matched.
 #> ℹ Tables: generating 2 missing programs.
-#> → success
-#> • R/tables/tab-baseline.R
-#> • R/tables/tab-response.R
+#> → Tables: created 2 programs in R/tables.
 #> ✔ Tab-Baseline file created at R/tables/tab-baseline.R.
 #> ✔ Tab-Response file created at R/tables/tab-response.R.
 ```

@@ -98,7 +98,7 @@ interactive prompts.</p>
 <p>The project now has the following structure:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="va">tmp_proj_dir</span>, recurse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">/tmp/Rtmp1Hqjhb/fake-trial</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">/tmp/RtmpLjI4XE/fake-trial</span></span></span>
 <span><span class="co">#&gt; ├── DESCRIPTION</span></span>
 <span><span class="co">#&gt; ├── <span style="color: #0000BB; font-weight: bold;">R</span></span></span>
 <span><span class="co">#&gt; │   ├── <span style="color: #0000BB; font-weight: bold;">data</span></span></span>
@@ -290,7 +290,7 @@ preview what will be created:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Figures: 2 in TOT, 0 on disk, 0 matched.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Figures: would generate 2 missing programs.</span></span>
-<span><span class="co">#&gt; → info</span></span>
+<span><span class="co">#&gt; → Figures: would create 2 programs in <span style="color: #0000BB;">R/figures</span>.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="color: #0000BB;">R/figures/fig-age-dist.R</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="color: #0000BB;">R/figures/fig-km.R</span></span></span>
 <span><span class="co">#&gt; </span></span>
@@ -298,7 +298,7 @@ preview what will be created:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Tables: 2 in TOT, 0 on disk, 0 matched.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Tables: would generate 2 missing programs.</span></span>
-<span><span class="co">#&gt; → info</span></span>
+<span><span class="co">#&gt; → Tables: would create 2 programs in <span style="color: #0000BB;">R/tables</span>.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="color: #0000BB;">R/tables/tab-baseline.R</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="color: #0000BB;">R/tables/tab-response.R</span></span></span></code></pre></div>
 <p>Once satisfied, run without <code>dry_run</code> to create the
@@ -310,9 +310,7 @@ stubs:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Figures: 2 in TOT, 0 on disk, 0 matched.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Figures: generating 2 missing programs.</span></span>
-<span><span class="co">#&gt; → success</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="color: #0000BB;">R/figures/fig-age-dist.R</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="color: #0000BB;">R/figures/fig-km.R</span></span></span>
+<span><span class="co">#&gt; → Figures: created 2 programs in <span style="color: #0000BB;">R/figures</span>.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="font-weight: bold;">Fig-Age-Dist</span> file created at <span style="color: #0000BB;">R/figures/fig-age-dist.R</span>.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="font-weight: bold;">Fig-Km</span> file created at <span style="color: #0000BB;">R/figures/fig-km.R</span>.</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -320,9 +318,7 @@ stubs:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Tables: 2 in TOT, 0 on disk, 0 matched.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Tables: generating 2 missing programs.</span></span>
-<span><span class="co">#&gt; → success</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="color: #0000BB;">R/tables/tab-baseline.R</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="color: #0000BB;">R/tables/tab-response.R</span></span></span>
+<span><span class="co">#&gt; → Tables: created 2 programs in <span style="color: #0000BB;">R/tables</span>.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="font-weight: bold;">Tab-Baseline</span> file created at <span style="color: #0000BB;">R/tables/tab-baseline.R</span>.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="font-weight: bold;">Tab-Response</span> file created at <span style="color: #0000BB;">R/tables/tab-response.R</span>.</span></span></code></pre></div>
 <p>Each stub is pre-filled with a header, <code><a href="../reference/get_info.html">get_info()</a></code> to
