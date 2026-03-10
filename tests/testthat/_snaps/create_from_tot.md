@@ -9,7 +9,7 @@
       
       i Tables: 3 in TOT, 2 on disk, 2 matched.
       i Tables: would generate 1 missing program.
-      > info
+      > Tables: would create 1 program in 'R/tables'.
       * 'R/tables/tab_c.R'
       ! Tables: 1 extra program on disk (not in TOT): tab_old.R
 
@@ -36,6 +36,5 @@
       
       i Figures: 2 in TOT, 1 on disk, 1 matched.
       i Figures: generating 1 missing program.
-      > success
-      * 'R/figures/fig_b.R'
+      > Figures: created 1 program in 'R/figures'.
 

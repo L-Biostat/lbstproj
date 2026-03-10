@@ -189,16 +189,17 @@ cli_report_program <- function(
     )
 
     cli::cli_alert(
-      if (dry_run) "info" else "success",
       "{label}: {if (dry_run) 'would create' else 'created'} {n_new} program{?s} in {.path {dir_}}."
     )
 
-    cli::cli_bullets(
-      stats::setNames(
-        paste0("{.file ", fs::path(dir_, new), "}"),
-        rep("*", n_new)
+    if (isTRUE(dry_run)) {
+      cli::cli_bullets(
+        stats::setNames(
+          paste0("{.file ", fs::path(dir_, new), "}"),
+          rep("*", n_new)
+        )
       )
-    )
+    }
   }
 
   if (n_extra > 0) {

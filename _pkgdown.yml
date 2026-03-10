@@ -36,7 +36,7 @@ reference:
       - create_project
 
   - title: Creating scripts
-    desc: Generate R script stubs from templates.
+    desc: Generate R script from templates.
     contents:
       - create_file
       - create_from_tot
