@@ -1,7 +1,7 @@
 #' Name         : {{name}}.R
 #' Author       : {{author}}
 #' Date         : {{date}}
-#' Purpose      : description
+#' Purpose      :
 #' Files created:
 #'  - `data/tables/{{name}}.rds`
 #'  - `results/tables/{{name}}.docx/html` (optional)
@@ -10,7 +10,7 @@
 
 # File info ---------------------------------------------------------------
 
-info <- get_info({{ id }})
+info <- get_info(name = "{{name}}")
 
 # Packages ----------------------------------------------------------------
 
@@ -32,5 +32,4 @@ tab_lbl <- tab |>
 
 # Save and export table ---------------------------------------------------
 
-lbstproj::save_table(tab_lbl, name = "{{name}}")
-lbstproj::export_table(tab_lbl, name = "{{name}}", ext = "docx")
+save_table(tab_lbl, name = "{{name}}", export = TRUE)

@@ -26,14 +26,20 @@
 #'   and insert a page break after it.
 #'
 #'   *Default*: `TRUE`
+#' @param quiet *Logical*. If `TRUE`, suppress informational messages. Important
+#'   messages (e.g. directory creation or errors) are still shown.
+#'
+#'   *Default*: `FALSE` unless the global option `lbstproj.quiet` is set otherwise.
 #'
 #' @return The rendered quarto chunk as a character string, invisibly
+#' @export
 create_chunk <- function(
   output_type = "html",
   id = NULL,
   name = NULL,
   print = TRUE,
-  pad = TRUE
+  pad = TRUE,
+  quiet = getOption("lbstproj.quiet", FALSE)
 ) {
   # Retrieve element from the TOT
   details <- get_info(id = id, name = name) # Will error if both are given !
@@ -61,7 +67,10 @@ create_chunk <- function(
   rendered_chunk <- whisker::whisker.render(template, template_data)
   # Pad the chunk if requested
   if (pad) {
-    rendered_chunk <- paste("\n", rendered_chunk, "\n{{< pagebreak >}}\n\n")
+    rendered_chunk <- sprintf(
+      "%s\n\n{{< pagebreak >}}\n\n",
+      rendered_chunk
+    )
   }
   # If needed, print the chunk to the console
   if (print) {
@@ -70,9 +79,11 @@ create_chunk <- function(
   # Copy the chunk to the clipboard if in interactive mode
   if (rlang::is_interactive()) {
     utils::writeClipboard(rendered_chunk)
-    cli::cli_alert_success(
-      "The chunk for {details$type} {.val {details$name}} has been copied to the clipboard."
-    )
+    if (isFALSE(quiet)) {
+      cli::cli_alert_success(
+        "The chunk for {details$type} {.val {details$name}} has been copied to the clipboard."
+      )
+    }
   }
   # Return the rendered chunk invisibly
   invisible(rendered_chunk)
