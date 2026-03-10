@@ -40,7 +40,7 @@ The project now has the following structure:
 
 ``` r
 fs::dir_tree(tmp_proj_dir, recurse = TRUE)
-#> /tmp/Rtmpnf14c5/fake-trial
+#> /tmp/RtmpLp9SSY/fake-trial
 #> ├── DESCRIPTION
 #> ├── R
 #> │   ├── data
@@ -229,12 +229,12 @@ to retrieve TOT metadata, library calls, and placeholder comments:
 
     #' Name         : fig-age-dist.R
     #' Author       : Jane Doe
-    #' Date         : 09 Mar 2026
+    #' Date         : 10 Mar 2026
     #' Purpose      : description
     #' Files created:
     #'  - `results/figures/fig-age-dist.png/pdf`
     #' Edits        :
-    #'  - 09 Mar 2026: Created file.
+    #'  - 10 Mar 2026: Created file.
 
     # File info ---------------------------------------------------------------
 
@@ -501,7 +501,7 @@ The generated file looks like this (excerpt):
     title: "Fake oncology trial"
     subtitle: "John Doe (Oncology)"
     author: "Jane Doe"
-    date: "09 March 2026"
+    date: "10 March 2026"
     format:
       html:
         embed-resources: true
