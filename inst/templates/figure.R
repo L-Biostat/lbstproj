@@ -1,7 +1,7 @@
 #' Name         : {{name}}.R
 #' Author       : {{author}}
 #' Date         : {{date}}
-#' Purpose      : description
+#' Purpose      :
 #' Files created:
 #'  - `results/figures/{{name}}.png/pdf`
 #' Edits        :
@@ -9,7 +9,7 @@
 
 # File info ---------------------------------------------------------------
 
-info <- get_info({{ id }})
+info <- get_info(name = "{{name}}")
 
 # Packages ----------------------------------------------------------------
 
@@ -26,4 +26,4 @@ fig <- NULL # Replace NULL with your figure code, e.g. ggplot(data) + ...
 
 # Save figure -------------------------------------------------------------
 
-lbstproj::export_figure(fig, name = "{{name}}", ext = "png")
+save_figure(fig, name = "{{name}}")

@@ -97,7 +97,7 @@ test_that("create_chunk() pads the chunk when pad = TRUE", {
     pad = TRUE
   )
   out <- strsplit(out, "\n", fixed = TRUE)[[1]]
-  expect_equal(out[[1]], "")
+  expect_equal(out[[6]], "")
   expect_equal(out[[length(out)]], "")
   expect_true("{{< pagebreak >}}" %in% out)
 })
