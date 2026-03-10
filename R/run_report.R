@@ -39,7 +39,7 @@
 #' run_report(file = "new_report.qmd", output_file = "final_report_FINAL_v3.0")
 #' }
 run_report <- function(
-  file = "report.qmd",
+  file = "html_report.qmd",
   quiet = getOption("lbstproj.quiet", FALSE),
   ...
 ) {

@@ -123,10 +123,10 @@ For this project we plan two figures and two tables:
 tot_data <- data.frame(
   id = c("fig-01", "fig-02", "tab-01", "tab-02"),
   type = c("figure", "figure", "table", "table"),
-  name = c("fig-age-dist", "fig-response", "tab-baseline", "tab-response"),
+  name = c("fig-age-dist", "fig-km", "tab-baseline", "tab-response"),
   caption = c(
     "Age distribution by treatment arm.",
-    "Tumour response rate by treatment arm.",
+    "Kaplan-Meier curve of the survival over time per treatment arm.",
     "Baseline patient characteristics by treatment arm.",
     "Tumour response rates by treatment arm."
   ),
@@ -297,60 +297,65 @@ fig_age_dist <- fig
 fig_age_dist
 ```
 
-### Figure 2 — Response rate
+### Figure 2 — Kaplan-Meier curve
 
-```{r fig-response-script-display, eval=FALSE}
-# R/figures/fig-response.R
+```{r fig-km-script-display, eval=FALSE}
+# R/figures/fig-km.R
 
 library(dplyr)
 library(ggplot2)
+library(ggsurvfit)
 
 info <- get_info("fig-02")
 trial <- readRDS("data/processed/trial-clean.rds")
 
-response_rate <- trial |>
-  group_by(trt) |>
-  summarise(rate = mean(response, na.rm = TRUE) * 100, .groups = "drop")
+mod <- survfit2(
+  data = data,
+  formula = Surv(ttdeath, death) ~ response
+)
 
-fig <- ggplot(response_rate, aes(x = trt, y = rate, fill = trt)) +
-  geom_col(width = 0.5, alpha = 0.8) +
-  scale_fill_brewer(palette = "Set2") +
-  scale_y_continuous(
-    limits = c(0, 100),
-    labels = scales::label_percent(scale = 1)
+fig <- ggsurvfit(mod) +
+  add_confidence_interval() +
+  labs(
+    x = "Months since treatment",
+    y = "Survival probability",
+    color = "Tumor Response",
+    fill = "Tumor Response"
   ) +
-  labs(x = "Treatment arm", y = "Response rate (%)") +
-  theme_minimal(base_size = 12) +
-  theme(legend.position = "none")
+  theme_minimal(base_size = 12)
 
-save_figure(fig, name = "fig-response", width = 5, height = 4)
+save_figure(fig, name = "fig-km", width = 5, height = 4)
 ```
 
 ```{r run-fig-response, echo=FALSE, message=FALSE, warning=FALSE}
 fig_resp_script <- c(
   'library(dplyr)',
   'library(ggplot2)',
+  'library(ggsurvfit)',
   'info  <- lbstproj::get_info("fig-02")',
   'trial <- readRDS("data/processed/trial-clean.rds")',
-  'response_rate <- trial |>',
-  '  group_by(trt) |>',
-  '  summarise(rate = mean(response, na.rm = TRUE) * 100, .groups = "drop")',
-  'fig <- ggplot(response_rate, aes(x = trt, y = rate, fill = trt)) +',
-  '  geom_col(width = 0.5, alpha = 0.8) +',
-  '  scale_fill_brewer(palette = "Set2") +',
-  '  scale_y_continuous(limits = c(0, 100)) +',
-  '  labs(x = "Treatment arm", y = "Response rate (%)") +',
-  '  theme_minimal(base_size = 12) +',
-  '  theme(legend.position = "none")',
-  'lbstproj::save_figure(fig, name = "fig-response", width = 5, height = 4)'
+  'mod <- survfit2(',
+  '  data = trial,',
+  '  formula = Surv(ttdeath, death) ~ response',
+  ')',
+  'fig <- ggsurvfit(mod) +',
+  'add_confidence_interval() +',
+  'labs(',
+  '  x = "Months since treatment",',
+  '  y = "Survival probability",',
+  '  color = "Tumor Response",',
+  '  fill = "Tumor Response"',
+  ') +',
+  'theme_minimal(base_size = 12)',
+  'lbstproj::save_figure(fig, name = "fig-km", width = 5, height = 4)'
 )
 writeLines(
   fig_resp_script,
-  fs::path(tmp_proj_dir, "R", "figures", "fig-response.R")
+  fs::path(tmp_proj_dir, "R", "figures", "fig-km.R")
 )
 
 withr::with_options(list(lbstproj.quiet = TRUE), {
-  source(fs::path(tmp_proj_dir, "R", "figures", "fig-response.R"))
+  source(fs::path(tmp_proj_dir, "R", "figures", "fig-km.R"))
 })
 fig_response <- fig
 ```
@@ -531,7 +536,7 @@ create_report(output_type = "html")
 The generated file looks like this (excerpt):
 
 ```{r show-report, echo=FALSE, comment=""}
-report_lines <- readLines(fs::path(tmp_proj_dir, "report", "report.qmd"))
+report_lines <- readLines(fs::path(tmp_proj_dir, "report", "html_report.qmd"))
 cat(report_lines[seq_len(min(40L, length(report_lines)))], sep = "\n")
 ```
 

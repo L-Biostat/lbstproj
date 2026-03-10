@@ -27,7 +27,7 @@
 #'   *Default*: `FALSE` unless the global option `lbstproj.quiet` is set otherwise.
 #' @export
 archive_report <- function(
-  file = "report.html",
+  file = "html_report.html",
   overwrite = FALSE,
   quiet = getOption("lbstproj.quiet", FALSE)
 ) {
