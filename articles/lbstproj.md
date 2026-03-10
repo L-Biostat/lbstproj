@@ -40,7 +40,7 @@ The project now has the following structure:
 
 ``` r
 fs::dir_tree(tmp_proj_dir, recurse = TRUE)
-#> /tmp/RtmpLp9SSY/fake-trial
+#> /tmp/RtmpVcW4My/fake-trial
 #> ├── DESCRIPTION
 #> ├── R
 #> │   ├── data
@@ -230,7 +230,7 @@ to retrieve TOT metadata, library calls, and placeholder comments:
     #' Name         : fig-age-dist.R
     #' Author       : Jane Doe
     #' Date         : 10 Mar 2026
-    #' Purpose      : description
+    #' Purpose      :
     #' Files created:
     #'  - `results/figures/fig-age-dist.png/pdf`
     #' Edits        :
@@ -238,7 +238,7 @@ to retrieve TOT metadata, library calls, and placeholder comments:
 
     # File info ---------------------------------------------------------------
 
-    info <- get_info(fig-01)
+    info <- get_info(name = "fig-age-dist")
 
     # Packages ----------------------------------------------------------------
 
@@ -255,7 +255,7 @@ to retrieve TOT metadata, library calls, and placeholder comments:
 
     # Save figure -------------------------------------------------------------
 
-    lbstproj::export_figure(fig, name = "fig-age-dist", ext = "png")
+    save_figure(fig, name = "fig-age-dist")
 
 You fill in the placeholder sections with your analysis. The next
 sections show the completed scripts for our oncology project.
@@ -501,7 +501,7 @@ The generated file looks like this (excerpt):
     title: "Fake oncology trial"
     subtitle: "John Doe (Oncology)"
     author: "Jane Doe"
-    date: "10 March 2026"
+    date: last-modified
     format:
       html:
         embed-resources: true
@@ -519,21 +519,22 @@ The generated file looks like this (excerpt):
     library(gt) # Needed to display gt tables in Word
 
     # Create list of captions
-    tot <- readRDS("tot.rds")
+    tot <- readRDS(here("data/tot/tot.rds"))
     caption_list <- setNames(as.list(tot$caption), tot$name)
 
     # Define function to add caption to tables
-    add_caption <- gt::tab_header
+    add_caption <- function(x, cap) {
+      x |>
+        gt::tab_header(NULL) |>
+        gt::tab_caption(cap)
+    }
     ```
 
-
-
-     ```{r fig-fig-age-dist }
+    ```{r fig-fig-age-dist }
     #| fig-cap: !expr 'caption_list[["fig-age-dist"]]'
 
     knitr::include_graphics(here("results/figures/fig-age-dist.png"))
-    ``` 
-    {{< pagebreak >}}
+    ```
 
 ### Render the report
 

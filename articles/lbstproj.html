@@ -98,7 +98,7 @@ interactive prompts.</p>
 <p>The project now has the following structure:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="va">tmp_proj_dir</span>, recurse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">/tmp/RtmpLp9SSY/fake-trial</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">/tmp/RtmpVcW4My/fake-trial</span></span></span>
 <span><span class="co">#&gt; ├── DESCRIPTION</span></span>
 <span><span class="co">#&gt; ├── <span style="color: #0000BB; font-weight: bold;">R</span></span></span>
 <span><span class="co">#&gt; │   ├── <span style="color: #0000BB; font-weight: bold;">data</span></span></span>
@@ -325,7 +325,7 @@ retrieve TOT metadata, library calls, and placeholder comments:</p>
 <pre><code><span><span class="co">#' Name         : fig-age-dist.R</span></span>
 <span><span class="co">#' Author       : Jane Doe</span></span>
 <span><span class="co">#' Date         : 10 Mar 2026</span></span>
-<span><span class="co">#' Purpose      : description</span></span>
+<span><span class="co">#' Purpose      :</span></span>
 <span><span class="co">#' Files created:</span></span>
 <span><span class="co">#'  - `results/figures/fig-age-dist.png/pdf`</span></span>
 <span><span class="co">#' Edits        :</span></span>
@@ -333,7 +333,7 @@ retrieve TOT metadata, library calls, and placeholder comments:</p>
 <span></span>
 <span><span class="co"># File info ---------------------------------------------------------------</span></span>
 <span></span>
-<span><span class="va">info</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_info.html">get_info</a></span><span class="op">(</span><span class="va">fig</span><span class="op">-</span><span class="fl">01</span><span class="op">)</span></span>
+<span><span class="va">info</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_info.html">get_info</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"fig-age-dist"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Packages ----------------------------------------------------------------</span></span>
 <span></span>
@@ -350,7 +350,7 @@ retrieve TOT metadata, library calls, and placeholder comments:</p>
 <span></span>
 <span><span class="co"># Save figure -------------------------------------------------------------</span></span>
 <span></span>
-<span><span class="fu">lbstproj</span><span class="fu">::</span><span class="fu">export_figure</span><span class="op">(</span><span class="va">fig</span>, name <span class="op">=</span> <span class="st">"fig-age-dist"</span>, ext <span class="op">=</span> <span class="st">"png"</span><span class="op">)</span></span></code></pre>
+<span><span class="fu"><a href="../reference/save_outputs.html">save_figure</a></span><span class="op">(</span><span class="va">fig</span>, name <span class="op">=</span> <span class="st">"fig-age-dist"</span><span class="op">)</span></span></code></pre>
 <p>You fill in the placeholder sections with your analysis. The next
 sections show the completed scripts for our oncology project.</p>
 <hr>
@@ -1615,7 +1615,7 @@ figure and table, in the order they appear in the TOT.</p>
 title: "Fake oncology trial"
 subtitle: "John Doe (Oncology)"
 author: "Jane Doe"
-date: "10 March 2026"
+date: last-modified
 format:
   html:
     embed-resources: true
@@ -1633,21 +1633,22 @@ library(here) # To generate relative file paths
 library(gt) # Needed to display gt tables in Word
 
 # Create list of captions
-tot &lt;- readRDS("tot.rds")
+tot &lt;- readRDS(here("data/tot/tot.rds"))
 caption_list &lt;- setNames(as.list(tot$caption), tot$name)
 
 # Define function to add caption to tables
-add_caption &lt;- gt::tab_header
+add_caption &lt;- function(x, cap) {
+  x |&gt;
+    gt::tab_header(NULL) |&gt;
+    gt::tab_caption(cap)
+}
 ```
 
-
-
- ```{r fig-fig-age-dist }
+```{r fig-fig-age-dist }
 #| fig-cap: !expr 'caption_list[["fig-age-dist"]]'
 
 knitr::include_graphics(here("results/figures/fig-age-dist.png"))
-``` 
-{{&lt; pagebreak &gt;}}</code></pre>
+```</code></pre>
 </div>
 <div class="section level3">
 <h3 id="render-the-report">Render the report<a class="anchor" aria-label="anchor" href="#render-the-report"></a>
