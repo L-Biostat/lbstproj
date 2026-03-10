@@ -40,7 +40,7 @@ The project now has the following structure:
 
 ``` r
 fs::dir_tree(tmp_proj_dir, recurse = TRUE)
-#> /tmp/RtmpVcW4My/fake-trial
+#> /tmp/Rtmp1Hqjhb/fake-trial
 #> ├── DESCRIPTION
 #> ├── R
 #> │   ├── data
@@ -129,21 +129,26 @@ For this project we plan two figures and two tables:
 tot_data <- data.frame(
   id = c("fig-01", "fig-02", "tab-01", "tab-02"),
   type = c("figure", "figure", "table", "table"),
-  name = c("fig-age-dist", "fig-response", "tab-baseline", "tab-response"),
+  name = c("fig-age-dist", "fig-km", "tab-baseline", "tab-response"),
   caption = c(
     "Age distribution by treatment arm.",
-    "Tumour response rate by treatment arm.",
+    "Kaplan-Meier curve of the survival over time per treatment arm.",
     "Baseline patient characteristics by treatment arm.",
     "Tumour response rates by treatment arm."
   ),
   stringsAsFactors = FALSE
 )
 tot_data
-#>       id   type         name                                            caption
-#> 1 fig-01 figure fig-age-dist                 Age distribution by treatment arm.
-#> 2 fig-02 figure fig-response             Tumour response rate by treatment arm.
-#> 3 tab-01  table tab-baseline Baseline patient characteristics by treatment arm.
-#> 4 tab-02  table tab-response            Tumour response rates by treatment arm.
+#>       id   type         name
+#> 1 fig-01 figure fig-age-dist
+#> 2 fig-02 figure       fig-km
+#> 3 tab-01  table tab-baseline
+#> 4 tab-02  table tab-response
+#>                                                           caption
+#> 1                              Age distribution by treatment arm.
+#> 2 Kaplan-Meier curve of the survival over time per treatment arm.
+#> 3              Baseline patient characteristics by treatment arm.
+#> 4                         Tumour response rates by treatment arm.
 ```
 
 After filling in the spreadsheet, call
@@ -161,11 +166,11 @@ You can always inspect the TOT with
 ``` r
 load_tot()
 #> # A tibble: 4 × 4
-#>   id     type   name         caption                                           
-#>   <chr>  <chr>  <chr>        <chr>                                             
-#> 1 fig-01 figure fig-age-dist Age distribution by treatment arm.                
-#> 2 fig-02 figure fig-response Tumour response rate by treatment arm.            
-#> 3 tab-01 table  tab-baseline Baseline patient characteristics by treatment arm.
+#>   id     type   name         caption                                            
+#>   <chr>  <chr>  <chr>        <chr>                                              
+#> 1 fig-01 figure fig-age-dist Age distribution by treatment arm.                 
+#> 2 fig-02 figure fig-km       Kaplan-Meier curve of the survival over time per t…
+#> 3 tab-01 table  tab-baseline Baseline patient characteristics by treatment arm. 
 #> 4 tab-02 table  tab-response Tumour response rates by treatment arm.
 ```
 
@@ -186,7 +191,7 @@ create_from_tot(dry_run = TRUE)
 #> ℹ Figures: would generate 2 missing programs.
 #> → info
 #> • R/figures/fig-age-dist.R
-#> • R/figures/fig-response.R
+#> • R/figures/fig-km.R
 #> 
 #> ── Tables ──
 #> 
@@ -208,9 +213,9 @@ create_from_tot(dry_run = FALSE)
 #> ℹ Figures: generating 2 missing programs.
 #> → success
 #> • R/figures/fig-age-dist.R
-#> • R/figures/fig-response.R
+#> • R/figures/fig-km.R
 #> ✔ Fig-Age-Dist file created at R/figures/fig-age-dist.R.
-#> ✔ Fig-Response file created at R/figures/fig-response.R.
+#> ✔ Fig-Km file created at R/figures/fig-km.R.
 #> 
 #> ── Tables ──
 #> 
@@ -342,33 +347,34 @@ arm.](lbstproj_files/figure-html/show-fig-age-1.png)
 
 Age distribution by treatment arm.
 
-### Figure 2 — Response rate
+### Figure 2 — Kaplan-Meier curve
 
 ``` r
-# R/figures/fig-response.R
+# R/figures/fig-km.R
 
 library(dplyr)
 library(ggplot2)
+library(ggsurvfit)
 
 info <- get_info("fig-02")
 trial <- readRDS("data/processed/trial-clean.rds")
 
-response_rate <- trial |>
-  group_by(trt) |>
-  summarise(rate = mean(response, na.rm = TRUE) * 100, .groups = "drop")
+mod <- survfit2(
+  data = data,
+  formula = Surv(ttdeath, death) ~ response
+)
 
-fig <- ggplot(response_rate, aes(x = trt, y = rate, fill = trt)) +
-  geom_col(width = 0.5, alpha = 0.8) +
-  scale_fill_brewer(palette = "Set2") +
-  scale_y_continuous(
-    limits = c(0, 100),
-    labels = scales::label_percent(scale = 1)
+fig <- ggsurvfit(mod) +
+  add_confidence_interval() +
+  labs(
+    x = "Months since treatment",
+    y = "Survival probability",
+    color = "Tumor Response",
+    fill = "Tumor Response"
   ) +
-  labs(x = "Treatment arm", y = "Response rate (%)") +
-  theme_minimal(base_size = 12) +
-  theme(legend.position = "none")
+  theme_minimal(base_size = 12)
 
-save_figure(fig, name = "fig-response", width = 5, height = 4)
+save_figure(fig, name = "fig-km", width = 5, height = 4)
 ```
 
 ![Tumour response rate by treatment
@@ -491,7 +497,7 @@ TOT.
 
 ``` r
 create_report(output_type = "html")
-#> ✔ Writing report to report/report.qmd.
+#> ✔ Writing report to report/html_report.qmd.
 #> ℹ Use `run_report()` to render the report.
 ```
 

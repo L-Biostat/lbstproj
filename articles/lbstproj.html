@@ -98,7 +98,7 @@ interactive prompts.</p>
 <p>The project now has the following structure:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="va">tmp_proj_dir</span>, recurse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">/tmp/RtmpVcW4My/fake-trial</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">/tmp/Rtmp1Hqjhb/fake-trial</span></span></span>
 <span><span class="co">#&gt; ├── DESCRIPTION</span></span>
 <span><span class="co">#&gt; ├── <span style="color: #0000BB; font-weight: bold;">R</span></span></span>
 <span><span class="co">#&gt; │   ├── <span style="color: #0000BB; font-weight: bold;">data</span></span></span>
@@ -240,21 +240,26 @@ every output your project will produce. It lives in
 <code class="sourceCode R"><span><span class="va">tot_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fig-01"</span>, <span class="st">"fig-02"</span>, <span class="st">"tab-01"</span>, <span class="st">"tab-02"</span><span class="op">)</span>,</span>
 <span>  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"figure"</span>, <span class="st">"figure"</span>, <span class="st">"table"</span>, <span class="st">"table"</span><span class="op">)</span>,</span>
-<span>  name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fig-age-dist"</span>, <span class="st">"fig-response"</span>, <span class="st">"tab-baseline"</span>, <span class="st">"tab-response"</span><span class="op">)</span>,</span>
+<span>  name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fig-age-dist"</span>, <span class="st">"fig-km"</span>, <span class="st">"tab-baseline"</span>, <span class="st">"tab-response"</span><span class="op">)</span>,</span>
 <span>  caption <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>    <span class="st">"Age distribution by treatment arm."</span>,</span>
-<span>    <span class="st">"Tumour response rate by treatment arm."</span>,</span>
+<span>    <span class="st">"Kaplan-Meier curve of the survival over time per treatment arm."</span>,</span>
 <span>    <span class="st">"Baseline patient characteristics by treatment arm."</span>,</span>
 <span>    <span class="st">"Tumour response rates by treatment arm."</span></span>
 <span>  <span class="op">)</span>,</span>
 <span>  stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">tot_data</span></span>
-<span><span class="co">#&gt;       id   type         name                                            caption</span></span>
-<span><span class="co">#&gt; 1 fig-01 figure fig-age-dist                 Age distribution by treatment arm.</span></span>
-<span><span class="co">#&gt; 2 fig-02 figure fig-response             Tumour response rate by treatment arm.</span></span>
-<span><span class="co">#&gt; 3 tab-01  table tab-baseline Baseline patient characteristics by treatment arm.</span></span>
-<span><span class="co">#&gt; 4 tab-02  table tab-response            Tumour response rates by treatment arm.</span></span></code></pre></div>
+<span><span class="co">#&gt;       id   type         name</span></span>
+<span><span class="co">#&gt; 1 fig-01 figure fig-age-dist</span></span>
+<span><span class="co">#&gt; 2 fig-02 figure       fig-km</span></span>
+<span><span class="co">#&gt; 3 tab-01  table tab-baseline</span></span>
+<span><span class="co">#&gt; 4 tab-02  table tab-response</span></span>
+<span><span class="co">#&gt;                                                           caption</span></span>
+<span><span class="co">#&gt; 1                              Age distribution by treatment arm.</span></span>
+<span><span class="co">#&gt; 2 Kaplan-Meier curve of the survival over time per treatment arm.</span></span>
+<span><span class="co">#&gt; 3              Baseline patient characteristics by treatment arm.</span></span>
+<span><span class="co">#&gt; 4                         Tumour response rates by treatment arm.</span></span></code></pre></div>
 <p>After filling in the spreadsheet, call <code><a href="../reference/import_tot.html">import_tot()</a></code> to
 validate it and cache it as an <code>.rds</code> file:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -264,11 +269,11 @@ validate it and cache it as an <code>.rds</code> file:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/load_tot.html">load_tot</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 4</span></span></span>
-<span><span class="co">#&gt;   id     type   name         caption                                           </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                             </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> fig-01 figure fig-age-dist Age distribution by treatment arm.                </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> fig-02 figure fig-response Tumour response rate by treatment arm.            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> tab-01 table  tab-baseline Baseline patient characteristics by treatment arm.</span></span>
+<span><span class="co">#&gt;   id     type   name         caption                                            </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> fig-01 figure fig-age-dist Age distribution by treatment arm.                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> fig-02 figure fig-km       Kaplan-Meier curve of the survival over time per t…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> tab-01 table  tab-baseline Baseline patient characteristics by treatment arm. </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> tab-02 table  tab-response Tumour response rates by treatment arm.</span></span></code></pre></div>
 <hr>
 </div>
@@ -287,7 +292,7 @@ preview what will be created:</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Figures: would generate 2 missing programs.</span></span>
 <span><span class="co">#&gt; → info</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="color: #0000BB;">R/figures/fig-age-dist.R</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="color: #0000BB;">R/figures/fig-response.R</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="color: #0000BB;">R/figures/fig-km.R</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── <span style="font-weight: bold;">Tables</span> ──</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -307,9 +312,9 @@ stubs:</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Figures: generating 2 missing programs.</span></span>
 <span><span class="co">#&gt; → success</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="color: #0000BB;">R/figures/fig-age-dist.R</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="color: #0000BB;">R/figures/fig-response.R</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="color: #0000BB;">R/figures/fig-km.R</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="font-weight: bold;">Fig-Age-Dist</span> file created at <span style="color: #0000BB;">R/figures/fig-age-dist.R</span>.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="font-weight: bold;">Fig-Response</span> file created at <span style="color: #0000BB;">R/figures/fig-response.R</span>.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="font-weight: bold;">Fig-Km</span> file created at <span style="color: #0000BB;">R/figures/fig-km.R</span>.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── <span style="font-weight: bold;">Tables</span> ──</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -430,33 +435,34 @@ Age distribution by treatment arm.
 </div>
 </div>
 <div class="section level3">
-<h3 id="figure-2-response-rate">Figure 2 — Response rate<a class="anchor" aria-label="anchor" href="#figure-2-response-rate"></a>
+<h3 id="figure-2-kaplan-meier-curve">Figure 2 — Kaplan-Meier curve<a class="anchor" aria-label="anchor" href="#figure-2-kaplan-meier-curve"></a>
 </h3>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># R/figures/fig-response.R</span></span>
+<code class="sourceCode R"><span><span class="co"># R/figures/fig-km.R</span></span>
 <span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/pharmaverse/ggsurvfit" class="external-link">ggsurvfit</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">info</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_info.html">get_info</a></span><span class="op">(</span><span class="st">"fig-02"</span><span class="op">)</span></span>
 <span><span class="va">trial</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"data/processed/trial-clean.rds"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">response_rate</span> <span class="op">&lt;-</span> <span class="va">trial</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">trt</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>rate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">response</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span>, .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span></span>
+<span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://www.danieldsjoberg.com/ggsurvfit/reference/survfit2.html" class="external-link">survfit2</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">data</span>,</span>
+<span>  formula <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">ttdeath</span>, <span class="va">death</span><span class="op">)</span> <span class="op">~</span> <span class="va">response</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">fig</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">response_rate</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">trt</span>, y <span class="op">=</span> <span class="va">rate</span>, fill <span class="op">=</span> <span class="va">trt</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_col</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.5</span>, alpha <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set2"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span></span>
-<span>    limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span>,</span>
-<span>    labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_percent.html" class="external-link">label_percent</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">fig</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://www.danieldsjoberg.com/ggsurvfit/reference/ggsurvfit.html" class="external-link">ggsurvfit</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="http://www.danieldsjoberg.com/ggsurvfit/reference/add_confidence_interval.html" class="external-link">add_confidence_interval</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="st">"Months since treatment"</span>,</span>
+<span>    y <span class="op">=</span> <span class="st">"Survival probability"</span>,</span>
+<span>    color <span class="op">=</span> <span class="st">"Tumor Response"</span>,</span>
+<span>    fill <span class="op">=</span> <span class="st">"Tumor Response"</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Treatment arm"</span>, y <span class="op">=</span> <span class="st">"Response rate (%)"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/save_outputs.html">save_figure</a></span><span class="op">(</span><span class="va">fig</span>, name <span class="op">=</span> <span class="st">"fig-response"</span>, width <span class="op">=</span> <span class="fl">5</span>, height <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/save_outputs.html">save_figure</a></span><span class="op">(</span><span class="va">fig</span>, name <span class="op">=</span> <span class="st">"fig-km"</span>, width <span class="op">=</span> <span class="fl">5</span>, height <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="lbstproj_files/figure-html/show-fig-response-1.png" class="r-plt" alt="Tumour response rate by treatment arm." width="70%"><p class="caption">
 Tumour response rate by treatment arm.
@@ -972,7 +978,9 @@ N = 98</span><span class="gt_footnote_marks" style="white-space:nowrap;font-styl
 <span class="gt_from_md"><strong>Drug B</strong><br>
 N = 102</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span>
 </th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="p.value"><span class="gt_from_md"><strong>p-value</strong></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="p.value">
+<span class="gt_from_md"><strong>p-value</strong></span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span>
+</th>
     </tr>
 </thead>
 <tbody class="gt_table_body">
@@ -981,7 +989,7 @@ N = 102</span><span class="gt_footnote_marks" style="white-space:nowrap;font-sty
 <td headers="stat_0" class="gt_row gt_center">47 (38, 57)</td>
 <td headers="stat_1" class="gt_row gt_center">46 (37, 60)</td>
 <td headers="stat_2" class="gt_row gt_center">48 (39, 56)</td>
-<td headers="p.value" class="gt_row gt_center"><br></td>
+<td headers="p.value" class="gt_row gt_center">0.7</td>
 </tr>
 <tr>
 <td headers="label" class="gt_row gt_left">    Unknown</td>
@@ -995,7 +1003,7 @@ N = 102</span><span class="gt_footnote_marks" style="white-space:nowrap;font-sty
 <td headers="stat_0" class="gt_row gt_center"><br></td>
 <td headers="stat_1" class="gt_row gt_center"><br></td>
 <td headers="stat_2" class="gt_row gt_center"><br></td>
-<td headers="p.value" class="gt_row gt_center"><br></td>
+<td headers="p.value" class="gt_row gt_center">0.9</td>
 </tr>
 <tr>
 <td headers="label" class="gt_row gt_left">    T1</td>
@@ -1030,7 +1038,7 @@ N = 102</span><span class="gt_footnote_marks" style="white-space:nowrap;font-sty
 <td headers="stat_0" class="gt_row gt_center"><br></td>
 <td headers="stat_1" class="gt_row gt_center"><br></td>
 <td headers="stat_2" class="gt_row gt_center"><br></td>
-<td headers="p.value" class="gt_row gt_center"><br></td>
+<td headers="p.value" class="gt_row gt_center">0.9</td>
 </tr>
 <tr>
 <td headers="label" class="gt_row gt_left">    I</td>
@@ -1054,11 +1062,18 @@ N = 102</span><span class="gt_footnote_marks" style="white-space:nowrap;font-sty
 <td headers="p.value" class="gt_row gt_center"><br></td>
 </tr>
 </tbody>
-<tfoot><tr class="gt_footnotes">
+<tfoot>
+<tr class="gt_footnotes">
 <td class="gt_footnote" colspan="5">
 <span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> <span class="gt_from_md">Median (Q1, Q3); n (%)</span>
 </td>
-    </tr></tfoot>
+    </tr>
+<tr class="gt_footnotes">
+<td class="gt_footnote" colspan="5">
+<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> <span class="gt_from_md">Wilcoxon rank sum test; Pearson’s Chi-squared test</span>
+</td>
+    </tr>
+</tfoot>
 </table>
 </div>
 </div>
@@ -1556,7 +1571,9 @@ N = 98</span><span class="gt_footnote_marks" style="white-space:nowrap;font-styl
 <span class="gt_from_md"><strong>Drug B</strong><br>
 N = 102</span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span>
 </th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="p.value"><span class="gt_from_md"><strong>p-value</strong></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="p.value">
+<span class="gt_from_md"><strong>p-value</strong></span><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span>
+</th>
     </tr>
 </thead>
 <tbody class="gt_table_body">
@@ -1564,7 +1581,7 @@ N = 102</span><span class="gt_footnote_marks" style="white-space:nowrap;font-sty
 <td headers="label" class="gt_row gt_left" style="font-weight: bold;">Tumour response</td>
 <td headers="stat_1" class="gt_row gt_center">28 (29%)</td>
 <td headers="stat_2" class="gt_row gt_center">33 (34%)</td>
-<td headers="p.value" class="gt_row gt_center"><br></td>
+<td headers="p.value" class="gt_row gt_center">0.5</td>
 </tr>
 <tr>
 <td headers="label" class="gt_row gt_left">    Unknown</td>
@@ -1573,11 +1590,18 @@ N = 102</span><span class="gt_footnote_marks" style="white-space:nowrap;font-sty
 <td headers="p.value" class="gt_row gt_center"><br></td>
 </tr>
 </tbody>
-<tfoot><tr class="gt_footnotes">
+<tfoot>
+<tr class="gt_footnotes">
 <td class="gt_footnote" colspan="4">
 <span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> <span class="gt_from_md">n (%)</span>
 </td>
-    </tr></tfoot>
+    </tr>
+<tr class="gt_footnotes">
+<td class="gt_footnote" colspan="4">
+<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> <span class="gt_from_md">Pearson’s Chi-squared test</span>
+</td>
+    </tr>
+</tfoot>
 </table>
 </div>
 <hr>
@@ -1608,7 +1632,7 @@ file at <code>report/report.qmd</code> with a code chunk for every
 figure and table, in the order they appear in the TOT.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/create_report.html">create_report</a></span><span class="op">(</span>output_type <span class="op">=</span> <span class="st">"html"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Writing report to <span style="color: #0000BB;">report/report.qmd</span>.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Writing report to <span style="color: #0000BB;">report/html_report.qmd</span>.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `run_report()` to render the report.</span></span></code></pre></div>
 <p>The generated file looks like this (excerpt):</p>
 <pre><code>---
