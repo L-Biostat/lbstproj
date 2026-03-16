@@ -1,10 +1,9 @@
 Type: Package
 Package: lbstproj
-Title: Tools To Create And Use Standardized R Projects For The L-Biostat
-    Group
+Title: Tools To Create And Use Standardized R Projects For The L-Biostat Group
 Version: 0.1.0
 Authors@R: 
-    person("Alexandre", "Bohyn", , "alexandre.bohyn@kuleuven.be", role = c("aut", "cre"),
+    person("Alexandre", "Bohyn", , "alexandre.bohyn@kuleuven.be", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0001-9776-7467"))
 Description: This package provides functions to easily start a new
     statistical analysis project in R. It creates a standardized folder
@@ -39,6 +38,7 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Suggests: 
+    dplyr,
     ggsurvfit,
     gtsummary (>= 2.0.0),
     knitr,
