@@ -35,7 +35,7 @@ Invisibly returns `NULL`. The function is called for its side effects
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
+if(FALSE) {
 # Hypothetical project structure:
 # R/
 # ├── figures/
@@ -68,5 +68,5 @@ create_from_tot()
 
 # Actual creation
 create_from_tot(dry_run = FALSE)
-} # }
+}
 ```

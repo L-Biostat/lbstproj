@@ -100,7 +100,7 @@ The following directory structure is created inside the project:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
+if(FALSE) {
 create_project(
   path = ".", # uses current directory
   title = "Example Project",
@@ -109,5 +109,5 @@ create_project(
   author = "Jane Doe",
   version = "0.1.0"
 )
-} # }
+}
 ```

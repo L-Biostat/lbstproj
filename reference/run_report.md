@@ -34,15 +34,16 @@ run_report(file = NULL, quiet = getOption("lbstproj.quiet", FALSE), ...)
   Additional arguments passed to the rendering function, in this case,
   [`quarto::quarto_render()`](https://quarto-dev.github.io/quarto-r/reference/quarto_render.html).
 
+## Value
+
+Invisibly returns the path to the rendered report file.
+
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-# Default usage
-run_report()
-# Rendering a specific dated report
-run_report(file = "html_report_2026_03_16.qmd")
-# Rendering a specific file to a specific name
-run_report(file = "new_report.qmd", output_file = "final_report_FINAL_v3.0")
-} # }
+if(FALSE) {
+  run_report()
+  run_report(file = "html_report_2026_03_16.qmd")
+  run_report(file = "new_report.qmd", output_file = "final_report_FINAL_v3.0")
+}
 ```

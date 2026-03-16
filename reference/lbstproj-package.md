@@ -15,4 +15,4 @@ Useful links:
 ## Author
 
 **Maintainer**: Alexandre Bohyn <alexandre.bohyn@kuleuven.be>
-([ORCID](https://orcid.org/0000-0001-9776-7467))
+([ORCID](https://orcid.org/0000-0001-9776-7467)) \[copyright holder\]

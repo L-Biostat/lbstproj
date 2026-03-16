@@ -39,3 +39,17 @@ archive_report(
 
   *Default*: `FALSE` unless the global option `lbstproj.quiet` is set
   otherwise.
+
+## Value
+
+Invisibly returns the path to the archived report file.
+
+## Examples
+
+``` r
+if(FALSE) {
+  run_report(file = "html_report_2026_03_16.qmd")
+  archive_report()
+  archive_report(file = "html_report_2026_03_16.html", overwrite = TRUE)
+}
+```

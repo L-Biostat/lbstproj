@@ -2,7 +2,7 @@
 
 ## Authors
 
-- **Alexandre Bohyn**. Author, maintainer.
+- **Alexandre Bohyn**. Author, maintainer, copyright holder.
   [](https://orcid.org/0000-0001-9776-7467)
 
 ## Citation

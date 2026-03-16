@@ -29,7 +29,7 @@ A named list containing the columns of the matched TOT row.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
+if(FALSE) {
 # By id
 info <- get_info(id = "T001")
 
@@ -38,5 +38,5 @@ info <- get_info(name = "baseline_table")
 
 # Access a field
 info$caption
-} # }
+}
 ```

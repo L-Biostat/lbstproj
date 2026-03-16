@@ -68,3 +68,16 @@ create_chunk(
 ## Value
 
 The rendered quarto chunk as a character string, invisibly
+
+## Examples
+
+``` r
+if(FALSE) {
+  create_chunk(id = "fig_01_flowchart")
+  create_chunk(
+    name = "tab_01_baseline",
+    output_type = "docx",
+    print = FALSE
+  )
+}
+```

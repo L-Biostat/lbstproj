@@ -31,7 +31,7 @@ A tibble containing the TOT data with the following columns:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
+if(FALSE) {
  tot <- load_tot()
-} # }
+}
 ```

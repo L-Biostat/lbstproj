@@ -72,11 +72,11 @@ Invisibly returns the character vector of sourced file paths.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
+if(FALSE) {
 run_all_files("figure")
 run_all_figures()                                 # equivalent to the above
 run_all_files("data")
 run_all_files("figure", glob = "fig-[0-9]*.R")   # only numbered figures
 run_all_files("figure", quiet = TRUE)             # suppress all messages
-} # }
+}
 ```

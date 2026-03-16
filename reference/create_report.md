@@ -47,3 +47,12 @@ create_report(
 ## Value
 
 Invisibly returns the path to the generated report file.
+
+## Examples
+
+``` r
+if(FALSE) {
+  create_report()
+  create_report(output_type = "docx", overwrite = TRUE)
+}
+```

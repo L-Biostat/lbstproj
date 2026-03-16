@@ -56,7 +56,7 @@ Invisibly returns the path of the file created.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
+if(FALSE) {
 # Hypothetical project layout:
 # .
 # └─ R/
@@ -78,5 +78,5 @@ create_file(type = "table", name = "baseline_characteristics.R")
 # 4) Calling again does not overwrite
 create_file(type = "analysis", name = "primary_model")
 # > ! File 'R/analysis/primary_model.R' already exists and will not be overwritten.
-} # }
+}
 ```
