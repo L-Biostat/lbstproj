@@ -4,13 +4,22 @@
 \alias{create_report}
 \title{Create a Quarto report from the TOT}
 \usage{
-create_report(output_type = "html", quiet = getOption("lbstproj.quiet", FALSE))
+create_report(
+  output_type = "html",
+  overwrite = FALSE,
+  quiet = getOption("lbstproj.quiet", FALSE)
+)
 }
 \arguments{
 \item{output_type}{\emph{Character}. Output format of the report template.
 Must be one of \code{"html"} or \code{"docx"}.
 
 \emph{Default}: \code{"html"}.}
+
+\item{overwrite}{\emph{Logical}. If \code{TRUE}, overwrite an existing report file with
+the same dated name. If \code{FALSE}, raise an error instead.
+
+\emph{Default}: \code{FALSE}.}
 
 \item{quiet}{\emph{Logical}. If \code{TRUE}, suppress informational messages. Important
 messages (e.g. directory creation or errors) are still shown.
@@ -27,5 +36,6 @@ figures and tables listed in the table of tables (TOT), in the order they appear
 Captions and labels are taken from the TOT, so updates to the TOT are reflected
 automatically in the generated report.
 
-The report is written to \code{report/report.qmd}.
+Generated report files are date-stamped, for example
+\code{report/html_report_2026_03_16.qmd}.
 }

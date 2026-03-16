@@ -5,16 +5,14 @@
 \title{Archive a rendered report}
 \usage{
 archive_report(
-  file = "report.html",
+  file = NULL,
   overwrite = FALSE,
   quiet = getOption("lbstproj.quiet", FALSE)
 )
 }
 \arguments{
-\item{file}{\emph{Character}. The name of the report file to archive.
-
-\emph{Default}: \code{"report.html"}, since this is the default file name in the report
-generation process.}
+\item{file}{\emph{Character} or \code{NULL}. The name of the report file to archive. If
+\code{NULL}, the most recently modified rendered report in \verb{report/} is used.}
 
 \item{overwrite}{\emph{Logical}. Indicate whether to overwrite an existing archive file.
 

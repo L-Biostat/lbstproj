@@ -1,25 +1,30 @@
-test_that("create_report() creates report/html_report.qmd and returns its path invisibly", {
+test_that("create_report() creates a dated html report and returns its path invisibly", {
   local_lbstproj_project(with_tot = TRUE)
+
+  expected_path <- fs::path(
+    "report",
+    glue::glue("html_report_{format(Sys.Date(), '%Y_%m_%d')}.qmd")
+  )
 
   out <- create_report(
     output_type = "html",
     quiet = TRUE
   )
 
-  expect_equal(out, invisible(fs::path("report", "html_report.qmd")))
-  expect_true(fs::file_exists(fs::path("report", "html_report.qmd")))
+  expect_equal(out, invisible(expected_path))
+  expect_true(fs::file_exists(expected_path))
 })
 
 
 test_that("create_report() writes report metadata from DESCRIPTION", {
   local_lbstproj_project(with_tot = TRUE)
 
-  create_report(
+  report_path <- create_report(
     output_type = "html",
     quiet = TRUE
   )
 
-  report <- readLines(fs::path("report", "html_report.qmd"))
+  report <- readLines(report_path)
 
   expect_true(any(grepl(desc::desc_get("Title"), report, fixed = TRUE)))
   expect_true(any(grepl(desc::desc_get("Client"), report, fixed = TRUE)))
@@ -31,16 +36,13 @@ test_that("create_report() includes all TOT entries in the order they appear", {
   local_lbstproj_project(with_tot = TRUE)
 
   tot <- load_tot()
-
-  create_report(
+  report_path <- create_report(
     output_type = "html",
     quiet = TRUE
   )
 
-  report <- paste(
-    readLines(fs::path("report", "html_report.qmd")),
-    collapse = "\n"
-  )
+  report <- paste(readLines(report_path), collapse = "
+")
 
   expected_labels <- ifelse(
     tot$type == "figure",
@@ -67,15 +69,13 @@ test_that("create_report() uses tbl- prefix for tables in html output", {
 
   testthat::skip_if(length(table_names) == 0, "Fake TOT contains no tables.")
 
-  create_report(
+  report_path <- create_report(
     output_type = "html",
     quiet = TRUE
   )
 
-  report <- paste(
-    readLines(fs::path("report", "html_report.qmd")),
-    collapse = "\n"
-  )
+  report <- paste(readLines(report_path), collapse = "
+")
 
   expect_true(all(grepl(
     paste0("tbl-", table_names),
@@ -93,15 +93,13 @@ test_that("create_report() uses tab- prefix for tables in word output", {
 
   testthat::skip_if(length(table_names) == 0, "Fake TOT contains no tables.")
 
-  create_report(
+  report_path <- create_report(
     output_type = "docx",
     quiet = TRUE
   )
 
-  report <- paste(
-    readLines(fs::path("report", "docx_report.qmd")),
-    collapse = "\n"
-  )
+  report <- paste(readLines(report_path), collapse = "
+")
 
   expect_true(all(grepl(
     paste0("tab-", table_names),
@@ -115,16 +113,13 @@ test_that("create_report() includes the expected paths for figures and tables", 
   local_lbstproj_project(with_tot = TRUE)
 
   tot <- load_tot()
-
-  create_report(
+  report_path <- create_report(
     output_type = "html",
     quiet = TRUE
   )
 
-  report <- paste(
-    readLines(fs::path("report", "html_report.qmd")),
-    collapse = "\n"
-  )
+  report <- paste(readLines(report_path), collapse = "
+")
 
   figure_names <- tot$name[tot$type == "figure"]
   table_names <- tot$name[tot$type == "table"]
@@ -149,7 +144,6 @@ test_that("create_report() includes the expected paths for figures and tables", 
 
 test_that("create_report() is quiet when quiet = TRUE", {
   local_lbstproj_project(with_tot = TRUE)
-  fs::dir_create("report")
   expect_no_message(
     create_report(
       output_type = "html",
@@ -171,18 +165,41 @@ test_that("create_report() informs when quiet = FALSE", {
 })
 
 
-test_that("create_report() overwrites an existing report", {
+test_that("create_report() errors when a dated report already exists and overwrite = FALSE", {
   local_lbstproj_project(with_tot = TRUE)
 
-  fs::dir_create("report")
-  writeLines("old report", "report/html_report.qmd")
+  report_path <- fs::path(
+    "report",
+    glue::glue("html_report_{format(Sys.Date(), '%Y_%m_%d')}.qmd")
+  )
+  writeLines("old report", report_path)
+
+  expect_error(
+    create_report(
+      output_type = "html",
+      quiet = TRUE
+    ),
+    "already exists"
+  )
+})
+
+
+test_that("create_report() overwrites an existing dated report when overwrite = TRUE", {
+  local_lbstproj_project(with_tot = TRUE)
+
+  report_path <- fs::path(
+    "report",
+    glue::glue("html_report_{format(Sys.Date(), '%Y_%m_%d')}.qmd")
+  )
+  writeLines("old report", report_path)
 
   create_report(
     output_type = "html",
+    overwrite = TRUE,
     quiet = TRUE
   )
 
-  report <- readLines("report/html_report.qmd")
+  report <- readLines(report_path)
 
   expect_false(identical(report, "old report"))
 })

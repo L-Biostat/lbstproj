@@ -14,10 +14,8 @@
 #' project version. This function is typically used after rendering a report
 #' with [run_report()], to save a copy of the rendered output.
 #'
-#' @param file *Character*. The name of the report file to archive.
-#'
-#'   *Default*: `"report.html"`, since this is the default file name in the report
-#'   generation process.
+#' @param file *Character* or `NULL`. The name of the report file to archive. If
+#'   `NULL`, the most recently modified rendered report in `report/` is used.
 #' @param overwrite *Logical*. Indicate whether to overwrite an existing archive file.
 #'
 #'   *Default*: `FALSE`, an error is raised if the archive file already exists.
@@ -27,24 +25,18 @@
 #'   *Default*: `FALSE` unless the global option `lbstproj.quiet` is set otherwise.
 #' @export
 archive_report <- function(
-  file = "html_report.html",
+  file = NULL,
   overwrite = FALSE,
   quiet = getOption("lbstproj.quiet", FALSE)
 ) {
-  # Check that the file exists
-  file_path <- usethis::proj_path("report", file)
-  if (!fs::file_exists(file_path)) {
-    rel_path <- fs::path_rel(file_path, usethis::proj_get())
-    cli::cli_abort(
-      c(
-        "x" = "Report file {.path {rel_path}} does not exist.",
-        "i" = "Please provide a valid report file to archive."
-      )
-    )
-  }
+  file_path <- resolve_report_file(
+    file = file,
+    extensions = c("html", "docx"),
+    action = "archive"
+  )
   # Generate archive name
-  ext <- fs::path_ext(file)
-  filebase <- fs::path_ext_remove(file)
+  ext <- fs::path_ext(file_path)
+  filebase <- fs::path_ext_remove(fs::path_file(file_path))
   version <- desc::desc_get("Version")
   archive_name <- glue::glue(
     "{filebase}_{format(Sys.Date(), '%Y_%m_%d')}_v{version}.{ext}"

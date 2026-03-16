@@ -529,14 +529,18 @@ run_all_tables()
 `create_report()` reads the TOT and generates a Quarto file at `report/report.qmd`
 with a code chunk for every figure and table, in the order they appear in the TOT.
 
-```{r create-report}
+```{r show-create-report, eval = FALSE}
 create_report(output_type = "html")
+```
+
+```{r create-report, echo = FALSE}
+report <- create_report(output_type = "html")
 ```
 
 The generated file looks like this (excerpt):
 
 ```{r show-report, echo=FALSE, comment=""}
-report_lines <- readLines(fs::path(tmp_proj_dir, "report", "html_report.qmd"))
+report_lines <- readLines(report)
 cat(report_lines[seq_len(min(40L, length(report_lines)))], sep = "\n")
 ```
 
