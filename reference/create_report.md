@@ -7,12 +7,17 @@ appear.
 Captions and labels are taken from the TOT, so updates to the TOT are
 reflected automatically in the generated report.
 
-The report is written to `report/report.qmd`.
+Generated report files are date-stamped, for example
+`report/html_report_2026_03_16.qmd`.
 
 ## Usage
 
 ``` r
-create_report(output_type = "html", quiet = getOption("lbstproj.quiet", FALSE))
+create_report(
+  output_type = "html",
+  overwrite = FALSE,
+  quiet = getOption("lbstproj.quiet", FALSE)
+)
 ```
 
 ## Arguments
@@ -23,6 +28,13 @@ create_report(output_type = "html", quiet = getOption("lbstproj.quiet", FALSE))
   `"html"` or `"docx"`.
 
   *Default*: `"html"`.
+
+- overwrite:
+
+  *Logical*. If `TRUE`, overwrite an existing report file with the same
+  dated name. If `FALSE`, raise an error instead.
+
+  *Default*: `FALSE`.
 
 - quiet:
 

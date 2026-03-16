@@ -19,7 +19,8 @@ create_chunk(
   id = NULL,
   name = NULL,
   print = TRUE,
-  pad = TRUE
+  pad = TRUE,
+  quiet = getOption("lbstproj.quiet", FALSE)
 )
 ```
 
@@ -55,6 +56,14 @@ create_chunk(
   insert a page break after it.
 
   *Default*: `TRUE`
+
+- quiet:
+
+  *Logical*. If `TRUE`, suppress informational messages. Important
+  messages (e.g. directory creation or errors) are still shown.
+
+  *Default*: `FALSE` unless the global option `lbstproj.quiet` is set
+  otherwise.
 
 ## Value
 

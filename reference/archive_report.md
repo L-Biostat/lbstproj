@@ -11,7 +11,7 @@ to save a copy of the rendered output.
 
 ``` r
 archive_report(
-  file = "report.html",
+  file = NULL,
   overwrite = FALSE,
   quiet = getOption("lbstproj.quiet", FALSE)
 )
@@ -21,10 +21,9 @@ archive_report(
 
 - file:
 
-  *Character*. The name of the report file to archive.
-
-  *Default*: `"report.html"`, since this is the default file name in the
-  report generation process.
+  *Character* or `NULL`. The name of the report file to archive. If
+  `NULL`, the most recently modified rendered report in `report/` is
+  used.
 
 - overwrite:
 

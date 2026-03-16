@@ -98,7 +98,7 @@ interactive prompts.</p>
 <p>The project now has the following structure:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="va">tmp_proj_dir</span>, recurse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">/tmp/RtmpLjI4XE/fake-trial</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">/tmp/Rtmp2Vxxm7/fake-trial</span></span></span>
 <span><span class="co">#&gt; ├── DESCRIPTION</span></span>
 <span><span class="co">#&gt; ├── <span style="color: #0000BB; font-weight: bold;">R</span></span></span>
 <span><span class="co">#&gt; │   ├── <span style="color: #0000BB; font-weight: bold;">data</span></span></span>
@@ -325,12 +325,12 @@ stubs:</p>
 retrieve TOT metadata, library calls, and placeholder comments:</p>
 <pre><code><span><span class="co">#' Name         : fig-age-dist.R</span></span>
 <span><span class="co">#' Author       : Jane Doe</span></span>
-<span><span class="co">#' Date         : 10 Mar 2026</span></span>
+<span><span class="co">#' Date         : 16 Mar 2026</span></span>
 <span><span class="co">#' Purpose      :</span></span>
 <span><span class="co">#' Files created:</span></span>
 <span><span class="co">#'  - `results/figures/fig-age-dist.png/pdf`</span></span>
 <span><span class="co">#' Edits        :</span></span>
-<span><span class="co">#'  - 10 Mar 2026: Created file.</span></span>
+<span><span class="co">#'  - 16 Mar 2026: Created file.</span></span>
 <span></span>
 <span><span class="co"># File info ---------------------------------------------------------------</span></span>
 <span></span>
@@ -1627,9 +1627,9 @@ about any discrepancies.</p>
 file at <code>report/report.qmd</code> with a code chunk for every
 figure and table, in the order they appear in the TOT.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/create_report.html">create_report</a></span><span class="op">(</span>output_type <span class="op">=</span> <span class="st">"html"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Writing report to <span style="color: #0000BB;">report/html_report.qmd</span>.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `run_report()` to render the report.</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/create_report.html">create_report</a></span><span class="op">(</span>output_type <span class="op">=</span> <span class="st">"html"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Writing report to <span style="color: #0000BB;">report/html_report_2026_03_16.qmd</span>.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `run_report()` to render the report.</span></span></code></pre>
 <p>The generated file looks like this (excerpt):</p>
 <pre><code>---
 title: "Fake oncology trial"
@@ -1675,12 +1675,12 @@ knitr::include_graphics(here("results/figures/fig-age-dist.png"))
 </h3>
 <p>Call <code><a href="../reference/run_report.html">run_report()</a></code> to render the Quarto file to HTML (or
 DOCX):</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/run_report.html">run_report</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>After reviewing the HTML report, archive it to
 <code>results/reports/</code> with a date-stamped filename using
 <code><a href="../reference/archive_report.html">archive_report()</a></code>:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/archive_report.html">archive_report</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <hr>
 </div>
@@ -1689,7 +1689,7 @@ DOCX):</p>
 <h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
 </h2>
 <p>Here is the full <code>lbstproj</code> workflow at a glance:</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://l-biostat.github.io/lbstproj/">lbstproj</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># 1 — Scaffold the project</span></span>

@@ -59,7 +59,8 @@ copied to the clipboard to easily paste it in the report file if needed.</p>
 <span>  id <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  name <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  print <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  pad <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  pad <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  quiet <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"lbstproj.quiet"</span>, <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -93,6 +94,12 @@ are supported.</p>
 <dd><p><em>Logical</em>. If <code>TRUE</code>, add blank lines before and after the chunk
 and insert a page break after it.</p>
 <p><em>Default</em>: <code>TRUE</code></p></dd>
+
+
+<dt id="arg-quiet">quiet<a class="anchor" aria-label="anchor" href="#arg-quiet"></a></dt>
+<dd><p><em>Logical</em>. If <code>TRUE</code>, suppress informational messages. Important
+messages (e.g. directory creation or errors) are still shown.</p>
+<p><em>Default</em>: <code>FALSE</code> unless the global option <code>lbstproj.quiet</code> is set otherwise.</p></dd>
 
 </dl></div>
     <div class="section level2">

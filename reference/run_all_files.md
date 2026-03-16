@@ -33,15 +33,15 @@ run_all_tables(glob = "*.R", quiet = getOption("lbstproj.quiet", FALSE))
   *Character*. The type of scripts to run. Controls the subdirectory of
   `R/` that is searched:
 
-  - `"figure"` → `R/figures/`
+  - `"figure"` -\> `R/figures/`
 
-  - `"table"` → `R/tables/`
+  - `"table"` -\> `R/tables/`
 
-  - `"data"` → `R/data/`
+  - `"data"` -\> `R/data/`
 
-  - `"analysis"` → `R/analysis/`
+  - `"analysis"` -\> `R/analysis/`
 
-  - any other value → `R/<type>s/`
+  - any other value -\> `R/<type>s/`
 
 - glob:
 
@@ -49,7 +49,7 @@ run_all_tables(glob = "*.R", quiet = getOption("lbstproj.quiet", FALSE))
   [`fs::dir_ls()`](https://fs.r-lib.org/reference/dir_ls.html) to
   include or exclude files.
 
-  *Default*: `"*.R"` — matches all R scripts (case-sensitive).
+  *Default*: `"*.R"` – matches all R scripts (case-sensitive).
 
 - quiet:
 
