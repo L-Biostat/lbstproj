@@ -4,17 +4,11 @@
 \alias{run_report}
 \title{Render a quarto report}
 \usage{
-run_report(
-  file = "report.qmd",
-  quiet = getOption("lbstproj.quiet", FALSE),
-  ...
-)
+run_report(file = NULL, quiet = getOption("lbstproj.quiet", FALSE), ...)
 }
 \arguments{
-\item{file}{\emph{Character}. The name of the report file to render. If this file isn't found, the
-function throws an error.
-
-\emph{Default}: \code{"report.qmd"}, the default name produced by \code{\link[=create_report]{create_report()}}}
+\item{file}{\emph{Character} or \code{NULL}. The name of the report file to render. If
+\code{NULL}, the most recently modified \code{.qmd} report in \verb{report/} is used.}
 
 \item{quiet}{\emph{Logical}. If \code{TRUE}, suppress informational messages. Important
 messages (e.g. directory creation or errors) are still shown.
@@ -29,15 +23,16 @@ Renders a quarto (\code{.qmd}) report file located in the \verb{report/} directo
 rendered output is saved in the same \verb{report/} directory under the same name (with a
 different extension).
 
-All report files are render to a file with the same name. If such a file
-already exists, it will be overwritten without warning. If you want to keep a
-copy of the rendered report, use the \code{\link[=archive_report]{archive_report()}} function after
-rendering to move it to the \verb{results/reports/} directory with a unique name.
+If \code{file} is not supplied, the most recently modified report file in
+\verb{report/} is rendered. Rendered outputs keep the same date-stamped stem as
+the input \code{.qmd} file.
 }
 \examples{
 \dontrun{
 # Default usage
 run_report()
+# Rendering a specific dated report
+run_report(file = "html_report_2026_03_16.qmd")
 # Rendering a specific file to a specific name
 run_report(file = "new_report.qmd", output_file = "final_report_FINAL_v3.0")
 }

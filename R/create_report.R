@@ -7,12 +7,17 @@
 #' Captions and labels are taken from the TOT, so updates to the TOT are reflected
 #' automatically in the generated report.
 #'
-#' The report is written to `report/report.qmd`.
+#' Generated report files are date-stamped, for example
+#' `report/html_report_2026_03_16.qmd`.
 #'
 #' @param output_type *Character*. Output format of the report template.
 #'   Must be one of `"html"` or `"docx"`.
 #'
 #'   *Default*: `"html"`.
+#' @param overwrite *Logical*. If `TRUE`, overwrite an existing report file with
+#'   the same dated name. If `FALSE`, raise an error instead.
+#'
+#'   *Default*: `FALSE`.
 #' @param quiet *Logical*. If `TRUE`, suppress informational messages. Important
 #'   messages (e.g. directory creation or errors) are still shown.
 #'
@@ -21,6 +26,7 @@
 #' @export
 create_report <- function(
   output_type = "html",
+  overwrite = FALSE,
   quiet = getOption("lbstproj.quiet", FALSE)
 ) {
   output_type <- rlang::arg_match(output_type, c("html", "docx"))
@@ -57,7 +63,8 @@ create_report <- function(
   report <- c(report_basis, chunks)
   # Write the report to a file
   ensure_dir_exists("report", create = TRUE)
-  report_path <- fs::path("report", paste0(output_type, "_report"), ext = "qmd")
+  report_path <- report_file_path(output_type, extension = "qmd")
+  check_can_overwrite(report_path, overwrite, what = "Report file")
   writeLines(report, con = report_path)
   # Inform the user if needed
   if (!quiet) {

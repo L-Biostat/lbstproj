@@ -26,15 +26,15 @@
 #'
 #' @param type *Character*. The type of scripts to run. Controls the
 #'   subdirectory of `R/` that is searched:
-#'   - `"figure"` → `R/figures/`
-#'   - `"table"` → `R/tables/`
-#'   - `"data"` → `R/data/`
-#'   - `"analysis"` → `R/analysis/`
-#'   - any other value → `R/<type>s/`
+#'   - `"figure"` -> `R/figures/`
+#'   - `"table"` -> `R/tables/`
+#'   - `"data"` -> `R/data/`
+#'   - `"analysis"` -> `R/analysis/`
+#'   - any other value -> `R/<type>s/`
 #' @param glob *Character*. A glob pattern passed to [fs::dir_ls()] to include
 #'   or exclude files.
 #'
-#'   *Default*: `"*.R"` — matches all R scripts (case-sensitive).
+#'   *Default*: `"*.R"` -- matches all R scripts (case-sensitive).
 #' @param quiet *Logical*. If `TRUE`, suppress informational messages.
 #'
 #'   *Default*: `FALSE` unless the global option `lbstproj.quiet` is set
@@ -64,11 +64,12 @@ run_all_files <- function(
   # Resolve subdirectory from type (same logic as create_file())
   subdir <- type_to_subdir(type)
   full_dir <- usethis::proj_path("R", subdir)
+  rel_dir <- fs::path("R", subdir)
 
   # Ensure the directory exists
   if (!fs::dir_exists(full_dir)) {
     cli::cli_abort(
-      "Directory {.path {fs::path_rel(full_dir)}} does not exist in the project.",
+      "Directory {.path {rel_dir}} does not exist in the project.",
       call = rlang::caller_env()
     )
   }
@@ -85,7 +86,7 @@ run_all_files <- function(
 
   # Header message
   if (!quiet) {
-    cli::cli_h1("Running all {type} files in {.path {fs::path_rel(full_dir)}}")
+    cli::cli_h1("Running all {type} files in {.path {rel_dir}}")
     cli::cli_alert_info("Found {n_files} file{?s}.")
   }
 
@@ -138,8 +139,7 @@ compare_with_tot <- function(type, files) {
   r_files <- files |> fs::path_file()
   only_in_dir <- setdiff(r_files, tot_files)
   # only_in_tot <- setdiff(tot_files, r_files)
-  subdir <- type_to_subdir(type)
-  full_dir <- usethis::proj_path("R", subdir)
+  rel_dir <- fs::path("R", type_to_subdir(type))
 
   if (length(only_in_dir) > 0) {
     f <- cli::cli_vec(
@@ -147,7 +147,7 @@ compare_with_tot <- function(type, files) {
       list("vec-trunc" = 3, "vec-trunc-style" = "head")
     )
     cli::cli_alert_warning(
-      "Found {length(f)} file{?s} in {.path {fs::path_rel(full_dir)}} but not in the ToT: {f}"
+      "Found {length(f)} file{?s} in {.path {rel_dir}} but not in the ToT: {f}"
     )
   }
   # if (length(only_in_tot) > 0) {
@@ -156,7 +156,7 @@ compare_with_tot <- function(type, files) {
   #     list("vec-trunc" = 3, "vec-trunc-style" = "head")
   #   )
   #   cli::cli_alert_warning(
-  #     "Found {length(f)} file{?s} in the ToT but not in {.path {fs::path_rel(full_dir)}}: {f}"
+  #     "Found {length(f)} file{?s} in the ToT but not in {.path {rel_dir}}: {f}"
   #   )
   # }
 }

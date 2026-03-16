@@ -16,17 +16,17 @@ run_all_tables(glob = "*.R", quiet = getOption("lbstproj.quiet", FALSE))
 \item{type}{\emph{Character}. The type of scripts to run. Controls the
 subdirectory of \verb{R/} that is searched:
 \itemize{
-\item \code{"figure"} → \verb{R/figures/}
-\item \code{"table"} → \verb{R/tables/}
-\item \code{"data"} → \verb{R/data/}
-\item \code{"analysis"} → \verb{R/analysis/}
-\item any other value → \verb{R/<type>s/}
+\item \code{"figure"} -> \verb{R/figures/}
+\item \code{"table"} -> \verb{R/tables/}
+\item \code{"data"} -> \verb{R/data/}
+\item \code{"analysis"} -> \verb{R/analysis/}
+\item any other value -> \verb{R/<type>s/}
 }}
 
 \item{glob}{\emph{Character}. A glob pattern passed to \code{\link[fs:dir_ls]{fs::dir_ls()}} to include
 or exclude files.
 
-\emph{Default}: \code{"*.R"} — matches all R scripts (case-sensitive).}
+\emph{Default}: \code{"*.R"} -- matches all R scripts (case-sensitive).}
 
 \item{quiet}{\emph{Logical}. If \code{TRUE}, suppress informational messages.
 

@@ -17,13 +17,13 @@ test_that("glob must be a single string", {
 
 test_that("errors when the type's directory does not exist", {
   local_lbstproj_project(empty_dirs = FALSE)
-  expect_error(run_all_files("figure"), "does not exist")
-  expect_error(run_all_files("table"), "does not exist")
+  expect_error(run_all_files("figure"), "R/figures")
+  expect_error(run_all_files("table"), "R/tables")
 })
 
 test_that("errors when a custom type's directory does not exist", {
   local_lbstproj_project()
-  expect_error(run_all_files("model"), "does not exist")
+  expect_error(run_all_files("model"), "R/models")
 })
 
 # SOURCING -----------------------------------------------------------------------
@@ -125,10 +125,10 @@ test_that("returns empty vector when no files match the glob", {
 
 # QUIET ARGUMENT -----------------------------------------------------------------
 
-test_that("quiet=FALSE produces messages", {
+test_that("quiet=FALSE produces messages with project-relative paths", {
   local_lbstproj_project()
   writeLines("1 + 1", "R/data/dat1.R")
-  expect_message(run_all_files("data", quiet = FALSE))
+  expect_message(run_all_files("data", quiet = FALSE), "R/data")
 })
 
 test_that("quiet=TRUE suppresses messages", {
@@ -147,7 +147,7 @@ test_that("lbstproj.quiet option is respected", {
 
 # TOT COMPARISON -----------------------------------------------------------------
 
-test_that("warns when a file in the directory is not in the ToT", {
+test_that("warns when a file in the directory is not in the ToT and shows a stable path", {
   local_lbstproj_project(with_tot = TRUE)
   import_tot(quiet = TRUE)
   # fig1 is in the ToT; fig-extra is not
@@ -155,7 +155,7 @@ test_that("warns when a file in the directory is not in the ToT", {
   writeLines("1 + 1", "R/figures/fig-extra.R")
   expect_message(
     run_all_files("figure", quiet = TRUE),
-    "fig-extra.R"
+    "R/figures"
   )
 })
 

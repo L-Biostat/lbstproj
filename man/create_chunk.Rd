@@ -9,7 +9,8 @@ create_chunk(
   id = NULL,
   name = NULL,
   print = TRUE,
-  pad = TRUE
+  pad = TRUE,
+  quiet = getOption("lbstproj.quiet", FALSE)
 )
 }
 \arguments{
@@ -33,6 +34,11 @@ are supported.
 and insert a page break after it.
 
 \emph{Default}: \code{TRUE}}
+
+\item{quiet}{\emph{Logical}. If \code{TRUE}, suppress informational messages. Important
+messages (e.g. directory creation or errors) are still shown.
+
+\emph{Default}: \code{FALSE} unless the global option \code{lbstproj.quiet} is set otherwise.}
 }
 \value{
 The rendered quarto chunk as a character string, invisibly
