@@ -30,6 +30,10 @@ create_report <- function(
   quiet = getOption("lbstproj.quiet", FALSE)
 ) {
   output_type <- rlang::arg_match(output_type, c("html", "docx"))
+  # Check that the report can be created
+  ensure_dir_exists("report", create = TRUE)
+  report_path <- report_file_path(output_type, extension = "qmd")
+  check_can_overwrite(report_path, overwrite, what = "Report file")
   # Load the report template
   template_path <- fs::path_package(
     "templates",
@@ -56,15 +60,13 @@ create_report <- function(
       output_type = output_type,
       id = .x,
       print = FALSE,
-      pad = TRUE
+      pad = TRUE,
+      quiet = TRUE
     )
   )
   # Combine the report basis and the chunks
   report <- c(report_basis, chunks)
   # Write the report to a file
-  ensure_dir_exists("report", create = TRUE)
-  report_path <- report_file_path(output_type, extension = "qmd")
-  check_can_overwrite(report_path, overwrite, what = "Report file")
   writeLines(report, con = report_path)
   # Inform the user if needed
   if (!quiet) {
