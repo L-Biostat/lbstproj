@@ -47,5 +47,6 @@ Suggests:
     writexl
 Config/Needs/website: gtsummary, writexl
 Config/testthat/edition: 3
-URL: https://l-biostat.github.io/lbstproj/
+URL: https://l-biostat.github.io/lbstproj/, https://github.com/L-Biostat/lbstproj
 VignetteBuilder: knitr
+BugReports: https://github.com/L-Biostat/lbstproj/issues
