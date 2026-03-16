@@ -43,7 +43,7 @@
 #' @return Invisibly returns the character vector of sourced file paths.
 #'
 #' @examples
-#' \dontrun{
+#' if(FALSE) {
 #' run_all_files("figure")
 #' run_all_figures()                                 # equivalent to the above
 #' run_all_files("data")

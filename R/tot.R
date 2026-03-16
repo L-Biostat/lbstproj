@@ -109,7 +109,7 @@ import_tot <- function(quiet = FALSE) {
 #'   frequently.
 #'
 #' @examples
-#' \dontrun{
+#' if(FALSE) {
 #'  tot <- load_tot()
 #' }
 #' @return A tibble containing the TOT data with the following columns:

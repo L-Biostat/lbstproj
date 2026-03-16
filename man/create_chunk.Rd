@@ -53,3 +53,13 @@ for tables and \code{fig} for figures to allow for cross-referencing).
 If the function is called from Rstudio or the console, the code chunk is always
 copied to the clipboard to easily paste it in the report file if needed.
 }
+\examples{
+if(FALSE) {
+  create_chunk(id = "fig_01_flowchart")
+  create_chunk(
+    name = "tab_01_baseline",
+    output_type = "docx",
+    print = FALSE
+  )
+}
+}

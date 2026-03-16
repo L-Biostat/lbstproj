@@ -21,7 +21,7 @@ Retrieves a single TOT entry identified by either its unique \code{id} or
 its unique \code{name}. The TOT is loaded with \code{\link[=load_tot]{load_tot()}}.
 }
 \examples{
-\dontrun{
+if(FALSE) {
 # By id
 info <- get_info(id = "T001")
 

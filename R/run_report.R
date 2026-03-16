@@ -27,16 +27,14 @@
 #' @param ... Additional arguments passed to the rendering function, in this case,
 #'  [quarto::quarto_render()].
 #'
-#' @export
+#' @return Invisibly returns the path to the rendered report file.
 #' @examples
-#' \dontrun{
-#' # Default usage
-#' run_report()
-#' # Rendering a specific dated report
-#' run_report(file = "html_report_2026_03_16.qmd")
-#' # Rendering a specific file to a specific name
-#' run_report(file = "new_report.qmd", output_file = "final_report_FINAL_v3.0")
+#' if(FALSE) {
+#'   run_report()
+#'   run_report(file = "html_report_2026_03_16.qmd")
+#'   run_report(file = "new_report.qmd", output_file = "final_report_FINAL_v3.0")
 #' }
+#' @export
 run_report <- function(
   file = NULL,
   quiet = getOption("lbstproj.quiet", FALSE),
@@ -60,25 +58,26 @@ run_report <- function(
     )
   }
 
-  if (isFALSE(quiet)) {
-    args <- list(...)
-    output_ext <- report_output_extension(file_path)
+  args <- list(...)
+  output_ext <- report_output_extension(file_path)
 
-    if (!is.null(args$output_file)) {
-      report_rel_path <- args$output_file
-      if (fs::path_ext(report_rel_path) == "") {
-        report_rel_path <- fs::path_ext_set(report_rel_path, output_ext)
-      }
-      if (!fs::is_absolute_path(report_rel_path) && fs::path_dir(report_rel_path) %in% c("", ".")) {
-        report_rel_path <- fs::path("report", report_rel_path)
-      }
-    } else {
-      report_rel_path <- fs::path_ext_set(rel_path, output_ext)
+  if (!is.null(args$output_file)) {
+    report_rel_path <- args$output_file
+    if (fs::path_ext(report_rel_path) == "") {
+      report_rel_path <- fs::path_ext_set(report_rel_path, output_ext)
     }
+    if (!fs::is_absolute_path(report_rel_path) && fs::path_dir(report_rel_path) %in% c("", ".")) {
+      report_rel_path <- fs::path("report", report_rel_path)
+    }
+  } else {
+    report_rel_path <- fs::path_ext_set(rel_path, output_ext)
+  }
 
+  if (isFALSE(quiet)) {
     cli::cli_alert_success("Report rendered at {.path {report_rel_path}}")
     cli::cli_alert_info(
       "Use {.fn archive_report} to archive the rendered report in {.path results/reports/}"
     )
   }
+  invisible(report_rel_path)
 }

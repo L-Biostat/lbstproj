@@ -76,7 +76,7 @@ The following directory structure is created inside the project:
 }\if{html}{\out{</div>}}
 }
 \examples{
-\dontrun{
+if(FALSE) {
 create_project(
   path = ".", # uses current directory
   title = "Example Project",

@@ -89,3 +89,19 @@ use \link[base:readRDS]{base::saveRDS} and manually define the file path.
 Each function saves the object using the given name, after validating it. Names can
 only contain letters, numbers, and hyphens.
 }
+\examples{
+if(FALSE) {
+  save_data(mtcars, name = "analysis_dataset")
+
+  summary_table <- gt::gt(head(mtcars))
+  save_table(summary_table, name = "baseline_characteristics")
+
+  scatter_plot <- ggplot2::ggplot(
+    mtcars,
+    ggplot2::aes(wt, mpg)
+  ) +
+    ggplot2::geom_point()
+  save_figure(scatter_plot, name = "mpg_vs_weight")
+}
+
+}

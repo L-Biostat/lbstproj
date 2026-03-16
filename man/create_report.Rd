@@ -39,3 +39,9 @@ automatically in the generated report.
 Generated report files are date-stamped, for example
 \code{report/html_report_2026_03_16.qmd}.
 }
+\examples{
+if(FALSE) {
+  create_report()
+  create_report(output_type = "docx", overwrite = TRUE)
+}
+}

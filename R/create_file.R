@@ -31,7 +31,7 @@
 #'
 #' @return Invisibly returns the path of the file created.
 #' @examples
-#' \dontrun{
+#' if(FALSE) {
 #' # Hypothetical project layout:
 #' # .
 #' # └─ R/

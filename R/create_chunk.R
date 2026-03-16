@@ -32,6 +32,15 @@
 #'   *Default*: `FALSE` unless the global option `lbstproj.quiet` is set otherwise.
 #'
 #' @return The rendered quarto chunk as a character string, invisibly
+#' @examples
+#' if(FALSE) {
+#'   create_chunk(id = "fig_01_flowchart")
+#'   create_chunk(
+#'     name = "tab_01_baseline",
+#'     output_type = "docx",
+#'     print = FALSE
+#'   )
+#' }
 #' @export
 create_chunk <- function(
   output_type = "html",

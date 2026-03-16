@@ -23,6 +23,13 @@
 #'   messages (e.g. directory creation or errors) are still shown.
 #'
 #'   *Default*: `FALSE` unless the global option `lbstproj.quiet` is set otherwise.
+#' @return Invisibly returns the path to the archived report file.
+#' @examples
+#' if(FALSE) {
+#'   run_report(file = "html_report_2026_03_16.qmd")
+#'   archive_report()
+#'   archive_report(file = "html_report_2026_03_16.html", overwrite = TRUE)
+#' }
 #' @export
 archive_report <- function(
   file = NULL,
@@ -59,4 +66,5 @@ archive_report <- function(
       "Report archived at {.path {proj_rel(archive_path)}}."
     )
   }
+  invisible(archive_path)
 }

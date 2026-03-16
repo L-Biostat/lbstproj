@@ -13,7 +13,7 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' if(FALSE) {
 #' # By id
 #' info <- get_info(id = "T001")
 #'

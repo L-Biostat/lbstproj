@@ -18,6 +18,9 @@ messages (e.g. directory creation or errors) are still shown.
 \item{...}{Additional arguments passed to the rendering function, in this case,
 \code{\link[quarto:quarto_render]{quarto::quarto_render()}}.}
 }
+\value{
+Invisibly returns the path to the rendered report file.
+}
 \description{
 Renders a quarto (\code{.qmd}) report file located in the \verb{report/} directory. The
 rendered output is saved in the same \verb{report/} directory under the same name (with a
@@ -28,12 +31,9 @@ If \code{file} is not supplied, the most recently modified report file in
 the input \code{.qmd} file.
 }
 \examples{
-\dontrun{
-# Default usage
-run_report()
-# Rendering a specific dated report
-run_report(file = "html_report_2026_03_16.qmd")
-# Rendering a specific file to a specific name
-run_report(file = "new_report.qmd", output_file = "final_report_FINAL_v3.0")
+if(FALSE) {
+  run_report()
+  run_report(file = "html_report_2026_03_16.qmd")
+  run_report(file = "new_report.qmd", output_file = "final_report_FINAL_v3.0")
 }
 }

@@ -59,7 +59,7 @@ for discrepancies between the files in the directory and the table of tables
 
 }}
 \examples{
-\dontrun{
+if(FALSE) {
 run_all_files("figure")
 run_all_figures()                                 # equivalent to the above
 run_all_files("data")

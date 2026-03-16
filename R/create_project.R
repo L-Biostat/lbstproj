@@ -50,7 +50,7 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' if(FALSE) {
 #' create_project(
 #'   path = ".", # uses current directory
 #'   title = "Example Project",

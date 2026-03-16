@@ -26,7 +26,7 @@ tables listed there in their respective directories in the \code{R} folder. Any
 existing scripts with the same names will NOT be overwritten.
 }
 \examples{
-\dontrun{
+if(FALSE) {
 # Hypothetical project structure:
 # R/
 # ├── figures/

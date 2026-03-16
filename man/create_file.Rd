@@ -40,7 +40,7 @@ Files are created under \verb{R/<type>(s)/} (e.g. \verb{R/figures/} for \code{ty
 If the target directory does not exist, it will be created automatically.
 }
 \examples{
-\dontrun{
+if(FALSE) {
 # Hypothetical project layout:
 # .
 # └─ R/

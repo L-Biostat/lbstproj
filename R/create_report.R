@@ -23,6 +23,11 @@
 #'
 #'   *Default*: `FALSE` unless the global option `lbstproj.quiet` is set otherwise.
 #' @return Invisibly returns the path to the generated report file.
+#' @examples
+#' if(FALSE) {
+#'   create_report()
+#'   create_report(output_type = "docx", overwrite = TRUE)
+#' }
 #' @export
 create_report <- function(
   output_type = "html",

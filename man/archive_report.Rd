@@ -23,9 +23,19 @@ messages (e.g. directory creation or errors) are still shown.
 
 \emph{Default}: \code{FALSE} unless the global option \code{lbstproj.quiet} is set otherwise.}
 }
+\value{
+Invisibly returns the path to the archived report file.
+}
 \description{
 Moves a rendered report from the \verb{report/} directory to the
 \verb{results/reports/} directory and renames it to include the current date and
 project version. This function is typically used after rendering a report
 with \code{\link[=run_report]{run_report()}}, to save a copy of the rendered output.
+}
+\examples{
+if(FALSE) {
+  run_report(file = "html_report_2026_03_16.qmd")
+  archive_report()
+  archive_report(file = "html_report_2026_03_16.html", overwrite = TRUE)
+}
 }

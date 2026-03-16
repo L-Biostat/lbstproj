@@ -18,7 +18,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Alexandre Bohyn \email{alexandre.bohyn@kuleuven.be} (\href{https://orcid.org/0000-0001-9776-7467}{ORCID})
+\strong{Maintainer}: Alexandre Bohyn \email{alexandre.bohyn@kuleuven.be} (\href{https://orcid.org/0000-0001-9776-7467}{ORCID}) [copyright holder]
 
 }
 \keyword{internal}

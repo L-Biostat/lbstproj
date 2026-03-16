@@ -26,7 +26,7 @@
 #'   (file creation and CLI reporting).
 #'
 #' @examples
-#' \dontrun{
+#' if(FALSE) {
 #' # Hypothetical project structure:
 #' # R/
 #' # ├── figures/

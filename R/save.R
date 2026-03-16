@@ -49,6 +49,20 @@
 #'   * For `save_figure()`: passed to [ggplot2::ggsave]
 #'
 #' @return Invisibly returns the path of the saved file.
+#' @examples
+#' if(FALSE) {
+#'   save_data(mtcars, name = "analysis_dataset")
+#'
+#'   summary_table <- gt::gt(head(mtcars))
+#'   save_table(summary_table, name = "baseline_characteristics")
+#'
+#'   scatter_plot <- ggplot2::ggplot(
+#'     mtcars,
+#'     ggplot2::aes(wt, mpg)
+#'   ) +
+#'     ggplot2::geom_point()
+#'   save_figure(scatter_plot, name = "mpg_vs_weight")
+#' }
 #'
 #' @name save_outputs
 NULL

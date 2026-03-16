@@ -24,7 +24,7 @@ A tibble containing the TOT data with the following columns:
 Simple wrapper function to load the TOT RDS file.
 }
 \examples{
-\dontrun{
+if(FALSE) {
  tot <- load_tot()
 }
 }
