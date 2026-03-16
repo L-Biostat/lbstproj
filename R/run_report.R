@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------------
-# ┌────────────┐
-# │  lbstproj  │
-# └────────────┘
+# ┌------------┐
+#   lbstproj
+# \------------┘
 #
 # run_report.R:
 # Render a quarto report
@@ -40,7 +40,11 @@ run_report <- function(
   quiet = getOption("lbstproj.quiet", FALSE),
   ...
 ) {
-  file_path <- resolve_report_file(file = file, extensions = "qmd", action = "run")
+  file_path <- resolve_report_file(
+    file = file,
+    extensions = "qmd",
+    action = "run"
+  )
   rel_path <- proj_rel(file_path)
 
   ext <- fs::path_ext(file_path)
@@ -66,7 +70,10 @@ run_report <- function(
     if (fs::path_ext(report_rel_path) == "") {
       report_rel_path <- fs::path_ext_set(report_rel_path, output_ext)
     }
-    if (!fs::is_absolute_path(report_rel_path) && fs::path_dir(report_rel_path) %in% c("", ".")) {
+    if (
+      !fs::is_absolute_path(report_rel_path) &&
+        fs::path_dir(report_rel_path) %in% c("", ".")
+    ) {
       report_rel_path <- fs::path("report", report_rel_path)
     }
   } else {

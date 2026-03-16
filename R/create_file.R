@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------------
-# ┌────────────┐
-# │  lbstproj  │
-# └────────────┘
+# ┌------------┐
+#   lbstproj
+# \------------┘
 #
 # create_file.R:
 # Create a new R file in the project
@@ -34,21 +34,21 @@
 #' if(FALSE) {
 #' # Hypothetical project layout:
 #' # .
-#' # └─ R/
-#' #    ├─ figures/
-#' #    └─ tables/
+#' # \- R/
+#' #    |- figures/
+#' #    \- tables/
 #'
 #' # 1) Create a figure file in `R/figures/`
 #' create_file(type = "figure", name = "hr_by_age")
-#' # > ✓ Figure file created at 'R/figures/hr_by_age.R'
+#' # > v Figure file created at 'R/figures/hr_by_age.R'
 #'
 #' # 2) Create a table file in `R/tables/`
 #' create_file(type = "table", name = "baseline_characteristics.R")
-#' # > ✓ Table file created at 'R/tables/baseline_characteristics.R'
+#' # > v Table file created at 'R/tables/baseline_characteristics.R'
 #'
 #' # 3) Create an analysis file (uses default template) in R/analysis/
-#' # > ℹ Created directory 'R/analysis'.
-#' # > ✓ Analysis file created at 'R/analysis/primary_model.R'.
+#' # > i Created directory 'R/analysis'.
+#' # > v Analysis file created at 'R/analysis/primary_model.R'.
 #'
 #' # 4) Calling again does not overwrite
 #' create_file(type = "analysis", name = "primary_model")

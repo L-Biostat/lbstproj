@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------------
-# ┌────────────┐
-# │  lbstproj  │
-# └────────────┘
+# ┌------------┐
+#   lbstproj
+# \------------┘
 #
 # utils_path.R:
 # utility functions to handle paths and directories in the project
