@@ -33,20 +33,20 @@ get_info <- function(id = NULL, name = NULL) {
   # Load the TOT
   tot <- load_tot()
   # Function to check for no matching entry
-  no_entry <- function(x, type) {
-    if (nrow(entry) == 0) {
+  no_entry <- function(x, type, given) {
+    if (nrow(x) == 0) {
       cli::cli_abort(
-        "No entry found for {.arg {type}} = {x}."
+        "No entry found for {.arg {type}} = {given}."
       )
     }
   }
   # Find the matching entry
   if (!is.null(id)) {
     entry <- tot[tot$id == id, ]
-    no_entry(entry, "id")
+    no_entry(entry, "id", id)
   } else {
     entry <- tot[tot$name == name, ]
-    no_entry(entry, "name")
+    no_entry(entry, "name", name)
   }
   # Check that only one entry was found: not needed, TOT should be checked for
   # duplicates when imported.
