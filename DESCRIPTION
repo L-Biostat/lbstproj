@@ -9,11 +9,11 @@ Description: Easily start a new
     statistical analysis project in R. Functions to create a standardized folder
     structure and files, to allow for easier collaboration and
     reproducible research. Functions are also provided to easily load and
-    preprocess data, generate and export figures and tables, and create
+    pre-process data, generate and export figures and tables, and create
     reports in various formats.
 License: CC BY 4.0
 Depends: 
-    R (>= 2.10)
+    R (>= 4.1)
 Imports: 
     cli,
     desc (>= 1.4.3),
