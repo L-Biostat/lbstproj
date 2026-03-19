@@ -3,7 +3,7 @@ test_that("create_report() creates a dated html report and returns its path invi
 
   expected_path <- fs::path(
     "report",
-    glue::glue("html_report_{format(Sys.Date(), '%Y_%m_%d')}.qmd")
+    glue::glue("report_{format(Sys.Date(), '%Y_%m_%d')}.qmd")
   )
 
   out <- create_report(
@@ -41,8 +41,11 @@ test_that("create_report() includes all TOT entries in the order they appear", {
     quiet = TRUE
   )
 
-  report <- paste(readLines(report_path), collapse = "
-")
+  report <- paste(
+    readLines(report_path),
+    collapse = "
+"
+  )
 
   expected_labels <- ifelse(
     tot$type == "figure",
@@ -74,8 +77,11 @@ test_that("create_report() uses tbl- prefix for tables in html output", {
     quiet = TRUE
   )
 
-  report <- paste(readLines(report_path), collapse = "
-")
+  report <- paste(
+    readLines(report_path),
+    collapse = "
+"
+  )
 
   expect_true(all(grepl(
     paste0("tbl-", table_names),
@@ -98,8 +104,11 @@ test_that("create_report() uses tab- prefix for tables in word output", {
     quiet = TRUE
   )
 
-  report <- paste(readLines(report_path), collapse = "
-")
+  report <- paste(
+    readLines(report_path),
+    collapse = "
+"
+  )
 
   expect_true(all(grepl(
     paste0("tab-", table_names),
@@ -118,8 +127,11 @@ test_that("create_report() includes the expected paths for figures and tables", 
     quiet = TRUE
   )
 
-  report <- paste(readLines(report_path), collapse = "
-")
+  report <- paste(
+    readLines(report_path),
+    collapse = "
+"
+  )
 
   figure_names <- tot$name[tot$type == "figure"]
   table_names <- tot$name[tot$type == "table"]
@@ -170,7 +182,7 @@ test_that("create_report() errors when a dated report already exists and overwri
 
   report_path <- fs::path(
     "report",
-    glue::glue("html_report_{format(Sys.Date(), '%Y_%m_%d')}.qmd")
+    glue::glue("report_{format(Sys.Date(), '%Y_%m_%d')}.qmd")
   )
   writeLines("old report", report_path)
 
@@ -189,7 +201,7 @@ test_that("create_report() overwrites an existing dated report when overwrite = 
 
   report_path <- fs::path(
     "report",
-    glue::glue("html_report_{format(Sys.Date(), '%Y_%m_%d')}.qmd")
+    glue::glue("report_{format(Sys.Date(), '%Y_%m_%d')}.qmd")
   )
   writeLines("old report", report_path)
 

@@ -37,7 +37,7 @@ create_report <- function(
   output_type <- rlang::arg_match(output_type, c("html", "docx"))
   # Check that the report can be created
   ensure_dir_exists("report", create = TRUE)
-  report_path <- report_file_path(output_type, extension = "qmd")
+  report_path <- report_file_path()
   check_can_overwrite(report_path, overwrite, what = "Report file")
   # Load the report template
   template_path <- fs::path_package(

@@ -27,7 +27,7 @@
 #' @param ... Additional arguments passed to the rendering function, in this case,
 #'  [quarto::quarto_render()].
 #'
-#' @return Invisibly returns the path to the rendered report file.
+#' @return Invisibly returns the path to the report file.
 #' @examples
 #' if(FALSE) {
 #'   run_report()
@@ -40,17 +40,17 @@ run_report <- function(
   quiet = getOption("lbstproj.quiet", FALSE),
   ...
 ) {
+  # Find the corresponding qmd report file
   file_path <- resolve_report_file(
     file = file,
     extensions = "qmd",
     action = "run"
   )
-  rel_path <- proj_rel(file_path)
-
+  # Ensure the report is a quarto file and then renders it
   ext <- fs::path_ext(file_path)
   if (ext == "qmd") {
     quarto::quarto_render(
-      input = rel_path,
+      input = file_path,
       ...
     )
   } else {
@@ -61,30 +61,15 @@ run_report <- function(
       )
     )
   }
-
-  args <- list(...)
-  output_ext <- report_output_extension(file_path)
-
-  if (!is.null(args$output_file)) {
-    report_rel_path <- args$output_file
-    if (fs::path_ext(report_rel_path) == "") {
-      report_rel_path <- fs::path_ext_set(report_rel_path, output_ext)
-    }
-    if (
-      !fs::is_absolute_path(report_rel_path) &&
-        fs::path_dir(report_rel_path) %in% c("", ".")
-    ) {
-      report_rel_path <- fs::path("report", report_rel_path)
-    }
-  } else {
-    report_rel_path <- fs::path_ext_set(rel_path, output_ext)
-  }
-
+  # Extract the report name
+  report_name <- paste0(fs::path_ext_remove(file_path), ".docx/.html")
   if (isFALSE(quiet)) {
-    cli::cli_alert_success("Report rendered at {.path {report_rel_path}}")
+    cli::cli_alert_success(
+      "Report rendered at {.path {report_name}}"
+    )
     cli::cli_alert_info(
       "Use {.fn archive_report} to archive the rendered report in {.path results/reports/}"
     )
   }
-  invisible(report_rel_path)
+  invisible(file_path)
 }

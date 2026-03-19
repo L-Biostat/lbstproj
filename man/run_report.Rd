@@ -19,7 +19,7 @@ messages (e.g. directory creation or errors) are still shown.
 \code{\link[quarto:quarto_render]{quarto::quarto_render()}}.}
 }
 \value{
-Invisibly returns the path to the rendered report file.
+Invisibly returns the path to the report file.
 }
 \description{
 Renders a quarto (\code{.qmd}) report file located in the \verb{report/} directory. The
