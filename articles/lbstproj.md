@@ -40,7 +40,7 @@ The project now has the following structure:
 
 ``` r
 fs::dir_tree(tmp_proj_dir, recurse = TRUE)
-#> /tmp/RtmpcMvBJd/fake-trial
+#> /tmp/RtmpnkgLPa/fake-trial
 #> ├── DESCRIPTION
 #> ├── R
 #> │   ├── data

@@ -7,6 +7,9 @@
 
 ## Citation
 
+Source:
+[`DESCRIPTION`](https://github.com/L-Biostat/lbstproj/blob/master/DESCRIPTION)
+
 Bohyn A (2026). *lbstproj: Tools to Create and Use Standardized R
 Projects for the L-Biostat Group*. R package version 0.1.0,
 <https://l-biostat.github.io/lbstproj/>.
