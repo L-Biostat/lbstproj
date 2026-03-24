@@ -71,10 +71,10 @@ reports what would be generated.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co"># Hypothetical project structure:</span></span></span>
 <span class="r-in"><span><span class="co"># R/</span></span></span>
-<span class="r-in"><span><span class="co"># ├── figures/</span></span></span>
-<span class="r-in"><span><span class="co"># │   └── fig_01_flowchart.R</span></span></span>
-<span class="r-in"><span><span class="co"># └── tables/</span></span></span>
-<span class="r-in"><span><span class="co">#     └── tab_01_baseline.R</span></span></span>
+<span class="r-in"><span><span class="co"># |-- figures/</span></span></span>
+<span class="r-in"><span><span class="co">#    \-- fig_01_flowchart.R</span></span></span>
+<span class="r-in"><span><span class="co"># \-- tables/</span></span></span>
+<span class="r-in"><span><span class="co">#     \-- tab_01_baseline.R</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># TOT contains:</span></span></span>
 <span class="r-in"><span><span class="co">#   - fig_01_flowchart</span></span></span>
@@ -88,16 +88,16 @@ reports what would be generated.</p>
 <span class="r-in"><span><span class="co"># Example CLI output:</span></span></span>
 <span class="r-in"><span><span class="co">#</span></span></span>
 <span class="r-in"><span><span class="co"># Figures</span></span></span>
-<span class="r-in"><span><span class="co"># ℹ Figures: 2 in TOT, 1 on disk, 1 matched.</span></span></span>
-<span class="r-in"><span><span class="co"># ℹ Figures: would generate 1 missing program (keeping 1 existing).</span></span></span>
-<span class="r-in"><span><span class="co"># ℹ Figures: would create 1 program in R/figures.</span></span></span>
-<span class="r-in"><span><span class="co"># • R/figures/fig_02_primary.R</span></span></span>
+<span class="r-in"><span><span class="co"># i Figures: 2 in TOT, 1 on disk, 1 matched.</span></span></span>
+<span class="r-in"><span><span class="co"># i Figures: would generate 1 missing program (keeping 1 existing).</span></span></span>
+<span class="r-in"><span><span class="co"># i Figures: would create 1 program in R/figures.</span></span></span>
+<span class="r-in"><span><span class="co"># * R/figures/fig_02_primary.R</span></span></span>
 <span class="r-in"><span><span class="co">#</span></span></span>
 <span class="r-in"><span><span class="co"># Tables</span></span></span>
-<span class="r-in"><span><span class="co"># ℹ Tables: 2 in TOT, 1 on disk, 1 matched.</span></span></span>
-<span class="r-in"><span><span class="co"># ℹ Tables: would generate 1 missing program (keeping 1 existing).</span></span></span>
-<span class="r-in"><span><span class="co"># ℹ Tables: would create 1 program in R/tables.</span></span></span>
-<span class="r-in"><span><span class="co"># • R/tables/tab_02_primary.R</span></span></span>
+<span class="r-in"><span><span class="co"># i Tables: 2 in TOT, 1 on disk, 1 matched.</span></span></span>
+<span class="r-in"><span><span class="co"># i Tables: would generate 1 missing program (keeping 1 existing).</span></span></span>
+<span class="r-in"><span><span class="co"># i Tables: would create 1 program in R/tables.</span></span></span>
+<span class="r-in"><span><span class="co"># * R/tables/tab_02_primary.R</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Actual creation</span></span></span>
 <span class="r-in"><span><span class="fu">create_from_tot</span><span class="op">(</span>dry_run <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>

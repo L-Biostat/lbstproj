@@ -36,26 +36,26 @@ pkgdown::build_site()
 
 The package is organized around a **project lifecycle**:
 
-1.  **Initialize** —
+1.  **Initialize** -
     [`create_project()`](https://l-biostat.github.io/lbstproj/reference/create_project.md)
     scaffolds a new project directory with a fixed folder structure, a
     `DESCRIPTION` file, and a `table_of_tables.xlsx` (the TOT).
-2.  **Create scripts** —
+2.  **Create scripts** -
     [`create_file()`](https://l-biostat.github.io/lbstproj/reference/create_file.md)
     generates R scripts from Mustache templates in `inst/templates/`.
     [`create_from_tot()`](https://l-biostat.github.io/lbstproj/reference/create_from_tot.md)
     auto-generates scripts for all entries in the TOT.
-3.  **Save outputs** —
+3.  **Save outputs** -
     [`save_figure()`](https://l-biostat.github.io/lbstproj/reference/save_outputs.md),
     [`save_table()`](https://l-biostat.github.io/lbstproj/reference/save_outputs.md),
     [`save_data()`](https://l-biostat.github.io/lbstproj/reference/save_outputs.md)
     write outputs to standardized paths (`output/figures/`,
     `output/tables/`, `data/processed/`).
-4.  **Run scripts** — `run_all()`,
+4.  **Run scripts** - `run_all()`,
     [`run_all_figures()`](https://l-biostat.github.io/lbstproj/reference/run_all_files.md),
     [`run_all_tables()`](https://l-biostat.github.io/lbstproj/reference/run_all_files.md)
     execute all scripts in the relevant `R/` subdirectory.
-5.  **Report** —
+5.  **Report** -
     [`create_report()`](https://l-biostat.github.io/lbstproj/reference/create_report.md)
     generates a Quarto report from a template;
     [`create_chunk()`](https://l-biostat.github.io/lbstproj/reference/create_chunk.md)
@@ -76,7 +76,7 @@ variables like `{{name}}`, `{{author}}`, `{{date}}`, `{{caption}}`,
 `{{path}}`.
 
 **Project root detection**: Functions rely on `usethis`/`rprojroot`
-conventions — an `.Rproj` file or `DESCRIPTION` at the project root
+conventions - an `.Rproj` file or `DESCRIPTION` at the project root
 signals the project boundary.
 
 ## Key conventions
@@ -86,15 +86,15 @@ signals the project boundary.
 Every R source file begins with an ASCII art header block:
 
 ``` r
-# ├────────────┐
-# │  lbstproj  │
-# └────────────┘
+# |------------┐
+#   lbstproj  
+# \------------┘
 # filename.R: Short description of what this file contains
 ```
 
 ### Documentation
 
-- Roxygen2 with `Roxygen: list(markdown = TRUE)` — all docs use
+- Roxygen2 with `Roxygen: list(markdown = TRUE)` - all docs use
   markdown.
 - Inline formatting uses cli-style markup: `.arg` for arguments, `.val`
   for values, `.file` for paths, `.fn` for function names, `.strong` for
@@ -125,7 +125,7 @@ Every R source file begins with an ASCII art header block:
 - Use `local_lbstproj_project(with_tot = TRUE)` to get a full temp
   project with a TOT fixture.
 - Tests create temporary file system state in
-  [`tempdir()`](https://rdrr.io/r/base/tempfile.html) — never write to
+  [`tempdir()`](https://rdrr.io/r/base/tempfile.html) - never write to
   the package source tree in tests.
 
 ### Naming

@@ -36,7 +36,7 @@ run_report(file = NULL, quiet = getOption("lbstproj.quiet", FALSE), ...)
 
 ## Value
 
-Invisibly returns the path to the rendered report file.
+Invisibly returns the path to the report file.
 
 ## Examples
 

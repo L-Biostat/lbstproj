@@ -3,8 +3,8 @@
 ## Introduction
 
 This tutorial walks through a complete `lbstproj` workflow using a fake
-oncology project. We use the `trial` dataset — a simulated randomized
-clinical trial of 200 patients assigned to **Drug A** or **Drug B** — to
+oncology project. We use the `trial` dataset - a simulated randomized
+clinical trial of 200 patients assigned to **Drug A** or **Drug B** - to
 demonstrate how to:
 
 1.  Scaffold a standardized project
@@ -40,7 +40,7 @@ The project now has the following structure:
 
 ``` r
 fs::dir_tree(tmp_proj_dir, recurse = TRUE)
-#> /tmp/Rtmp3Vv5tP/fake-trial
+#> /tmp/RtmpcMvBJd/fake-trial
 #> ├── DESCRIPTION
 #> ├── R
 #> │   ├── data
@@ -230,12 +230,12 @@ to retrieve TOT metadata, library calls, and placeholder comments:
 
     #' Name         : fig-age-dist.R
     #' Author       : Jane Doe
-    #' Date         : 17 Mar 2026
+    #' Date         : 24 Mar 2026
     #' Purpose      :
     #' Files created:
     #'  - `results/figures/fig-age-dist.png/pdf`
     #' Edits        :
-    #'  - 17 Mar 2026: Created file.
+    #'  - 24 Mar 2026: Created file.
 
     # File info ---------------------------------------------------------------
 
@@ -311,7 +311,7 @@ dplyr::glimpse(trial)
 
 ## 6. Figures
 
-### Figure 1 — Age distribution
+### Figure 1 - Age distribution
 
 ``` r
 # R/figures/fig-age-dist.R
@@ -343,7 +343,7 @@ arm.](lbstproj_files/figure-html/show-fig-age-1.png)
 
 Age distribution by treatment arm.
 
-### Figure 2 — Kaplan-Meier curve
+### Figure 2 - Kaplan-Meier curve
 
 ``` r
 # R/figures/fig-km.R
@@ -388,7 +388,7 @@ then converts to `gt` with
 [`as_gt()`](https://www.danieldsjoberg.com/gtsummary/reference/as_gt.html)
 before saving.
 
-### Table 1 — Baseline characteristics
+### Table 1 - Baseline characteristics
 
 ``` r
 # R/tables/tab-baseline.R
@@ -425,7 +425,7 @@ readRDS("data/tables/tab-baseline.rds")
 
 [TABLE]
 
-### Table 2 — Response rates
+### Table 2 - Response rates
 
 ``` r
 # R/tables/tab-response.R
@@ -495,7 +495,7 @@ TOT.
 create_report(output_type = "html")
 ```
 
-    #> ✔ Writing report to report/html_report_2026_03_17.qmd.
+    #> ✔ Writing report to report/report_2026_03_24.qmd.
     #> ℹ Use `run_report()` to render the report.
 
 The generated file looks like this (excerpt):
@@ -566,21 +566,21 @@ Here is the full `lbstproj` workflow at a glance:
 ``` r
 library(lbstproj)
 
-# 1 — Scaffold the project
+# 1 - Scaffold the project
 create_project(path = ".", title = "My project", author = "Jane Doe")
 
-# 2 — Fill in data/tot/table_of_tables.xlsx, then import it
+# 2 - Fill in data/tot/table_of_tables.xlsx, then import it
 import_tot()
 
-# 3 — Generate script stubs for every TOT entry
+# 3 - Generate script stubs for every TOT entry
 create_from_tot(dry_run = FALSE)
 
-# 4 — Fill in the scripts, then run them all
+# 4 - Fill in the scripts, then run them all
 run_all_files("data")
 run_all_figures()
 run_all_tables()
 
-# 5 — Build and render the report
+# 5 - Build and render the report
 create_report(output_type = "html")
 run_report()
 archive_report()

@@ -63,18 +63,18 @@
 <h2 id="architecture">Architecture<a class="anchor" aria-label="anchor" href="#architecture"></a></h2>
 <p>The package is organized around a <strong>project lifecycle</strong>:</p>
 <ol style="list-style-type: decimal"><li>
-<strong>Initialize</strong> — <code><a href="reference/create_project.html">create_project()</a></code> scaffolds a new project directory with a fixed folder structure, a <code>DESCRIPTION</code> file, and a <code>table_of_tables.xlsx</code> (the TOT).</li>
+<strong>Initialize</strong> - <code><a href="reference/create_project.html">create_project()</a></code> scaffolds a new project directory with a fixed folder structure, a <code>DESCRIPTION</code> file, and a <code>table_of_tables.xlsx</code> (the TOT).</li>
 <li>
-<strong>Create scripts</strong> — <code><a href="reference/create_file.html">create_file()</a></code> generates R scripts from Mustache templates in <code>inst/templates/</code>. <code><a href="reference/create_from_tot.html">create_from_tot()</a></code> auto-generates scripts for all entries in the TOT.</li>
+<strong>Create scripts</strong> - <code><a href="reference/create_file.html">create_file()</a></code> generates R scripts from Mustache templates in <code>inst/templates/</code>. <code><a href="reference/create_from_tot.html">create_from_tot()</a></code> auto-generates scripts for all entries in the TOT.</li>
 <li>
-<strong>Save outputs</strong> — <code><a href="reference/save_outputs.html">save_figure()</a></code>, <code><a href="reference/save_outputs.html">save_table()</a></code>, <code><a href="reference/save_outputs.html">save_data()</a></code> write outputs to standardized paths (<code>output/figures/</code>, <code>output/tables/</code>, <code>data/processed/</code>).</li>
+<strong>Save outputs</strong> - <code><a href="reference/save_outputs.html">save_figure()</a></code>, <code><a href="reference/save_outputs.html">save_table()</a></code>, <code><a href="reference/save_outputs.html">save_data()</a></code> write outputs to standardized paths (<code>output/figures/</code>, <code>output/tables/</code>, <code>data/processed/</code>).</li>
 <li>
-<strong>Run scripts</strong> — <code>run_all()</code>, <code><a href="reference/run_all_files.html">run_all_figures()</a></code>, <code><a href="reference/run_all_files.html">run_all_tables()</a></code> execute all scripts in the relevant <code>R/</code> subdirectory.</li>
+<strong>Run scripts</strong> - <code>run_all()</code>, <code><a href="reference/run_all_files.html">run_all_figures()</a></code>, <code><a href="reference/run_all_files.html">run_all_tables()</a></code> execute all scripts in the relevant <code>R/</code> subdirectory.</li>
 <li>
-<strong>Report</strong> — <code><a href="reference/create_report.html">create_report()</a></code> generates a Quarto report from a template; <code><a href="reference/create_chunk.html">create_chunk()</a></code> inserts TOT-linked code chunks; <code><a href="reference/run_report.html">run_report()</a></code> renders it.</li>
+<strong>Report</strong> - <code><a href="reference/create_report.html">create_report()</a></code> generates a Quarto report from a template; <code><a href="reference/create_chunk.html">create_chunk()</a></code> inserts TOT-linked code chunks; <code><a href="reference/run_report.html">run_report()</a></code> renders it.</li>
 </ol><p><strong>Table of Tables (TOT)</strong>: An Excel file (<code>data/tot/table_of_tables.xlsx</code>) is the central metadata registry. It tracks every figure and table by <code>id</code>, <code>type</code>, <code>name</code>, and <code>caption</code>. The TOT is loaded/validated via <code>tot.R</code> and queried via <code>get_info.R</code>. Test helpers in <code>helper-project.R</code> create minimal in-memory TOT fixtures.</p>
 <p><strong>Template rendering</strong>: <code>inst/templates/</code> contains Mustache templates (<code>.R</code> and <code>.qmd</code>). They are rendered using the <code>whisker</code> package with variables like <code>{{name}}</code>, <code>{{author}}</code>, <code>{{date}}</code>, <code>{{caption}}</code>, <code>{{path}}</code>.</p>
-<p><strong>Project root detection</strong>: Functions rely on <code>usethis</code>/<code>rprojroot</code> conventions — an <code>.Rproj</code> file or <code>DESCRIPTION</code> at the project root signals the project boundary.</p>
+<p><strong>Project root detection</strong>: Functions rely on <code>usethis</code>/<code>rprojroot</code> conventions - an <code>.Rproj</code> file or <code>DESCRIPTION</code> at the project root signals the project boundary.</p>
 </div>
 <div class="section level2">
 <h2 id="key-conventions">Key conventions<a class="anchor" aria-label="anchor" href="#key-conventions"></a></h2>
@@ -82,14 +82,14 @@
 <h3 id="file-headers">File headers<a class="anchor" aria-label="anchor" href="#file-headers"></a></h3>
 <p>Every R source file begins with an ASCII art header block:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># ├────────────┐</span></span>
-<span><span class="co"># │  lbstproj  │</span></span>
-<span><span class="co"># └────────────┘</span></span>
+<code class="sourceCode R"><span><span class="co"># |------------┐</span></span>
+<span><span class="co">#   lbstproj  </span></span>
+<span><span class="co"># \------------┘</span></span>
 <span><span class="co"># filename.R: Short description of what this file contains</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a></h3>
-<ul><li>Roxygen2 with <code>Roxygen: list(markdown = TRUE)</code> — all docs use markdown.</li>
+<ul><li>Roxygen2 with <code>Roxygen: list(markdown = TRUE)</code> - all docs use markdown.</li>
 <li>Inline formatting uses cli-style markup: <code>.arg</code> for arguments, <code>.val</code> for values, <code>.file</code> for paths, <code>.fn</code> for function names, <code>.strong</code> for emphasis.</li>
 <li>Every exported function has <code>@param</code>, <code>@return</code>, and <code>@examples</code>.</li>
 </ul></div>
@@ -104,7 +104,7 @@
 <ul><li>Tests use <code>testthat</code> edition 3.</li>
 <li>Test helpers (<code>tests/testthat/helper-*.R</code>) define <code>local_*()</code> functions that create isolated temporary projects and clean up via <code><a href="https://withr.r-lib.org/reference/with_dir.html" class="external-link">withr::local_dir()</a></code> and <code><a href="https://usethis.r-lib.org/reference/proj_utils.html" class="external-link">usethis::local_project()</a></code>.</li>
 <li>Use <code>local_lbstproj_project(with_tot = TRUE)</code> to get a full temp project with a TOT fixture.</li>
-<li>Tests create temporary file system state in <code><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir()</a></code> — never write to the package source tree in tests.</li>
+<li>Tests create temporary file system state in <code><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir()</a></code> - never write to the package source tree in tests.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="naming">Naming<a class="anchor" aria-label="anchor" href="#naming"></a></h3>
