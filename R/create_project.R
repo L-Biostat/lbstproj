@@ -10,24 +10,24 @@
 #' The following directory structure is created inside the project:
 #'
 #' ```
-#' ├── data
-#' │   ├── figures
-#' │   ├── processed
-#' │   ├── raw
-#' │   ├── tables
-#' │   └── tot
-#' ├── docs
-#' ├── results
-#' │   ├── figures
-#' │   ├── tables
-#' │   └── reports
-#' ├── R
-#' │   ├── data
-#' │   ├── figures
-#' │   ├── functions
-#' │   └── tables
-#' └── report
-#'     └── utils
+#' |-- data
+#'    |-- figures
+#'    |-- processed
+#'    |-- raw
+#'    |-- tables
+#'    \-- tot
+#' |-- docs
+#' |-- results
+#'    |-- figures
+#'    |-- tables
+#'    \-- reports
+#' |-- R
+#'    |-- data
+#'    |-- figures
+#'    |-- functions
+#'    \-- tables
+#' \-- report
+#'     \-- utils
 #' ```
 #'
 #' @param path Path where the project should be created (default is current

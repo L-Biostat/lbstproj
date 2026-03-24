@@ -21,7 +21,7 @@ test_that("archive_report() moves the file out of report/", {
   local_lbstproj_project()
   fs::dir_create("results/reports")
 
-  report_file <- glue::glue("html_report_{format(Sys.Date(), '%Y_%m_%d')}.html")
+  report_file <- glue::glue("report_{format(Sys.Date(), '%Y_%m_%d')}.html")
   writeLines("rendered content", fs::path("report", report_file))
 
   archive_report(file = report_file, quiet = TRUE)
@@ -33,7 +33,7 @@ test_that("archive_report() places the file in results/reports/", {
   local_lbstproj_project()
   fs::dir_create("results/reports")
 
-  report_file <- glue::glue("html_report_{format(Sys.Date(), '%Y_%m_%d')}.html")
+  report_file <- glue::glue("report_{format(Sys.Date(), '%Y_%m_%d')}.html")
   writeLines("rendered content", fs::path("report", report_file))
 
   archive_report(file = report_file, quiet = TRUE)
@@ -45,14 +45,14 @@ test_that("archive_report() uses the correct naming convention", {
   local_lbstproj_project()
   fs::dir_create("results/reports")
 
-  report_file <- glue::glue("html_report_{format(Sys.Date(), '%Y_%m_%d')}.html")
+  report_file <- glue::glue("report_{format(Sys.Date(), '%Y_%m_%d')}.html")
   writeLines("rendered content", fs::path("report", report_file))
 
   archive_report(file = report_file, quiet = TRUE)
 
   version <- as.character(desc::desc_get("Version"))
   expected_name <- glue::glue(
-    "html_report_{format(Sys.Date(), '%Y_%m_%d')}_{format(Sys.Date(), '%Y_%m_%d')}_v{version}.html"
+    "report_{format(Sys.Date(), '%Y_%m_%d')}_v{version}.html"
   )
 
   expect_true(fs::file_exists(fs::path("results/reports", expected_name)))
@@ -62,14 +62,14 @@ test_that("archive_report() preserves file content after move", {
   local_lbstproj_project()
   fs::dir_create("results/reports")
 
-  report_file <- glue::glue("html_report_{format(Sys.Date(), '%Y_%m_%d')}.html")
+  report_file <- glue::glue("report_{format(Sys.Date(), '%Y_%m_%d')}.html")
   writeLines("rendered content", fs::path("report", report_file))
 
   archive_report(file = report_file, quiet = TRUE)
 
   version <- as.character(desc::desc_get("Version"))
   archive_name <- glue::glue(
-    "html_report_{format(Sys.Date(), '%Y_%m_%d')}_{format(Sys.Date(), '%Y_%m_%d')}_v{version}.html"
+    "report_{format(Sys.Date(), '%Y_%m_%d')}_v{version}.html"
   )
 
   expect_equal(
@@ -87,7 +87,7 @@ test_that("archive_report() works with a non-default file name", {
 
   version <- as.character(desc::desc_get("Version"))
   expected_name <- glue::glue(
-    "final_report_{format(Sys.Date(), '%Y_%m_%d')}_v{version}.html"
+    "final_report_v{version}.html"
   )
 
   expect_true(fs::file_exists(fs::path("results/reports", expected_name)))
@@ -97,7 +97,7 @@ test_that("archive_report() uses the latest rendered report when file is omitted
   local_lbstproj_project()
   fs::dir_create("results/reports")
 
-  older <- fs::path("report", "html_report_2026_03_15.html")
+  older <- fs::path("report", "report_2026_03_15.html")
   newer <- fs::path("report", "docx_report_2026_03_16.docx")
   writeLines("older", older)
   writeLines("newer", newer)
@@ -117,10 +117,10 @@ test_that("archive_report() errors when archive already exists and overwrite = F
 
   version <- as.character(desc::desc_get("Version"))
   archive_name <- glue::glue(
-    "html_report_{format(Sys.Date(), '%Y_%m_%d')}_{format(Sys.Date(), '%Y_%m_%d')}_v{version}.html"
+    "report_{format(Sys.Date(), '%Y_%m_%d')}_v{version}.html"
   )
   writeLines("old content", fs::path("results/reports", archive_name))
-  report_file <- glue::glue("html_report_{format(Sys.Date(), '%Y_%m_%d')}.html")
+  report_file <- glue::glue("report_{format(Sys.Date(), '%Y_%m_%d')}.html")
   writeLines("new content", fs::path("report", report_file))
 
   expect_error(
@@ -135,10 +135,10 @@ test_that("archive_report() overwrites an existing archive when overwrite = TRUE
 
   version <- as.character(desc::desc_get("Version"))
   archive_name <- glue::glue(
-    "html_report_{format(Sys.Date(), '%Y_%m_%d')}_{format(Sys.Date(), '%Y_%m_%d')}_v{version}.html"
+    "report_{format(Sys.Date(), '%Y_%m_%d')}_v{version}.html"
   )
   writeLines("old content", fs::path("results/reports", archive_name))
-  report_file <- glue::glue("html_report_{format(Sys.Date(), '%Y_%m_%d')}.html")
+  report_file <- glue::glue("report_{format(Sys.Date(), '%Y_%m_%d')}.html")
   writeLines("new content", fs::path("report", report_file))
 
   archive_report(file = report_file, overwrite = TRUE, quiet = TRUE)
@@ -154,7 +154,7 @@ test_that("archive_report() overwrites an existing archive when overwrite = TRUE
 test_that("archive_report() is quiet when quiet = TRUE", {
   local_lbstproj_project()
   fs::dir_create("results/reports")
-  report_file <- glue::glue("html_report_{format(Sys.Date(), '%Y_%m_%d')}.html")
+  report_file <- glue::glue("report_{format(Sys.Date(), '%Y_%m_%d')}.html")
   writeLines("rendered content", fs::path("report", report_file))
 
   expect_no_message(archive_report(file = report_file, quiet = TRUE))
@@ -163,7 +163,7 @@ test_that("archive_report() is quiet when quiet = TRUE", {
 test_that("archive_report() informs when quiet = FALSE", {
   local_lbstproj_project()
   fs::dir_create("results/reports")
-  report_file <- glue::glue("html_report_{format(Sys.Date(), '%Y_%m_%d')}.html")
+  report_file <- glue::glue("report_{format(Sys.Date(), '%Y_%m_%d')}.html")
   writeLines("rendered content", fs::path("report", report_file))
 
   expect_message(
@@ -175,7 +175,7 @@ test_that("archive_report() informs when quiet = FALSE", {
 test_that("lbstproj.quiet option is respected by archive_report()", {
   local_lbstproj_project()
   fs::dir_create("results/reports")
-  report_file <- glue::glue("html_report_{format(Sys.Date(), '%Y_%m_%d')}.html")
+  report_file <- glue::glue("report_{format(Sys.Date(), '%Y_%m_%d')}.html")
   writeLines("rendered content", fs::path("report", report_file))
 
   withr::with_options(

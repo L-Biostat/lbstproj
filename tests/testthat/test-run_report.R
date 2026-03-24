@@ -30,12 +30,15 @@ test_that("run_report() errors for an unsupported file extension", {
 test_that("run_report() calls quarto_render() with the correct input path", {
   local_lbstproj_project()
 
-  report_file <- glue::glue("html_report_{format(Sys.Date(), '%Y_%m_%d')}.qmd")
-  writeLines("---
+  report_file <- glue::glue("report_{format(Sys.Date(), '%Y_%m_%d')}.qmd")
+  writeLines(
+    "---
 format:
   html:
 ---
-", fs::path("report", report_file))
+",
+    fs::path("report", report_file)
+  )
 
   rendered_inputs <- character(0)
   local_mocked_bindings(
@@ -53,18 +56,24 @@ format:
 test_that("run_report() uses the latest dated qmd report when file is omitted", {
   local_lbstproj_project()
 
-  older <- fs::path("report", "html_report_2026_03_15.qmd")
-  newer <- fs::path("report", "docx_report_2026_03_16.qmd")
-  writeLines("---
+  older <- fs::path("report", "report_2026_03_15.qmd")
+  newer <- fs::path("report", "report_2026_03_16.qmd")
+  writeLines(
+    "---
 format:
   html:
 ---
-", older)
-  writeLines("---
+",
+    older
+  )
+  writeLines(
+    "---
 format:
   docx:
 ---
-", newer)
+",
+    newer
+  )
   Sys.setFileTime(older, as.POSIXct("2026-03-15 10:00:00", tz = "UTC"))
   Sys.setFileTime(newer, as.POSIXct("2026-03-16 10:00:00", tz = "UTC"))
 
@@ -78,18 +87,21 @@ format:
 
   run_report(quiet = TRUE)
 
-  expect_equal(rendered_inputs, "report/docx_report_2026_03_16.qmd")
+  expect_equal(rendered_inputs, "report/report_2026_03_16.qmd")
 })
 
 test_that("run_report() passes ... arguments through to quarto_render()", {
   local_lbstproj_project()
 
-  report_file <- glue::glue("html_report_{format(Sys.Date(), '%Y_%m_%d')}.qmd")
-  writeLines("---
+  report_file <- glue::glue("report_{format(Sys.Date(), '%Y_%m_%d')}.qmd")
+  writeLines(
+    "---
 format:
   html:
 ---
-", fs::path("report", report_file))
+",
+    fs::path("report", report_file)
+  )
 
   captured_args <- list()
   local_mocked_bindings(
@@ -109,12 +121,15 @@ format:
 test_that("run_report() is quiet when quiet = TRUE", {
   local_lbstproj_project()
 
-  report_file <- glue::glue("html_report_{format(Sys.Date(), '%Y_%m_%d')}.qmd")
-  writeLines("---
+  report_file <- glue::glue("report_{format(Sys.Date(), '%Y_%m_%d')}.qmd")
+  writeLines(
+    "---
 format:
   html:
 ---
-", fs::path("report", report_file))
+",
+    fs::path("report", report_file)
+  )
   local_mocked_bindings(
     quarto_render = function(...) invisible(NULL),
     .package = "quarto"
@@ -126,12 +141,15 @@ format:
 test_that("run_report() informs when quiet = FALSE", {
   local_lbstproj_project()
 
-  report_file <- glue::glue("html_report_{format(Sys.Date(), '%Y_%m_%d')}.qmd")
-  writeLines("---
+  report_file <- glue::glue("report_{format(Sys.Date(), '%Y_%m_%d')}.qmd")
+  writeLines(
+    "---
 format:
   html:
 ---
-", fs::path("report", report_file))
+",
+    fs::path("report", report_file)
+  )
   local_mocked_bindings(
     quarto_render = function(...) invisible(NULL),
     .package = "quarto"
@@ -143,12 +161,8 @@ format:
 test_that("run_report() reports a docx output path for docx reports", {
   local_lbstproj_project()
 
-  report_file <- glue::glue("docx_report_{format(Sys.Date(), '%Y_%m_%d')}.qmd")
-  writeLines("---
-format:
-  docx:
----
-", fs::path("report", report_file))
+  report_file <- glue::glue("report_{format(Sys.Date(), '%Y_%m_%d')}.qmd")
+  fs::file_create(fs::path("report", report_file))
   local_mocked_bindings(
     quarto_render = function(...) invisible(NULL),
     .package = "quarto"
@@ -156,19 +170,22 @@ format:
 
   expect_message(
     run_report(file = report_file, quiet = FALSE),
-    glue::glue("docx_report_{format(Sys.Date(), '%Y_%m_%d')}.docx")
+    glue::glue("report_{format(Sys.Date(), '%Y_%m_%d')}.docx/.html")
   )
 })
 
 test_that("lbstproj.quiet option is respected by run_report()", {
   local_lbstproj_project()
 
-  report_file <- glue::glue("html_report_{format(Sys.Date(), '%Y_%m_%d')}.qmd")
-  writeLines("---
+  report_file <- glue::glue("report_{format(Sys.Date(), '%Y_%m_%d')}.qmd")
+  writeLines(
+    "---
 format:
   html:
 ---
-", fs::path("report", report_file))
+",
+    fs::path("report", report_file)
+  )
   local_mocked_bindings(
     quarto_render = function(...) invisible(NULL),
     .package = "quarto"

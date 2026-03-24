@@ -55,24 +55,24 @@ created, it opens the new project in RStudio.
 \details{
 The following directory structure is created inside the project:
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{├── data
-│   ├── figures
-│   ├── processed
-│   ├── raw
-│   ├── tables
-│   └── tot
-├── docs
-├── results
-│   ├── figures
-│   ├── tables
-│   └── reports
-├── R
-│   ├── data
-│   ├── figures
-│   ├── functions
-│   └── tables
-└── report
-    └── utils
+\if{html}{\out{<div class="sourceCode">}}\preformatted{|-- data
+   |-- figures
+   |-- processed
+   |-- raw
+   |-- tables
+   \\-- tot
+|-- docs
+|-- results
+   |-- figures
+   |-- tables
+   \\-- reports
+|-- R
+   |-- data
+   |-- figures
+   |-- functions
+   \\-- tables
+\\-- report
+    \\-- utils
 }\if{html}{\out{</div>}}
 }
 \examples{

@@ -4,11 +4,11 @@
 \name{lbstproj-package}
 \alias{lbstproj}
 \alias{lbstproj-package}
-\title{lbstproj: Tools To Create And Use Standardized R Projects For The L-Biostat Group}
+\title{lbstproj: Tools to Create and Use Standardized R Projects for the L-Biostat Group}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-This package provides functions to easily start a new statistical analysis project in R. It creates a standardized folder structure and files, to allow for easier collaboration and reproducible research. It also provides functions to easily load and preprocess data, generate and export figures and tables, and create reports in various formats.
+Easily start a new statistical analysis project in R. Functions to create a standardized folder structure and files, to allow for easier collaboration and reproducible research. Functions are also provided to easily load and pre-process data, generate and export figures and tables, and create reports in various formats.
 }
 \seealso{
 Useful links:

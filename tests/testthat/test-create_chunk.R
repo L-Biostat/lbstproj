@@ -142,6 +142,7 @@ test_that("create_chunk() does not print when print = FALSE", {
 
 
 test_that("create_chunk() copies the chunk to the clipboard in interactive mode", {
+  skip_on_os(c("linux", "mac"))
   clipboard <- NULL
 
   local_lbstproj_project(with_tot = TRUE)
