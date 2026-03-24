@@ -3,10 +3,10 @@ url: https://l-biostat.github.io/lbstproj/
 template:
   bootstrap: 5
   bslib:
-    primary:         "#1B4E8C"   # navy  — hex border, Sigma, "L-Biostat"
+    primary:         "#1B4E8C"   # navy  - hex border, Sigma, "L-Biostat"
     link-color:      "#1B4E8C"
     headings-color:  "#1B4E8C"
-    code-color:      "#2CB5C0"   # teal  — ribbon accent
+    code-color:      "#2CB5C0"   # teal  - ribbon accent
     code-bg:         "#eef8fa"
     pkgdown-nav-background: "#1B4E8C"
 home:

@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------------
-# ┌────────────┐
-# │  lbstproj  │
-# └────────────┘
+# ┌------------┐
+#   lbstproj
+# \------------┘
 #
 # utils_path.R:
 # utility functions to handle paths and directories in the project
@@ -151,22 +151,14 @@ check_can_overwrite <- function(path, overwrite, what = "File") {
   invisible(path)
 }
 
-# Return path relative to the active project root.
-#
-# @keywords internal
-proj_rel <- function(path) {
-  fs::path_rel(path, start = usethis::proj_get())
-}
-
 # Return the project-relative path to a dated report file.
 #
 # @keywords internal
 report_file_path <- function(
-  output_type,
   extension = "qmd",
   date = Sys.Date()
 ) {
-  file_name <- paste0(output_type, "_report_", format(date, "%Y_%m_%d"))
+  file_name <- paste0("report_", format(date, "%Y_%m_%d"))
   fs::path("report", file_name, ext = extension)
 }
 
@@ -175,10 +167,8 @@ report_file_path <- function(
 # @keywords internal
 find_latest_report_file <- function(extensions) {
   ensure_dir_exists("report", create = FALSE)
-
   files <- fs::dir_ls("report", type = "file", recurse = FALSE)
   files <- files[fs::path_ext(files) %in% extensions]
-
   if (length(files) == 0L) {
     return(character())
   }
@@ -189,12 +179,14 @@ find_latest_report_file <- function(extensions) {
   ]]]
 }
 
-# Resolve a report file path from an explicit file name or the latest match.
-#
-# @keywords internal
+#' Resolve a report file path from an explicit file name or the latest match.
+#' @return *Character*. The path of the report file, relative to the project root.
+#' @keywords internal
 resolve_report_file <- function(file = NULL, extensions, action = "use") {
+  # Find latest file if not given
   if (is.null(file)) {
     file_path <- find_latest_report_file(extensions)
+    # If no report exists, throw an error
     if (length(file_path) == 0L) {
       cli::cli_abort(
         c(
@@ -206,51 +198,18 @@ resolve_report_file <- function(file = NULL, extensions, action = "use") {
     return(file_path)
   }
 
+  # If file is given,
   check_string(file)
-  file_path <- usethis::proj_path("report", file)
-  rel_path <- proj_rel(file_path)
+  file_path <- fs::path("report", file)
 
   if (!fs::file_exists(file_path)) {
     cli::cli_abort(
       c(
-        "x" = "Report file {.path {rel_path}} does not exist.",
+        "x" = "Report file {.path {file_path}} does not exist.",
         "i" = "Please provide a valid report file to {action}."
       )
     )
   }
 
   file_path
-}
-
-# Infer the output extension for a Quarto report file.
-#
-# @keywords internal
-report_output_extension <- function(file_path) {
-  lines <- readLines(file_path, warn = FALSE)
-  header_delims <- which(trimws(lines) == "---")
-
-  if (length(header_delims) >= 2 && header_delims[[1]] == 1) {
-    header <- lines[(header_delims[[1]] + 1):(header_delims[[2]] - 1)]
-
-    if (
-      any(grepl("^\\s*format\\s*:\\s*html\\s*$", header)) ||
-        any(grepl("^\\s*html\\s*:\\s*$", header))
-    ) {
-      return("html")
-    }
-
-    if (
-      any(grepl("^\\s*format\\s*:\\s*docx\\s*$", header)) ||
-        any(grepl("^\\s*docx\\s*:\\s*$", header))
-    ) {
-      return("docx")
-    }
-  }
-
-  file_name <- fs::path_file(file_path)
-  if (grepl("^docx_report(_\\d{4}_\\d{2}_\\d{2})?\\.qmd$", file_name)) {
-    return("docx")
-  }
-
-  "html"
 }

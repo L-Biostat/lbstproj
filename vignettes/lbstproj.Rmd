@@ -24,8 +24,8 @@ knitr::opts_chunk$set(
 ## Introduction
 
 This tutorial walks through a complete `lbstproj` workflow using a fake oncology
-project. We use the `trial` dataset — a simulated randomized clinical trial of
-200 patients assigned to **Drug A** or **Drug B** — to demonstrate how to:
+project. We use the `trial` dataset - a simulated randomized clinical trial of
+200 patients assigned to **Drug A** or **Drug B** - to demonstrate how to:
 
 1. Scaffold a standardized project
 2. Register outputs in the **Table of Tables** (TOT)
@@ -63,7 +63,7 @@ fs::dir_tree(tmp_proj_dir, recurse = TRUE)
 
 | Folder            | Purpose |
 |-------------------|---------|
-| `data/raw/`       | Raw input files (CSV, Excel, …) |
+| `data/raw/`       | Raw input files (CSV, Excel, ...) |
 | `data/processed/` | Cleaned datasets saved as `.rds` |
 | `data/tables/`    | GT tables saved as `.rds` |
 | `data/tot/`       | The Table of Tables (Excel + cached `.rds`) |
@@ -245,7 +245,7 @@ dplyr::glimpse(trial)
 
 ## 6. Figures
 
-### Figure 1 — Age distribution
+### Figure 1 - Age distribution
 
 ```{r fig-age-script-display, eval=FALSE}
 # R/figures/fig-age-dist.R
@@ -297,7 +297,7 @@ fig_age_dist <- fig
 fig_age_dist
 ```
 
-### Figure 2 — Kaplan-Meier curve
+### Figure 2 - Kaplan-Meier curve
 
 ```{r fig-km-script-display, eval=FALSE}
 # R/figures/fig-km.R
@@ -372,7 +372,7 @@ Tables are saved as `gt` objects and optionally exported to Word. The workflow
 below uses `gtsummary` to produce publication-ready summaries, then converts to
 `gt` with `as_gt()` before saving.
 
-### Table 1 — Baseline characteristics
+### Table 1 - Baseline characteristics
 
 ```{r tab-baseline-script-display, eval=FALSE}
 # R/tables/tab-baseline.R
@@ -441,7 +441,7 @@ withr::with_options(list(lbstproj.quiet = TRUE), {
 readRDS("data/tables/tab-baseline.rds")
 ```
 
-### Table 2 — Response rates
+### Table 2 - Response rates
 
 ```{r tab-response-script-display, eval=FALSE}
 # R/tables/tab-response.R
@@ -568,21 +568,21 @@ Here is the full `lbstproj` workflow at a glance:
 ```{r workflow-summary, eval=FALSE}
 library(lbstproj)
 
-# 1 — Scaffold the project
+# 1 - Scaffold the project
 create_project(path = ".", title = "My project", author = "Jane Doe")
 
-# 2 — Fill in data/tot/table_of_tables.xlsx, then import it
+# 2 - Fill in data/tot/table_of_tables.xlsx, then import it
 import_tot()
 
-# 3 — Generate script stubs for every TOT entry
+# 3 - Generate script stubs for every TOT entry
 create_from_tot(dry_run = FALSE)
 
-# 4 — Fill in the scripts, then run them all
+# 4 - Fill in the scripts, then run them all
 run_all_files("data")
 run_all_figures()
 run_all_tables()
 
-# 5 — Build and render the report
+# 5 - Build and render the report
 create_report(output_type = "html")
 run_report()
 archive_report()

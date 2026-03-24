@@ -10,9 +10,9 @@ messages are printed by package functions.
 \section{Options}{
 
 \itemize{
-\item \strong{\code{lbstproj.quiet}} (\code{logical}, default \code{FALSE}) — When \code{TRUE},
-suppresses all informational messages (e.g. "Saved to …", "Importing
-TOT …") across every function in the package.
+\item \strong{\code{lbstproj.quiet}} (\code{logical}, default \code{FALSE}) - When \code{TRUE},
+suppresses all informational messages (e.g. "Saved to ...", "Importing
+TOT ...") across every function in the package.
 
 Individual functions also accept a \code{quiet} argument that overrides this
 option for a single call.

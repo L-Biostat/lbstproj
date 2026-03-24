@@ -33,31 +33,31 @@ pkgdown::build_site()
 
 The package is organized around a **project lifecycle**:
 
-1. **Initialize** — `create_project()` scaffolds a new project directory with a fixed folder structure, a `DESCRIPTION` file, and a `table_of_tables.xlsx` (the TOT).
-2. **Create scripts** — `create_file()` generates R scripts from Mustache templates in `inst/templates/`. `create_from_tot()` auto-generates scripts for all entries in the TOT.
-3. **Save outputs** — `save_figure()`, `save_table()`, `save_data()` write outputs to standardized paths (`output/figures/`, `output/tables/`, `data/processed/`).
-4. **Run scripts** — `run_all()`, `run_all_figures()`, `run_all_tables()` execute all scripts in the relevant `R/` subdirectory.
-5. **Report** — `create_report()` generates a Quarto report from a template; `create_chunk()` inserts TOT-linked code chunks; `run_report()` renders it.
+1. **Initialize** - `create_project()` scaffolds a new project directory with a fixed folder structure, a `DESCRIPTION` file, and a `table_of_tables.xlsx` (the TOT).
+2. **Create scripts** - `create_file()` generates R scripts from Mustache templates in `inst/templates/`. `create_from_tot()` auto-generates scripts for all entries in the TOT.
+3. **Save outputs** - `save_figure()`, `save_table()`, `save_data()` write outputs to standardized paths (`output/figures/`, `output/tables/`, `data/processed/`).
+4. **Run scripts** - `run_all()`, `run_all_figures()`, `run_all_tables()` execute all scripts in the relevant `R/` subdirectory.
+5. **Report** - `create_report()` generates a Quarto report from a template; `create_chunk()` inserts TOT-linked code chunks; `run_report()` renders it.
 
 **Table of Tables (TOT)**: An Excel file (`data/tot/table_of_tables.xlsx`) is the central metadata registry. It tracks every figure and table by `id`, `type`, `name`, and `caption`. The TOT is loaded/validated via `tot.R` and queried via `get_info.R`. Test helpers in `helper-project.R` create minimal in-memory TOT fixtures.
 
 **Template rendering**: `inst/templates/` contains Mustache templates (`.R` and `.qmd`). They are rendered using the `whisker` package with variables like `{{name}}`, `{{author}}`, `{{date}}`, `{{caption}}`, `{{path}}`.
 
-**Project root detection**: Functions rely on `usethis`/`rprojroot` conventions — an `.Rproj` file or `DESCRIPTION` at the project root signals the project boundary.
+**Project root detection**: Functions rely on `usethis`/`rprojroot` conventions - an `.Rproj` file or `DESCRIPTION` at the project root signals the project boundary.
 
 ## Key conventions
 
 ### File headers
 Every R source file begins with an ASCII art header block:
 ```r
-# ├────────────┐
-# │  lbstproj  │
-# └────────────┘
+# |------------┐
+#   lbstproj  
+# \------------┘
 # filename.R: Short description of what this file contains
 ```
 
 ### Documentation
-- Roxygen2 with `Roxygen: list(markdown = TRUE)` — all docs use markdown.
+- Roxygen2 with `Roxygen: list(markdown = TRUE)` - all docs use markdown.
 - Inline formatting uses cli-style markup: `.arg` for arguments, `.val` for values, `.file` for paths, `.fn` for function names, `.strong` for emphasis.
 - Every exported function has `@param`, `@return`, and `@examples`.
 
@@ -70,7 +70,7 @@ Every R source file begins with an ASCII art header block:
 - Tests use `testthat` edition 3.
 - Test helpers (`tests/testthat/helper-*.R`) define `local_*()` functions that create isolated temporary projects and clean up via `withr::local_dir()` and `usethis::local_project()`.
 - Use `local_lbstproj_project(with_tot = TRUE)` to get a full temp project with a TOT fixture.
-- Tests create temporary file system state in `tempdir()` — never write to the package source tree in tests.
+- Tests create temporary file system state in `tempdir()` - never write to the package source tree in tests.
 
 ### Naming
 - All functions: `snake_case`.

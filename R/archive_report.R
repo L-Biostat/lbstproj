@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------------
-# ┌────────────┐
-# │  lbstproj  │
-# └────────────┘
+# ┌------------┐
+#   lbstproj
+# \------------┘
 #
 # archive_report.R:
 # Archive a quarto report
@@ -45,25 +45,20 @@ archive_report <- function(
   ext <- fs::path_ext(file_path)
   filebase <- fs::path_ext_remove(fs::path_file(file_path))
   version <- desc::desc_get("Version")
-  archive_name <- glue::glue(
-    "{filebase}_{format(Sys.Date(), '%Y_%m_%d')}_v{version}.{ext}"
+  archive_path <- fs::path(
+    "results",
+    "reports",
+    paste0(filebase, "_v", version),
+    ext = ext
   )
-  archive_path <- usethis::proj_path("results/reports", archive_name)
   # If needed, check archive does not exist
-  if (fs::file_exists(archive_path) & !overwrite) {
-    cli::cli_abort(
-      c(
-        "x" = "Archive file {.path {proj_rel(archive_path)}} already exists.",
-        "i" = "Use {.code overwrite = TRUE} to overwrite the existing archive."
-      )
-    )
-  }
+  check_can_overwrite(archive_path, overwrite, what = "Archive file")
   # Move file to archive
   fs::file_move(file_path, archive_path)
   # Inform user
   if (isFALSE(quiet)) {
     cli::cli_alert_success(
-      "Report archived at {.path {proj_rel(archive_path)}}."
+      "Report archived at {.path {archive_path}}."
     )
   }
   invisible(archive_path)
