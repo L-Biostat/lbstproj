@@ -37,6 +37,11 @@ default template.
 
 Files are created under \verb{R/<type>(s)/} (e.g. \verb{R/figures/} for \code{type = "figure"}), except \code{type = "data"} which goes to \verb{R/data/}, or \code{type = "analysis"} which goes to \verb{R/analysis/}.
 
+For types other than \code{"figure"}, \code{"table"}, and \code{"data"} (which have
+dedicated \link{save_outputs} functions), a matching \verb{data/<subdir>/} directory
+is also created. This is the conventional location to save objects produced
+by scripts in \verb{R/<subdir>/} using \link[base:readRDS]{base::saveRDS}.
+
 If the target directory does not exist, it will be created automatically.
 }
 \examples{
@@ -55,13 +60,15 @@ create_file(type = "figure", name = "hr_by_age")
 create_file(type = "table", name = "baseline_characteristics.R")
 # > v Table file created at 'R/tables/baseline_characteristics.R'
 
-# 3) Create an analysis file (uses default template) in R/analysis/
-# > i Created directory 'R/analysis'.
-# > v Analysis file created at 'R/analysis/primary_model.R'.
+# 3) Create a model file (custom type): creates R/models/ and data/models/
+create_file(type = "model", name = "primary_model")
+# > i Created directory 'R/models'.
+# > i Created directory 'data/models'.
+# > v Model file created at 'R/models/primary_model.R'.
 
 # 4) Calling again does not overwrite
-create_file(type = "analysis", name = "primary_model")
-# > ! File 'R/analysis/primary_model.R' already exists and will not be overwritten.
+create_file(type = "model", name = "primary_model")
+# > ! File 'R/models/primary_model.R' already exists and will not be overwritten.
 }
 
 }

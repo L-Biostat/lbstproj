@@ -83,8 +83,12 @@ as \code{docx} to \code{results/tables}.
 \item \code{save_figure()} saves a figure as \code{png} (or another extension) to \code{results/figures}.
 }
 
-To save another R object (e.g. a model, a \code{mice} object, ...) to file, you need to
-use \link[base:readRDS]{base::saveRDS} and manually define the file path.
+To save another R object (e.g. a model, a \code{mice} object, ...) to file, use
+\link[base:readRDS]{base::saveRDS}. By convention, save it to \verb{data/<subdir>/} where \verb{<subdir>}
+matches the subdirectory in \verb{R/} where the script lives. For example, a model
+created in \verb{R/models/} should be saved to \verb{data/models/}. When using
+\code{\link[=create_file]{create_file()}} with a custom type, the matching \verb{data/<subdir>/} directory
+is created automatically.
 
 Each function saves the object using the given name, after validating it. Names can
 only contain letters, numbers, and hyphens.

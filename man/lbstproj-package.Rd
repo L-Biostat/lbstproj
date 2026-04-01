@@ -8,12 +8,14 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Easily start a new statistical analysis project in R. Functions to create a standardized folder structure and files, to allow for easier collaboration and reproducible research. Functions are also provided to easily load and pre-process data, generate and export figures and tables, and create reports in various formats.
+Easily start a new statistical analysis project in R. Functions to create a standardized folder structure and files, to allow for easier collaboration and reproducible research. It also provides functions to easily load and pre-process data, generate and export figures and tables, and create reports in various formats.
 }
 \seealso{
 Useful links:
 \itemize{
   \item \url{https://l-biostat.github.io/lbstproj/}
+  \item \url{https://github.com/L-Biostat/lbstproj}
+  \item Report bugs at \url{https://github.com/L-Biostat/lbstproj/issues}
 }
 
 }

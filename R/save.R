@@ -17,8 +17,12 @@
 #'     as `docx` to `results/tables`.
 #'   * `save_figure()` saves a figure as `png` (or another extension) to `results/figures`.
 #'
-#' To save another R object (e.g. a model, a `mice` object, ...) to file, you need to
-#' use [base::saveRDS] and manually define the file path.
+#' To save another R object (e.g. a model, a `mice` object, ...) to file, use
+#' [base::saveRDS]. By convention, save it to `data/<subdir>/` where `<subdir>`
+#' matches the subdirectory in `R/` where the script lives. For example, a model
+#' created in `R/models/` should be saved to `data/models/`. When using
+#' [create_file()] with a custom type, the matching `data/<subdir>/` directory
+#' is created automatically.
 #'
 #' Each function saves the object using the given name, after validating it. Names can
 #' only contain letters, numbers, and hyphens.

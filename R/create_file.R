@@ -17,6 +17,11 @@
 #'   "figure"`), except `type = "data"` which goes to `R/data/`, or `type =
 #'   "analysis"` which goes to `R/analysis/`.
 #'
+#'   For types other than `"figure"`, `"table"`, and `"data"` (which have
+#'   dedicated [save_outputs] functions), a matching `data/<subdir>/` directory
+#'   is also created. This is the conventional location to save objects produced
+#'   by scripts in `R/<subdir>/` using [base::saveRDS].
+#'
 #'   If the target directory does not exist, it will be created automatically.
 #'
 #' @param type *Character*. Used to choose both the subdirectory and the
@@ -46,13 +51,15 @@
 #' create_file(type = "table", name = "baseline_characteristics.R")
 #' # > v Table file created at 'R/tables/baseline_characteristics.R'
 #'
-#' # 3) Create an analysis file (uses default template) in R/analysis/
-#' # > i Created directory 'R/analysis'.
-#' # > v Analysis file created at 'R/analysis/primary_model.R'.
+#' # 3) Create a model file (custom type): creates R/models/ and data/models/
+#' create_file(type = "model", name = "primary_model")
+#' # > i Created directory 'R/models'.
+#' # > i Created directory 'data/models'.
+#' # > v Model file created at 'R/models/primary_model.R'.
 #'
 #' # 4) Calling again does not overwrite
-#' create_file(type = "analysis", name = "primary_model")
-#' # > ! File 'R/analysis/primary_model.R' already exists and will not be overwritten.
+#' create_file(type = "model", name = "primary_model")
+#' # > ! File 'R/models/primary_model.R' already exists and will not be overwritten.
 #' }
 #'
 #' @export
@@ -74,6 +81,12 @@ create_file <- function(
   # Create directory path and ensure it exists
   dir_path <- fs::path("R", subdir)
   ensure_dir_exists(dir_path)
+
+  # For custom types (not figure/table/data which have dedicated save_* functions),
+  # also create the matching data/<subdir>/ directory
+  if (!type %in% c("figure", "table", "data")) {
+    ensure_dir_exists(fs::path("data", subdir))
+  }
 
   # Create file path and ensure it DOES NOT exist
   file_path <- fs::path(dir_path, name, ext = "R")
