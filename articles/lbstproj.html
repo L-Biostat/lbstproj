@@ -100,7 +100,7 @@ interactive prompts.</p>
 <p>The project now has the following structure:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="va">tmp_proj_dir</span>, recurse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">/tmp/RtmpzFeSwl/fake-trial</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">/tmp/Rtmplb0h4L/fake-trial</span></span></span>
 <span><span class="co">#&gt; ├── DESCRIPTION</span></span>
 <span><span class="co">#&gt; ├── <span style="color: #0000BB; font-weight: bold;">R</span></span></span>
 <span><span class="co">#&gt; │   ├── <span style="color: #0000BB; font-weight: bold;">data</span></span></span>
@@ -313,26 +313,26 @@ stubs:</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Figures: 2 in TOT, 0 on disk, 0 matched.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Figures: generating 2 missing programs.</span></span>
 <span><span class="co">#&gt; → Figures: created 2 programs in <span style="color: #0000BB;">R/figures</span>.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="font-weight: bold;">Fig-Age-Dist</span> file created at <span style="color: #0000BB;">R/figures/fig-age-dist.R</span>.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="font-weight: bold;">Fig-Km</span> file created at <span style="color: #0000BB;">R/figures/fig-km.R</span>.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="color: #0000BB;">R/figures/fig-age-dist.R</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="color: #0000BB;">R/figures/fig-km.R</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── <span style="font-weight: bold;">Tables</span> ──</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Tables: 2 in TOT, 0 on disk, 0 matched.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Tables: generating 2 missing programs.</span></span>
 <span><span class="co">#&gt; → Tables: created 2 programs in <span style="color: #0000BB;">R/tables</span>.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="font-weight: bold;">Tab-Baseline</span> file created at <span style="color: #0000BB;">R/tables/tab-baseline.R</span>.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="font-weight: bold;">Tab-Response</span> file created at <span style="color: #0000BB;">R/tables/tab-response.R</span>.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="color: #0000BB;">R/tables/tab-baseline.R</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="color: #0000BB;">R/tables/tab-response.R</span></span></span></code></pre></div>
 <p>Each stub is pre-filled with a header, <code><a href="../reference/get_info.html">get_info()</a></code> to
 retrieve TOT metadata, library calls, and placeholder comments:</p>
 <pre><code><span><span class="co">#' Name         : fig-age-dist.R</span></span>
 <span><span class="co">#' Author       : Jane Doe</span></span>
-<span><span class="co">#' Date         : 01 Apr 2026</span></span>
+<span><span class="co">#' Date         : 03 Apr 2026</span></span>
 <span><span class="co">#' Purpose      :</span></span>
 <span><span class="co">#' Files created:</span></span>
 <span><span class="co">#'  - `results/figures/fig-age-dist.png/pdf`</span></span>
 <span><span class="co">#' Edits        :</span></span>
-<span><span class="co">#'  - 01 Apr 2026: Created file.</span></span>
+<span><span class="co">#'  - 03 Apr 2026: Created file.</span></span>
 <span></span>
 <span><span class="co"># File info ---------------------------------------------------------------</span></span>
 <span></span>
@@ -353,7 +353,7 @@ retrieve TOT metadata, library calls, and placeholder comments:</p>
 <span></span>
 <span><span class="co"># Save figure -------------------------------------------------------------</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/save_outputs.html">save_figure</a></span><span class="op">(</span><span class="va">fig</span>, name <span class="op">=</span> <span class="st">"fig-age-dist"</span><span class="op">)</span></span></code></pre>
+<span><span class="fu"><a href="../reference/save_outputs.html">save_figure</a></span><span class="op">(</span><span class="va">fig</span>, name <span class="op">=</span> <span class="va">info</span><span class="op">$</span><span class="va">name</span><span class="op">)</span></span></code></pre>
 <p>You fill in the placeholder sections with your analysis. The next
 sections show the completed scripts for our oncology project.</p>
 <hr>
@@ -1630,7 +1630,7 @@ file at <code>report/report.qmd</code> with a code chunk for every
 figure and table, in the order they appear in the TOT.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/create_report.html">create_report</a></span><span class="op">(</span>output_type <span class="op">=</span> <span class="st">"html"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Writing report to <span style="color: #0000BB;">report/report_2026_04_01.qmd</span>.</span></span>
+<pre><code><span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Writing report to <span style="color: #0000BB;">report/report_2026_04_03.qmd</span>.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `run_report()` to render the report.</span></span></code></pre>
 <p>The generated file looks like this (excerpt):</p>
 <pre><code>---

@@ -40,7 +40,7 @@ The project now has the following structure:
 
 ``` r
 fs::dir_tree(tmp_proj_dir, recurse = TRUE)
-#> /tmp/RtmpzFeSwl/fake-trial
+#> /tmp/Rtmplb0h4L/fake-trial
 #> ├── DESCRIPTION
 #> ├── R
 #> │   ├── data
@@ -212,16 +212,16 @@ create_from_tot(dry_run = FALSE)
 #> ℹ Figures: 2 in TOT, 0 on disk, 0 matched.
 #> ℹ Figures: generating 2 missing programs.
 #> → Figures: created 2 programs in R/figures.
-#> ✔ Fig-Age-Dist file created at R/figures/fig-age-dist.R.
-#> ✔ Fig-Km file created at R/figures/fig-km.R.
+#> • R/figures/fig-age-dist.R
+#> • R/figures/fig-km.R
 #> 
 #> ── Tables ──
 #> 
 #> ℹ Tables: 2 in TOT, 0 on disk, 0 matched.
 #> ℹ Tables: generating 2 missing programs.
 #> → Tables: created 2 programs in R/tables.
-#> ✔ Tab-Baseline file created at R/tables/tab-baseline.R.
-#> ✔ Tab-Response file created at R/tables/tab-response.R.
+#> • R/tables/tab-baseline.R
+#> • R/tables/tab-response.R
 ```
 
 Each stub is pre-filled with a header,
@@ -230,12 +230,12 @@ to retrieve TOT metadata, library calls, and placeholder comments:
 
     #' Name         : fig-age-dist.R
     #' Author       : Jane Doe
-    #' Date         : 01 Apr 2026
+    #' Date         : 03 Apr 2026
     #' Purpose      :
     #' Files created:
     #'  - `results/figures/fig-age-dist.png/pdf`
     #' Edits        :
-    #'  - 01 Apr 2026: Created file.
+    #'  - 03 Apr 2026: Created file.
 
     # File info ---------------------------------------------------------------
 
@@ -256,7 +256,7 @@ to retrieve TOT metadata, library calls, and placeholder comments:
 
     # Save figure -------------------------------------------------------------
 
-    save_figure(fig, name = "fig-age-dist")
+    save_figure(fig, name = info$name)
 
 You fill in the placeholder sections with your analysis. The next
 sections show the completed scripts for our oncology project.
@@ -495,7 +495,7 @@ TOT.
 create_report(output_type = "html")
 ```
 
-    #> ✔ Writing report to report/report_2026_04_01.qmd.
+    #> ✔ Writing report to report/report_2026_04_03.qmd.
     #> ℹ Use `run_report()` to render the report.
 
 The generated file looks like this (excerpt):
