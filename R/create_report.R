@@ -30,7 +30,7 @@
 #' }
 #' @export
 create_report <- function(
-  output_type = "html",
+  output_type = "docx",
   overwrite = FALSE,
   quiet = getOption("lbstproj.quiet", FALSE)
 ) {
