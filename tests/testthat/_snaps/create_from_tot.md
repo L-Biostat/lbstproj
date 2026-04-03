@@ -37,4 +37,5 @@
       i Figures: 2 in TOT, 1 on disk, 1 matched.
       i Figures: generating 1 missing program.
       > Figures: created 1 program in 'R/figures'.
+      * 'R/figures/fig_b.R'
 

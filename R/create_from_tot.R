@@ -112,14 +112,14 @@ create_from_tot <- function(
     if (isFALSE(dry_run)) {
       # Create scripts (won't overwrite)
       invisible(Map(
-        # Always generate files with use.print = FALSE to avoid printing
+        # Always generate files with quiet = TRUE to avoid printing
         # messages from create_figure() and create_table()
         function(x, y) {
           create_file(
             type = s$tot_type,
             name = x,
             open = FALSE,
-            print = FALSE,
+            quiet = TRUE,
             id = y
           )
         },
@@ -192,14 +192,12 @@ cli_report_program <- function(
       "{label}: {if (dry_run) 'would create' else 'created'} {n_new} program{?s} in {.path {dir_}}."
     )
 
-    if (isTRUE(dry_run)) {
-      cli::cli_bullets(
-        stats::setNames(
-          paste0("{.file ", fs::path(dir_, new), "}"),
-          rep("*", n_new)
-        )
+    cli::cli_bullets(
+      stats::setNames(
+        paste0("{.file ", fs::path(dir_, new), "}"),
+        rep("*", n_new)
       )
-    }
+    )
   }
 
   if (n_extra > 0) {
