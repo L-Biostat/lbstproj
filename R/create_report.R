@@ -52,7 +52,8 @@ create_report <- function(
     author = get_author(),
     client = desc::desc_get("Client"),
     department = desc::desc_get("Department"),
-    date = format(Sys.Date(), "%d %B %Y")
+    date = format(Sys.Date(), "%d %B %Y"),
+    table_engine = get_table_engine()
   )
   # Render the template with the data
   report_basis <- whisker::whisker.render(template, template_data)

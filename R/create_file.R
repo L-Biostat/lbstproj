@@ -111,7 +111,8 @@ create_file <- function(
       name = name,
       type = type,
       author = get_author(),
-      date = format(Sys.Date(), "%d %b %Y")
+      date = format(Sys.Date(), "%d %b %Y"),
+      table_engine = get_table_engine()
     ),
     rlang::list2(...)
   )
