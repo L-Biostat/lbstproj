@@ -3,6 +3,6 @@
     Code
       run_report(file = report_file, quiet = FALSE)
     Message
-      v Report rendered at 'report/report_2026_03_19.docx/.html'
+      v Report rendered at 'report/report_2026_04_01.docx/.html'
       i Use `archive_report()` to archive the rendered report in 'results/reports/'
 

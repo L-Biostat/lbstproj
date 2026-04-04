@@ -32,4 +32,4 @@ tab_lbl <- tab |>
 
 # Save and export table ---------------------------------------------------
 
-save_table(tab_lbl, name = "{{name}}", export = TRUE)
+save_table(tab_lbl, name = info$name, export = TRUE)

@@ -26,4 +26,4 @@ fig <- NULL # Replace NULL with your figure code, e.g. ggplot(data) + ...
 
 # Save figure -------------------------------------------------------------
 
-save_figure(fig, name = "{{name}}")
+save_figure(fig, name = info$name)
