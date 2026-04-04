@@ -141,7 +141,7 @@ format:
 test_that("run_report() informs when quiet = FALSE", {
   local_lbstproj_project()
 
-  report_file <- glue::glue("report_{format(Sys.Date(), '%Y_%m_%d')}.qmd")
+  report_file <- "report_2026_01_01.qmd"
   writeLines(
     "---
 format:

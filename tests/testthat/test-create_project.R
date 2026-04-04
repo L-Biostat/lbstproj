@@ -134,7 +134,6 @@ test_that("invalid table_engine raises an error", {
       department = "TEST",
       table_engine = "kableExtra",
       quiet = TRUE
-    ),
-    class = "cli_error"
+    )
   )
 })

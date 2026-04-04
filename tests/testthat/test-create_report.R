@@ -168,6 +168,11 @@ test_that("create_report() is quiet when quiet = TRUE", {
 test_that("create_report() informs when quiet = FALSE", {
   local_lbstproj_project(with_tot = TRUE)
 
+  local_mocked_bindings(
+    Sys.Date = function() as.Date("2026-01-01"),
+    .package = "base"
+  )
+
   expect_snapshot(
     create_report(
       output_type = "html",
