@@ -18,6 +18,7 @@ create_project(
   author = NULL,
   email = NULL,
   version = "1.0.0",
+  table_engine = "gt",
   open = rlang::is_interactive(),
   force = FALSE,
   quiet = FALSE
@@ -54,6 +55,14 @@ create_project(
 - version:
 
   Project version (default is `1.0.0`).
+
+- table_engine:
+
+  Table engine to use in the project. Must be `"gt"` or `"flextable"`.
+  Determines which package is loaded in generated table scripts and
+  reports.
+
+  *Default*: `"gt"`.
 
 - open:
 

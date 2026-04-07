@@ -58,6 +58,15 @@ Generate, render, and archive Quarto reports.
 - [`archive_report()`](https://l-biostat.github.io/lbstproj/reference/archive_report.md)
   : Archive a rendered report
 
+## Table engine
+
+Query and check the table rendering engine configured for the project.
+
+- [`get_table_engine()`](https://l-biostat.github.io/lbstproj/reference/get_table_engine.md)
+  [`is_gt_project()`](https://l-biostat.github.io/lbstproj/reference/get_table_engine.md)
+  [`is_flextable_project()`](https://l-biostat.github.io/lbstproj/reference/get_table_engine.md)
+  : Table engine helpers
+
 ## Options
 
 Package-level global options.

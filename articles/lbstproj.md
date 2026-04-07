@@ -40,7 +40,7 @@ The project now has the following structure:
 
 ``` r
 fs::dir_tree(tmp_proj_dir, recurse = TRUE)
-#> /tmp/Rtmp2idXRI/fake-trial
+#> /tmp/RtmpNNbHbo/fake-trial
 #> ├── DESCRIPTION
 #> ├── R
 #> │   ├── data
@@ -519,7 +519,7 @@ The generated file looks like this (excerpt):
 
     ```{r pkg}
     library(here) # To generate relative file paths
-    library(gt) # Needed to display gt tables in Word
+    library(gt) # Needed to display tables
 
     # Create list of captions
     tot <- readRDS(here("data/tot/tot.rds"))

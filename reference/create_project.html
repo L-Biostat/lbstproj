@@ -57,6 +57,7 @@ created, it opens the new project in RStudio.</p>
 <span>  author <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  email <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  version <span class="op">=</span> <span class="st">"1.0.0"</span>,</span>
+<span>  table_engine <span class="op">=</span> <span class="st">"gt"</span>,</span>
 <span>  open <span class="op">=</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/is_interactive.html" class="external-link">is_interactive</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  force <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  quiet <span class="op">=</span> <span class="cn">FALSE</span></span>
@@ -94,6 +95,13 @@ directory).</p></dd>
 
 <dt id="arg-version">version<a class="anchor" aria-label="anchor" href="#arg-version"></a></dt>
 <dd><p>Project version (default is <code>1.0.0</code>).</p></dd>
+
+
+<dt id="arg-table-engine">table_engine<a class="anchor" aria-label="anchor" href="#arg-table-engine"></a></dt>
+<dd><p>Table engine to use in the project. Must be <code>"gt"</code> or
+<code>"flextable"</code>. Determines which package is loaded in generated table
+scripts and reports.</p>
+<p><em>Default</em>: <code>"gt"</code>.</p></dd>
 
 
 <dt id="arg-open">open<a class="anchor" aria-label="anchor" href="#arg-open"></a></dt>
