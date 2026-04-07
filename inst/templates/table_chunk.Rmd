@@ -1,5 +1,4 @@
-```{r tab-{{name}} }
+```{r tab-{{name}}, tab.cap=caption_list[["{{name}}"]]}
 tab <- readRDS(here("{{path}}"))
-tab |>
-  add_caption(caption_list[["{{name}}"]])
+tab
 ```

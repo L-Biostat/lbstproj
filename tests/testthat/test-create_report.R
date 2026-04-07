@@ -272,6 +272,7 @@ test_that("create_report() flextable report contains Rmd-style table chunks", {
   report <- paste(readLines(report_path), collapse = "\n")
 
   expect_true(all(grepl(paste0("tab-", table_names), report, fixed = TRUE)))
+  expect_true(grepl("tab.cap=caption_list", report, fixed = TRUE))
 })
 
 

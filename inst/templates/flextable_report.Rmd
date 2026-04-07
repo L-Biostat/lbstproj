@@ -17,12 +17,6 @@ library(officedown)  # Needed for Word document features
 # Create list of captions
 tot <- readRDS(here("data/tot/tot.rds"))
 caption_list <- setNames(as.list(tot$caption), tot$name)
-
-# Define function to add caption to tables
-add_caption <- function(x, cap) {
-  x |>
-    flextable::set_caption(cap)
-}
 ```
 
 `r run_pagebreak()`

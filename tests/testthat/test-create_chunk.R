@@ -240,10 +240,9 @@ test_that("create_chunk() renders an Rmd table chunk for flextable projects", {
   expect_equal(
     out,
     c(
-      "```{r tab-tab1 }",
+      "```{r tab-tab1, tab.cap=caption_list[[\"tab1\"]]}",
       "tab <- readRDS(here(\"data/tables/tab1.rds\"))",
-      "tab |>",
-      "  add_caption(caption_list[[\"tab1\"]])",
+      "tab",
       "```"
     )
   )
