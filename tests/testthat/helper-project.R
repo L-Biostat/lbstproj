@@ -54,7 +54,8 @@ local_lbstproj_project <- function(
       "License: MIT",
       "Title: Parkinson",
       "Client: Jane Doe",
-      "Department: DEP"
+      "Department: DEP",
+      "TableEngine: gt"
     ),
     "DESCRIPTION"
   )

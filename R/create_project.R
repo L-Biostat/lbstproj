@@ -38,6 +38,11 @@
 #' @param author Author name (first and last).
 #' @param email Author email.
 #' @param version Project version (default is `1.0.0`).
+#' @param table_engine Table engine to use in the project. Must be `"gt"` or
+#'   `"flextable"`. Determines which package is loaded in generated table
+#'   scripts and reports.
+#'
+#'   *Default*: `"gt"`.
 #' @param open If `TRUE`, opens the new project in RStudio (default is `TRUE` if
 #'   in interactive session).
 #' @param force If `TRUE`, skips the confirmation prompt before creating the
@@ -68,10 +73,14 @@ create_project <- function(
   author = NULL,
   email = NULL,
   version = "1.0.0",
+  table_engine = "gt",
   open = rlang::is_interactive(),
   force = FALSE,
   quiet = FALSE
 ) {
+  # Validate table_engine early before doing anything
+  check_table_engine(table_engine)
+
   # Ensure that user does want to create project at this path
   if (!force) {
     ok <- usethis::ui_yeah(
@@ -142,6 +151,7 @@ create_project <- function(
     department = department,
     author = author_obj,
     version = version,
+    table_engine = table_engine,
     quiet = quiet
   )
 
@@ -214,6 +224,7 @@ create_description <- function(
   department,
   author,
   version,
+  table_engine = "gt",
   quiet = FALSE
 ) {
   # Check that author is of class person
@@ -230,6 +241,7 @@ create_description <- function(
   d$set("Client", client)
   d$set("Department", department)
   d$set("Version", version)
+  d$set("TableEngine", table_engine, check = FALSE)
   d$set_authors(author)
   d$write(file = desc_path)
   if (!quiet) {

@@ -1,7 +1,7 @@
 # lbstproj <a href="https://l-biostat.github.io/lbstproj/"><img src="man/figures/logo.png" alt="lbstproj website" align="right" height="138"/></a>
 
 <!-- badges: start -->
-[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![pkgdown](https://img.shields.io/badge/docs-pkgdown-blue)](https://l-biostat.github.io/lbstproj/)
 <!-- badges: end -->
 

@@ -15,7 +15,7 @@ execute:
 
 ```{r pkg}
 library(here) # To generate relative file paths
-library(gt) # Needed to display gt tables in Word
+library({{table_engine}}) # Needed to display tables in Word
 
 # Create list of captions
 tot <- readRDS(here("data/tot/tot.rds"))
