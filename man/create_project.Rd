@@ -12,6 +12,7 @@ create_project(
   author = NULL,
   email = NULL,
   version = "1.0.0",
+  table_engine = "gt",
   open = rlang::is_interactive(),
   force = FALSE,
   quiet = FALSE
@@ -32,6 +33,12 @@ directory).}
 \item{email}{Author email.}
 
 \item{version}{Project version (default is \verb{1.0.0}).}
+
+\item{table_engine}{Table engine to use in the project. Must be \code{"gt"} or
+\code{"flextable"}. Determines which package is loaded in generated table
+scripts and reports.
+
+\emph{Default}: \code{"gt"}.}
 
 \item{open}{If \code{TRUE}, opens the new project in RStudio (default is \code{TRUE} if
 in interactive session).}

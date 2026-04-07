@@ -13,3 +13,13 @@ check_string <- function(x) {
     cli::cli_abort("{.arg {arg}} must be a single character string.")
   }
 }
+
+check_table_engine <- function(engine) {
+  arg <- deparse(substitute(engine))
+  valid_engines <- c("gt", "flextable")
+  if (!(engine %in% valid_engines)) {
+    cli::cli_abort(
+      "{.arg {arg}} must be one of {.val gt} or {.val flextable}, not {.val {engine}}."
+    )
+  }
+}

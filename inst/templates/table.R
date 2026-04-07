@@ -15,7 +15,7 @@ info <- get_info(name = "{{name}}")
 # Packages ----------------------------------------------------------------
 
 library(dplyr)
-library(gt)
+library({{table_engine}})
 
 # Load data ---------------------------------------------------------------
 

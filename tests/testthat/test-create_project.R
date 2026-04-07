@@ -96,3 +96,44 @@ test_that("Default email works when supplied", {
   author <- prompt_email(NULL)
   expect_identical(author, "jane.doe@email.com")
 })
+
+test_that("table_engine defaults to gt in DESCRIPTION", {
+  proj <- local_created_project(
+    author = "Test Author",
+    title = "Test Project",
+    client = "Test Client",
+    email = "test@email.com",
+    department = "TEST",
+    quiet = TRUE
+  )
+  d <- desc::description$new(file.path(proj, "DESCRIPTION"))
+  expect_equal(d$get("TableEngine")[[1]], "gt")
+})
+
+test_that("table_engine = 'flextable' is stored in DESCRIPTION", {
+  proj <- local_created_project(
+    author = "Test Author",
+    title = "Test Project",
+    client = "Test Client",
+    email = "test@email.com",
+    department = "TEST",
+    table_engine = "flextable",
+    quiet = TRUE
+  )
+  d <- desc::description$new(file.path(proj, "DESCRIPTION"))
+  expect_equal(d$get("TableEngine")[[1]], "flextable")
+})
+
+test_that("invalid table_engine raises an error", {
+  expect_error(
+    local_created_project(
+      author = "Test Author",
+      title = "Test Project",
+      client = "Test Client",
+      email = "test@email.com",
+      department = "TEST",
+      table_engine = "kableExtra",
+      quiet = TRUE
+    )
+  )
+})
