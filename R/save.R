@@ -13,8 +13,11 @@
 #' These functions standardize how outputs are saved in an
 #' `lbstproj` project:
 #'   * `save_data()` saves a data frame as `rds` to `data/processed`.
-#'   * `save_table()` saves a table as `rds` to `data/tables` and optionally export it
-#'     as `docx` to `results/tables`.
+#'   * `save_table()` saves a table as `rds` to `data/tables` and optionally
+#'     exports it as `docx` to `results/tables`. The accepted table class and
+#'     the export method depend on the project's table engine (`"gt"` or
+#'     `"flextable"`), stored in the `TableEngine` field of the project
+#'     `DESCRIPTION` file. Legacy projects without that field default to `"gt"`.
 #'   * `save_figure()` saves a figure as `png` (or another extension) to `results/figures`.
 #'
 #' To save another R object (e.g. a model, a `mice` object, ...) to file, use
@@ -36,7 +39,8 @@
 #'
 #'   *Default*: `FALSE` unless the global option `lbstproj.quiet` is set otherwise. The default option can be changed using `options(lbstproj.quiet = TRUE)`
 #' @param data A `data.frame` to save.
-#' @param table A `gt_tbl` object to save.
+#' @param table A table object to save. Must be a `gt_tbl` for `gt` projects or
+#'   a `flextable` for `flextable` projects.
 #' @param export *Logical*. If `TRUE`, also export the table as a `.docx` file.
 #'
 #'   *Default*: `TRUE`. Word tables are always produced unless specified otherwise.
@@ -49,7 +53,8 @@
 #'   *Default*: A width of 6 and a height of 4. This fits nicely on a portrait A4 page.
 #' @param ... Additional arguments passed to the saving function:
 #'
-#'   * For `save_table()`: passed to [gt::gtsave]
+#'   * For `save_table()`: passed to [gt::gtsave()] (gt projects) or
+#'     [flextable::save_as_docx()] (flextable projects)
 #'   * For `save_figure()`: passed to [ggplot2::ggsave]
 #'
 #' @return Invisibly returns the path of the saved file.
@@ -57,8 +62,13 @@
 #' if(FALSE) {
 #'   save_data(mtcars, name = "analysis_dataset")
 #'
+#'   # gt project (default)
 #'   summary_table <- gt::gt(head(mtcars))
 #'   save_table(summary_table, name = "baseline_characteristics")
+#'
+#'   # flextable project
+#'   ft <- flextable::flextable(head(mtcars))
+#'   save_table(ft, name = "baseline_characteristics")
 #'
 #'   scatter_plot <- ggplot2::ggplot(
 #'     mtcars,
@@ -115,12 +125,8 @@ save_table <- function(
   quiet = getOption("lbstproj.quiet", FALSE),
   ...
 ) {
-  # Ensure "table" is a `gt` object
-  if (!inherits(table, "gt_tbl")) {
-    cli::cli_abort(
-      "{.arg table} must have class {.cls gt_tbl}, but has class {.cls {class(table)}}."
-    )
-  }
+  # Validate table class against the project engine
+  check_table_object(table)
   # Validate the name
   name <- validate_file_name(name)
   # Ensures the data directory exists
@@ -149,8 +155,8 @@ save_table <- function(
       overwrite = overwrite,
       what = "Table"
     )
-    # Export the table to docx
-    gt::gtsave(table, filename = export_file_path)
+    # Export the table to docx using the engine-appropriate method
+    export_table_docx(table, path = export_file_path, ...)
     # Inform about the export
     inform_saved(
       object_name = table_name,
@@ -213,6 +219,15 @@ save_figure <- function(
     quiet = quiet
   )
   invisible(file_path)
+}
+
+export_table_docx <- function(table, path, ...) {
+  if (is_gt_project()) {
+    gt::gtsave(table, filename = path, ...)
+  } else {
+    flextable::save_as_docx(table, path = path, ...)
+  }
+  invisible(path)
 }
 
 inform_saved <- function(object_name, path, what, quiet, export = FALSE) {

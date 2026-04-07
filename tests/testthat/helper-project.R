@@ -5,7 +5,9 @@
 #' @param with_tot Logical. Should a minimal TOT file be created?
 #' @param tot_data Optional data.frame to use as TOT content.
 #' @param empty_dirs Logical. Create empty R/figures and R/tables folders?
-#' @param rproj_name Name of the .Rproj file to create (default: "fakeproject.Rproj").
+#' @param engine Character. The table engine to record in DESCRIPTION.
+#'   `"gt"` (default) or `"flextable"`. When `NULL`, the `TableEngine` field
+#'   is omitted from `DESCRIPTION` (simulates a legacy project).
 #'
 #' @return Path to the temporary project root (invisibly).
 #'
@@ -18,7 +20,8 @@
 local_lbstproj_project <- function(
   with_tot = FALSE,
   tot_data = NULL,
-  empty_dirs = TRUE
+  empty_dirs = TRUE,
+  engine = "gt"
 ) {
   root <- fs::dir_create(fs::file_temp(pattern = "lbstproj-test-"))
   # random project name
@@ -46,18 +49,19 @@ local_lbstproj_project <- function(
   fs::dir_create("output/tables")
 
   # ---- Minimal DESCRIPTION (useful if root detection checks for it) ----
-  writeLines(
-    c(
-      "Package: fakeproject",
-      "Version: 0.0.0",
-      "Description: Temporary test project",
-      "License: MIT",
-      "Title: Parkinson",
-      "Client: Jane Doe",
-      "Department: DEP"
-    ),
-    "DESCRIPTION"
+  desc_lines <- c(
+    "Package: fakeproject",
+    "Version: 0.0.0",
+    "Description: Temporary test project",
+    "License: MIT",
+    "Title: Parkinson",
+    "Client: Jane Doe",
+    "Department: DEP"
   )
+  if (!is.null(engine)) {
+    desc_lines <- c(desc_lines, paste0("TableEngine: ", engine))
+  }
+  writeLines(desc_lines, "DESCRIPTION")
 
   # ---- Minimal RStudio project marker ----
   # Some root-finders use the presence of an *.Rproj file
