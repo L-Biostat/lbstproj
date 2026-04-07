@@ -57,6 +57,8 @@ reference:
     desc: Source all scripts of a given type in batch.
     contents:
       - run_all_files
+      - run_all_figures
+      - run_all_tables
 
   - title: Reporting
     desc: Generate, render, and archive Quarto reports.
@@ -65,6 +67,13 @@ reference:
       - create_chunk
       - run_report
       - archive_report
+
+  - title: Table engine
+    desc: Query and check the table rendering engine configured for the project.
+    contents:
+      - get_table_engine
+      - is_gt_project
+      - is_flextable_project
 
   - title: Options
     desc: Package-level global options.
