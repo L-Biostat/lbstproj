@@ -44,8 +44,8 @@ test_that("save_data() overwrites file when overwrite = TRUE", {
 
 # TABLE --------------------------------------------------------------------------
 
-test_that("save_table() errors for non-gt object", {
-  local_lbstproj_project(with_tot = FALSE)
+test_that("save_table() errors for non-gt object in gt project", {
+  local_lbstproj_project(with_tot = FALSE, engine = "gt")
 
   expect_error(
     save_table(data.frame(x = 1), "test"),
@@ -53,10 +53,45 @@ test_that("save_table() errors for non-gt object", {
   )
 })
 
-test_that("save_table() saves rds file", {
-  local_lbstproj_project(with_tot = FALSE)
+test_that("save_table() errors for non-flextable object in flextable project", {
+  local_lbstproj_project(with_tot = FALSE, engine = "flextable")
+
+  expect_error(
+    save_table(data.frame(x = 1), "test"),
+    "flextable"
+  )
+})
+
+test_that("save_table() errors when gt object used in flextable project", {
+  local_lbstproj_project(with_tot = FALSE, engine = "flextable")
 
   tab <- gt::gt(data.frame(x = 1))
+
+  expect_error(save_table(tab, "test"), "flextable")
+})
+
+test_that("save_table() errors when flextable object used in gt project", {
+  local_lbstproj_project(with_tot = FALSE, engine = "gt")
+
+  tab <- flextable::flextable(data.frame(x = 1))
+
+  expect_error(save_table(tab, "test"), "gt_tbl")
+})
+
+test_that("save_table() saves rds file for gt project", {
+  local_lbstproj_project(with_tot = FALSE, engine = "gt")
+
+  tab <- gt::gt(data.frame(x = 1))
+
+  save_table(tab, "tab", quiet = TRUE, export = FALSE)
+
+  expect_true(fs::file_exists("data/tables/tab.rds"))
+})
+
+test_that("save_table() saves rds file for flextable project", {
+  local_lbstproj_project(with_tot = FALSE, engine = "flextable")
+
+  tab <- flextable::flextable(data.frame(x = 1))
 
   save_table(tab, "tab", quiet = TRUE, export = FALSE)
 
@@ -88,14 +123,34 @@ test_that("save_table() overwrites file when overwrite = TRUE", {
   expect_true(fs::file_exists("data/tables/test.rds"))
 })
 
-test_that("save_table() exports docx when export = TRUE", {
-  local_lbstproj_project(with_tot = FALSE)
+test_that("save_table() exports docx via gt::gtsave() for gt project", {
+  local_lbstproj_project(with_tot = FALSE, engine = "gt")
 
   tab <- gt::gt(data.frame(x = 1))
 
   save_table(tab, "tab", quiet = TRUE, export = TRUE)
 
   expect_true(fs::file_exists("results/tables/tab.docx"))
+})
+
+test_that("save_table() exports docx via flextable::save_as_docx() for flextable project", {
+  local_lbstproj_project(with_tot = FALSE, engine = "flextable")
+
+  tab <- flextable::flextable(data.frame(x = 1))
+
+  save_table(tab, "tab", quiet = TRUE, export = TRUE)
+
+  expect_true(fs::file_exists("results/tables/tab.docx"))
+})
+
+test_that("save_table() defaults to gt for legacy projects without TableEngine", {
+  local_lbstproj_project(with_tot = FALSE, engine = NULL)
+
+  tab <- gt::gt(data.frame(x = 1))
+
+  # Should not error – legacy project falls back to gt
+  expect_no_error(save_table(tab, "tab", quiet = TRUE, export = FALSE))
+  expect_true(fs::file_exists("data/tables/tab.rds"))
 })
 
 # FIGURE -------------------------------------------------------------------------

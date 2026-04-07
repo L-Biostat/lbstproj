@@ -17,47 +17,34 @@ get_author <- function() {
   }
 }
 
-#' Get the table engine configured for the project
+#' Get the table engine for the active project
 #'
-#' `get_table_engine()` reads the `TableEngine` field from the active project's
-#' `DESCRIPTION` file and returns its value. If the field is absent (e.g. in
-#' legacy projects), it returns `"gt"` silently for backwards compatibility.
+#' Reads the `TableEngine` field from the project `DESCRIPTION` file and
+#' returns it as a string. When the field is absent (e.g. legacy projects),
+#' it defaults to `"gt"` for backward compatibility.
 #'
-#' @return A single character string: `"gt"` or `"flextable"`.
-#' @seealso [is_gt_project()], [is_flextable_project()]
-#' @export
-#' @examples
-#' if (FALSE) {
-#'   get_table_engine()
-#' }
+#' @return *Character*. `"gt"` or `"flextable"`.
+#'
+#' @keywords internal
 get_table_engine <- function() {
-  engine <- desc::desc_get_field("TableEngine", default = "gt")
-  return(engine)
+  engine <- desc::desc_get("TableEngine")[[1]]
+  if (is.na(engine)) {
+    return("gt")
+  }
+  engine
 }
 
-#' Check whether the project uses the gt table engine
+#' Test whether the active project uses a given table engine
 #'
-#' @return `TRUE` if the project's `TableEngine` is `"gt"`, `FALSE` otherwise.
-#' @seealso [get_table_engine()], [is_flextable_project()]
-#' @export
-#' @examples
-#' if (FALSE) {
-#'   is_gt_project()
-#' }
+#' @return *Logical*. `TRUE` when the project's table engine matches.
+#'
+#' @keywords internal
 is_gt_project <- function() {
-  get_table_engine() == "gt"
+  identical(get_table_engine(), "gt")
 }
 
-#' Check whether the project uses the flextable table engine
-#'
-#' @return `TRUE` if the project's `TableEngine` is `"flextable"`, `FALSE`
-#'   otherwise.
-#' @seealso [get_table_engine()], [is_gt_project()]
-#' @export
-#' @examples
-#' if (FALSE) {
-#'   is_flextable_project()
-#' }
+#' @rdname is_gt_project
+#' @keywords internal
 is_flextable_project <- function() {
-  get_table_engine() == "flextable"
+  identical(get_table_engine(), "flextable")
 }
