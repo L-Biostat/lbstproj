@@ -21,6 +21,11 @@ builds the full directory structure and adds a `DESCRIPTION` file and a
 blank Table of Tables. We pass `force = TRUE` and `open = FALSE` to skip
 interactive prompts.
 
+The `table_engine` argument selects which table package the project
+uses: `"gt"` (default) generates Quarto reports, while `"flextable"`
+generates R Markdown reports rendered via `officedown`. See **Section
+10** for the full flextable workflow.
+
 ``` r
 library(lbstproj)
 
@@ -40,7 +45,7 @@ The project now has the following structure:
 
 ``` r
 fs::dir_tree(tmp_proj_dir, recurse = TRUE)
-#> /tmp/RtmpNNbHbo/fake-trial
+#> /tmp/Rtmpel7Rvi/fake-trial
 #> ├── DESCRIPTION
 #> ├── R
 #> │   ├── data
@@ -559,6 +564,104 @@ archive_report()
 
 ------------------------------------------------------------------------
 
+## 10. Using the flextable engine
+
+`lbstproj` supports two table rendering engines selected at project
+creation time via the `table_engine` argument of
+[`create_project()`](https://l-biostat.github.io/lbstproj/reference/create_project.md):
+
+| Engine           | Table class | Report format       | Rendering                                                                                       |
+|------------------|-------------|---------------------|-------------------------------------------------------------------------------------------------|
+| `"gt"` (default) | `gt_tbl`    | Quarto (`.qmd`)     | [`quarto::quarto_render()`](https://quarto-dev.github.io/quarto-r/reference/quarto_render.html) |
+| `"flextable"`    | `flextable` | R Markdown (`.Rmd`) | [`rmarkdown::render()`](https://pkgs.rstudio.com/rmarkdown/reference/render.html)               |
+
+### Creating a flextable project
+
+``` r
+create_project(
+  path = ".",
+  title = "My flextable project",
+  author = "Jane Doe",
+  table_engine = "flextable"
+)
+```
+
+This stores `TableEngine: flextable` in the project `DESCRIPTION` file.
+All subsequent `lbstproj` functions read this field automatically via
+[`get_table_engine()`](https://l-biostat.github.io/lbstproj/reference/get_table_engine.md).
+
+### Writing table scripts
+
+In a flextable project, table scripts must produce a `flextable` object.
+[`save_table()`](https://l-biostat.github.io/lbstproj/reference/save_outputs.md)
+validates the object class and raises a clear error if the wrong engine
+is used.
+
+``` r
+# R/tables/tab-baseline.R  (flextable project)
+library(flextable)
+library(dplyr)
+library(gtsummary)
+
+info  <- get_info("tab-01")
+trial <- readRDS("data/processed/trial-clean.rds")
+
+tab <- trial |>
+  select(trt, age, stage, grade) |>
+  tbl_summary(by = trt) |>
+  as_flex_table()
+
+save_table(tab, name = "tab-baseline")
+```
+
+### Report generation and rendering
+
+For flextable projects,
+[`create_report()`](https://l-biostat.github.io/lbstproj/reference/create_report.md)
+generates an **R Markdown** file (`.Rmd`) configured for
+`officedown::rdocx_document` instead of a Quarto file. The chunk format
+also differs: table captions use the `tab.cap=` knitr chunk option
+rather than an inline `add_caption()` call.
+
+``` r
+# Generates report/report_<date>.Rmd (not .qmd)
+create_report()
+```
+
+[`run_report()`](https://l-biostat.github.io/lbstproj/reference/run_report.md)
+detects the file extension and dispatches to the correct renderer
+automatically — no extra arguments needed:
+
+``` r
+run_report()  # calls rmarkdown::render() for .Rmd, quarto::quarto_render() for .qmd
+```
+
+### Code chunks
+
+[`create_chunk()`](https://l-biostat.github.io/lbstproj/reference/create_chunk.md)
+also respects the engine. For a **gt** project a Quarto-style chunk is
+generated:
+
+```` default
+```{r tbl-tab-baseline }
+tab <- readRDS(here("data/tables/tab-baseline.rds"))
+tab |>
+  add_caption(caption_list[["tab-baseline"]])
+```
+````
+
+For a **flextable** project an R Markdown-style chunk with the
+`tab.cap=` option is generated instead:
+
+```` default
+```{r tab-tab-baseline, tab.cap=caption_list[["tab-baseline"]]}
+tab <- readRDS(here("data/tables/tab-baseline.rds"))
+tab
+```
+````
+
+------------------------------------------------------------------------
+
 ## Summary
 
 Here is the full `lbstproj` workflow at a glance:
@@ -566,8 +669,10 @@ Here is the full `lbstproj` workflow at a glance:
 ``` r
 library(lbstproj)
 
-# 1 - Scaffold the project
+# 1 - Scaffold the project (gt engine, default)
 create_project(path = ".", title = "My project", author = "Jane Doe")
+# or, for a flextable/officedown project:
+# create_project(..., table_engine = "flextable")
 
 # 2 - Fill in data/tot/table_of_tables.xlsx, then import it
 import_tot()
@@ -581,7 +686,12 @@ run_all_figures()
 run_all_tables()
 
 # 5 - Build and render the report
+#   gt project  → report/report_<date>.qmd, rendered with quarto
 create_report(output_type = "html")
 run_report()
+#   flextable project → report/report_<date>.Rmd, rendered with rmarkdown
+# create_report()
+# run_report()
+
 archive_report()
 ```

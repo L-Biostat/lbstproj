@@ -84,6 +84,11 @@ to:</p>
 adds a <code>DESCRIPTION</code> file and a blank Table of Tables. We
 pass <code>force = TRUE</code> and <code>open = FALSE</code> to skip
 interactive prompts.</p>
+<p>The <code>table_engine</code> argument selects which table package
+the project uses: <code>"gt"</code> (default) generates Quarto reports,
+while <code>"flextable"</code> generates R Markdown reports rendered via
+<code>officedown</code>. See <strong>Section 10</strong> for the full
+flextable workflow.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://l-biostat.github.io/lbstproj/">lbstproj</a></span><span class="op">)</span></span>
 <span></span>
@@ -100,7 +105,7 @@ interactive prompts.</p>
 <p>The project now has the following structure:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="va">tmp_proj_dir</span>, recurse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">/tmp/RtmpNNbHbo/fake-trial</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">/tmp/Rtmpel7Rvi/fake-trial</span></span></span>
 <span><span class="co">#&gt; ├── DESCRIPTION</span></span>
 <span><span class="co">#&gt; ├── <span style="color: #0000BB; font-weight: bold;">R</span></span></span>
 <span><span class="co">#&gt; │   ├── <span style="color: #0000BB; font-weight: bold;">data</span></span></span>
@@ -1688,14 +1693,124 @@ DOCX):</p>
 </div>
 </div>
 <div class="section level2">
+<h2 id="using-the-flextable-engine">10. Using the flextable engine<a class="anchor" aria-label="anchor" href="#using-the-flextable-engine"></a>
+</h2>
+<p><code>lbstproj</code> supports two table rendering engines selected
+at project creation time via the <code>table_engine</code> argument of
+<code><a href="../reference/create_project.html">create_project()</a></code>:</p>
+<table class="table">
+<colgroup>
+<col width="25%">
+<col width="25%">
+<col width="25%">
+<col width="25%">
+</colgroup>
+<thead><tr class="header">
+<th>Engine</th>
+<th>Table class</th>
+<th>Report format</th>
+<th>Rendering</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>
+<code>"gt"</code> (default)</td>
+<td><code>gt_tbl</code></td>
+<td>Quarto (<code>.qmd</code>)</td>
+<td><code><a href="https://quarto-dev.github.io/quarto-r/reference/quarto_render.html" class="external-link">quarto::quarto_render()</a></code></td>
+</tr>
+<tr class="even">
+<td><code>"flextable"</code></td>
+<td><code>flextable</code></td>
+<td>R Markdown (<code>.Rmd</code>)</td>
+<td><code><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html" class="external-link">rmarkdown::render()</a></code></td>
+</tr>
+</tbody>
+</table>
+<div class="section level3">
+<h3 id="creating-a-flextable-project">Creating a flextable project<a class="anchor" aria-label="anchor" href="#creating-a-flextable-project"></a>
+</h3>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/create_project.html">create_project</a></span><span class="op">(</span></span>
+<span>  path <span class="op">=</span> <span class="st">"."</span>,</span>
+<span>  title <span class="op">=</span> <span class="st">"My flextable project"</span>,</span>
+<span>  author <span class="op">=</span> <span class="st">"Jane Doe"</span>,</span>
+<span>  table_engine <span class="op">=</span> <span class="st">"flextable"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>This stores <code>TableEngine: flextable</code> in the project
+<code>DESCRIPTION</code> file. All subsequent <code>lbstproj</code>
+functions read this field automatically via
+<code><a href="../reference/get_table_engine.html">get_table_engine()</a></code>.</p>
+</div>
+<div class="section level3">
+<h3 id="writing-table-scripts">Writing table scripts<a class="anchor" aria-label="anchor" href="#writing-table-scripts"></a>
+</h3>
+<p>In a flextable project, table scripts must produce a
+<code>flextable</code> object. <code><a href="../reference/save_outputs.html">save_table()</a></code> validates the
+object class and raises a clear error if the wrong engine is used.</p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># R/tables/tab-baseline.R  (flextable project)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ardata-fr.github.io/flextable-book/" class="external-link">flextable</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ddsjoberg/gtsummary" class="external-link">gtsummary</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">info</span>  <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_info.html">get_info</a></span><span class="op">(</span><span class="st">"tab-01"</span><span class="op">)</span></span>
+<span><span class="va">trial</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"data/processed/trial-clean.rds"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">tab</span> <span class="op">&lt;-</span> <span class="va">trial</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">trt</span>, <span class="va">age</span>, <span class="va">stage</span>, <span class="va">grade</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_summary.html" class="external-link">tbl_summary</a></span><span class="op">(</span>by <span class="op">=</span> <span class="va">trt</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/as_flex_table.html" class="external-link">as_flex_table</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/save_outputs.html">save_table</a></span><span class="op">(</span><span class="va">tab</span>, name <span class="op">=</span> <span class="st">"tab-baseline"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="report-generation-and-rendering">Report generation and rendering<a class="anchor" aria-label="anchor" href="#report-generation-and-rendering"></a>
+</h3>
+<p>For flextable projects, <code><a href="../reference/create_report.html">create_report()</a></code> generates an
+<strong>R Markdown</strong> file (<code>.Rmd</code>) configured for
+<code>officedown::rdocx_document</code> instead of a Quarto file. The
+chunk format also differs: table captions use the <code>tab.cap=</code>
+knitr chunk option rather than an inline <code>add_caption()</code>
+call.</p>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Generates report/report_&lt;date&gt;.Rmd (not .qmd)</span></span>
+<span><span class="fu"><a href="../reference/create_report.html">create_report</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><code><a href="../reference/run_report.html">run_report()</a></code> detects the file extension and dispatches
+to the correct renderer automatically — no extra arguments needed:</p>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/run_report.html">run_report</a></span><span class="op">(</span><span class="op">)</span>  <span class="co"># calls rmarkdown::render() for .Rmd, quarto::quarto_render() for .qmd</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="code-chunks">Code chunks<a class="anchor" aria-label="anchor" href="#code-chunks"></a>
+</h3>
+<p><code><a href="../reference/create_chunk.html">create_chunk()</a></code> also respects the engine. For a
+<strong>gt</strong> project a Quarto-style chunk is generated:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a>```{r tbl-tab-baseline }</span>
+<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a>tab &lt;- readRDS(here("data/tables/tab-baseline.rds"))</span>
+<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a>tab |&gt;</span>
+<span id="cb31-4"><a href="#cb31-4" tabindex="-1"></a>  add_caption(caption_list[["tab-baseline"]])</span>
+<span id="cb31-5"><a href="#cb31-5" tabindex="-1"></a>```</span></code></pre></div>
+<p>For a <strong>flextable</strong> project an R Markdown-style chunk
+with the <code>tab.cap=</code> option is generated instead:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a>```{r tab-tab-baseline, tab.cap=caption_list[["tab-baseline"]]}</span>
+<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a>tab &lt;- readRDS(here("data/tables/tab-baseline.rds"))</span>
+<span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a>tab</span>
+<span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a>```</span></code></pre></div>
+<hr>
+</div>
+</div>
+<div class="section level2">
 <h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
 </h2>
 <p>Here is the full <code>lbstproj</code> workflow at a glance:</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://l-biostat.github.io/lbstproj/">lbstproj</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># 1 - Scaffold the project</span></span>
+<span><span class="co"># 1 - Scaffold the project (gt engine, default)</span></span>
 <span><span class="fu"><a href="../reference/create_project.html">create_project</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"."</span>, title <span class="op">=</span> <span class="st">"My project"</span>, author <span class="op">=</span> <span class="st">"Jane Doe"</span><span class="op">)</span></span>
+<span><span class="co"># or, for a flextable/officedown project:</span></span>
+<span><span class="co"># create_project(..., table_engine = "flextable")</span></span>
 <span></span>
 <span><span class="co"># 2 - Fill in data/tot/table_of_tables.xlsx, then import it</span></span>
 <span><span class="fu"><a href="../reference/import_tot.html">import_tot</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -1709,8 +1824,13 @@ DOCX):</p>
 <span><span class="fu"><a href="../reference/run_all_files.html">run_all_tables</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># 5 - Build and render the report</span></span>
+<span><span class="co">#   gt project  → report/report_&lt;date&gt;.qmd, rendered with quarto</span></span>
 <span><span class="fu"><a href="../reference/create_report.html">create_report</a></span><span class="op">(</span>output_type <span class="op">=</span> <span class="st">"html"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/run_report.html">run_report</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#   flextable project → report/report_&lt;date&gt;.Rmd, rendered with rmarkdown</span></span>
+<span><span class="co"># create_report()</span></span>
+<span><span class="co"># run_report()</span></span>
+<span></span>
 <span><span class="fu"><a href="../reference/archive_report.html">archive_report</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
