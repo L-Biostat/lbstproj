@@ -638,23 +638,23 @@ run_report()  # calls rmarkdown::render() for .Rmd, quarto::quarto_render() for 
 `create_chunk()` also respects the engine. For a **gt** project a Quarto-style
 chunk is generated:
 
-```
+````{verbatim}
 ```{r tbl-tab-baseline }
 tab <- readRDS(here("data/tables/tab-baseline.rds"))
 tab |>
   add_caption(caption_list[["tab-baseline"]])
 ```
-```
+````
 
 For a **flextable** project an R Markdown-style chunk with the `tab.cap=`
 option is generated instead:
 
-```
+````{verbatim}
 ```{r tab-tab-baseline, tab.cap=caption_list[["tab-baseline"]]}
 tab <- readRDS(here("data/tables/tab-baseline.rds"))
 tab
 ```
-```
+````
 
 ---
 
