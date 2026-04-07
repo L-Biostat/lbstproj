@@ -192,3 +192,79 @@ test_that("create_chunk() forwards errors from get_info()", {
     "Please provide either"
   )
 })
+
+
+# FLEXTABLE ENGINE -------------------------------------------------------
+
+test_that("create_chunk() renders an Rmd figure chunk for flextable projects", {
+  local_lbstproj_project(with_tot = TRUE, engine = "flextable")
+  import_tot(quiet = TRUE)
+
+  local_mocked_bindings(
+    is_interactive = function() FALSE,
+    .package = "rlang"
+  )
+
+  out <- create_chunk(
+    name = "fig1",
+    print = FALSE,
+    pad = FALSE
+  )
+  out <- strsplit(out, "\n", fixed = TRUE)[[1]]
+  expect_equal(
+    out,
+    c(
+      "```{r fig-fig1, fig.cap=caption_list[[\"fig1\"]]}",
+      "knitr::include_graphics(here(\"results/figures/fig1.png\"))",
+      "```"
+    )
+  )
+})
+
+
+test_that("create_chunk() renders an Rmd table chunk for flextable projects", {
+  local_lbstproj_project(with_tot = TRUE, engine = "flextable")
+  import_tot(quiet = TRUE)
+
+  local_mocked_bindings(
+    is_interactive = function() FALSE,
+    .package = "rlang"
+  )
+
+  out <- create_chunk(
+    name = "tab1",
+    print = FALSE,
+    pad = FALSE
+  )
+  out <- strsplit(out, "\n", fixed = TRUE)[[1]]
+  expect_equal(
+    out,
+    c(
+      "```{r tab-tab1 }",
+      "tab <- readRDS(here(\"data/tables/tab1.rds\"))",
+      "tab |>",
+      "  add_caption(caption_list[[\"tab1\"]])",
+      "```"
+    )
+  )
+})
+
+
+test_that("create_chunk() uses \\newpage for pagebreak in flextable projects", {
+  local_lbstproj_project(with_tot = TRUE, engine = "flextable")
+  import_tot(quiet = TRUE)
+
+  local_mocked_bindings(
+    is_interactive = function() FALSE,
+    .package = "rlang"
+  )
+
+  out <- create_chunk(
+    name = "fig1",
+    print = FALSE,
+    pad = TRUE
+  )
+  out_lines <- strsplit(out, "\n", fixed = TRUE)[[1]]
+  expect_true("\\newpage" %in% out_lines)
+  expect_false("{{< pagebreak >}}" %in% out_lines)
+})

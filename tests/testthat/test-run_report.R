@@ -14,17 +14,6 @@ test_that("run_report() errors when the report file does not exist", {
   )
 })
 
-test_that("run_report() errors for an unsupported file extension", {
-  local_lbstproj_project()
-
-  writeLines("dummy", "report/report.Rmd")
-
-  expect_error(
-    run_report(file = "report.Rmd", quiet = TRUE),
-    "Unsupported file extension"
-  )
-})
-
 # RENDERING ----------------------------------------------------------------------
 
 test_that("run_report() calls quarto_render() with the correct input path", {
@@ -194,5 +183,66 @@ format:
   withr::with_options(
     list(lbstproj.quiet = TRUE),
     expect_no_message(run_report())
+  )
+})
+
+
+# FLEXTABLE / RMD ENGINE -------------------------------------------------
+
+test_that("run_report() calls rmarkdown::render() for .Rmd files", {
+  local_lbstproj_project(engine = "flextable")
+
+  report_file <- glue::glue("report_{format(Sys.Date(), '%Y_%m_%d')}.Rmd")
+  writeLines(
+    "---
+output:
+  officedown::rdocx_document: default
+---
+",
+    fs::path("report", report_file)
+  )
+
+  rendered_inputs <- character(0)
+  local_mocked_bindings(
+    render = function(input, ...) {
+      rendered_inputs <<- c(rendered_inputs, input)
+      invisible(NULL)
+    },
+    .package = "rmarkdown"
+  )
+
+  run_report(file = report_file, quiet = TRUE)
+
+  expect_equal(rendered_inputs, as.character(fs::path("report", report_file)))
+})
+
+
+test_that("run_report() finds the latest .Rmd when file is NULL (flextable project)", {
+  local_lbstproj_project(engine = "flextable")
+
+  report_file <- glue::glue("report_{format(Sys.Date(), '%Y_%m_%d')}.Rmd")
+  writeLines(
+    "---
+output:
+  officedown::rdocx_document: default
+---
+",
+    fs::path("report", report_file)
+  )
+
+  rendered_inputs <- character(0)
+  local_mocked_bindings(
+    render = function(input, ...) {
+      rendered_inputs <<- c(rendered_inputs, input)
+      invisible(NULL)
+    },
+    .package = "rmarkdown"
+  )
+
+  run_report(quiet = TRUE)
+
+  expect_equal(
+    rendered_inputs,
+    as.character(fs::path("report", report_file))
   )
 })

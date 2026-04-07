@@ -232,3 +232,59 @@ test_that("create_report() errors for unsupported output_type", {
     )
   )
 })
+
+
+# FLEXTABLE ENGINE -------------------------------------------------------
+
+test_that("create_report() creates a dated .Rmd report for flextable projects", {
+  local_lbstproj_project(with_tot = TRUE, engine = "flextable")
+
+  expected_path <- fs::path(
+    "report",
+    glue::glue("report_{format(Sys.Date(), '%Y_%m_%d')}.Rmd")
+  )
+
+  out <- create_report(quiet = TRUE)
+
+  expect_equal(out, invisible(expected_path))
+  expect_true(fs::file_exists(expected_path))
+})
+
+
+test_that("create_report() flextable report contains officedown output format", {
+  local_lbstproj_project(with_tot = TRUE, engine = "flextable")
+
+  report_path <- create_report(quiet = TRUE)
+  report <- paste(readLines(report_path), collapse = "\n")
+
+  expect_true(grepl("officedown::rdocx_document", report, fixed = TRUE))
+})
+
+
+test_that("create_report() flextable report contains Rmd-style table chunks", {
+  local_lbstproj_project(with_tot = TRUE, engine = "flextable")
+
+  tot <- load_tot()
+  table_names <- tot$name[tot$type == "table"]
+  testthat::skip_if(length(table_names) == 0, "Fake TOT contains no tables.")
+
+  report_path <- create_report(quiet = TRUE)
+  report <- paste(readLines(report_path), collapse = "\n")
+
+  expect_true(all(grepl(paste0("tab-", table_names), report, fixed = TRUE)))
+})
+
+
+test_that("create_report() flextable report contains Rmd-style figure chunks", {
+  local_lbstproj_project(with_tot = TRUE, engine = "flextable")
+
+  tot <- load_tot()
+  figure_names <- tot$name[tot$type == "figure"]
+  testthat::skip_if(length(figure_names) == 0, "Fake TOT contains no figures.")
+
+  report_path <- create_report(quiet = TRUE)
+  report <- paste(readLines(report_path), collapse = "\n")
+
+  expect_true(all(grepl(paste0("fig-", figure_names), report, fixed = TRUE)))
+  expect_true(grepl("fig.cap=caption_list", report, fixed = TRUE))
+})

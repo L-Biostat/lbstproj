@@ -1,0 +1,28 @@
+---
+title: "{{title}}"
+subtitle: "{{client}} ({{department}})"
+author: "{{author}}"
+date: "`r format(Sys.Date(), '%d %B %Y')`"
+output:
+  officedown::rdocx_document:
+    toc: true
+    number_sections: true
+---
+
+```{r pkg, include=FALSE}
+library(here)        # To generate relative file paths
+library(flextable)   # Needed to display tables in Word
+library(officedown)  # Needed for Word document features
+
+# Create list of captions
+tot <- readRDS(here("data/tot/tot.rds"))
+caption_list <- setNames(as.list(tot$caption), tot$name)
+
+# Define function to add caption to tables
+add_caption <- function(x, cap) {
+  x |>
+    flextable::set_caption(cap)
+}
+```
+
+`r run_pagebreak()`
