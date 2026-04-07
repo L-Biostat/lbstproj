@@ -221,6 +221,18 @@ save_figure <- function(
   invisible(file_path)
 }
 
+# Dispatch docx export to the engine-appropriate function.
+#
+# Uses `gt::gtsave()` for `gt` projects and `flextable::save_as_docx()` for
+# `flextable` projects. `...` is forwarded to the underlying export function.
+#
+# @param table A table object (`gt_tbl` or `flextable`).
+# @param path *Character*. Output file path (must end in `.docx`).
+# @param ... Additional arguments forwarded to the underlying export function.
+#
+# @return Invisibly returns `path`.
+#
+# @keywords internal
 export_table_docx <- function(table, path, ...) {
   if (is_gt_project()) {
     gt::gtsave(table, filename = path, ...)
