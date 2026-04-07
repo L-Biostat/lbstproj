@@ -14,6 +14,24 @@ check_string <- function(x) {
   }
 }
 
+# Validate that a table_engine value is one of the supported engines.
+#
+# @param table_engine Character. The engine to validate.
+# @return Invisibly returns `table_engine` when valid.
+# @keywords internal
+check_table_engine <- function(table_engine) {
+  valid <- c("gt", "flextable")
+  if (!rlang::is_string(table_engine) || !table_engine %in% valid) {
+    cli::cli_abort(
+      c(
+        "{.arg table_engine} must be one of {.val {valid}}.",
+        "x" = "Got {.val {table_engine}}."
+      )
+    )
+  }
+  invisible(table_engine)
+}
+
 #' Check that a table object matches the project's table engine
 #'
 #' Validates that `table` has the class expected by the current project engine:
