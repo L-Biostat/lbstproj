@@ -73,14 +73,11 @@ create_project <- function(
   author = NULL,
   email = NULL,
   version = "1.0.0",
-  table_engine = "gt",
+  table_engine = NULL,
   open = rlang::is_interactive(),
   force = FALSE,
   quiet = FALSE
 ) {
-  # Validate table_engine early before doing anything
-  check_table_engine(table_engine)
-
   # Ensure that user does want to create project at this path
   if (!force) {
     ok <- usethis::ui_yeah(
@@ -107,7 +104,8 @@ create_project <- function(
     readline(prompt = "Client's name (if applicable): ")
   department <- department %||%
     readline(prompt = "Client's department (if applicable): ")
-
+  table_engine <- prompt_table_engine(table_engine)
+  check_table_engine(table_engine)
   # Set the given path as the active project, and create RStudio project
   if (!quiet) {
     usethis::proj_set(path, force = TRUE) # Forcing is needed for a new project
@@ -324,4 +322,18 @@ prompt_email <- function(email) {
     }
   }
   readline(paste0(prompt, ": "))
+}
+
+prompt_table_engine <- function(table_engine) {
+  if (!is.null(table_engine)) {
+    return(table_engine)
+  }
+  default_table_engine <- "gt"
+  prompt <- paste0("Table engine [", default_table_engine, "]: ")
+  new_table_engine <- readline(prompt = prompt)
+  if (nzchar(new_table_engine)) {
+    return(new_table_engine)
+  } else {
+    return(default_table_engine)
+  }
 }
