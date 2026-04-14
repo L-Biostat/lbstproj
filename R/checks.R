@@ -21,14 +21,7 @@ check_string <- function(x) {
 # @keywords internal
 check_table_engine <- function(table_engine) {
   valid <- c("gt", "flextable")
-  if (!rlang::is_string(table_engine) || !table_engine %in% valid) {
-    cli::cli_abort(
-      c(
-        "{.arg table_engine} must be one of {.val {valid}}.",
-        "x" = "Got {.val {table_engine}}."
-      )
-    )
-  }
+  rlang::arg_match(table_engine, values = valid)
   invisible(table_engine)
 }
 
