@@ -39,13 +39,14 @@ create_project(
   open = FALSE,
   force = TRUE
 )
+#> Table engine [gt]:
 ```
 
 The project now has the following structure:
 
 ``` r
 fs::dir_tree(tmp_proj_dir, recurse = TRUE)
-#> /tmp/RtmpAqQyWk/fake-trial
+#> /tmp/RtmpofOIG6/fake-trial
 #> ├── DESCRIPTION
 #> ├── R
 #> │   ├── data
