@@ -107,6 +107,15 @@ create_from_tot <- function(
         extra = fs::path_file(extra),
         dry_run = dry_run
       )
+      # If this is a dry-run, let the user know
+      if (isTRUE(dry_run)) {
+        cli::cli_alert_info(
+          c(
+            "{.strong Dry run only: no files were generated.}\n",
+            "To actually generate files, run {.fn create_from_tot} with {.arg dry_run = FALSE}."
+          )
+        )
+      }
     }
 
     if (isFALSE(dry_run)) {
