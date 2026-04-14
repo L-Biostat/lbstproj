@@ -46,7 +46,7 @@ The project now has the following structure:
 
 ``` r
 fs::dir_tree(tmp_proj_dir, recurse = TRUE)
-#> /tmp/RtmpofOIG6/fake-trial
+#> /tmp/RtmpEmj5KB/fake-trial
 #> ├── DESCRIPTION
 #> ├── R
 #> │   ├── data
@@ -198,6 +198,8 @@ create_from_tot(dry_run = TRUE)
 #> → Figures: would create 2 programs in R/figures.
 #> • R/figures/fig-age-dist.R
 #> • R/figures/fig-km.R
+#> ℹ Dry run only: no files were generated.
+#> To actually generate files, run `create_from_tot()` with `dry_run = FALSE`.
 #> 
 #> ── Tables ──
 #> 
@@ -206,6 +208,8 @@ create_from_tot(dry_run = TRUE)
 #> → Tables: would create 2 programs in R/tables.
 #> • R/tables/tab-baseline.R
 #> • R/tables/tab-response.R
+#> ℹ Dry run only: no files were generated.
+#> To actually generate files, run `create_from_tot()` with `dry_run = FALSE`.
 ```
 
 Once satisfied, run without `dry_run` to create the stubs:

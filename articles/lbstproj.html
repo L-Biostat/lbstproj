@@ -106,7 +106,7 @@ flextable workflow.</p>
 <p>The project now has the following structure:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="va">tmp_proj_dir</span>, recurse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">/tmp/RtmpofOIG6/fake-trial</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">/tmp/RtmpEmj5KB/fake-trial</span></span></span>
 <span><span class="co">#&gt; ├── DESCRIPTION</span></span>
 <span><span class="co">#&gt; ├── <span style="color: #0000BB; font-weight: bold;">R</span></span></span>
 <span><span class="co">#&gt; │   ├── <span style="color: #0000BB; font-weight: bold;">data</span></span></span>
@@ -301,6 +301,8 @@ preview what will be created:</p>
 <span><span class="co">#&gt; → Figures: would create 2 programs in <span style="color: #0000BB;">R/figures</span>.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="color: #0000BB;">R/figures/fig-age-dist.R</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="color: #0000BB;">R/figures/fig-km.R</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="font-weight: bold;">Dry run only: no files were generated.</span></span></span>
+<span><span class="co">#&gt; To actually generate files, run `create_from_tot()` with `dry_run = FALSE`.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── <span style="font-weight: bold;">Tables</span> ──</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -308,7 +310,9 @@ preview what will be created:</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Tables: would generate 2 missing programs.</span></span>
 <span><span class="co">#&gt; → Tables: would create 2 programs in <span style="color: #0000BB;">R/tables</span>.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="color: #0000BB;">R/tables/tab-baseline.R</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="color: #0000BB;">R/tables/tab-response.R</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="color: #0000BB;">R/tables/tab-response.R</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="font-weight: bold;">Dry run only: no files were generated.</span></span></span>
+<span><span class="co">#&gt; To actually generate files, run `create_from_tot()` with `dry_run = FALSE`.</span></span></code></pre></div>
 <p>Once satisfied, run without <code>dry_run</code> to create the
 stubs:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
