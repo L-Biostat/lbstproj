@@ -2,7 +2,8 @@
 title: "{{title}}"
 subtitle: "{{client}} ({{department}})"
 author: "{{author}}"
-date: last-modified
+date: today
+date-format: long
 format:
   docx:
     toc: true
@@ -15,7 +16,7 @@ execute:
 
 ```{r pkg}
 library(here) # To generate relative file paths
-library({{table_engine}}) # Needed to display tables in Word
+library({{ table_engine }}) # Needed to display tables in Word
 
 # Create list of captions
 tot <- readRDS(here("data/tot/tot.rds"))

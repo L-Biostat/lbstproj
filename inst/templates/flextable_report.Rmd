@@ -13,10 +13,11 @@ output:
 library(here)        # To generate relative file paths
 library(flextable)   # Needed to display tables in Word
 library(officedown)  # Needed for Word document features
+library(officer)     # Needed for Word document features too
 
 # Create list of captions
 tot <- readRDS(here("data/tot/tot.rds"))
 caption_list <- setNames(as.list(tot$caption), tot$name)
 ```
 
-`r run_pagebreak()`
+\newpage
