@@ -4,15 +4,22 @@
 \alias{validate_file_name}
 \title{Validate the name of a script}
 \usage{
-validate_file_name(name)
+validate_file_name(name, strict = FALSE)
 }
 \arguments{
 \item{name}{\emph{Character}. The name of the script to validate.}
+
+\item{strict}{\emph{Logical}. Whether to disallow underscores in the validated
+name.
+
+\emph{Default}: \code{FALSE}}
 }
 \value{
 \emph{Character}. The validated name of the script without any extension.
 }
 \description{
-Ensures that the name of a R script only contains valid characters (letters, numbers, underscores, and hyphens) and remove any potential extension.
+Ensures that a script name only contains valid characters and removes any
+potential extension. In non-strict mode, letters, numbers, underscores, and
+hyphens are allowed. In strict mode, underscores are disallowed.
 }
 \keyword{internal}

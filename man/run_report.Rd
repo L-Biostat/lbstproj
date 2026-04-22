@@ -2,38 +2,46 @@
 % Please edit documentation in R/run_report.R
 \name{run_report}
 \alias{run_report}
-\title{Render a quarto report}
+\title{Render a report}
 \usage{
 run_report(file = NULL, quiet = getOption("lbstproj.quiet", FALSE), ...)
 }
 \arguments{
 \item{file}{\emph{Character} or \code{NULL}. The name of the report file to render. If
-\code{NULL}, the most recently modified \code{.qmd} report in \verb{report/} is used.}
+\code{NULL}, the most recently modified \code{.qmd} or \code{.Rmd} report in \verb{report/}
+is used.}
 
 \item{quiet}{\emph{Logical}. If \code{TRUE}, suppress informational messages. Important
 messages (e.g. directory creation or errors) are still shown.
 
-\emph{Default}: \code{FALSE} unless the global option \code{lbstproj.quiet} is set otherwise.}
+\emph{Default}: \code{FALSE} unless the global option \code{lbstproj.quiet} is set
+otherwise.}
 
-\item{...}{Additional arguments passed to the rendering function, in this case,
-\code{\link[quarto:quarto_render]{quarto::quarto_render()}}.}
+\item{...}{Additional arguments passed to the rendering function
+(\code{\link[quarto:quarto_render]{quarto::quarto_render()}} for \code{.qmd} files, \code{\link[rmarkdown:render]{rmarkdown::render()}} for
+\code{.Rmd} files).}
 }
 \value{
 Invisibly returns the path to the report file.
 }
 \description{
-Renders a quarto (\code{.qmd}) report file located in the \verb{report/} directory. The
-rendered output is saved in the same \verb{report/} directory under the same name (with a
+Renders a report file located in the \verb{report/} directory. The rendered
+output is saved in the same \verb{report/} directory under the same name (with a
 different extension).
 
-If \code{file} is not supplied, the most recently modified report file in
-\verb{report/} is rendered. Rendered outputs keep the same date-stamped stem as
-the input \code{.qmd} file.
+If \code{file} is not supplied, the most recently modified report file (\code{.qmd} or
+\code{.Rmd}) in \verb{report/} is rendered.
+\itemize{
+\item \strong{gt projects} produce a Quarto (\code{.qmd}) report rendered via
+\code{\link[quarto:quarto_render]{quarto::quarto_render()}}.
+\item \strong{flextable projects} produce an R Markdown (\code{.Rmd}) report rendered via
+\code{\link[rmarkdown:render]{rmarkdown::render()}}.
+}
 }
 \examples{
 if(FALSE) {
   run_report()
-  run_report(file = "html_report_2026_03_16.qmd")
-  run_report(file = "new_report.qmd", output_file = "final_report_FINAL_v3.0")
+  run_report(file = "report_2026_03_16.qmd")
+  run_report(file = "report_2026_03_16.Rmd")
 }
 }

@@ -2,17 +2,18 @@
 % Please edit documentation in R/create_report.R
 \name{create_report}
 \alias{create_report}
-\title{Create a Quarto report from the TOT}
+\title{Create a report from the TOT}
 \usage{
 create_report(
-  output_type = "html",
+  output_type = "docx",
   overwrite = FALSE,
   quiet = getOption("lbstproj.quiet", FALSE)
 )
 }
 \arguments{
-\item{output_type}{\emph{Character}. Output format of the report template.
-Must be one of \code{"html"} or \code{"docx"}.
+\item{output_type}{\emph{Character}. Output format of the report template for
+\strong{gt} projects. Must be one of \code{"html"} or \code{"docx"}. Ignored for
+flextable projects, which always produce a Word document.
 
 \emph{Default}: \code{"html"}.}
 
@@ -24,20 +25,26 @@ the same dated name. If \code{FALSE}, raise an error instead.
 \item{quiet}{\emph{Logical}. If \code{TRUE}, suppress informational messages. Important
 messages (e.g. directory creation or errors) are still shown.
 
-\emph{Default}: \code{FALSE} unless the global option \code{lbstproj.quiet} is set otherwise.}
+\emph{Default}: \code{FALSE} unless the global option \code{lbstproj.quiet} is set
+otherwise.}
 }
 \value{
 Invisibly returns the path to the generated report file.
 }
 \description{
-Create a Quarto report by combining a report template with all
-figures and tables listed in the table of tables (TOT), in the order they appear.
+Create a report by combining a report template with all figures and tables
+listed in the table of tables (TOT), in the order they appear.
 
-Captions and labels are taken from the TOT, so updates to the TOT are reflected
-automatically in the generated report.
+Captions and labels are taken from the TOT, so updates to the TOT are
+reflected automatically in the generated report.
+
+For \strong{gt} projects the report is a Quarto (\code{.qmd}) file. For \strong{flextable}
+projects the report is an R Markdown (\code{.Rmd}) file configured for
+\code{officedown::rdocx_document}.
 
 Generated report files are date-stamped, for example
-\code{report/html_report_2026_03_16.qmd}.
+\code{report/report_2026_03_16.qmd} (gt) or \code{report/report_2026_03_16.Rmd}
+(flextable).
 }
 \examples{
 if(FALSE) {

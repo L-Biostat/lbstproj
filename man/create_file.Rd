@@ -16,7 +16,9 @@ create_file(
 \item{type}{\emph{Character}. Used to choose both the subdirectory and the
 template.}
 
-\item{name}{\emph{Character}. File name (with or without \code{.R}).}
+\item{name}{\emph{Character}. File name (with or without \code{.R}). Figure and table
+names may only contain letters, numbers, and hyphens. Other file types may
+also contain underscores.}
 
 \item{open}{\emph{Logical}. Open the file after creation.}
 

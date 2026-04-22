@@ -8,6 +8,14 @@ test_that("File type is validated", {
 test_that("File name is validated", {
   local_lbstproj_project(with_tot = FALSE)
   expect_error(create_file("figure", "name with space"))
+  expect_error(
+    create_file("figure", "name_with_underscore", open = FALSE, quiet = TRUE),
+    "Only letters, numbers, and hyphens are allowed."
+  )
+  expect_equal(
+    create_file("analysis", "name_with_underscore", open = FALSE, quiet = TRUE),
+    fs::path("R/analysis/name_with_underscore.R")
+  )
   expect_equal(
     create_file("table", "abc.R", open = FALSE, quiet = TRUE),
     fs::path("R/tables/abc.R")

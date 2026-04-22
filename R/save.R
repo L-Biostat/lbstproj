@@ -27,8 +27,9 @@
 #' [create_file()] with a custom type, the matching `data/<subdir>/` directory
 #' is created automatically.
 #'
-#' Each function saves the object using the given name, after validating it. Names can
-#' only contain letters, numbers, and hyphens.
+#' Each function saves the object using the given name, after validating it.
+#' Figure and table names can only contain letters, numbers, and hyphens.
+#' Data names may also contain underscores.
 #'
 #' @param name *Character*. File name without extension.
 #' @param overwrite *Logical*. If `TRUE`, overwrite an existing file with the same
@@ -128,7 +129,7 @@ save_table <- function(
   # Validate table class against the project engine
   check_table_object(table)
   # Validate the name
-  name <- validate_file_name(name)
+  name <- validate_file_name(name, strict = TRUE)
   # Ensures the data directory exists
   ensure_dir_exists("data/tables", create = TRUE)
   # Check if file exists and handle overwrite logic
@@ -188,7 +189,7 @@ save_figure <- function(
     )
   }
   # Validate the name
-  name <- validate_file_name(name)
+  name <- validate_file_name(name, strict = TRUE)
   # Ensures the data directory exists
   ensure_dir_exists("results/figures", create = TRUE)
   # Ensure extension is one of "png" or "pdf"

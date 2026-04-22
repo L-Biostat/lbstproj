@@ -48,7 +48,8 @@ name. If \code{FALSE}, an error is thrown when the target file already exists.
 
 \emph{Default}: \code{FALSE} unless the global option \code{lbstproj.quiet} is set otherwise. The default option can be changed using \code{options(lbstproj.quiet = TRUE)}}
 
-\item{table}{A \code{gt_tbl} object to save.}
+\item{table}{A table object to save. Must be a \code{gt_tbl} for \code{gt} projects or
+a \code{flextable} for \code{flextable} projects.}
 
 \item{export}{\emph{Logical}. If \code{TRUE}, also export the table as a \code{.docx} file.
 
@@ -56,7 +57,8 @@ name. If \code{FALSE}, an error is thrown when the target file already exists.
 
 \item{...}{Additional arguments passed to the saving function:
 \itemize{
-\item For \code{save_table()}: passed to \link[gt:gtsave]{gt::gtsave}
+\item For \code{save_table()}: passed to \code{\link[gt:gtsave]{gt::gtsave()}} (gt projects) or
+\code{\link[flextable:save_as_docx]{flextable::save_as_docx()}} (flextable projects)
 \item For \code{save_figure()}: passed to \link[ggplot2:ggsave]{ggplot2::ggsave}
 }}
 
@@ -78,8 +80,11 @@ These functions standardize how outputs are saved in an
 \code{lbstproj} project:
 \itemize{
 \item \code{save_data()} saves a data frame as \code{rds} to \code{data/processed}.
-\item \code{save_table()} saves a table as \code{rds} to \code{data/tables} and optionally export it
-as \code{docx} to \code{results/tables}.
+\item \code{save_table()} saves a table as \code{rds} to \code{data/tables} and optionally
+exports it as \code{docx} to \code{results/tables}. The accepted table class and
+the export method depend on the project's table engine (\code{"gt"} or
+\code{"flextable"}), stored in the \code{TableEngine} field of the project
+\code{DESCRIPTION} file. Legacy projects without that field default to \code{"gt"}.
 \item \code{save_figure()} saves a figure as \code{png} (or another extension) to \code{results/figures}.
 }
 
@@ -90,15 +95,21 @@ created in \verb{R/models/} should be saved to \verb{data/models/}. When using
 \code{\link[=create_file]{create_file()}} with a custom type, the matching \verb{data/<subdir>/} directory
 is created automatically.
 
-Each function saves the object using the given name, after validating it. Names can
-only contain letters, numbers, and hyphens.
+Each function saves the object using the given name, after validating it.
+Figure and table names can only contain letters, numbers, and hyphens.
+Data names may also contain underscores.
 }
 \examples{
 if(FALSE) {
   save_data(mtcars, name = "analysis_dataset")
 
+  # gt project (default)
   summary_table <- gt::gt(head(mtcars))
   save_table(summary_table, name = "baseline_characteristics")
+
+  # flextable project
+  ft <- flextable::flextable(head(mtcars))
+  save_table(ft, name = "baseline_characteristics")
 
   scatter_plot <- ggplot2::ggplot(
     mtcars,

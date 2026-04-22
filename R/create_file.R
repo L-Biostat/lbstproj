@@ -26,7 +26,9 @@
 #'
 #' @param type *Character*. Used to choose both the subdirectory and the
 #'   template.
-#' @param name *Character*. File name (with or without `.R`).
+#' @param name *Character*. File name (with or without `.R`). Figure and table
+#'   names may only contain letters, numbers, and hyphens. Other file types may
+#'   also contain underscores.
 #' @param open *Logical*. Open the file after creation.
 #' @param quiet *Logical*. If `TRUE`, suppress informational messages. Important
 #'   messages (e.g. directory creation or errors) are still shown.
@@ -72,7 +74,7 @@ create_file <- function(
 ) {
   # Validate inputs
   check_string(type)
-  name <- validate_file_name(name)
+  name <- validate_file_name(name, strict = type %in% c("figure", "table"))
 
   # Subdirectory rule: figure -> figures, table -> tables, etc.
   # Special-cases: data -> data; analysis -> analysis

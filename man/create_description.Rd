@@ -4,7 +4,15 @@
 \alias{create_description}
 \title{Create a DESCRIPTION file for the project}
 \usage{
-create_description(title, client, department, author, version, quiet = FALSE)
+create_description(
+  title,
+  client,
+  department,
+  author,
+  version,
+  table_engine = "gt",
+  quiet = FALSE
+)
 }
 \description{
 \code{create_description()} creates a \code{DESCRIPTION} file in the project, using the

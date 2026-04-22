@@ -20,6 +20,17 @@ test_that("save_data() saves data to data/processed", {
   expect_equal(readRDS(path), df)
 })
 
+test_that("save_data() allows underscores in file names", {
+  local_lbstproj_project(with_tot = FALSE)
+
+  df <- data.frame(x = 1:3)
+
+  path <- save_data(df, "my_data", quiet = TRUE)
+
+  expect_true(fs::file_exists("data/processed/my_data.rds"))
+  expect_equal(readRDS(path), df)
+})
+
 test_that("save_data() errors if file exists and overwrite = FALSE", {
   local_lbstproj_project(with_tot = FALSE)
 
@@ -86,6 +97,17 @@ test_that("save_table() saves rds file for gt project", {
   save_table(tab, "tab", quiet = TRUE, export = FALSE)
 
   expect_true(fs::file_exists("data/tables/tab.rds"))
+})
+
+test_that("save_table() rejects underscores in file names", {
+  local_lbstproj_project(with_tot = FALSE, engine = "gt")
+
+  tab <- gt::gt(data.frame(x = 1))
+
+  expect_error(
+    save_table(tab, "tab_name", quiet = TRUE, export = FALSE),
+    "Only letters, numbers, and hyphens are allowed."
+  )
 })
 
 test_that("save_table() saves rds file for flextable project", {
@@ -182,6 +204,18 @@ test_that("save_figure() saves png figure", {
   save_figure(p, "fig", dpi = 72, quiet = TRUE)
 
   expect_true(fs::file_exists("results/figures/fig.png"))
+})
+
+test_that("save_figure() rejects underscores in file names", {
+  local_lbstproj_project(with_tot = FALSE)
+
+  p <- ggplot2::ggplot(mtcars, ggplot2::aes(mpg, wt)) +
+    ggplot2::geom_point()
+
+  expect_error(
+    save_figure(p, "fig_name", dpi = 72, quiet = TRUE),
+    "Only letters, numbers, and hyphens are allowed."
+  )
 })
 
 test_that("save_figure() errors if file exists and overwrite = FALSE", {

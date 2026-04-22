@@ -87,24 +87,43 @@ ensure_file_does_not_exist <- function(file) {
 
 #' Validate the name of a script
 #'
-#' Ensures that the name of a R script only contains valid characters (letters, numbers, underscores, and hyphens) and remove any potential extension.
+#' Ensures that a script name only contains valid characters and removes any
+#' potential extension. In non-strict mode, letters, numbers, underscores, and
+#' hyphens are allowed. In strict mode, underscores are disallowed.
 #'
 #' @param name *Character*. The name of the script to validate.
+#' @param strict *Logical*. Whether to disallow underscores in the validated
+#'   name.
+#'
+#'   *Default*: `FALSE`
 #'
 #' @return *Character*. The validated name of the script without any extension.
 #'
 #' @keywords internal
-validate_file_name <- function(name) {
+validate_file_name <- function(name, strict = FALSE) {
   # Ensure the name is a string
   check_string(name)
+  if (!rlang::is_bool(strict)) {
+    cli::cli_abort("{.arg strict} must be either {.val TRUE} or {.val FALSE}.")
+  }
   # Remove any .r/.R extension if present
   name <- fs::path_ext_remove(name)
-  # Ensure only alphabetic characters, numbers, and hyphens are present
-  if (!grepl("^[a-zA-Z0-9-]+$", name)) {
+  valid_pattern <- if (isTRUE(strict)) {
+    "^[a-zA-Z0-9-]+$"
+  } else {
+    "^[a-zA-Z0-9_-]+$"
+  }
+  allowed_characters <- if (isTRUE(strict)) {
+    "Only letters, numbers, and hyphens are allowed."
+  } else {
+    "Only letters, numbers, underscores, and hyphens are allowed."
+  }
+  # Ensure only supported characters are present
+  if (!grepl(valid_pattern, name)) {
     cli::cli_abort(
       c(
         "File name {.val {name}} is invalid.",
-        "i" = "Only letters, numbers, and hyphens are allowed."
+        "i" = allowed_characters
       )
     )
   }

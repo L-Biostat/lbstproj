@@ -55,6 +55,13 @@ test_that("validate_file_name() validates input type", {
   )
 })
 
+test_that("validate_file_name() validates strict type", {
+  expect_error(
+    validate_file_name("testfile", strict = 1),
+    "must be either"
+  )
+})
+
 test_that("validate_file_name() removes extensions", {
   name <- "testfile.R"
   expect_equal(
@@ -63,9 +70,23 @@ test_that("validate_file_name() removes extensions", {
   )
 })
 
-test_that("validate_file_name() only accepts alphanumeric, _, and -", {
+test_that("validate_file_name() allows underscores in non-strict mode", {
   expect_no_error(validate_file_name("new-plot-20.png"))
+  expect_no_error(validate_file_name("analysis_01_01_2001.R"))
+})
+
+test_that("validate_file_name() disallows underscores in strict mode", {
+  expect_no_error(validate_file_name("new-plot-20.png", strict = TRUE))
+  expect_error(
+    validate_file_name("analysis_01_01_2001.R", strict = TRUE),
+    "Only letters, numbers, and hyphens are allowed."
+  )
+})
+
+test_that("validate_file_name() rejects unsupported characters in all modes", {
+  expect_error(validate_file_name("analysis 01.R"))
   expect_error(validate_file_name("analysis_01/01/2001.R"))
+  expect_error(validate_file_name("analysis 01.R", strict = TRUE))
 })
 
 # CHECK OVERWRITE ----------------------------------------------------------------

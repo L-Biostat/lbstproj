@@ -2,7 +2,7 @@
 % Please edit documentation in R/create_chunk.R
 \name{create_chunk}
 \alias{create_chunk}
-\title{Create a quarto code chunk from the TOT}
+\title{Create a code chunk from the TOT}
 \usage{
 create_chunk(
   output_type = "html",
@@ -15,13 +15,14 @@ create_chunk(
 }
 \arguments{
 \item{output_type}{\emph{Character}. Output format to use when building the
-code chunk. Should match the output type of the report. Only \code{"docx"} or \code{"html"}
-are supported.
+code chunk for \strong{gt} projects. Should match the output type of the
+report. Only \code{"docx"} or \code{"html"} are supported. Ignored for flextable
+projects (always \code{"docx"}).
 
 \emph{Default}: \code{"html"}}
 
-\item{id}{\emph{Character}. Identifier of the element in the TOT. Either this or the
-\code{name} must be provided but not both.}
+\item{id}{\emph{Character}. Identifier of the element in the TOT. Either this or
+the \code{name} must be provided but not both.}
 
 \item{name}{\emph{Character}. Name of the element in the TOT. Either this or the
 \code{id} must be provided but not both.}
@@ -38,20 +39,25 @@ and insert a page break after it.
 \item{quiet}{\emph{Logical}. If \code{TRUE}, suppress informational messages. Important
 messages (e.g. directory creation or errors) are still shown.
 
-\emph{Default}: \code{FALSE} unless the global option \code{lbstproj.quiet} is set otherwise.}
+\emph{Default}: \code{FALSE} unless the global option \code{lbstproj.quiet} is set
+otherwise.}
 }
 \value{
-The rendered quarto chunk as a character string, invisibly
+The rendered chunk as a character string, invisibly.
 }
 \description{
-Generate the quarto code chunk to include a figure or table in a report
-based on the information stored in the table of tables (TOT). The element
-can be identified by its \code{id} or \code{name}. The chunk includes the correct path to the
-element as well as the caption and a quarto-safe chunk label (starting with \code{tbl}
+Generate the code chunk to include a figure or table in a report based on
+the information stored in the table of tables (TOT). The element can be
+identified by its \code{id} or \code{name}. The chunk includes the correct path to the
+element as well as the caption and a chunk label (starting with \code{tbl}/\code{tab}
 for tables and \code{fig} for figures to allow for cross-referencing).
 
-If the function is called from Rstudio or the console, the code chunk is always
-copied to the clipboard to easily paste it in the report file if needed.
+For \strong{gt} projects the output is a Quarto (\code{.qmd}) chunk. For \strong{flextable}
+projects the output is an R Markdown (\code{.Rmd}) chunk suitable for use with
+\code{officedown::rdocx_document}.
+
+If the function is called from RStudio or the console, the code chunk is
+always copied to the clipboard to easily paste it in the report file.
 }
 \examples{
 if(FALSE) {
