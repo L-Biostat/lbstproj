@@ -9,6 +9,7 @@
 <url><loc>https://l-biostat.github.io/lbstproj/news/index.html</loc></url>
 <url><loc>https://l-biostat.github.io/lbstproj/reference/archive_report.html</loc></url>
 <url><loc>https://l-biostat.github.io/lbstproj/reference/check_can_overwrite.html</loc></url>
+<url><loc>https://l-biostat.github.io/lbstproj/reference/check_table_object.html</loc></url>
 <url><loc>https://l-biostat.github.io/lbstproj/reference/cli_report_program.html</loc></url>
 <url><loc>https://l-biostat.github.io/lbstproj/reference/create_chunk.html</loc></url>
 <url><loc>https://l-biostat.github.io/lbstproj/reference/create_description.html</loc></url>
@@ -24,6 +25,7 @@
 <url><loc>https://l-biostat.github.io/lbstproj/reference/get_table_engine.html</loc></url>
 <url><loc>https://l-biostat.github.io/lbstproj/reference/import_tot.html</loc></url>
 <url><loc>https://l-biostat.github.io/lbstproj/reference/index.html</loc></url>
+<url><loc>https://l-biostat.github.io/lbstproj/reference/is_gt_project.html</loc></url>
 <url><loc>https://l-biostat.github.io/lbstproj/reference/lbstproj-options.html</loc></url>
 <url><loc>https://l-biostat.github.io/lbstproj/reference/lbstproj-package.html</loc></url>
 <url><loc>https://l-biostat.github.io/lbstproj/reference/load_tot.html</loc></url>

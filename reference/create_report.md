@@ -1,20 +1,24 @@
-# Create a Quarto report from the TOT
+# Create a report from the TOT
 
-Create a Quarto report by combining a report template with all figures
-and tables listed in the table of tables (TOT), in the order they
-appear.
+Create a report by combining a report template with all figures and
+tables listed in the table of tables (TOT), in the order they appear.
 
 Captions and labels are taken from the TOT, so updates to the TOT are
 reflected automatically in the generated report.
 
+For **gt** projects the report is a Quarto (`.qmd`) file. For
+**flextable** projects the report is an R Markdown (`.Rmd`) file
+configured for `officedown::rdocx_document`.
+
 Generated report files are date-stamped, for example
-`report/html_report_2026_03_16.qmd`.
+`report/report_2026_03_16.qmd` (gt) or `report/report_2026_03_16.Rmd`
+(flextable).
 
 ## Usage
 
 ``` r
 create_report(
-  output_type = "html",
+  output_type = "docx",
   overwrite = FALSE,
   quiet = getOption("lbstproj.quiet", FALSE)
 )
@@ -24,8 +28,9 @@ create_report(
 
 - output_type:
 
-  *Character*. Output format of the report template. Must be one of
-  `"html"` or `"docx"`.
+  *Character*. Output format of the report template for **gt** projects.
+  Must be one of `"html"` or `"docx"`. Ignored for flextable projects,
+  which always produce a Word document.
 
   *Default*: `"html"`.
 

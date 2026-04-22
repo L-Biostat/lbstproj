@@ -50,11 +50,11 @@ Source all scripts of a given type in batch.
 Generate, render, and archive Quarto reports.
 
 - [`create_report()`](https://l-biostat.github.io/lbstproj/reference/create_report.md)
-  : Create a Quarto report from the TOT
+  : Create a report from the TOT
 - [`create_chunk()`](https://l-biostat.github.io/lbstproj/reference/create_chunk.md)
-  : Create a quarto code chunk from the TOT
+  : Create a code chunk from the TOT
 - [`run_report()`](https://l-biostat.github.io/lbstproj/reference/run_report.md)
-  : Render a quarto report
+  : Render a report
 - [`archive_report()`](https://l-biostat.github.io/lbstproj/reference/archive_report.md)
   : Archive a rendered report
 
@@ -63,9 +63,10 @@ Generate, render, and archive Quarto reports.
 Query and check the table rendering engine configured for the project.
 
 - [`get_table_engine()`](https://l-biostat.github.io/lbstproj/reference/get_table_engine.md)
-  [`is_gt_project()`](https://l-biostat.github.io/lbstproj/reference/get_table_engine.md)
-  [`is_flextable_project()`](https://l-biostat.github.io/lbstproj/reference/get_table_engine.md)
-  : Table engine helpers
+  : Get the table engine for the active project
+- [`is_gt_project()`](https://l-biostat.github.io/lbstproj/reference/is_gt_project.md)
+  [`is_flextable_project()`](https://l-biostat.github.io/lbstproj/reference/is_gt_project.md)
+  : Test whether the active project uses a given table engine
 
 ## Options
 

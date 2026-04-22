@@ -1,15 +1,18 @@
-# Create a quarto code chunk from the TOT
+# Create a code chunk from the TOT
 
-Generate the quarto code chunk to include a figure or table in a report
-based on the information stored in the table of tables (TOT). The
-element can be identified by its `id` or `name`. The chunk includes the
-correct path to the element as well as the caption and a quarto-safe
-chunk label (starting with `tbl` for tables and `fig` for figures to
-allow for cross-referencing).
+Generate the code chunk to include a figure or table in a report based
+on the information stored in the table of tables (TOT). The element can
+be identified by its `id` or `name`. The chunk includes the correct path
+to the element as well as the caption and a chunk label (starting with
+`tbl`/`tab` for tables and `fig` for figures to allow for
+cross-referencing).
 
-If the function is called from Rstudio or the console, the code chunk is
-always copied to the clipboard to easily paste it in the report file if
-needed.
+For **gt** projects the output is a Quarto (`.qmd`) chunk. For
+**flextable** projects the output is an R Markdown (`.Rmd`) chunk
+suitable for use with `officedown::rdocx_document`.
+
+If the function is called from RStudio or the console, the code chunk is
+always copied to the clipboard to easily paste it in the report file.
 
 ## Usage
 
@@ -28,9 +31,10 @@ create_chunk(
 
 - output_type:
 
-  *Character*. Output format to use when building the code chunk. Should
-  match the output type of the report. Only `"docx"` or `"html"` are
-  supported.
+  *Character*. Output format to use when building the code chunk for
+  **gt** projects. Should match the output type of the report. Only
+  `"docx"` or `"html"` are supported. Ignored for flextable projects
+  (always `"docx"`).
 
   *Default*: `"html"`
 
@@ -67,7 +71,7 @@ create_chunk(
 
 ## Value
 
-The rendered quarto chunk as a character string, invisibly
+The rendered chunk as a character string, invisibly.
 
 ## Examples
 

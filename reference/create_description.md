@@ -10,5 +10,13 @@ function.
 ## Usage
 
 ``` r
-create_description(title, client, department, author, version, quiet = FALSE)
+create_description(
+  title,
+  client,
+  department,
+  author,
+  version,
+  table_engine = "gt",
+  quiet = FALSE
+)
 ```

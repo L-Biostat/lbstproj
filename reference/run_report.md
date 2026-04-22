@@ -1,12 +1,18 @@
-# Render a quarto report
+# Render a report
 
-Renders a quarto (`.qmd`) report file located in the `report/`
-directory. The rendered output is saved in the same `report/` directory
-under the same name (with a different extension).
+Renders a report file located in the `report/` directory. The rendered
+output is saved in the same `report/` directory under the same name
+(with a different extension).
 
-If `file` is not supplied, the most recently modified report file in
-`report/` is rendered. Rendered outputs keep the same date-stamped stem
-as the input `.qmd` file.
+If `file` is not supplied, the most recently modified report file
+(`.qmd` or `.Rmd`) in `report/` is rendered.
+
+- **gt projects** produce a Quarto (`.qmd`) report rendered via
+  [`quarto::quarto_render()`](https://quarto-dev.github.io/quarto-r/reference/quarto_render.html).
+
+- **flextable projects** produce an R Markdown (`.Rmd`) report rendered
+  via
+  [`rmarkdown::render()`](https://pkgs.rstudio.com/rmarkdown/reference/render.html).
 
 ## Usage
 
@@ -19,7 +25,8 @@ run_report(file = NULL, quiet = getOption("lbstproj.quiet", FALSE), ...)
 - file:
 
   *Character* or `NULL`. The name of the report file to render. If
-  `NULL`, the most recently modified `.qmd` report in `report/` is used.
+  `NULL`, the most recently modified `.qmd` or `.Rmd` report in
+  `report/` is used.
 
 - quiet:
 
@@ -31,8 +38,11 @@ run_report(file = NULL, quiet = getOption("lbstproj.quiet", FALSE), ...)
 
 - ...:
 
-  Additional arguments passed to the rendering function, in this case,
-  [`quarto::quarto_render()`](https://quarto-dev.github.io/quarto-r/reference/quarto_render.html).
+  Additional arguments passed to the rendering function
+  ([`quarto::quarto_render()`](https://quarto-dev.github.io/quarto-r/reference/quarto_render.html)
+  for `.qmd` files,
+  [`rmarkdown::render()`](https://pkgs.rstudio.com/rmarkdown/reference/render.html)
+  for `.Rmd` files).
 
 ## Value
 
@@ -43,7 +53,7 @@ Invisibly returns the path to the report file.
 ``` r
 if(FALSE) {
   run_report()
-  run_report(file = "html_report_2026_03_16.qmd")
-  run_report(file = "new_report.qmd", output_file = "final_report_FINAL_v3.0")
+  run_report(file = "report_2026_03_16.qmd")
+  run_report(file = "report_2026_03_16.Rmd")
 }
 ```

@@ -1,13 +1,14 @@
 # Validate the name of a script
 
-Ensures that the name of a R script only contains valid characters
-(letters, numbers, underscores, and hyphens) and remove any potential
-extension.
+Ensures that a script name only contains valid characters and removes
+any potential extension. In non-strict mode, letters, numbers,
+underscores, and hyphens are allowed. In strict mode, underscores are
+disallowed.
 
 ## Usage
 
 ``` r
-validate_file_name(name)
+validate_file_name(name, strict = FALSE)
 ```
 
 ## Arguments
@@ -15,6 +16,12 @@ validate_file_name(name)
 - name:
 
   *Character*. The name of the script to validate.
+
+- strict:
+
+  *Logical*. Whether to disallow underscores in the validated name.
+
+  *Default*: `FALSE`
 
 ## Value
 

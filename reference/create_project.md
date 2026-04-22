@@ -18,7 +18,7 @@ create_project(
   author = NULL,
   email = NULL,
   version = "1.0.0",
-  table_engine = "gt",
+  table_engine = NULL,
   open = rlang::is_interactive(),
   force = FALSE,
   quiet = FALSE

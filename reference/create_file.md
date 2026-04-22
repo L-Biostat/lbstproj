@@ -39,7 +39,9 @@ create_file(
 
 - name:
 
-  *Character*. File name (with or without `.R`).
+  *Character*. File name (with or without `.R`). Figure and table names
+  may only contain letters, numbers, and hyphens. Other file types may
+  also contain underscores.
 
 - open:
 
