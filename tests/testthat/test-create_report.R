@@ -289,3 +289,107 @@ test_that("create_report() flextable report contains Rmd-style figure chunks", {
   expect_true(all(grepl(paste0("fig-", figure_names), report, fixed = TRUE)))
   expect_true(grepl("fig.cap=caption_list", report, fixed = TRUE))
 })
+
+
+# ---- Section headers ---------------------------------------------------------
+
+make_section_tot <- function(...) {
+  data.frame(
+    id      = as.character(seq_along(list(...)[[1]])),
+    type    = "figure",
+    name    = paste0("fig", seq_along(list(...)[[1]])),
+    caption = paste0("Figure ", seq_along(list(...)[[1]])),
+    ...,
+    stringsAsFactors = FALSE
+  )
+}
+
+test_that("build_section_headers() returns empty strings when section cols are blank", {
+  tot <- make_section_tot(
+    section = c("", ""), subsection = c("", ""), subsubsection = c("", "")
+  )
+  result <- lbstproj:::build_section_headers(tot)
+  expect_equal(result, c("", ""))
+})
+
+test_that("build_section_headers() emits a # header when section changes", {
+  tot <- make_section_tot(
+    section = c("Results", "Results", "Safety"),
+    subsection = c("", "", ""),
+    subsubsection = c("", "", "")
+  )
+  result <- lbstproj:::build_section_headers(tot)
+  expect_equal(result[1], "# Results")
+  expect_equal(result[2], "")          # same section — no repeat
+  expect_equal(result[3], "# Safety")
+})
+
+test_that("build_section_headers() emits ## and ### headers for sub-levels", {
+  tot <- make_section_tot(
+    section       = c("A", "A"),
+    subsection    = c("A1", "A2"),
+    subsubsection = c("A1a", "")
+  )
+  result <- lbstproj:::build_section_headers(tot)
+  expect_match(result[1], "# A",   fixed = TRUE)
+  expect_match(result[1], "## A1", fixed = TRUE)
+  expect_match(result[1], "### A1a", fixed = TRUE)
+  expect_equal(result[2], "## A2")     # section unchanged; sub changed; no subsub
+})
+
+test_that("build_section_headers() resets child tracking when parent changes", {
+  tot <- make_section_tot(
+    section       = c("A", "B"),
+    subsection    = c("A1", "A1"),   # same subsection text under different sections
+    subsubsection = c("", "")
+  )
+  result <- lbstproj:::build_section_headers(tot)
+  # Under section B, subsection A1 should be re-emitted (parent changed)
+  expect_match(result[2], "## A1", fixed = TRUE)
+})
+
+test_that("create_report() includes section headers from TOT", {
+  tot_data <- make_section_tot(
+    section       = c("Results", "Results"),
+    subsection    = c("Primary", "Secondary"),
+    subsubsection = c("", "")
+  )
+  local_lbstproj_project(with_tot = TRUE, tot_data = tot_data)
+
+  report_path <- create_report(output_type = "html", quiet = TRUE)
+  report <- paste(readLines(report_path), collapse = "\n")
+
+  expect_match(report, "# Results",    fixed = TRUE)
+  expect_match(report, "## Primary",   fixed = TRUE)
+  expect_match(report, "## Secondary", fixed = TRUE)
+})
+
+test_that("create_report() does not repeat identical section headers", {
+  tot_data <- make_section_tot(
+    section       = c("Results", "Results", "Results"),
+    subsection    = c("", "", ""),
+    subsubsection = c("", "", "")
+  )
+  local_lbstproj_project(with_tot = TRUE, tot_data = tot_data)
+
+  report_path <- create_report(output_type = "html", quiet = TRUE)
+  report <- paste(readLines(report_path), collapse = "\n")
+
+  # "# Results" should appear exactly once
+  matches <- gregexpr("# Results", report, fixed = TRUE)[[1]]
+  expect_equal(length(matches), 1L)
+})
+
+test_that("create_report() produces no headers when section cols are all blank", {
+  tot_data <- make_section_tot(
+    section       = c("", ""),
+    subsection    = c("", ""),
+    subsubsection = c("", "")
+  )
+  local_lbstproj_project(with_tot = TRUE, tot_data = tot_data)
+
+  report_path <- create_report(output_type = "html", quiet = TRUE)
+  report <- paste(readLines(report_path), collapse = "\n")
+
+  expect_false(grepl("^#", report))
+})

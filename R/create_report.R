@@ -73,6 +73,7 @@ create_report <- function(
   report_basis <- whisker::whisker.render(template, template_data)
 
   tot <- load_tot()
+  headers <- build_section_headers(tot)
   chunks <- purrr::map_chr(
     .x = tot$id,
     .f = ~ create_chunk(
@@ -83,7 +84,12 @@ create_report <- function(
       quiet = TRUE
     )
   )
-  report <- c(report_basis, chunks)
+  chunks_with_headers <- ifelse(
+    nzchar(headers),
+    paste0(headers, "\n\n", chunks),
+    chunks
+  )
+  report <- c(report_basis, chunks_with_headers)
   writeLines(report, con = report_path)
 
   if (!quiet) {
@@ -95,4 +101,64 @@ create_report <- function(
     )
   }
   invisible(report_path)
+}
+
+
+# Build a character vector of Markdown section headers, one entry per TOT row.
+#
+# For each row, compares section/subsection/subsubsection values against the
+# previous row. A header line is emitted only when the value at that level
+# changes. Changing a parent level resets child-level tracking so sub-headers
+# re-appear under a new parent even if their text is identical.
+#
+# Empty string values are never emitted as headers; they simply clear the
+# current level's state.
+#
+# @param tot A data frame with columns `section`, `subsection`,
+#   `subsubsection` (all character, added by `validate_tot()` if absent).
+# @return A character vector of length `nrow(tot)`. Each element is either
+#   `""` (no headers for this row) or one or more Markdown header lines joined
+#   by `"\n\n"`.
+# @keywords internal
+build_section_headers <- function(tot) {
+  n <- nrow(tot)
+  headers <- character(n)
+
+  prev_sec    <- NULL
+  prev_sub    <- NULL
+  prev_subsub <- NULL
+
+  for (i in seq_len(n)) {
+    sec    <- tot$section[i]
+    sub    <- tot$subsection[i]
+    subsub <- tot$subsubsection[i]
+
+    sec_changed    <- !identical(sec, prev_sec)
+    sub_changed    <- sec_changed    || !identical(sub, prev_sub)
+    subsub_changed <- sub_changed    || !identical(subsub, prev_subsub)
+
+    lines <- character(0)
+
+    if (sec_changed) {
+      prev_sec    <- sec
+      prev_sub    <- NULL
+      prev_subsub <- NULL
+      if (nzchar(sec)) lines <- c(lines, paste0("# ", sec))
+    }
+
+    if (sub_changed) {
+      prev_sub    <- sub
+      prev_subsub <- NULL
+      if (nzchar(sub)) lines <- c(lines, paste0("## ", sub))
+    }
+
+    if (subsub_changed) {
+      prev_subsub <- subsub
+      if (nzchar(subsub)) lines <- c(lines, paste0("### ", subsub))
+    }
+
+    headers[i] <- paste(lines, collapse = "\n\n")
+  }
+
+  headers
 }

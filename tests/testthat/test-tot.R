@@ -11,7 +11,36 @@ test_that("validate_tot() passes with a valid TOT", {
     stringsAsFactors = FALSE
   )
   result <- expect_invisible(lbstproj:::validate_tot(valid_tot))
-  expect_equal(result, valid_tot)
+  # Required columns unchanged
+  expect_equal(result[names(valid_tot)], valid_tot)
+  # Optional section columns are added as empty strings
+  expect_equal(result$section,       rep("", 2))
+  expect_equal(result$subsection,    rep("", 2))
+  expect_equal(result$subsubsection, rep("", 2))
+})
+
+test_that("validate_tot() adds missing optional section columns as empty strings", {
+  tot <- data.frame(
+    id = "1", type = "figure", name = "fig1", caption = "Figure 1",
+    stringsAsFactors = FALSE
+  )
+  result <- lbstproj:::validate_tot(tot)
+  expect_true(all(c("section", "subsection", "subsubsection") %in% names(result)))
+  expect_equal(result$section,       "")
+  expect_equal(result$subsection,    "")
+  expect_equal(result$subsubsection, "")
+})
+
+test_that("validate_tot() preserves existing section columns unchanged", {
+  tot <- data.frame(
+    id = "1", type = "figure", name = "fig1", caption = "Figure 1",
+    section = "Results", subsection = "Primary", subsubsection = "",
+    stringsAsFactors = FALSE
+  )
+  result <- lbstproj:::validate_tot(tot)
+  expect_equal(result$section,       "Results")
+  expect_equal(result$subsection,    "Primary")
+  expect_equal(result$subsubsection, "")
 })
 
 test_that("validate_tot() errors on missing required columns", {

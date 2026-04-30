@@ -57,6 +57,15 @@ validate_tot <- function(tot_data) {
     )
   }
 
+  # Add optional section columns if absent (ensures downstream code can always
+  # reference them; an all-empty TOT produces an unordered report)
+  optional_cols <- c("section", "subsection", "subsubsection")
+  for (col in optional_cols) {
+    if (!col %in% names(tot_data)) {
+      tot_data[[col]] <- ""
+    }
+  }
+
   invisible(tot_data)
 }
 
@@ -82,8 +91,8 @@ import_tot <- function(quiet = FALSE) {
   tot_data <- readxl::read_excel(tot_xlsx_path) |>
     tibble::as_tibble()
 
-  # Validate the TOT data structure
-  validate_tot(tot_data)
+  # Validate the TOT data structure (also adds optional section columns)
+  tot_data <- validate_tot(tot_data)
 
   # Save the TOT data as an RDS file in the project
   tot_path <- fs::path("data/tot/tot.rds")
