@@ -43,6 +43,23 @@ test_that("validate_tot() preserves existing section columns unchanged", {
   expect_equal(result$subsubsection, "")
 })
 
+test_that("validate_tot() coerces NA in existing section columns to ''", {
+  tot <- data.frame(
+    id      = c("1", "2", "3"),
+    type    = c("figure", "figure", "table"),
+    name    = c("fig1", "fig2", "tab1"),
+    caption = c("Fig 1", "Fig 2", "Tab 1"),
+    section       = c("Results", NA, "Safety"),
+    subsection    = c(NA, "Primary", NA),
+    subsubsection = c(NA, NA, NA),
+    stringsAsFactors = FALSE
+  )
+  result <- lbstproj:::validate_tot(tot)
+  expect_equal(result$section,       c("Results", "", "Safety"))
+  expect_equal(result$subsection,    c("", "Primary", ""))
+  expect_equal(result$subsubsection, c("", "", ""))
+})
+
 test_that("validate_tot() errors on missing required columns", {
   bad_tot <- data.frame(
     id = "1",

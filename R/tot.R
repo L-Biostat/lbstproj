@@ -57,12 +57,14 @@ validate_tot <- function(tot_data) {
     )
   }
 
-  # Add optional section columns if absent (ensures downstream code can always
-  # reference them; an all-empty TOT produces an unordered report)
+  # Add optional section columns if absent, and coerce any NA values (from
+  # blank Excel cells) to "" so downstream code always works with strings.
   optional_cols <- c("section", "subsection", "subsubsection")
   for (col in optional_cols) {
     if (!col %in% names(tot_data)) {
       tot_data[[col]] <- ""
+    } else {
+      tot_data[[col]][is.na(tot_data[[col]])] <- ""
     }
   }
 
