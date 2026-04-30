@@ -147,3 +147,132 @@ create_file <- function(
   # Invisible return
   invisible(file_path)
 }
+
+
+# ---- Shortcut wrappers -------------------------------------------------------
+
+#' Create a figure R file
+#'
+#' @description Shortcut for `create_file(type = "figure", ...)`. Creates an R
+#'   script in `R/figures/` using the figure template.
+#'
+#' @param name *Character*. File name (with or without `.R`). Only letters,
+#'   numbers, and hyphens are allowed.
+#' @param open *Logical*. Open the file after creation.
+#' @param quiet *Logical*. If `TRUE`, suppress informational messages.
+#'
+#'   *Default*: `TRUE` unless the global option `lbstproj.quiet` is set otherwise.
+#' @param ... Additional fields passed as data to the file template (e.g. `id`,
+#'   `caption`).
+#'
+#' @return Invisibly returns the path of the file created.
+#' @examples
+#' if (FALSE) {
+#' create_figure("hr-by-age")
+#' # > v Hr-by-age file created at 'R/figures/hr-by-age.R'
+#' }
+#'
+#' @export
+create_figure <- function(
+  name,
+  open = TRUE,
+  quiet = getOption("lbstproj.quiet", FALSE),
+  ...
+) {
+  create_file(type = "figure", name = name, open = open, quiet = quiet, ...)
+}
+
+
+#' Create a table R file
+#'
+#' @description Shortcut for `create_file(type = "table", ...)`. Creates an R
+#'   script in `R/tables/` using the table template.
+#'
+#' @param name *Character*. File name (with or without `.R`). Only letters,
+#'   numbers, and hyphens are allowed.
+#' @param open *Logical*. Open the file after creation.
+#' @param quiet *Logical*. If `TRUE`, suppress informational messages.
+#'
+#'   *Default*: `TRUE` unless the global option `lbstproj.quiet` is set otherwise.
+#' @param ... Additional fields passed as data to the file template (e.g. `id`,
+#'   `caption`).
+#'
+#' @return Invisibly returns the path of the file created.
+#' @examples
+#' if (FALSE) {
+#' create_table("baseline-characteristics")
+#' # > v Baseline-characteristics file created at 'R/tables/baseline-characteristics.R'
+#' }
+#'
+#' @export
+create_table <- function(
+  name,
+  open = TRUE,
+  quiet = getOption("lbstproj.quiet", FALSE),
+  ...
+) {
+  create_file(type = "table", name = name, open = open, quiet = quiet, ...)
+}
+
+
+#' Create a data R file
+#'
+#' @description Shortcut for `create_file(type = "data", ...)`. Creates an R
+#'   script in `R/data/` using the data template.
+#'
+#' @param name *Character*. File name (with or without `.R`). Only letters,
+#'   numbers, and hyphens are allowed.
+#' @param open *Logical*. Open the file after creation.
+#' @param quiet *Logical*. If `TRUE`, suppress informational messages.
+#'
+#'   *Default*: `TRUE` unless the global option `lbstproj.quiet` is set otherwise.
+#' @param ... Additional fields passed as data to the file template.
+#'
+#' @return Invisibly returns the path of the file created.
+#' @examples
+#' if (FALSE) {
+#' create_data("import-adsl")
+#' # > v Import-adsl file created at 'R/data/import-adsl.R'
+#' }
+#'
+#' @export
+create_data <- function(
+  name,
+  open = TRUE,
+  quiet = getOption("lbstproj.quiet", FALSE),
+  ...
+) {
+  create_file(type = "data", name = name, open = open, quiet = quiet, ...)
+}
+
+
+#' Create a function R file
+#'
+#' @description Shortcut for `create_file(type = "function", ...)`. Creates an R
+#'   script in `R/functions/` using the generic file template. A matching
+#'   `data/functions/` directory is also created automatically.
+#'
+#' @param name *Character*. File name (with or without `.R`). Only letters,
+#'   numbers, hyphens, and underscores are allowed.
+#' @param open *Logical*. Open the file after creation.
+#' @param quiet *Logical*. If `TRUE`, suppress informational messages.
+#'
+#'   *Default*: `TRUE` unless the global option `lbstproj.quiet` is set otherwise.
+#' @param ... Additional fields passed as data to the file template.
+#'
+#' @return Invisibly returns the path of the file created.
+#' @examples
+#' if (FALSE) {
+#' create_function("helpers")
+#' # > v Helpers file created at 'R/functions/helpers.R'
+#' }
+#'
+#' @export
+create_function <- function(
+  name,
+  open = TRUE,
+  quiet = getOption("lbstproj.quiet", FALSE),
+  ...
+) {
+  create_file(type = "function", name = name, open = open, quiet = quiet, ...)
+}
