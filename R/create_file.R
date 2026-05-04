@@ -172,10 +172,17 @@ NULL
 #' @describeIn create_shortcuts Create a figure R file in `R/figures/` using the
 #'   figure template. File names may contain only letters, numbers, and hyphens.
 #' @examples
-#' tmp <- example_project()
-#' dir(file.path("R", "figures"))
-#' create_figure("fig-01", open = FALSE, quiet = TRUE)
-#' dir(file.path("R", "figures"))
+#' # Helper functions directly create files in the correct subdirectory
+#' with_example_project({
+#'   cat("Before")
+#'   fs::dir_tree("R")
+#'   cat("Creating files")
+#'   create_figure("fig-01")
+#'   create_table("tab-01")
+#'   create_data("clean-asdl") )
+#'   cat("After")
+#'   fs::dir_tree("R")
+#' })
 #'
 #' @export
 create_figure <- function(
