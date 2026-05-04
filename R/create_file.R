@@ -173,9 +173,9 @@ NULL
 #'   figure template. File names may contain only letters, numbers, and hyphens.
 #' @examples
 #' tmp <- example_project()
-#' dir(file.path("R", "figures"))
+#' dir(fs::path("R/figures"))
 #' create_figure("fig-01", open = FALSE, quiet = TRUE)
-#' dir(file.path("R", "figures"))
+#' dir(fs::path("R/figures"))
 #'
 #' @export
 create_figure <- function(

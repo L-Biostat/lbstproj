@@ -28,18 +28,16 @@
 #' @details
 #' This function is intended exclusively for `@examples`, vignettes, and tests —
 #' not for production code. It modifies the working directory and active
-#' `usethis` project in the **calling** scope via [withr::local_tempdir()],
-#' [withr::local_dir()], and [usethis::local_project()], ensuring full cleanup
-#' on exit with no persistent side effects.
+#' `usethis` project in the **calling** scope via [withr::local_dir()] and
+#' [usethis::local_project()], ensuring full cleanup on exit with no persistent
+#' side effects.
 #'
 #' @keywords internal
 #' @export
 example_project <- function(with_tot = TRUE, quiet = TRUE) {
-  # Create a temp directory that lives as long as the calling scope
-  tmp <- withr::local_tempdir(
-    pattern = "lbstproj-example-",
-    .local_envir = parent.frame()
-  )
+  # Create a uniquely-named temp directory and register cleanup in the calling scope
+  tmp <- fs::dir_create(fs::file_temp(pattern = "lbstproj-example-"))
+  withr::defer(fs::dir_delete(tmp), envir = parent.frame())
 
   # Change directory to the temp project for the calling scope
   withr::local_dir(tmp, .local_envir = parent.frame())
