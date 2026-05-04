@@ -39,6 +39,7 @@ reference:
     desc: Generate R script from templates.
     contents:
       - create_file
+      - create_shortcuts
       - create_from_tot
 
   - title: Saving outputs
@@ -59,6 +60,7 @@ reference:
       - run_all_files
       - run_all_figures
       - run_all_tables
+      - load_function
 
   - title: Reporting
     desc: Generate, render, and archive Quarto reports.

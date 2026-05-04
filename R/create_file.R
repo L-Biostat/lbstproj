@@ -151,21 +151,26 @@ create_file <- function(
 
 # ---- Shortcut wrappers -------------------------------------------------------
 
-#' Create a figure R file
+#' Create shortcut R files
 #'
-#' @description Shortcut for `create_file(type = "figure", ...)`. Creates an R
-#'   script in `R/figures/` using the figure template.
+#' @description Shortcut wrappers around [create_file()] for the standard
+#'   `figure`, `table`, `data`, and `function` file types.
 #'
-#' @param name *Character*. File name (with or without `.R`). Only letters,
-#'   numbers, and hyphens are allowed.
+#' @param name *Character*. File name (with or without `.R`).
 #' @param open *Logical*. Open the file after creation.
 #' @param quiet *Logical*. If `TRUE`, suppress informational messages.
 #'
 #'   *Default*: `TRUE` unless the global option `lbstproj.quiet` is set otherwise.
-#' @param ... Additional fields passed as data to the file template (e.g. `id`,
-#'   `caption`).
+#' @param ... Additional fields passed as data to the file template.
 #'
 #' @return Invisibly returns the path of the file created.
+#'
+#' @name create_shortcuts
+NULL
+
+
+#' @describeIn create_shortcuts Create a figure R file in `R/figures/` using the
+#'   figure template. File names may contain only letters, numbers, and hyphens.
 #' @examples
 #' if (FALSE) {
 #' create_figure("hr-by-age")
@@ -183,21 +188,8 @@ create_figure <- function(
 }
 
 
-#' Create a table R file
-#'
-#' @description Shortcut for `create_file(type = "table", ...)`. Creates an R
-#'   script in `R/tables/` using the table template.
-#'
-#' @param name *Character*. File name (with or without `.R`). Only letters,
-#'   numbers, and hyphens are allowed.
-#' @param open *Logical*. Open the file after creation.
-#' @param quiet *Logical*. If `TRUE`, suppress informational messages.
-#'
-#'   *Default*: `TRUE` unless the global option `lbstproj.quiet` is set otherwise.
-#' @param ... Additional fields passed as data to the file template (e.g. `id`,
-#'   `caption`).
-#'
-#' @return Invisibly returns the path of the file created.
+#' @describeIn create_shortcuts Create a table R file in `R/tables/` using the
+#'   table template. File names may contain only letters, numbers, and hyphens.
 #' @examples
 #' if (FALSE) {
 #' create_table("baseline-characteristics")
@@ -215,20 +207,9 @@ create_table <- function(
 }
 
 
-#' Create a data R file
-#'
-#' @description Shortcut for `create_file(type = "data", ...)`. Creates an R
-#'   script in `R/data/` using the data template.
-#'
-#' @param name *Character*. File name (with or without `.R`). Only letters,
-#'   numbers, and hyphens are allowed.
-#' @param open *Logical*. Open the file after creation.
-#' @param quiet *Logical*. If `TRUE`, suppress informational messages.
-#'
-#'   *Default*: `TRUE` unless the global option `lbstproj.quiet` is set otherwise.
-#' @param ... Additional fields passed as data to the file template.
-#'
-#' @return Invisibly returns the path of the file created.
+#' @describeIn create_shortcuts Create a data R file in `R/data/` using the data
+#'   template. File names may contain letters, numbers, hyphens, and
+#'   underscores.
 #' @examples
 #' if (FALSE) {
 #' create_data("import-adsl")
@@ -246,21 +227,10 @@ create_data <- function(
 }
 
 
-#' Create a function R file
-#'
-#' @description Shortcut for `create_file(type = "function", ...)`. Creates an R
-#'   script in `R/functions/` using the generic file template. A matching
-#'   `data/functions/` directory is also created automatically.
-#'
-#' @param name *Character*. File name (with or without `.R`). Only letters,
-#'   numbers, hyphens, and underscores are allowed.
-#' @param open *Logical*. Open the file after creation.
-#' @param quiet *Logical*. If `TRUE`, suppress informational messages.
-#'
-#'   *Default*: `TRUE` unless the global option `lbstproj.quiet` is set otherwise.
-#' @param ... Additional fields passed as data to the file template.
-#'
-#' @return Invisibly returns the path of the file created.
+#' @describeIn create_shortcuts Create a function R file in `R/functions/` using
+#'   the generic file template. File names may contain letters, numbers,
+#'   hyphens, and underscores. A matching `data/functions/` directory is also
+#'   created automatically.
 #' @examples
 #' if (FALSE) {
 #' create_function("helpers")
