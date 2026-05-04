@@ -6,30 +6,6 @@
 #' file, and an table of tables (TOT) Excel file. If the project is successfully
 #' created, it opens the new project in RStudio.
 #'
-#' @details
-#' The following directory structure is created inside the project:
-#'
-#' ```
-#' |-- data
-#'    |-- figures
-#'    |-- processed
-#'    |-- raw
-#'    |-- tables
-#'    \-- tot
-#' |-- docs
-#' |-- results
-#'    |-- figures
-#'    |-- tables
-#'    \-- reports
-#' |-- R
-#'    |-- data
-#'    |-- figures
-#'    |-- functions
-#'    \-- tables
-#' \-- report
-#'     \-- utils
-#' ```
-#'
 #' @param path Path where the project should be created (default is current
 #'   directory).
 #' @param title Title of the project.
@@ -55,16 +31,29 @@
 #' @export
 #'
 #' @examples
-#' if(FALSE) {
+#' # Create a temporary folder to store the new project
+#' tmp_dir <- tempfile("lbstproj-")
+#' dir.create(tmp_dir)
+#'
+#' # Create a new project
 #' create_project(
-#'   path = ".", # uses current directory
-#'   title = "Example Project",
-#'   client = "Client Name",
-#'   department = "DEP",
+#'   path = tmp_dir,
+#'   title = "COVID-19 Vaccine Effectiveness Study",
+#'   client = "Acme Corp",
+#'   department = "Epidemiology",
 #'   author = "Jane Doe",
-#'   version = "0.1.0"
+#'   email = "jane.doe@@example.com",
+#'   table_engine = "gt",
+#'   open = FALSE,
+#'   force = TRUE # Avoids interactive confirmation prompt in example
 #' )
-#' }
+#'
+#' # Show resulting project structure
+#' fs::dir_tree(tmp_dir)
+#'
+#' # Peek at the generated DESCRIPTION file
+#' desc_path <- file.path(tmp_dir, "DESCRIPTION")
+#' cat(readLines(desc_path)[1:8], sep = "\n")
 create_project <- function(
   path = ".",
   title = NULL,
@@ -93,10 +82,19 @@ create_project <- function(
   }
 
   # Prompt user for project information, if not provided
-  cli::cli_text("Enter project information:")
-  cli::cli_alert_info(
-    "Default values are shown in [brackets]. Press {.key Enter} to accept the default."
-  )
+  if (
+    is_null(title) ||
+      is_null(client) ||
+      is_null(department) ||
+      is_null(author) ||
+      is_null(email) ||
+      is_null(table_engine)
+  ) {
+    cli::cli_text("Enter project information:")
+    cli::cli_alert_info(
+      "Default values are shown in [brackets]. Press {.key Enter} to accept the default."
+    )
+  }
   title <- title %||% readline(prompt = "Project name: ")
   author <- prompt_author(author)
   email <- prompt_email(email)

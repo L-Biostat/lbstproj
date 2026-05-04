@@ -59,38 +59,28 @@ provided. The function creates the necessary directories, a \code{DESCRIPTION}
 file, and an table of tables (TOT) Excel file. If the project is successfully
 created, it opens the new project in RStudio.
 }
-\details{
-The following directory structure is created inside the project:
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{|-- data
-   |-- figures
-   |-- processed
-   |-- raw
-   |-- tables
-   \\-- tot
-|-- docs
-|-- results
-   |-- figures
-   |-- tables
-   \\-- reports
-|-- R
-   |-- data
-   |-- figures
-   |-- functions
-   \\-- tables
-\\-- report
-    \\-- utils
-}\if{html}{\out{</div>}}
-}
 \examples{
-if(FALSE) {
+# Create a temporary folder to store the new project
+tmp_dir <- tempfile("lbstproj-")
+dir.create(tmp_dir)
+
+# Create a new project
 create_project(
-  path = ".", # uses current directory
-  title = "Example Project",
-  client = "Client Name",
-  department = "DEP",
+  path = tmp_dir,
+  title = "COVID-19 Vaccine Effectiveness Study",
+  client = "Acme Corp",
+  department = "Epidemiology",
   author = "Jane Doe",
-  version = "0.1.0"
+  email = "jane.doe@example.com",
+  table_engine = "gt",
+  open = FALSE,
+  force = TRUE # Avoids interactive confirmation prompt in example
 )
-}
+
+# Show resulting project structure
+fs::dir_tree(tmp_dir)
+
+# Peek at the generated DESCRIPTION file
+desc_path <- file.path(tmp_dir, "DESCRIPTION")
+cat(readLines(desc_path)[1:8], sep = "\n")
 }
