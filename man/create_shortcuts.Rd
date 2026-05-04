@@ -68,10 +68,17 @@ created automatically.
 
 }}
 \examples{
-if (FALSE) {
-create_figure("hr-by-age")
-# > v Hr-by-age file created at 'R/figures/hr-by-age.R'
-}
+# Helper functions directly create files in the correct subdirectory
+with_example_project({
+  cat("Before")
+  fs::dir_tree("R")
+  cat("Creating files")
+  create_figure("fig-01")
+  create_table("tab-01")
+  create_data("clean-asdl") )
+  cat("After")
+  fs::dir_tree("R")
+})
 
 if (FALSE) {
 create_table("baseline-characteristics")
