@@ -68,31 +68,12 @@ created automatically.
 
 }}
 \examples{
-# Helper functions directly create files in the correct subdirectory
 with_example_project({
-  cat("Before")
-  fs::dir_tree("R")
-  cat("Creating files")
-  create_figure("fig-01")
-  create_table("tab-01")
-  create_data("clean-asdl") )
-  cat("After")
+  create_figure("hr-by-age", open = FALSE, quiet = TRUE)
+  create_table("baseline", open = FALSE, quiet = TRUE)
+  create_data("import-adsl", open = FALSE, quiet = TRUE)
+  create_function("helpers", open = FALSE, quiet = TRUE)
   fs::dir_tree("R")
 })
-
-if (FALSE) {
-create_table("baseline-characteristics")
-# > v Baseline-characteristics file created at 'R/tables/baseline-characteristics.R'
-}
-
-if (FALSE) {
-create_data("import-adsl")
-# > v Import-adsl file created at 'R/data/import-adsl.R'
-}
-
-if (FALSE) {
-create_function("helpers")
-# > v Helpers file created at 'R/functions/helpers.R'
-}
 
 }

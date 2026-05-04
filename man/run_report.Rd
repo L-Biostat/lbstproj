@@ -39,9 +39,10 @@ If \code{file} is not supplied, the most recently modified report file (\code{.q
 }
 }
 \examples{
-if(FALSE) {
-  run_report()
-  run_report(file = "report_2026_03_16.qmd")
-  run_report(file = "report_2026_03_16.Rmd")
+\dontrun{
+  with_example_project({
+    create_report(quiet = TRUE)
+    run_report()
+  }, with_tot = TRUE)
 }
 }

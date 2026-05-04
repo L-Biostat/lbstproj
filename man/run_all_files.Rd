@@ -59,12 +59,22 @@ for discrepancies between the files in the directory and the table of tables
 
 }}
 \examples{
-if(FALSE) {
-run_all_files("figure")
-run_all_figures()                                 # equivalent to the above
-run_all_files("data")
-run_all_files("figure", glob = "fig-[0-9]*.R")   # only numbered figures
-run_all_files("figure", quiet = TRUE)             # suppress all messages
-}
+with_example_project({
+  # Create a minimal data script
+  writeLines('cat("data loaded\n")', "R/data/load-data.R")
+
+  # Source all scripts in R/data/
+  run_all_files("data")
+})
+
+with_example_project({
+  writeLines('cat("figure ran\n")', "R/figures/fig01.R")
+  run_all_figures()
+}, with_tot = TRUE)
+
+with_example_project({
+  writeLines('cat("table ran\n")', "R/tables/tab01.R")
+  run_all_tables()
+}, with_tot = TRUE)
 
 }

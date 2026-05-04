@@ -13,16 +13,14 @@
 #' @export
 #'
 #' @examples
-#' if(FALSE) {
-#' # By id
-#' info <- get_info(id = "T001")
+#' with_example_project({
+#'   tot <- load_tot()
 #'
-#' # By name
-#' info <- get_info(name = "baseline_table")
-#'
-#' # Access a field
-#' info$caption
-#' }
+#'   # Look up the first entry by id
+#'   info <- get_info(id = tot$id[[1]])
+#'   cat("Name:", info$name[[1]], "\n")
+#'   cat("Caption:", info$caption[[1]], "\n")
+#' }, with_tot = TRUE)
 get_info <- function(id = NULL, name = NULL) {
   # Ensure either id or name is given, not both
   if (!xor(is.null(id), is.null(name))) {

@@ -26,10 +26,14 @@
 #' @return Invisibly returns the path of the sourced file.
 #'
 #' @examples
-#' if (FALSE) {
-#' load_function("helpers")
-#' # > v Sourced 'R/functions/helpers.R'
-#' }
+#' with_example_project({
+#'   # Create a simple helper script
+#'   writeLines("add <- function(x, y) x + y", "R/functions/helpers.R")
+#'
+#'   # Load it into the session
+#'   load_function("helpers", quiet = TRUE)
+#'   add(1, 2)
+#' })
 #'
 #' @name load_functions
 #' @export
@@ -66,11 +70,10 @@ load_function <- function(
 #' @return Invisibly returns the character vector of sourced file paths.
 #'
 #' @examples
-#' if (FALSE) {
-#' load_all_functions()
-#' # > v Sourced 'R/functions/helpers.R'
-#' # > v Sourced 'R/functions/utils.R'
-#' }
+#' with_example_project({
+#'   writeLines("greet <- function() cat('hello\n')", "R/functions/greet.R")
+#'   load_all_functions()
+#' })
 #'
 #' @export
 load_all_functions <- function(

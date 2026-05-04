@@ -33,9 +33,11 @@ project version. This function is typically used after rendering a report
 with \code{\link[=run_report]{run_report()}}, to save a copy of the rendered output.
 }
 \examples{
-if(FALSE) {
-  run_report(file = "html_report_2026_03_16.qmd")
-  archive_report()
-  archive_report(file = "html_report_2026_03_16.html", overwrite = TRUE)
-}
+with_example_project({
+  # Simulate a rendered report in report/
+  writeLines("<html><body>Report</body></html>", "report/report.html")
+
+  archive_report(file = "report.html", quiet = TRUE)
+  fs::dir_tree("results/reports")
+})
 }

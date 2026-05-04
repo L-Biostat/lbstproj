@@ -25,11 +25,13 @@
 #'   *Default*: `FALSE` unless the global option `lbstproj.quiet` is set otherwise.
 #' @return Invisibly returns the path to the archived report file.
 #' @examples
-#' if(FALSE) {
-#'   run_report(file = "html_report_2026_03_16.qmd")
-#'   archive_report()
-#'   archive_report(file = "html_report_2026_03_16.html", overwrite = TRUE)
-#' }
+#' with_example_project({
+#'   # Simulate a rendered report in report/
+#'   writeLines("<html><body>Report</body></html>", "report/report.html")
+#'
+#'   archive_report(file = "report.html", quiet = TRUE)
+#'   fs::dir_tree("results/reports")
+#' })
 #' @export
 archive_report <- function(
   file = NULL,

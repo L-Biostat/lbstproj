@@ -21,14 +21,12 @@ Retrieves a single TOT entry identified by either its unique \code{id} or
 its unique \code{name}. The TOT is loaded with \code{\link[=load_tot]{load_tot()}}.
 }
 \examples{
-if(FALSE) {
-# By id
-info <- get_info(id = "T001")
+with_example_project({
+  tot <- load_tot()
 
-# By name
-info <- get_info(name = "baseline_table")
-
-# Access a field
-info$caption
-}
+  # Look up the first entry by id
+  info <- get_info(id = tot$id[[1]])
+  cat("Name:", info$name[[1]], "\n")
+  cat("Caption:", info$caption[[1]], "\n")
+}, with_tot = TRUE)
 }

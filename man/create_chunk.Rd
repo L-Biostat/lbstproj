@@ -60,12 +60,8 @@ If the function is called from RStudio or the console, the code chunk is
 always copied to the clipboard to easily paste it in the report file.
 }
 \examples{
-if(FALSE) {
-  create_chunk(id = "fig_01_flowchart")
-  create_chunk(
-    name = "tab_01_baseline",
-    output_type = "docx",
-    print = FALSE
-  )
-}
+with_example_project({
+  tot <- load_tot()
+  create_chunk(id = tot$id[[1]], print = TRUE, quiet = TRUE)
+}, with_tot = TRUE)
 }

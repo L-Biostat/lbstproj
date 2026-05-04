@@ -4,14 +4,17 @@
 \alias{with_example_project}
 \title{Evaluate Code in a Temporary Example Project}
 \usage{
-with_example_project(code)
+with_example_project(code, with_tot = FALSE)
 }
 \arguments{
 \item{code}{Code to evaluate inside the temporary project (use \code{{}}).}
 
-\item{with_tot}{Logical. Should a minimal table of tables (TOT) file be created?}
+\item{with_tot}{\emph{Logical}. If \code{TRUE}, copies the package's example TOT
+(\verb{inst/extdata/table_of_tables.xlsx}) into \verb{data/tot/} and calls
+\code{\link[=import_tot]{import_tot()}} so that \code{\link[=load_tot]{load_tot()}}, \code{\link[=get_info]{get_info()}}, and related functions
+work immediately.
 
-\item{tot_data}{Optional data.frame used as TOT content.}
+\emph{Default}: \code{FALSE}.}
 }
 \value{
 Invisibly returns the path to the temporary project directory.
@@ -20,17 +23,24 @@ Invisibly returns the path to the temporary project directory.
 \code{with_example_project()} creates a temporary, minimal project environment
 and evaluates the provided code inside it. This is primarily intended for
 use in \verb{@examples}, vignettes, and tests to ensure reproducibility without
-relying on the user’s working directory.
+relying on the user's working directory.
+
+The temporary project replicates the full directory structure created by
+\code{\link[=create_project]{create_project()}}: \verb{R/figures/}, \verb{R/tables/}, \verb{R/data/}, \verb{R/functions/},
+\verb{data/raw/}, \verb{data/processed/}, \verb{data/tables/}, \verb{data/tot/},
+\verb{results/figures/}, \verb{results/tables/}, \verb{results/reports/}, and \verb{report/}.
+A minimal \code{DESCRIPTION} file and an \code{.Rproj} file are also written so that
+\code{\link[usethis:proj_path]{usethis::proj_path()}} and related helpers work correctly throughout the
+evaluation.
 }
 \details{
-The temporary project includes a minimal directory structure, a
-\code{DESCRIPTION} file, and an \code{.Rproj} file. All changes are scoped to the
-evaluation and do not affect the global environment.
+Working directory and the active \code{usethis} project are both restored when
+\code{with_example_project()} returns, even if \code{code} signals an error.
 }
 \examples{
 with_example_project({
-  create_file("table", "baseline", open = FALSE)
+  create_figure("hr-by-age", open = FALSE, quiet = TRUE)
+  fs::dir_tree("R/figures")
 })
 
 }
-\keyword{internal}
