@@ -83,40 +83,69 @@ create_project(
 
 Invisibly returns the active project path.
 
-## Details
-
-The following directory structure is created inside the project:
-
-    |-- data
-       |-- figures
-       |-- processed
-       |-- raw
-       |-- tables
-       \-- tot
-    |-- docs
-    |-- results
-       |-- figures
-       |-- tables
-       \-- reports
-    |-- R
-       |-- data
-       |-- figures
-       |-- functions
-       \-- tables
-    \-- report
-        \-- utils
-
 ## Examples
 
 ``` r
-if(FALSE) {
+# Create a temporary folder to store the new project
+tmp_dir <- tempfile("lbstproj-")
+dir.create(tmp_dir)
+
+# Create a new project
 create_project(
-  path = ".", # uses current directory
-  title = "Example Project",
-  client = "Client Name",
-  department = "DEP",
+  path = tmp_dir,
+  title = "COVID-19 Vaccine Effectiveness Study",
+  client = "Acme Corp",
+  department = "Epidemiology",
   author = "Jane Doe",
-  version = "0.1.0"
+  email = "jane.doe@example.com",
+  table_engine = "gt",
+  open = FALSE,
+  force = TRUE # Avoids interactive confirmation prompt in example
 )
-}
+#> ✔ Setting active project to "/tmp/RtmpE2gKqw/lbstproj-57606f281f08".
+#> ✔ Writing lbstproj-57606f281f08.Rproj.
+#> ✔ Adding ".Rproj.user" to .gitignore.
+#> ✔ Creating project structure
+#> ✔ Writing DESCRIPTION
+#> ✔ Writing table_of_tables.xlsx to data/tot
+#> ✔ Project setup complete! Start working!
+
+# Show resulting project structure
+fs::dir_tree(tmp_dir)
+#> /tmp/RtmpE2gKqw/lbstproj-57606f281f08
+#> ├── DESCRIPTION
+#> ├── R
+#> │   ├── data
+#> │   ├── figures
+#> │   ├── functions
+#> │   └── tables
+#> ├── data
+#> │   ├── figures
+#> │   ├── processed
+#> │   ├── raw
+#> │   ├── tables
+#> │   └── tot
+#> │       └── table_of_tables.xlsx
+#> ├── docs
+#> │   ├── costing.docx
+#> │   └── meeting_notes.docx
+#> ├── lbstproj-57606f281f08.Rproj
+#> ├── report
+#> │   └── utils
+#> └── results
+#>     ├── figures
+#>     ├── reports
+#>     └── tables
+
+# Peek at the generated DESCRIPTION file
+desc_path <- file.path(tmp_dir, "DESCRIPTION")
+cat(readLines(desc_path)[1:8], sep = "\n")
+#> Package: lbstproj-57606f281f08
+#> Title: COVID-19 Vaccine Effectiveness Study
+#> Client: Acme Corp
+#> Department: Epidemiology
+#> Version: 1.0.0
+#> TableEngine: gt
+#> Authors@R: 
+#>     person("Jane", "Doe", , "jane.doe@example.com", role = c("aut", "cre"))
 ```

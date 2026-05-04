@@ -27,6 +27,7 @@ generates R Markdown reports rendered via `officedown`. See **Section
 10** for the full flextable workflow.
 
 ``` r
+
 library(lbstproj)
 
 create_project(
@@ -45,8 +46,9 @@ create_project(
 The project now has the following structure:
 
 ``` r
+
 fs::dir_tree(tmp_proj_dir, recurse = TRUE)
-#> /tmp/RtmpJMOWUb/fake-trial
+#> /tmp/Rtmp213Zz7/fake-trial
 #> ├── DESCRIPTION
 #> ├── R
 #> │   ├── data
@@ -93,11 +95,13 @@ The `trial` dataset is bundled with `lbstproj` as a CSV. Copy it to
 `data/raw/`:
 
 ``` r
+
 # In a real project you would place your raw data file in data/raw/ manually.
 fs::file_copy("path/to/trial.csv", "data/raw/trial.csv")
 ```
 
 ``` r
+
 trial_raw <- read.csv("data/raw/trial.csv")
 head(trial_raw)
 #>      trt age marker stage grade response death ttdeath
@@ -132,6 +136,7 @@ and has four columns:
 For this project we plan two figures and two tables:
 
 ``` r
+
 tot_data <- data.frame(
   id = c("fig-01", "fig-02", "tab-01", "tab-02"),
   type = c("figure", "figure", "table", "table"),
@@ -162,6 +167,7 @@ After filling in the spreadsheet, call
 to validate it and cache it as an `.rds` file:
 
 ``` r
+
 import_tot()
 #> ℹ Importing Table of Tables (TOT) to data/tot/tot.rds
 ```
@@ -170,14 +176,15 @@ You can always inspect the TOT with
 [`load_tot()`](https://l-biostat.github.io/lbstproj/reference/load_tot.md):
 
 ``` r
+
 load_tot()
-#> # A tibble: 4 × 4
-#>   id     type   name         caption                                            
-#>   <chr>  <chr>  <chr>        <chr>                                              
-#> 1 fig-01 figure fig-age-dist Age distribution by treatment arm.                 
-#> 2 fig-02 figure fig-km       Kaplan-Meier curve of the survival over time per t…
-#> 3 tab-01 table  tab-baseline Baseline patient characteristics by treatment arm. 
-#> 4 tab-02 table  tab-response Tumour response rates by treatment arm.
+#> # A tibble: 4 × 7
+#>   id     type   name         caption            section subsection subsubsection
+#>   <chr>  <chr>  <chr>        <chr>              <chr>   <chr>      <chr>        
+#> 1 fig-01 figure fig-age-dist Age distribution … ""      ""         ""           
+#> 2 fig-02 figure fig-km       Kaplan-Meier curv… ""      ""         ""           
+#> 3 tab-01 table  tab-baseline Baseline patient … ""      ""         ""           
+#> 4 tab-02 table  tab-response Tumour response r… ""      ""         ""
 ```
 
 ------------------------------------------------------------------------
@@ -189,6 +196,7 @@ reads the TOT and generates stub R scripts for each entry. Always do a
 **dry run** first to preview what will be created:
 
 ``` r
+
 create_from_tot(dry_run = TRUE)
 #> 
 #> ── Figures ──
@@ -215,6 +223,7 @@ create_from_tot(dry_run = TRUE)
 Once satisfied, run without `dry_run` to create the stubs:
 
 ``` r
+
 create_from_tot(dry_run = FALSE)
 #> 
 #> ── Figures ──
@@ -240,12 +249,12 @@ to retrieve TOT metadata, library calls, and placeholder comments:
 
     #' Name         : fig-age-dist.R
     #' Author       : Jane Doe
-    #' Date         : 22 Apr 2026
+    #' Date         : 04 May 2026
     #' Purpose      :
     #' Files created:
     #'  - `results/figures/fig-age-dist.png/pdf`
     #' Edits        :
-    #'  - 22 Apr 2026: Created file.
+    #'  - 04 May 2026: Created file.
 
     # File info ---------------------------------------------------------------
 
@@ -281,6 +290,7 @@ result with
 [`save_data()`](https://l-biostat.github.io/lbstproj/reference/save_outputs.md).
 
 ``` r
+
 # R/data/trial-clean.R
 
 library(dplyr)
@@ -303,6 +313,7 @@ save_data(trial, name = "trial-clean")
 After running the script you can inspect the processed dataset:
 
 ``` r
+
 trial <- readRDS("data/processed/trial-clean.rds")
 dplyr::glimpse(trial)
 #> Rows: 200
@@ -324,6 +335,7 @@ dplyr::glimpse(trial)
 ### Figure 1 - Age distribution
 
 ``` r
+
 # R/figures/fig-age-dist.R
 
 library(dplyr)
@@ -356,6 +368,7 @@ Age distribution by treatment arm.
 ### Figure 2 - Kaplan-Meier curve
 
 ``` r
+
 # R/figures/fig-km.R
 
 library(dplyr)
@@ -401,6 +414,7 @@ before saving.
 ### Table 1 - Baseline characteristics
 
 ``` r
+
 # R/tables/tab-baseline.R
 
 library(dplyr)
@@ -430,6 +444,7 @@ save_table(tab, name = "tab-baseline", export = FALSE)
 ```
 
 ``` r
+
 readRDS("data/tables/tab-baseline.rds")
 ```
 
@@ -438,6 +453,7 @@ readRDS("data/tables/tab-baseline.rds")
 ### Table 2 - Response rates
 
 ``` r
+
 # R/tables/tab-response.R
 
 library(dplyr)
@@ -465,6 +481,7 @@ save_table(tab, name = "tab-response", export = FALSE)
 ```
 
 ``` r
+
 readRDS("data/tables/tab-response.rds")
 ```
 
@@ -483,10 +500,12 @@ order. They also cross-check the file list against the TOT and warn you
 about any discrepancies.
 
 ``` r
+
 run_all_figures()
 ```
 
 ``` r
+
 run_all_tables()
 ```
 
@@ -502,10 +521,11 @@ code chunk for every figure and table, in the order they appear in the
 TOT.
 
 ``` r
+
 create_report(output_type = "html")
 ```
 
-    #> ✔ Writing report to report/report_2026_04_22.qmd.
+    #> ✔ Writing report to report/report_2026_05_04.qmd.
     #> ℹ Use `run_report()` to render the report.
 
 The generated file looks like this (excerpt):
@@ -557,6 +577,7 @@ Call
 to render the Quarto file to HTML (or DOCX):
 
 ``` r
+
 run_report()
 ```
 
@@ -565,6 +586,7 @@ date-stamped filename using
 [`archive_report()`](https://l-biostat.github.io/lbstproj/reference/archive_report.md):
 
 ``` r
+
 archive_report()
 ```
 
@@ -576,14 +598,15 @@ archive_report()
 creation time via the `table_engine` argument of
 [`create_project()`](https://l-biostat.github.io/lbstproj/reference/create_project.md):
 
-| Engine           | Table class | Report format       | Rendering                                                                                       |
-|------------------|-------------|---------------------|-------------------------------------------------------------------------------------------------|
-| `"gt"` (default) | `gt_tbl`    | Quarto (`.qmd`)     | [`quarto::quarto_render()`](https://quarto-dev.github.io/quarto-r/reference/quarto_render.html) |
-| `"flextable"`    | `flextable` | R Markdown (`.Rmd`) | [`rmarkdown::render()`](https://pkgs.rstudio.com/rmarkdown/reference/render.html)               |
+| Engine | Table class | Report format | Rendering |
+|----|----|----|----|
+| `"gt"` (default) | `gt_tbl` | Quarto (`.qmd`) | [`quarto::quarto_render()`](https://quarto-dev.github.io/quarto-r/reference/quarto_render.html) |
+| `"flextable"` | `flextable` | R Markdown (`.Rmd`) | [`rmarkdown::render()`](https://pkgs.rstudio.com/rmarkdown/reference/render.html) |
 
 ### Creating a flextable project
 
 ``` r
+
 create_project(
   path = ".",
   title = "My flextable project",
@@ -604,6 +627,7 @@ validates the object class and raises a clear error if the wrong engine
 is used.
 
 ``` r
+
 # R/tables/tab-baseline.R  (flextable project)
 library(flextable)
 library(dplyr)
@@ -630,6 +654,7 @@ also differs: table captions use the `tab.cap=` knitr chunk option
 rather than an inline `add_caption()` call.
 
 ``` r
+
 # Generates report/report_<date>.Rmd (not .qmd)
 create_report()
 ```
@@ -639,6 +664,7 @@ detects the file extension and dispatches to the correct renderer
 automatically — no extra arguments needed:
 
 ``` r
+
 run_report()  # calls rmarkdown::render() for .Rmd, quarto::quarto_render() for .qmd
 ```
 
@@ -673,6 +699,7 @@ tab
 Here is the full `lbstproj` workflow at a glance:
 
 ``` r
+
 library(lbstproj)
 
 # 1 - Scaffold the project (gt engine, default)

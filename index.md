@@ -12,24 +12,26 @@ Currently the package is not available on CRAN, so it needs to be
 installed from github.
 
 ``` r
+
 # install.packages("remotes")
 remotes::install_github("L-Biostat/lbstproj")
 ```
 
 ## Overview
 
-| Step                    | What you do                                    | Key function(s)                                                                                                                                                               |
-|-------------------------|------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **1. Create**           | Set up a new project                           | [`create_project()`](https://l-biostat.github.io/lbstproj/reference/create_project.md)                                                                                        |
-| **2. Register**         | Fill in the table of tables (TOT), then import | [`import_tot()`](https://l-biostat.github.io/lbstproj/reference/import_tot.md)                                                                                                |
-| **3. Generate scripts** | Create template R scripts from the TOT         | [`create_from_tot()`](https://l-biostat.github.io/lbstproj/reference/create_from_tot.md)                                                                                      |
-| **4. Analyse**          | Write your code, then run all scripts          | [`run_all_figures()`](https://l-biostat.github.io/lbstproj/reference/run_all_files.md), [`run_all_tables()`](https://l-biostat.github.io/lbstproj/reference/run_all_files.md) |
-| **5. Report**           | Assemble and render a Quarto report            | [`create_report()`](https://l-biostat.github.io/lbstproj/reference/create_report.md), [`run_report()`](https://l-biostat.github.io/lbstproj/reference/run_report.md)          |
-| **6. Archive**          | Move the rendered report to `results/reports/` | [`archive_report()`](https://l-biostat.github.io/lbstproj/reference/archive_report.md)                                                                                        |
+| Step | What you do | Key function(s) |
+|----|----|----|
+| **1. Create** | Set up a new project | [`create_project()`](https://l-biostat.github.io/lbstproj/reference/create_project.md) |
+| **2. Register** | Fill in the table of tables (TOT), then import | [`import_tot()`](https://l-biostat.github.io/lbstproj/reference/import_tot.md) |
+| **3. Generate scripts** | Create template R scripts from the TOT | [`create_from_tot()`](https://l-biostat.github.io/lbstproj/reference/create_from_tot.md) |
+| **4. Analyse** | Write your code, then run all scripts | [`run_all_figures()`](https://l-biostat.github.io/lbstproj/reference/run_all_files.md), [`run_all_tables()`](https://l-biostat.github.io/lbstproj/reference/run_all_files.md) |
+| **5. Report** | Assemble and render a Quarto report | [`create_report()`](https://l-biostat.github.io/lbstproj/reference/create_report.md), [`run_report()`](https://l-biostat.github.io/lbstproj/reference/run_report.md) |
+| **6. Archive** | Move the rendered report to `results/reports/` | [`archive_report()`](https://l-biostat.github.io/lbstproj/reference/archive_report.md) |
 
 ## Quick start
 
 ``` r
+
 library(lbstproj)
 
 # 1 - Scaffold a new project

@@ -13,6 +13,11 @@ Generate R script from templates.
 
 - [`create_file()`](https://l-biostat.github.io/lbstproj/reference/create_file.md)
   : Create an R file from a template
+- [`create_figure()`](https://l-biostat.github.io/lbstproj/reference/create_shortcuts.md)
+  [`create_table()`](https://l-biostat.github.io/lbstproj/reference/create_shortcuts.md)
+  [`create_data()`](https://l-biostat.github.io/lbstproj/reference/create_shortcuts.md)
+  [`create_function()`](https://l-biostat.github.io/lbstproj/reference/create_shortcuts.md)
+  : Create shortcut R files
 - [`create_from_tot()`](https://l-biostat.github.io/lbstproj/reference/create_from_tot.md)
   : Create all R scripts listed in the table of tables (TOT)
 
@@ -44,6 +49,12 @@ Source all scripts of a given type in batch.
   [`run_all_figures()`](https://l-biostat.github.io/lbstproj/reference/run_all_files.md)
   [`run_all_tables()`](https://l-biostat.github.io/lbstproj/reference/run_all_files.md)
   : Run R Scripts in a Project Subdirectory
+
+- [`load_function()`](https://l-biostat.github.io/lbstproj/reference/load_functions.md)
+  [`load_all_functions()`](https://l-biostat.github.io/lbstproj/reference/load_functions.md)
+  :
+
+  Source a file from `R/functions/`
 
 ## Reporting
 

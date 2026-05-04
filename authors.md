@@ -11,13 +11,13 @@ Source:
 [`DESCRIPTION`](https://github.com/L-Biostat/lbstproj/blob/master/DESCRIPTION)
 
 Bohyn A (2026). *lbstproj: Tools to Create and Use Standardized R
-Projects for the L-Biostat Group*. R package version 0.1.0,
+Projects for the L-Biostat Group*. R package version 0.1.0.9001,
 <https://l-biostat.github.io/lbstproj/>.
 
     @Manual{,
       title = {lbstproj: Tools to Create and Use Standardized R Projects for the L-Biostat Group},
       author = {Alexandre Bohyn},
       year = {2026},
-      note = {R package version 0.1.0},
+      note = {R package version 0.1.0.9001},
       url = {https://l-biostat.github.io/lbstproj/},
     }

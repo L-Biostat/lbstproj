@@ -10,6 +10,7 @@ provides save/load helpers for outputs, and renders reports.
 ## Build, test, and lint commands
 
 ``` r
+
 # Install dependencies
 devtools::install_deps()
 
@@ -86,6 +87,7 @@ signals the project boundary.
 Every R source file begins with an ASCII art header block:
 
 ``` r
+
 # |------------┐
 #   lbstproj  
 # \------------┘
