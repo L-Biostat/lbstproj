@@ -172,10 +172,10 @@ NULL
 #' @describeIn create_shortcuts Create a figure R file in `R/figures/` using the
 #'   figure template. File names may contain only letters, numbers, and hyphens.
 #' @examples
-#' if (FALSE) {
-#' create_figure("hr-by-age")
-#' # > v Hr-by-age file created at 'R/figures/hr-by-age.R'
-#' }
+#' tmp <- example_project()
+#' dir(file.path("R", "figures"))
+#' create_figure("fig-01", open = FALSE, quiet = TRUE)
+#' dir(file.path("R", "figures"))
 #'
 #' @export
 create_figure <- function(
