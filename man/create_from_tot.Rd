@@ -27,12 +27,14 @@ existing scripts with the same names will NOT be overwritten.
 }
 \examples{
 with_example_project({
-  cat("# Dry run (default): reports what would be created without writing files\n")
+  # Dry run by default, no files are generated
   create_from_tot()
+  fs::dir_tree("R")
 
-  cat("\n# Actually create the scripts\n")
+  # Actually generate the files
   create_from_tot(dry_run = FALSE, quiet = TRUE)
   fs::dir_tree("R")
+
 }, with_tot = TRUE)
 
 }

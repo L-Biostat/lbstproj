@@ -43,11 +43,11 @@
 #'   fs::dir_tree("R")
 #'
 #'   # Create a figure file in R/figures/ and a table file in R/tables/
-#'   create_file("figure", "hr-by-age", open = FALSE, quiet = TRUE)
-#'   create_file("table", "baseline", open = FALSE, quiet = TRUE)
+#'   create_file("figure", "hr-by-age", open = FALSE)
+#'   create_file("table", "baseline", open = FALSE, quiet = TRUE) # Doesn't print a message
 #'
 #'   # Custom type: also creates matching data/models/ directory
-#'   create_file("model", "primary-model", open = FALSE, quiet = TRUE)
+#'   create_file("model", "primary-model", open = FALSE)
 #'
 #'   # After
 #'   fs::dir_tree("R")
@@ -75,7 +75,7 @@ create_file <- function(
 
   # For custom types (not figure/table/data which have dedicated save_* functions),
   # also create the matching data/<subdir>/ directory
-  if (!type %in% c("figure", "table", "data")) {
+  if (!type %in% c("figure", "table", "data", "function")) {
     ensure_dir_exists(fs::path("data", subdir))
   }
 
@@ -162,10 +162,16 @@ NULL
 #'   figure template. File names may contain only letters, numbers, and hyphens.
 #' @examples
 #' with_example_project({
+#'   # Before
+#'   fs::dir_tree("R")
+#'
+#'   # Files are automatically created in the right directory
 #'   create_figure("hr-by-age", open = FALSE, quiet = TRUE)
 #'   create_table("baseline", open = FALSE, quiet = TRUE)
 #'   create_data("import-adsl", open = FALSE, quiet = TRUE)
 #'   create_function("helpers", open = FALSE, quiet = TRUE)
+#'
+#'   # After
 #'   fs::dir_tree("R")
 #' })
 #'

@@ -52,11 +52,11 @@ with_example_project({
   fs::dir_tree("R")
 
   # Create a figure file in R/figures/ and a table file in R/tables/
-  create_file("figure", "hr-by-age", open = FALSE, quiet = TRUE)
-  create_file("table", "baseline", open = FALSE, quiet = TRUE)
+  create_file("figure", "hr-by-age", open = FALSE)
+  create_file("table", "baseline", open = FALSE, quiet = TRUE) # Doesn't print a message
 
   # Custom type: also creates matching data/models/ directory
-  create_file("model", "primary-model", open = FALSE, quiet = TRUE)
+  create_file("model", "primary-model", open = FALSE)
 
   # After
   fs::dir_tree("R")

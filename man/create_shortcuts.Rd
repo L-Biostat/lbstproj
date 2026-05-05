@@ -69,10 +69,16 @@ created automatically.
 }}
 \examples{
 with_example_project({
+  # Before
+  fs::dir_tree("R")
+
+  # Files are automatically created in the right directory
   create_figure("hr-by-age", open = FALSE, quiet = TRUE)
   create_table("baseline", open = FALSE, quiet = TRUE)
   create_data("import-adsl", open = FALSE, quiet = TRUE)
   create_function("helpers", open = FALSE, quiet = TRUE)
+
+  # After
   fs::dir_tree("R")
 })
 
