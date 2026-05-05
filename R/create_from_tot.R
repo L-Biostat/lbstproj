@@ -81,15 +81,6 @@ create_from_tot <- function(
         extra = fs::path_file(extra),
         dry_run = dry_run
       )
-      # If this is a dry-run, let the user know
-      if (isTRUE(dry_run)) {
-        cli::cli_alert_info(
-          c(
-            "{.strong Dry run only: no files were generated.}\n",
-            "To actually generate files, run {.fn create_from_tot} with {.arg dry_run = FALSE}."
-          )
-        )
-      }
     }
 
     if (isFALSE(dry_run)) {
@@ -168,11 +159,7 @@ cli_report_program <- function(
     }
   } else {
     cli::cli_alert_info(
-      "{label}: {if (dry_run) 'would generate' else 'generating'} {n_new} missing program{?s}."
-    )
-
-    cli::cli_alert(
-      "{label}: {if (dry_run) 'would create' else 'created'} {n_new} program{?s} in {.path {dir_}}."
+      "{if (dry_run) 'Would generate' else 'Generating'} {n_new} missing program{?s} in {.path {dir_}}:"
     )
 
     cli::cli_bullets(
@@ -181,6 +168,12 @@ cli_report_program <- function(
         rep("*", n_new)
       )
     )
+
+    if (isTRUE(dry_run)) {
+      cli::cli_alert_warning(
+        "Dry run only: no files were generated. Run {.code create_from_tot(dry_run = FALSE)} to generate files."
+      )
+    }
   }
 
   if (n_extra > 0) {
