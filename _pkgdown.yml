@@ -81,4 +81,9 @@ reference:
     desc: Package-level global options.
     contents:
       - lbstproj-options
+  
+  - title: Miscellaneous
+    desc: Other functions
+    contents:
+      - with_example_project
 

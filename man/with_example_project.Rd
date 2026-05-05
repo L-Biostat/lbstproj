@@ -10,7 +10,7 @@ with_example_project(code, with_tot = FALSE)
 \item{code}{Code to evaluate inside the temporary project (use \code{{}}).}
 
 \item{with_tot}{\emph{Logical}. If \code{TRUE}, copies the package's example TOT
-(\verb{inst/extdata/table_of_tables.xlsx}) into \verb{data/tot/} and calls
+(\code{inst/extdata/table_of_tables.xlsx}) into \verb{data/tot/} and calls
 \code{\link[=import_tot]{import_tot()}} so that \code{\link[=load_tot]{load_tot()}}, \code{\link[=get_info]{get_info()}}, and related functions
 work immediately.
 
@@ -30,7 +30,7 @@ The temporary project replicates the full directory structure created by
 \verb{data/raw/}, \verb{data/processed/}, \verb{data/tables/}, \verb{data/tot/},
 \verb{results/figures/}, \verb{results/tables/}, \verb{results/reports/}, and \verb{report/}.
 A minimal \code{DESCRIPTION} file and an \code{.Rproj} file are also written so that
-\code{\link[usethis:proj_path]{usethis::proj_path()}} and related helpers work correctly throughout the
+\code{\link[usethis:proj_utils]{usethis::proj_path()}} and related helpers work correctly throughout the
 evaluation.
 }
 \details{

@@ -71,10 +71,8 @@ with_example_project({
   writeLines('cat("figure ran\n")', "R/figures/fig01.R")
   run_all_figures()
 }, with_tot = TRUE)
-
 with_example_project({
   writeLines('cat("table ran\n")', "R/tables/tab01.R")
   run_all_tables()
 }, with_tot = TRUE)
-
 }
