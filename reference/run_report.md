@@ -51,9 +51,10 @@ Invisibly returns the path to the report file.
 ## Examples
 
 ``` r
-if(FALSE) {
-  run_report()
-  run_report(file = "report_2026_03_16.qmd")
-  run_report(file = "report_2026_03_16.Rmd")
-}
+if (FALSE) { # \dontrun{
+  with_example_project({
+    create_report(quiet = TRUE)
+    run_report()
+  }, with_tot = TRUE)
+} # }
 ```

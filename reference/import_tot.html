@@ -57,6 +57,22 @@ structure, and saves it as an RDS file in <code>data/tot/tot.rds</code>.</p>
     <p>Invisibly returns the TOT data as a tibble.</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="with_example_project.html">with_example_project</a></span><span class="op">(</span><span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="co"># Import the excel TOT as an .rds file</span></span></span>
+<span class="r-in"><span>  <span class="fu">import_tot</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="st">"data/tot"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span>,</span></span>
+<span class="r-in"><span>with_tot <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Importing Table of Tables (TOT) to <span style="color: #0000BB;">data/tot/tot.rds</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB; font-weight: bold;">data/tot</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ├── table_of_tables.xlsx</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> └── tot.rds</span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

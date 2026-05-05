@@ -66,29 +66,36 @@ Invisibly returns the path of the file created.
 ## Examples
 
 ``` r
-if(FALSE) {
-# Hypothetical project layout:
-# .
-# \- R/
-#    |- figures/
-#    \- tables/
+with_example_project({
+  # Before
+  fs::dir_tree("R")
 
-# 1) Create a figure file in `R/figures/`
-create_file(type = "figure", name = "hr_by_age")
-# > v Figure file created at 'R/figures/hr_by_age.R'
+  # Create a figure file in R/figures/ and a table file in R/tables/
+  create_file("figure", "hr-by-age", open = FALSE)
+  create_file("table", "baseline", open = FALSE, quiet = TRUE) # Doesn't print a message
 
-# 2) Create a table file in `R/tables/`
-create_file(type = "table", name = "baseline_characteristics.R")
-# > v Table file created at 'R/tables/baseline_characteristics.R'
+  # Custom type: also creates matching data/models/ directory
+  create_file("model", "primary-model", open = FALSE)
 
-# 3) Create a model file (custom type): creates R/models/ and data/models/
-create_file(type = "model", name = "primary_model")
-# > i Created directory 'R/models'.
-# > i Created directory 'data/models'.
-# > v Model file created at 'R/models/primary_model.R'.
-
-# 4) Calling again does not overwrite
-create_file(type = "model", name = "primary_model")
-# > ! File 'R/models/primary_model.R' already exists and will not be overwritten.
-}
+  # After
+  fs::dir_tree("R")
+})
+#> R
+#> ├── data
+#> ├── figures
+#> ├── functions
+#> └── tables
+#> ✔ Hr-By-Age file created at R/figures/hr-by-age.R.
+#> ℹ Created directory R/models.
+#> ℹ Created directory data/models.
+#> ✔ Primary-Model file created at R/models/primary-model.R.
+#> R
+#> ├── data
+#> ├── figures
+#> │   └── hr-by-age.R
+#> ├── functions
+#> ├── models
+#> │   └── primary-model.R
+#> └── tables
+#>     └── baseline.R
 ```

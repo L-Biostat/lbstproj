@@ -69,40 +69,37 @@ reports what would be generated.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="co"># Hypothetical project structure:</span></span></span>
-<span class="r-in"><span><span class="co"># R/</span></span></span>
-<span class="r-in"><span><span class="co"># |-- figures/</span></span></span>
-<span class="r-in"><span><span class="co">#    \-- fig_01_flowchart.R</span></span></span>
-<span class="r-in"><span><span class="co"># \-- tables/</span></span></span>
-<span class="r-in"><span><span class="co">#     \-- tab_01_baseline.R</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="with_example_project.html">with_example_project</a></span><span class="op">(</span><span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="co"># Dry run by default, no files are generated</span></span></span>
+<span class="r-in"><span>  <span class="fu">create_from_tot</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="st">"R"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># TOT contains:</span></span></span>
-<span class="r-in"><span><span class="co">#   - fig_01_flowchart</span></span></span>
-<span class="r-in"><span><span class="co">#   - fig_02_primary</span></span></span>
-<span class="r-in"><span><span class="co">#   - tab_01_baseline</span></span></span>
-<span class="r-in"><span><span class="co">#   - tab_02_primary</span></span></span>
+<span class="r-in"><span>  <span class="co"># Actually generate the files</span></span></span>
+<span class="r-in"><span>  <span class="fu">create_from_tot</span><span class="op">(</span>dry_run <span class="op">=</span> <span class="cn">FALSE</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="st">"R"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Dry run (no files created)</span></span></span>
-<span class="r-in"><span><span class="fu">create_from_tot</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Example CLI output:</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co"># Figures</span></span></span>
-<span class="r-in"><span><span class="co"># i Figures: 2 in TOT, 1 on disk, 1 matched.</span></span></span>
-<span class="r-in"><span><span class="co"># i Figures: would generate 1 missing program (keeping 1 existing).</span></span></span>
-<span class="r-in"><span><span class="co"># i Figures: would create 1 program in R/figures.</span></span></span>
-<span class="r-in"><span><span class="co"># * R/figures/fig_02_primary.R</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co"># Tables</span></span></span>
-<span class="r-in"><span><span class="co"># i Tables: 2 in TOT, 1 on disk, 1 matched.</span></span></span>
-<span class="r-in"><span><span class="co"># i Tables: would generate 1 missing program (keeping 1 existing).</span></span></span>
-<span class="r-in"><span><span class="co"># i Tables: would create 1 program in R/tables.</span></span></span>
-<span class="r-in"><span><span class="co"># * R/tables/tab_02_primary.R</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Actual creation</span></span></span>
-<span class="r-in"><span><span class="fu">create_from_tot</span><span class="op">(</span>dry_run <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="op">}</span>, with_tot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Figures </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> 1 in TOT, 0 on disk, 0 matched.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Would generate 1 missing program in <span style="color: #0000BB;">R/figures</span>:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> <span style="color: #0000BB;">R/figures/fig.R</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Dry run only: no files were generated. Run `create_from_tot(dry_run = FALSE)` to generate files.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Tables </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> 0 in TOT, 0 on disk, 0 matched.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> None declared in TOT - nothing to do.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB; font-weight: bold;">R</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ├── <span style="color: #0000BB; font-weight: bold;">data</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ├── <span style="color: #0000BB; font-weight: bold;">figures</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ├── <span style="color: #0000BB; font-weight: bold;">functions</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> └── <span style="color: #0000BB; font-weight: bold;">tables</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB; font-weight: bold;">R</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ├── <span style="color: #0000BB; font-weight: bold;">data</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ├── <span style="color: #0000BB; font-weight: bold;">figures</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> │   └── <span style="color: #00BB00;">fig.R</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ├── <span style="color: #0000BB; font-weight: bold;">functions</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> └── <span style="color: #0000BB; font-weight: bold;">tables</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

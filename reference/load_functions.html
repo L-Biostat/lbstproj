@@ -79,16 +79,20 @@ otherwise.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="fu">load_function</span><span class="op">(</span><span class="st">"helpers"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co"># &gt; v Sourced 'R/functions/helpers.R'</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="with_example_project.html">with_example_project</a></span><span class="op">(</span><span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="co"># Create a simple helper script</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="st">"add &lt;- function(x, y) x + y"</span>, <span class="st">"R/functions/helpers.R"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="fu">load_all_functions</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co"># &gt; v Sourced 'R/functions/helpers.R'</span></span></span>
-<span class="r-in"><span><span class="co"># &gt; v Sourced 'R/functions/utils.R'</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span>  <span class="co"># Load it into the session</span></span></span>
+<span class="r-in"><span>  <span class="fu">load_function</span><span class="op">(</span><span class="st">"helpers"</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">add</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="with_example_project.html">with_example_project</a></span><span class="op">(</span><span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="st">"greet &lt;- function() cat('hello\n')"</span>, <span class="st">"R/functions/greet.R"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">load_all_functions</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Sourced <span style="color: #0000BB;">R/functions/greet.R</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

@@ -85,3 +85,10 @@ Package-level global options.
 
 - [`lbstproj-options`](https://l-biostat.github.io/lbstproj/reference/lbstproj-options.md)
   : Package-wide options for lbstproj
+
+## Miscellaneous
+
+Other functions
+
+- [`with_example_project()`](https://l-biostat.github.io/lbstproj/reference/with_example_project.md)
+  : Evaluate Code in a Temporary Example Project

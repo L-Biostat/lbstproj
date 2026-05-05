@@ -31,7 +31,13 @@ A tibble containing the TOT data with the following columns:
 ## Examples
 
 ``` r
-if(FALSE) {
- tot <- load_tot()
-}
+with_example_project({
+  # Load the default TOT with a single figure in it
+  tot <- load_tot()
+  print(tot)
+}, with_tot = TRUE)
+#> # A tibble: 1 × 7
+#>      id type   name  caption          section subsection subsubsection
+#>   <dbl> <chr>  <chr> <chr>            <chr>   <chr>      <chr>        
+#> 1     1 figure fig   This is a figure ""      ""         ""           
 ```

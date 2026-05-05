@@ -106,31 +106,38 @@ messages (e.g. directory creation or errors) are still shown.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="co"># Hypothetical project layout:</span></span></span>
-<span class="r-in"><span><span class="co"># .</span></span></span>
-<span class="r-in"><span><span class="co"># \- R/</span></span></span>
-<span class="r-in"><span><span class="co">#    |- figures/</span></span></span>
-<span class="r-in"><span><span class="co">#    \- tables/</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="with_example_project.html">with_example_project</a></span><span class="op">(</span><span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="co"># Before</span></span></span>
+<span class="r-in"><span>  <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="st">"R"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># 1) Create a figure file in `R/figures/`</span></span></span>
-<span class="r-in"><span><span class="fu">create_file</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"figure"</span>, name <span class="op">=</span> <span class="st">"hr_by_age"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co"># &gt; v Figure file created at 'R/figures/hr_by_age.R'</span></span></span>
+<span class="r-in"><span>  <span class="co"># Create a figure file in R/figures/ and a table file in R/tables/</span></span></span>
+<span class="r-in"><span>  <span class="fu">create_file</span><span class="op">(</span><span class="st">"figure"</span>, <span class="st">"hr-by-age"</span>, open <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">create_file</span><span class="op">(</span><span class="st">"table"</span>, <span class="st">"baseline"</span>, open <span class="op">=</span> <span class="cn">FALSE</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># Doesn't print a message</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># 2) Create a table file in `R/tables/`</span></span></span>
-<span class="r-in"><span><span class="fu">create_file</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"table"</span>, name <span class="op">=</span> <span class="st">"baseline_characteristics.R"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co"># &gt; v Table file created at 'R/tables/baseline_characteristics.R'</span></span></span>
+<span class="r-in"><span>  <span class="co"># Custom type: also creates matching data/models/ directory</span></span></span>
+<span class="r-in"><span>  <span class="fu">create_file</span><span class="op">(</span><span class="st">"model"</span>, <span class="st">"primary-model"</span>, open <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># 3) Create a model file (custom type): creates R/models/ and data/models/</span></span></span>
-<span class="r-in"><span><span class="fu">create_file</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"model"</span>, name <span class="op">=</span> <span class="st">"primary_model"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co"># &gt; i Created directory 'R/models'.</span></span></span>
-<span class="r-in"><span><span class="co"># &gt; i Created directory 'data/models'.</span></span></span>
-<span class="r-in"><span><span class="co"># &gt; v Model file created at 'R/models/primary_model.R'.</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># 4) Calling again does not overwrite</span></span></span>
-<span class="r-in"><span><span class="fu">create_file</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"model"</span>, name <span class="op">=</span> <span class="st">"primary_model"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co"># &gt; ! File 'R/models/primary_model.R' already exists and will not be overwritten.</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span>  <span class="co"># After</span></span></span>
+<span class="r-in"><span>  <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="st">"R"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB; font-weight: bold;">R</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ├── <span style="color: #0000BB; font-weight: bold;">data</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ├── <span style="color: #0000BB; font-weight: bold;">figures</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ├── <span style="color: #0000BB; font-weight: bold;">functions</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> └── <span style="color: #0000BB; font-weight: bold;">tables</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> <span style="font-weight: bold;">Hr-By-Age</span> file created at <span style="color: #0000BB;">R/figures/hr-by-age.R</span>.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Created directory <span style="color: #0000BB;">R/models</span>.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Created directory <span style="color: #0000BB;">data/models</span>.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> <span style="font-weight: bold;">Primary-Model</span> file created at <span style="color: #0000BB;">R/models/primary-model.R</span>.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB; font-weight: bold;">R</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ├── <span style="color: #0000BB; font-weight: bold;">data</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ├── <span style="color: #0000BB; font-weight: bold;">figures</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> │   └── <span style="color: #00BB00;">hr-by-age.R</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ├── <span style="color: #0000BB; font-weight: bold;">functions</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ├── <span style="color: #0000BB; font-weight: bold;">models</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> │   └── <span style="color: #00BB00;">primary-model.R</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> └── <span style="color: #0000BB; font-weight: bold;">tables</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     └── <span style="color: #00BB00;">baseline.R</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

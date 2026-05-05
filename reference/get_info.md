@@ -29,14 +29,31 @@ A named list containing the columns of the matched TOT row.
 ## Examples
 
 ``` r
-if(FALSE) {
-# By id
-info <- get_info(id = "T001")
+with_example_project({
+  tot <- load_tot()
 
-# By name
-info <- get_info(name = "baseline_table")
+  # Look up by id
+  info_id <- get_info(id = tot$id[[1]])
+  str(info_id)
 
-# Access a field
-info$caption
-}
+  # Look up by name (the information is the same)
+  info_name <- get_info(name = tot$name[[1]])
+  str(info_name)
+}, with_tot = TRUE)
+#> List of 7
+#>  $ id           : num 1
+#>  $ type         : chr "figure"
+#>  $ name         : chr "fig"
+#>  $ caption      : chr "This is a figure"
+#>  $ section      : chr ""
+#>  $ subsection   : chr ""
+#>  $ subsubsection: chr ""
+#> List of 7
+#>  $ id           : num 1
+#>  $ type         : chr "figure"
+#>  $ name         : chr "fig"
+#>  $ caption      : chr "This is a figure"
+#>  $ section      : chr ""
+#>  $ subsection   : chr ""
+#>  $ subsubsection: chr ""
 ```

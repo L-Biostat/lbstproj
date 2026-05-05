@@ -102,8 +102,8 @@ create_project(
   open = FALSE,
   force = TRUE # Avoids interactive confirmation prompt in example
 )
-#> ✔ Setting active project to "/tmp/RtmpE2gKqw/lbstproj-57606f281f08".
-#> ✔ Writing lbstproj-57606f281f08.Rproj.
+#> ✔ Setting active project to "/tmp/RtmpoVCm5Y/lbstproj-1b7759808c4f".
+#> ✔ Writing lbstproj-1b7759808c4f.Rproj.
 #> ✔ Adding ".Rproj.user" to .gitignore.
 #> ✔ Creating project structure
 #> ✔ Writing DESCRIPTION
@@ -112,7 +112,7 @@ create_project(
 
 # Show resulting project structure
 fs::dir_tree(tmp_dir)
-#> /tmp/RtmpE2gKqw/lbstproj-57606f281f08
+#> /tmp/RtmpoVCm5Y/lbstproj-1b7759808c4f
 #> ├── DESCRIPTION
 #> ├── R
 #> │   ├── data
@@ -129,7 +129,7 @@ fs::dir_tree(tmp_dir)
 #> ├── docs
 #> │   ├── costing.docx
 #> │   └── meeting_notes.docx
-#> ├── lbstproj-57606f281f08.Rproj
+#> ├── lbstproj-1b7759808c4f.Rproj
 #> ├── report
 #> │   └── utils
 #> └── results
@@ -140,7 +140,7 @@ fs::dir_tree(tmp_dir)
 # Peek at the generated DESCRIPTION file
 desc_path <- file.path(tmp_dir, "DESCRIPTION")
 cat(readLines(desc_path)[1:8], sep = "\n")
-#> Package: lbstproj-57606f281f08
+#> Package: lbstproj-1b7759808c4f
 #> Title: COVID-19 Vaccine Effectiveness Study
 #> Client: Acme Corp
 #> Department: Epidemiology

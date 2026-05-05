@@ -48,7 +48,7 @@ The project now has the following structure:
 ``` r
 
 fs::dir_tree(tmp_proj_dir, recurse = TRUE)
-#> /tmp/Rtmp213Zz7/fake-trial
+#> /tmp/Rtmpe4tLE3/fake-trial
 #> ├── DESCRIPTION
 #> ├── R
 #> │   ├── data
@@ -199,25 +199,19 @@ reads the TOT and generates stub R scripts for each entry. Always do a
 
 create_from_tot(dry_run = TRUE)
 #> 
-#> ── Figures ──
-#> 
-#> ℹ Figures: 2 in TOT, 0 on disk, 0 matched.
-#> ℹ Figures: would generate 2 missing programs.
-#> → Figures: would create 2 programs in R/figures.
+#> ── Figures
+#> ℹ 2 in TOT, 0 on disk, 0 matched.
+#> ℹ Would generate 2 missing programs in R/figures:
 #> • R/figures/fig-age-dist.R
 #> • R/figures/fig-km.R
-#> ℹ Dry run only: no files were generated.
-#> To actually generate files, run `create_from_tot()` with `dry_run = FALSE`.
+#> ! Dry run only: no files were generated. Run `create_from_tot(dry_run = FALSE)` to generate files.
 #> 
-#> ── Tables ──
-#> 
-#> ℹ Tables: 2 in TOT, 0 on disk, 0 matched.
-#> ℹ Tables: would generate 2 missing programs.
-#> → Tables: would create 2 programs in R/tables.
+#> ── Tables
+#> ℹ 2 in TOT, 0 on disk, 0 matched.
+#> ℹ Would generate 2 missing programs in R/tables:
 #> • R/tables/tab-baseline.R
 #> • R/tables/tab-response.R
-#> ℹ Dry run only: no files were generated.
-#> To actually generate files, run `create_from_tot()` with `dry_run = FALSE`.
+#> ! Dry run only: no files were generated. Run `create_from_tot(dry_run = FALSE)` to generate files.
 ```
 
 Once satisfied, run without `dry_run` to create the stubs:
@@ -226,19 +220,15 @@ Once satisfied, run without `dry_run` to create the stubs:
 
 create_from_tot(dry_run = FALSE)
 #> 
-#> ── Figures ──
-#> 
-#> ℹ Figures: 2 in TOT, 0 on disk, 0 matched.
-#> ℹ Figures: generating 2 missing programs.
-#> → Figures: created 2 programs in R/figures.
+#> ── Figures
+#> ℹ 2 in TOT, 0 on disk, 0 matched.
+#> ℹ Generating 2 missing programs in R/figures:
 #> • R/figures/fig-age-dist.R
 #> • R/figures/fig-km.R
 #> 
-#> ── Tables ──
-#> 
-#> ℹ Tables: 2 in TOT, 0 on disk, 0 matched.
-#> ℹ Tables: generating 2 missing programs.
-#> → Tables: created 2 programs in R/tables.
+#> ── Tables
+#> ℹ 2 in TOT, 0 on disk, 0 matched.
+#> ℹ Generating 2 missing programs in R/tables:
 #> • R/tables/tab-baseline.R
 #> • R/tables/tab-response.R
 ```
@@ -249,12 +239,12 @@ to retrieve TOT metadata, library calls, and placeholder comments:
 
     #' Name         : fig-age-dist.R
     #' Author       : Jane Doe
-    #' Date         : 04 May 2026
+    #' Date         : 05 May 2026
     #' Purpose      :
     #' Files created:
     #'  - `results/figures/fig-age-dist.png/pdf`
     #' Edits        :
-    #'  - 04 May 2026: Created file.
+    #'  - 05 May 2026: Created file.
 
     # File info ---------------------------------------------------------------
 
@@ -525,7 +515,7 @@ TOT.
 create_report(output_type = "html")
 ```
 
-    #> ✔ Writing report to report/report_2026_05_04.qmd.
+    #> ✔ Writing report to report/report_2026_05_05.qmd.
     #> ℹ Use `run_report()` to render the report.
 
 The generated file looks like this (excerpt):

@@ -42,14 +42,18 @@ Invisibly returns the character vector of sourced file paths.
 ## Examples
 
 ``` r
-if (FALSE) {
-load_function("helpers")
-# > v Sourced 'R/functions/helpers.R'
-}
+with_example_project({
+  # Create a simple helper script
+  writeLines("add <- function(x, y) x + y", "R/functions/helpers.R")
 
-if (FALSE) {
-load_all_functions()
-# > v Sourced 'R/functions/helpers.R'
-# > v Sourced 'R/functions/utils.R'
-}
+  # Load it into the session
+  load_function("helpers", quiet = TRUE)
+  add(1, 2)
+})
+
+with_example_project({
+  writeLines("greet <- function() cat('hello\n')", "R/functions/greet.R")
+  load_all_functions()
+})
+#> ✔ Sourced R/functions/greet.R
 ```

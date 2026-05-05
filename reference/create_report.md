@@ -56,8 +56,19 @@ Invisibly returns the path to the generated report file.
 ## Examples
 
 ``` r
-if(FALSE) {
+with_example_project({
+  # Create a word report by default
   create_report()
-  create_report(output_type = "docx", overwrite = TRUE)
-}
+
+  # Create a html report and overwrite the previous one
+  create_report(output_type = "html", overwrite = TRUE)
+  fs::dir_tree("report")
+}, with_tot = TRUE)
+#> ✔ Writing report to report/report_2026_05_05.qmd.
+#> ℹ Use `run_report()` to render the report.
+#> ✔ Writing report to report/report_2026_05_05.qmd.
+#> ℹ Use `run_report()` to render the report.
+#> report
+#> ├── report_2026_05_05.qmd
+#> └── utils
 ```

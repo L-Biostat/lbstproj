@@ -72,11 +72,44 @@ Invisibly returns the character vector of sourced file paths.
 ## Examples
 
 ``` r
-if(FALSE) {
-run_all_files("figure")
-run_all_figures()                                 # equivalent to the above
-run_all_files("data")
-run_all_files("figure", glob = "fig-[0-9]*.R")   # only numbered figures
-run_all_files("figure", quiet = TRUE)             # suppress all messages
-}
+with_example_project({
+  # Create a minimal data script
+  writeLines('# code for data', "R/data/load-data.R")
+
+  # Source all scripts in R/data/
+  run_all_files("data")
+})
+#> 
+#> ── Running all data files in R/data ────────────────────────────────────────────
+#> ℹ Found 1 file.
+#> ℹ Sourcing file 1/1: load-data
+#> ✔ Sourced file 1/1: load-data [13ms]
+#> 
+
+with_example_project({
+  writeLines('# code for Figure 1', "R/figures/fig01.R")
+  run_all_figures()
+}, with_tot = TRUE)
+#> ! Found 1 file in R/figures but not in the ToT: fig01.R
+#> 
+#> ── Running all figure files in R/figures ───────────────────────────────────────
+#> ℹ Found 1 file.
+#> ℹ Sourcing file 1/1: fig01
+#> ✔ Sourced file 1/1: fig01 [14ms]
+#> 
+with_example_project({
+  writeLines('# code for Table 1', "R/tables/tab01.R")
+  writeLines('# code for Table 2', "R/tables/tab02.R")
+  run_all_tables()
+}, with_tot = TRUE)
+#> ! Found 2 files in R/tables but not in the ToT: tab01.R and tab02.R
+#> 
+#> ── Running all table files in R/tables ─────────────────────────────────────────
+#> ℹ Found 2 files.
+#> ℹ Sourcing file 1/2: tab01
+#> ✔ Sourced file 1/2: tab01 [11ms]
+#> 
+#> ℹ Sourcing file 2/2: tab02
+#> ✔ Sourced file 2/2: tab02 [11ms]
+#> 
 ```

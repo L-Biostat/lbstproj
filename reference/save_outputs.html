@@ -180,24 +180,44 @@ a <code>flextable</code> for <code>flextable</code> projects.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="fu">save_data</span><span class="op">(</span><span class="va">mtcars</span>, name <span class="op">=</span> <span class="st">"analysis_dataset"</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="with_example_project.html">with_example_project</a></span><span class="op">(</span><span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="co"># Before any data is saved</span></span></span>
+<span class="r-in"><span>  <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="st">"data"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="co"># gt project (default)</span></span></span>
-<span class="r-in"><span>  <span class="va">summary_table</span> <span class="op">&lt;-</span> <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/gt.html" class="external-link">gt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu">save_table</span><span class="op">(</span><span class="va">summary_table</span>, name <span class="op">=</span> <span class="st">"baseline_characteristics"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="co"># Save a data frame to `data/processed/`</span></span></span>
+<span class="r-in"><span>  <span class="fu">save_data</span><span class="op">(</span><span class="va">mtcars</span>, name <span class="op">=</span> <span class="st">"analysis-dataset"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="st">"data/processed"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="co"># flextable project</span></span></span>
-<span class="r-in"><span>  <span class="va">ft</span> <span class="op">&lt;-</span> <span class="fu">flextable</span><span class="fu">::</span><span class="fu"><a href="https://davidgohel.github.io/flextable/reference/flextable.html" class="external-link">flextable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu">save_table</span><span class="op">(</span><span class="va">ft</span>, name <span class="op">=</span> <span class="st">"baseline_characteristics"</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="va">scatter_plot</span> <span class="op">&lt;-</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    <span class="va">mtcars</span>,</span></span>
-<span class="r-in"><span>    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">wt</span>, <span class="va">mpg</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>  <span class="co"># Save a ggplot figure to `results/figures`</span></span></span>
+<span class="r-in"><span>  <span class="va">fig</span> <span class="op">&lt;-</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">wt</span>, <span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu">save_figure</span><span class="op">(</span><span class="va">scatter_plot</span>, name <span class="op">=</span> <span class="st">"mpg_vs_weight"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span>  <span class="fu">save_figure</span><span class="op">(</span><span class="va">fig</span>, name <span class="op">=</span> <span class="st">"mpg-vs-weight"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="st">"results/figures"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># Save a gt table to `data/tables/` and export it to `results/tables`</span></span></span>
+<span class="r-in"><span>  <span class="va">tbl</span> <span class="op">&lt;-</span> <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/gt.html" class="external-link">gt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">save_table</span><span class="op">(</span><span class="va">tbl</span>, name <span class="op">=</span> <span class="st">"summary"</span>, export <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="st">"data/tables"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="st">"results/tables"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB; font-weight: bold;">data</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ├── <span style="color: #0000BB; font-weight: bold;">figures</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ├── <span style="color: #0000BB; font-weight: bold;">processed</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ├── <span style="color: #0000BB; font-weight: bold;">raw</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ├── <span style="color: #0000BB; font-weight: bold;">tables</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> └── <span style="color: #0000BB; font-weight: bold;">tot</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Data frame <span style="color: #0000BB;">"mtcars"</span> saved to <span style="color: #0000BB;">data/processed/analysis-dataset.rds</span>.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB; font-weight: bold;">data/processed</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> └── analysis-dataset.rds</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Figure <span style="color: #0000BB;">"fig"</span> saved to <span style="color: #0000BB;">results/figures/mpg-vs-weight.png</span>.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB; font-weight: bold;">results/figures</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> └── <span style="color: #BB00BB; font-weight: bold;">mpg-vs-weight.png</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Table <span style="color: #0000BB;">"tbl"</span> saved to <span style="color: #0000BB;">data/tables/summary.rds</span>.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Table <span style="color: #0000BB;">"tbl"</span> exported to <span style="color: #0000BB;">results/tables/summary.docx</span>.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB; font-weight: bold;">data/tables</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> └── summary.rds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB; font-weight: bold;">results/tables</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> └── summary.docx</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

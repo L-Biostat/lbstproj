@@ -35,38 +35,35 @@ Invisibly returns `NULL`. The function is called for its side effects
 ## Examples
 
 ``` r
-if(FALSE) {
-# Hypothetical project structure:
-# R/
-# |-- figures/
-#    \-- fig_01_flowchart.R
-# \-- tables/
-#     \-- tab_01_baseline.R
+with_example_project({
+  # Dry run by default, no files are generated
+  create_from_tot()
+  fs::dir_tree("R")
 
-# TOT contains:
-#   - fig_01_flowchart
-#   - fig_02_primary
-#   - tab_01_baseline
-#   - tab_02_primary
+  # Actually generate the files
+  create_from_tot(dry_run = FALSE, quiet = TRUE)
+  fs::dir_tree("R")
 
-# Dry run (no files created)
-create_from_tot()
-
-# Example CLI output:
-#
-# Figures
-# i Figures: 2 in TOT, 1 on disk, 1 matched.
-# i Figures: would generate 1 missing program (keeping 1 existing).
-# i Figures: would create 1 program in R/figures.
-# * R/figures/fig_02_primary.R
-#
-# Tables
-# i Tables: 2 in TOT, 1 on disk, 1 matched.
-# i Tables: would generate 1 missing program (keeping 1 existing).
-# i Tables: would create 1 program in R/tables.
-# * R/tables/tab_02_primary.R
-
-# Actual creation
-create_from_tot(dry_run = FALSE)
-}
+}, with_tot = TRUE)
+#> 
+#> ── Figures 
+#> ℹ 1 in TOT, 0 on disk, 0 matched.
+#> ℹ Would generate 1 missing program in R/figures:
+#> • R/figures/fig.R
+#> ! Dry run only: no files were generated. Run `create_from_tot(dry_run = FALSE)` to generate files.
+#> 
+#> ── Tables 
+#> ℹ 0 in TOT, 0 on disk, 0 matched.
+#> ℹ None declared in TOT - nothing to do.
+#> R
+#> ├── data
+#> ├── figures
+#> ├── functions
+#> └── tables
+#> R
+#> ├── data
+#> ├── figures
+#> │   └── fig.R
+#> ├── functions
+#> └── tables
 ```

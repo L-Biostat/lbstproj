@@ -47,9 +47,36 @@ Invisibly returns the path to the archived report file.
 ## Examples
 
 ``` r
-if(FALSE) {
-  run_report(file = "html_report_2026_03_16.qmd")
+with_example_project({
+  # Create two report files; make the first one older
+  writeLines("<html><body>Report v1</body></html>", "report/report-v1.html")
+  fs::file_touch(
+    "report/report-v1.html",
+    modification_time = Sys.time() - 60
+  )
+  writeLines("<html><body>Report v2</body></html>", "report/report-v2.html")
+
+  # Print the modification time
+  print(fs::file_info(fs::dir_ls("report"))[c("path", "modification_time")])
+
+  # Before archival the dir is empty
+  fs::dir_tree("results/reports")
+
+  # ´archive_report()´ automatically selects the latest report created (v2)
   archive_report()
-  archive_report(file = "html_report_2026_03_16.html", overwrite = TRUE)
-}
+
+  # After archival, the report has been moved and renamed with version
+  fs::dir_tree("results/reports")
+})
+#> ✔ Setting active project to "/home/runner/work/lbstproj/lbstproj".
+#> # A tibble: 3 × 2
+#>   path                  modification_time  
+#>   <fs::path>            <dttm>             
+#> 1 report/report-v1.html 2026-05-05 10:31:27
+#> 2 report/report-v2.html 2026-05-05 10:32:27
+#> 3 report/utils          2026-05-05 10:32:27
+#> results/reports
+#> ✔ Report archived at results/reports/report-v2_v0.1.0.html.
+#> results/reports
+#> └── report-v2_v0.1.0.html
 ```

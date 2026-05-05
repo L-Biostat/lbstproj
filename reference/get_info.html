@@ -64,16 +64,33 @@ its unique <code>name</code>. The TOT is loaded with <code><a href="load_tot.htm
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="co"># By id</span></span></span>
-<span class="r-in"><span><span class="va">info</span> <span class="op">&lt;-</span> <span class="fu">get_info</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"T001"</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="with_example_project.html">with_example_project</a></span><span class="op">(</span><span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="va">tot</span> <span class="op">&lt;-</span> <span class="fu"><a href="load_tot.html">load_tot</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># By name</span></span></span>
-<span class="r-in"><span><span class="va">info</span> <span class="op">&lt;-</span> <span class="fu">get_info</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"baseline_table"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="co"># Look up by id</span></span></span>
+<span class="r-in"><span>  <span class="va">info_id</span> <span class="op">&lt;-</span> <span class="fu">get_info</span><span class="op">(</span>id <span class="op">=</span> <span class="va">tot</span><span class="op">$</span><span class="va">id</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">info_id</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Access a field</span></span></span>
-<span class="r-in"><span><span class="va">info</span><span class="op">$</span><span class="va">caption</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span>  <span class="co"># Look up by name (the information is the same)</span></span></span>
+<span class="r-in"><span>  <span class="va">info_name</span> <span class="op">&lt;-</span> <span class="fu">get_info</span><span class="op">(</span>name <span class="op">=</span> <span class="va">tot</span><span class="op">$</span><span class="va">name</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">info_name</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span>, with_tot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ id           : num 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ type         : chr "figure"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ name         : chr "fig"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ caption      : chr "This is a figure"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ section      : chr ""</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ subsection   : chr ""</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ subsubsection: chr ""</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ id           : num 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ type         : chr "figure"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ name         : chr "fig"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ caption      : chr "This is a figure"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ section      : chr ""</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ subsection   : chr ""</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ subsubsection: chr ""</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
