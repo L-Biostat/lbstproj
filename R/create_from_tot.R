@@ -144,17 +144,17 @@ cli_report_program <- function(
   n_new <- length(new)
   n_extra <- length(extra)
 
-  cli::cli_h2(label)
+  cli::cli_h3(label)
   cli::cli_alert_info(
-    "{label}: {n_tot} in TOT, {n_disk} on disk, {n_match} matched."
+    "{n_tot} in TOT, {n_disk} on disk, {n_match} matched."
   )
 
   if (n_new == 0) {
     if (n_tot == 0) {
-      cli::cli_alert_info("{label}: none declared in TOT - nothing to do.")
+      cli::cli_alert_info("None declared in TOT - nothing to do.")
     } else {
       cli::cli_alert_success(
-        "{label}: all programs already exist - nothing to generate."
+        "All programs already exist - nothing to generate."
       )
     }
   } else {
@@ -179,7 +179,7 @@ cli_report_program <- function(
   if (n_extra > 0) {
     extra_vec <- cli::ansi_collapse(extra, trunc = 2, style = "head")
     cli::cli_alert_warning(
-      "{label}: {n_extra} extra program{?s} on disk (not in TOT): {extra_vec}"
+      "{n_extra} extra program{?s} on disk (not in TOT): {extra_vec}"
     )
   }
 
