@@ -171,7 +171,7 @@ cli_report_program <- function(
 
     if (isTRUE(dry_run)) {
       cli::cli_alert_warning(
-        "Dry run only: no files were generated. Run {.code create_from_tot(dry_run = FALSE)} to generate files."
+        "Dry run only: no files were generated. Run {.fn create_from_tot} with {.arg dry_run = FALSE} to generate files."
       )
     }
   }
