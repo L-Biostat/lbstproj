@@ -83,15 +83,6 @@ create_from_tot <- function(
         extra = fs::path_file(extra),
         dry_run = dry_run
       )
-      # If this is a dry-run, let the user know
-      if (isTRUE(dry_run)) {
-        cli::cli_alert_info(
-          c(
-            "{.strong Dry run only: no files were generated.}\n",
-            "To actually generate files, run {.fn create_from_tot} with {.arg dry_run = FALSE}."
-          )
-        )
-      }
     }
 
     if (isFALSE(dry_run)) {
@@ -155,26 +146,22 @@ cli_report_program <- function(
   n_new <- length(new)
   n_extra <- length(extra)
 
-  cli::cli_h2(label)
+  cli::cli_h3(label)
   cli::cli_alert_info(
-    "{label}: {n_tot} in TOT, {n_disk} on disk, {n_match} matched."
+    "{n_tot} in TOT, {n_disk} on disk, {n_match} matched."
   )
 
   if (n_new == 0) {
     if (n_tot == 0) {
-      cli::cli_alert_info("{label}: none declared in TOT - nothing to do.")
+      cli::cli_alert_info("None declared in TOT - nothing to do.")
     } else {
       cli::cli_alert_success(
-        "{label}: all programs already exist - nothing to generate."
+        "All programs already exist - nothing to generate."
       )
     }
   } else {
     cli::cli_alert_info(
-      "{label}: {if (dry_run) 'would generate' else 'generating'} {n_new} missing program{?s}."
-    )
-
-    cli::cli_alert(
-      "{label}: {if (dry_run) 'would create' else 'created'} {n_new} program{?s} in {.path {dir_}}."
+      "{if (dry_run) 'Would generate' else 'Generating'} {n_new} missing program{?s} in {.path {dir_}}:"
     )
 
     cli::cli_bullets(
@@ -183,12 +170,18 @@ cli_report_program <- function(
         rep("*", n_new)
       )
     )
+
+    if (isTRUE(dry_run)) {
+      cli::cli_alert_warning(
+        "Dry run only: no files were generated. Run {.code create_from_tot(dry_run = FALSE)} to generate files."
+      )
+    }
   }
 
   if (n_extra > 0) {
     extra_vec <- cli::ansi_collapse(extra, trunc = 2, style = "head")
     cli::cli_alert_warning(
-      "{label}: {n_extra} extra program{?s} on disk (not in TOT): {extra_vec}"
+      "{n_extra} extra program{?s} on disk (not in TOT): {extra_vec}"
     )
   }
 

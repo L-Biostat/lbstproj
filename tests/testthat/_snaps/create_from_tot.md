@@ -5,13 +5,12 @@
         "tab_a.R", "tab_b.R"), new = "tab_c.R", extra = "tab_old.R", dry_run = TRUE)
     Message
       
-      -- Tables --
-      
-      i Tables: 3 in TOT, 2 on disk, 2 matched.
-      i Tables: would generate 1 missing program.
-      > Tables: would create 1 program in 'R/tables'.
+      -- Tables 
+      i 3 in TOT, 2 on disk, 2 matched.
+      i Would generate 1 missing program in 'R/tables':
       * 'R/tables/tab_c.R'
-      ! Tables: 1 extra program on disk (not in TOT): tab_old.R
+      ! Dry run only: no files were generated. Run `create_from_tot(dry_run = FALSE)` to generate files.
+      ! 1 extra program on disk (not in TOT): tab_old.R
 
 ---
 
@@ -20,10 +19,9 @@
       new = character(), extra = character(), dry_run = TRUE)
     Message
       
-      -- Tables --
-      
-      i Tables: 0 in TOT, 0 on disk, 0 matched.
-      i Tables: none declared in TOT - nothing to do.
+      -- Tables 
+      i 0 in TOT, 0 on disk, 0 matched.
+      i None declared in TOT - nothing to do.
 
 ---
 
@@ -32,10 +30,8 @@
         new = "fig_b.R", extra = character(), dry_run = FALSE)
     Message
       
-      -- Figures --
-      
-      i Figures: 2 in TOT, 1 on disk, 1 matched.
-      i Figures: generating 1 missing program.
-      > Figures: created 1 program in 'R/figures'.
+      -- Figures 
+      i 2 in TOT, 1 on disk, 1 matched.
+      i Generating 1 missing program in 'R/figures':
       * 'R/figures/fig_b.R'
 
