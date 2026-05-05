@@ -81,6 +81,15 @@ validate_tot <- function(tot_data) {
 #'   *Default*: `FALSE` unless the global option `lbstproj.quiet` is set otherwise. The default option can be changed using `options(lbstproj.quiet = TRUE)`
 #'
 #' @return Invisibly returns the TOT data as a tibble.
+#' @examples
+#' with_example_project({
+#'   # Import the excel TOT as an .rds file
+#'   import_tot()
+#'   fs::dir_tree("data/tot")
+#' },
+#' with_tot = TRUE
+#' )
+#'
 #' @export
 import_tot <- function(quiet = FALSE) {
   # Read the TOT Excel file
@@ -121,6 +130,7 @@ import_tot <- function(quiet = FALSE) {
 #'
 #' @examples
 #' with_example_project({
+#'   # Load the default TOT with a single figure in it
 #'   tot <- load_tot()
 #'   print(tot)
 #' }, with_tot = TRUE)

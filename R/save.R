@@ -61,20 +61,24 @@
 #' @return Invisibly returns the path of the saved file.
 #' @examples
 #' with_example_project({
-#'   cat("# Save a data frame to data/processed/\n")
-#'   save_data(mtcars, name = "analysis-dataset", quiet = TRUE)
+#'   # Before any data is saved
+#'   fs::dir_tree("data")
+#'
+#'   # Save a data frame to `data/processed/`
+#'   save_data(mtcars, name = "analysis-dataset")
 #'   fs::dir_tree("data/processed")
 #'
-#'   cat("\n# Save a ggplot figure to results/figures/\n")
+#'   # Save a ggplot figure to `results/figures`
 #'   fig <- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) +
 #'     ggplot2::geom_point()
-#'   save_figure(fig, name = "mpg-vs-weight", quiet = TRUE)
+#'   save_figure(fig, name = "mpg-vs-weight")
 #'   fs::dir_tree("results/figures")
 #'
-#'   cat("\n# Save a gt table to data/tables/ (export = FALSE skips .docx)\n")
+#'   # Save a gt table to `data/tables/` and export it to `results/tables`
 #'   tbl <- gt::gt(head(mtcars))
-#'   save_table(tbl, name = "summary", export = FALSE, quiet = TRUE)
+#'   save_table(tbl, name = "summary", export = TRUE)
 #'   fs::dir_tree("data/tables")
+#'   fs::dir_tree("results/tables")
 #' })
 #'
 #' @name save_outputs

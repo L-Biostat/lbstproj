@@ -48,7 +48,11 @@ Generated report files are date-stamped, for example
 }
 \examples{
 with_example_project({
-  create_report(quiet = TRUE)
+  # Create a word report by default
+  create_report()
+
+  # Create a html report and overwrite the previous one
+  create_report(output_type = "html", overwrite = TRUE)
   fs::dir_tree("report")
 }, with_tot = TRUE)
 }

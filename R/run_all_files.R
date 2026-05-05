@@ -45,7 +45,7 @@
 #' @examples
 #' with_example_project({
 #'   # Create a minimal data script
-#'   writeLines('cat("data loaded\n")', "R/data/load-data.R")
+#'   writeLines('# code for data', "R/data/load-data.R")
 #'
 #'   # Source all scripts in R/data/
 #'   run_all_files("data")
@@ -164,7 +164,7 @@ compare_with_tot <- function(type, files) {
 #' @describeIn run_all_files Run all R scripts in `R/figures`
 #' @examples
 #' with_example_project({
-#'   writeLines('cat("figure ran\n")', "R/figures/fig01.R")
+#'   writeLines('# code for Figure 1', "R/figures/fig01.R")
 #'   run_all_figures()
 #' }, with_tot = TRUE)
 #' @export
@@ -178,7 +178,8 @@ run_all_figures <- function(
 #' @describeIn run_all_files Run all R scripts in `R/tables`
 #' @examples
 #' with_example_project({
-#'   writeLines('cat("table ran\n")', "R/tables/tab01.R")
+#'   writeLines('# code for Table 1', "R/tables/tab01.R")
+#'   writeLines('# code for Table 2', "R/tables/tab02.R")
 #'   run_all_tables()
 #' }, with_tot = TRUE)
 #' @export

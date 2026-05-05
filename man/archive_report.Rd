@@ -42,16 +42,16 @@ with_example_project({
   )
   writeLines("<html><body>Report v2</body></html>", "report/report-v2.html")
 
-  cat("Modification times (report-v2 is more recent):\n")
+  # Print the modification time
   print(fs::file_info(fs::dir_ls("report"))[c("path", "modification_time")])
 
-  cat("\nBefore:\n")
+  # Before archival the dir is empty
   fs::dir_tree("results/reports")
 
-  # file = NULL: automatically archives the most recently modified file
-  archive_report(quiet = TRUE)
+  # ´archive_report()´ automatically selects the latest report created (v2)
+  archive_report()
 
-  cat("\nAfter:\n")
+  # After archival, the report has been moved and renamed with version
   fs::dir_tree("results/reports")
 })
 }

@@ -18,3 +18,13 @@ Invisibly returns the TOT data as a tibble.
 Reads the TOT Excel file from \code{data/tot/table_of_tables.xlsx}, validates its
 structure, and saves it as an RDS file in \code{data/tot/tot.rds}.
 }
+\examples{
+with_example_project({
+  # Import the excel TOT as an .rds file
+  import_tot()
+  fs::dir_tree("data/tot")
+},
+with_tot = TRUE
+)
+
+}

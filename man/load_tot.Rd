@@ -25,6 +25,7 @@ Simple wrapper function to load the TOT RDS file.
 }
 \examples{
 with_example_project({
+  # Load the default TOT with a single figure in it
   tot <- load_tot()
   print(tot)
 }, with_tot = TRUE)

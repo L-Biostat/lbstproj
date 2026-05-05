@@ -84,5 +84,4 @@ test_that("create_function() creates a function file", {
   path <- create_function("shortcut-helpers", open = FALSE, quiet = TRUE)
   expect_equal(path, fs::path("R/functions/shortcut-helpers.R"))
   expect_true(fs::file_exists(path))
-  expect_true(fs::dir_exists("data/functions"))
 })

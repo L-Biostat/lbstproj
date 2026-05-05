@@ -61,18 +61,19 @@ for discrepancies between the files in the directory and the table of tables
 \examples{
 with_example_project({
   # Create a minimal data script
-  writeLines('cat("data loaded\n")', "R/data/load-data.R")
+  writeLines('# code for data', "R/data/load-data.R")
 
   # Source all scripts in R/data/
   run_all_files("data")
 })
 
 with_example_project({
-  writeLines('cat("figure ran\n")', "R/figures/fig01.R")
+  writeLines('# code for Figure 1', "R/figures/fig01.R")
   run_all_figures()
 }, with_tot = TRUE)
 with_example_project({
-  writeLines('cat("table ran\n")', "R/tables/tab01.R")
+  writeLines('# code for Table 1', "R/tables/tab01.R")
+  writeLines('# code for Table 2', "R/tables/tab02.R")
   run_all_tables()
 }, with_tot = TRUE)
 }

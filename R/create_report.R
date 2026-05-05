@@ -32,7 +32,11 @@
 #' @return Invisibly returns the path to the generated report file.
 #' @examples
 #' with_example_project({
-#'   create_report(quiet = TRUE)
+#'   # Create a word report by default
+#'   create_report()
+#'
+#'   # Create a html report and overwrite the previous one
+#'   create_report(output_type = "html", overwrite = TRUE)
 #'   fs::dir_tree("report")
 #' }, with_tot = TRUE)
 #' @export
@@ -48,7 +52,8 @@ create_report <- function(
     report_path <- report_file_path(extension = "Rmd")
     check_can_overwrite(report_path, overwrite, what = "Report file")
     template_path <- fs::path_package(
-      "templates", "flextable_report.Rmd",
+      "templates",
+      "flextable_report.Rmd",
       package = "lbstproj"
     )
   } else {
@@ -124,30 +129,30 @@ build_section_headers <- function(tot) {
   n <- nrow(tot)
   headers <- character(n)
 
-  prev_sec    <- NULL
-  prev_sub    <- NULL
+  prev_sec <- NULL
+  prev_sub <- NULL
   prev_subsub <- NULL
 
   for (i in seq_len(n)) {
-    sec    <- tot$section[i]
-    sub    <- tot$subsection[i]
+    sec <- tot$section[i]
+    sub <- tot$subsection[i]
     subsub <- tot$subsubsection[i]
 
-    sec_changed    <- !identical(sec, prev_sec)
-    sub_changed    <- sec_changed    || !identical(sub, prev_sub)
-    subsub_changed <- sub_changed    || !identical(subsub, prev_subsub)
+    sec_changed <- !identical(sec, prev_sec)
+    sub_changed <- sec_changed || !identical(sub, prev_sub)
+    subsub_changed <- sub_changed || !identical(subsub, prev_subsub)
 
     lines <- character(0)
 
     if (sec_changed) {
-      prev_sec    <- sec
-      prev_sub    <- NULL
+      prev_sec <- sec
+      prev_sub <- NULL
       prev_subsub <- NULL
       if (nzchar(sec)) lines <- c(lines, paste0("# ", sec))
     }
 
     if (sub_changed) {
-      prev_sub    <- sub
+      prev_sub <- sub
       prev_subsub <- NULL
       if (nzchar(sub)) lines <- c(lines, paste0("## ", sub))
     }
