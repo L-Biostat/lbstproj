@@ -41,7 +41,12 @@
 #' @examples
 #' with_example_project({
 #'   tot <- load_tot()
+#'
+#'   cat("# Chunk by id (padded, includes page break):\n")
 #'   create_chunk(id = tot$id[[1]], print = TRUE, quiet = TRUE)
+#'
+#'   cat("\n# Chunk by name (no page break):\n")
+#'   create_chunk(name = tot$name[[1]], pad = FALSE, print = TRUE, quiet = TRUE)
 #' }, with_tot = TRUE)
 #' @export
 create_chunk <- function(

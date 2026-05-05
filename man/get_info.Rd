@@ -24,9 +24,13 @@ its unique \code{name}. The TOT is loaded with \code{\link[=load_tot]{load_tot()
 with_example_project({
   tot <- load_tot()
 
-  # Look up the first entry by id
-  info <- get_info(id = tot$id[[1]])
-  cat("Name:", info$name[[1]], "\n")
-  cat("Caption:", info$caption[[1]], "\n")
+  cat("# Look up by id:\n")
+  info_id <- get_info(id = tot$id[[1]])
+  cat("Name:", info_id$name[[1]], "\n")
+  cat("Caption:", info_id$caption[[1]], "\n")
+
+  cat("\n# Look up by name:\n")
+  info_name <- get_info(name = tot$name[[1]])
+  str(info_name)
 }, with_tot = TRUE)
 }

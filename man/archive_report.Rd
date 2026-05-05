@@ -34,10 +34,24 @@ with \code{\link[=run_report]{run_report()}}, to save a copy of the rendered out
 }
 \examples{
 with_example_project({
-  # Simulate a rendered report in report/
-  writeLines("<html><body>Report</body></html>", "report/report.html")
+  # Create two report files; make the first one older
+  writeLines("<html><body>Report v1</body></html>", "report/report-v1.html")
+  fs::file_touch(
+    "report/report-v1.html",
+    modification_time = Sys.time() - 60
+  )
+  writeLines("<html><body>Report v2</body></html>", "report/report-v2.html")
 
-  archive_report(file = "report.html", quiet = TRUE)
+  cat("Modification times (report-v2 is more recent):\n")
+  print(fs::file_info(fs::dir_ls("report"))[c("path", "modification_time")])
+
+  cat("\nBefore:\n")
+  fs::dir_tree("results/reports")
+
+  # file = NULL: automatically archives the most recently modified file
+  archive_report(quiet = TRUE)
+
+  cat("\nAfter:\n")
   fs::dir_tree("results/reports")
 })
 }

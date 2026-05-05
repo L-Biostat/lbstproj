@@ -101,19 +101,20 @@ Data names may also contain underscores.
 }
 \examples{
 with_example_project({
-  # Save a data frame to data/processed/
+  cat("# Save a data frame to data/processed/\n")
   save_data(mtcars, name = "analysis-dataset", quiet = TRUE)
+  fs::dir_tree("data/processed")
 
-  # Save a ggplot figure to results/figures/
+  cat("\n# Save a ggplot figure to results/figures/\n")
   fig <- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) +
     ggplot2::geom_point()
   save_figure(fig, name = "mpg-vs-weight", quiet = TRUE)
+  fs::dir_tree("results/figures")
 
-  # Save a gt table to data/tables/ (export = FALSE skips the .docx export)
+  cat("\n# Save a gt table to data/tables/ (export = FALSE skips .docx)\n")
   tbl <- gt::gt(head(mtcars))
   save_table(tbl, name = "summary", export = FALSE, quiet = TRUE)
-
-  fs::dir_tree(c("data/processed", "data/tables", "results/figures"))
+  fs::dir_tree("data/tables")
 })
 
 }

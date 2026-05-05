@@ -27,10 +27,10 @@
 #'
 #' @examples
 #' with_example_project({
-#'   # Dry run (default): reports what would be created without writing files
+#'   cat("# Dry run (default): reports what would be created without writing files\n")
 #'   create_from_tot()
 #'
-#'   # Actually create the scripts
+#'   cat("\n# Actually create the scripts\n")
 #'   create_from_tot(dry_run = FALSE, quiet = TRUE)
 #'   fs::dir_tree("R")
 #' }, with_tot = TRUE)
