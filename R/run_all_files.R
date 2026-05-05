@@ -43,13 +43,13 @@
 #' @return Invisibly returns the character vector of sourced file paths.
 #'
 #' @examples
-#' if(FALSE) {
-#' run_all_files("figure")
-#' run_all_figures()                                 # equivalent to the above
-#' run_all_files("data")
-#' run_all_files("figure", glob = "fig-[0-9]*.R")   # only numbered figures
-#' run_all_files("figure", quiet = TRUE)             # suppress all messages
-#' }
+#' with_example_project({
+#'   # Create a minimal data script
+#'   writeLines('cat("data loaded\n")', "R/data/load-data.R")
+#'
+#'   # Source all scripts in R/data/
+#'   run_all_files("data")
+#' })
 #'
 #' @name run_all_files
 #' @export
@@ -162,6 +162,11 @@ compare_with_tot <- function(type, files) {
 }
 
 #' @describeIn run_all_files Run all R scripts in `R/figures`
+#' @examples
+#' with_example_project({
+#'   writeLines('cat("figure ran\n")', "R/figures/fig01.R")
+#'   run_all_figures()
+#' }, with_tot = TRUE)
 #' @export
 run_all_figures <- function(
   glob = "*.R",
@@ -171,6 +176,11 @@ run_all_figures <- function(
 }
 
 #' @describeIn run_all_files Run all R scripts in `R/tables`
+#' @examples
+#' with_example_project({
+#'   writeLines('cat("table ran\n")', "R/tables/tab01.R")
+#'   run_all_tables()
+#' }, with_tot = TRUE)
 #' @export
 run_all_tables <- function(
   glob = "*.R",

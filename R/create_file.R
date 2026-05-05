@@ -38,31 +38,20 @@
 #'
 #' @return Invisibly returns the path of the file created.
 #' @examples
-#' if(FALSE) {
-#' # Hypothetical project layout:
-#' # .
-#' # \- R/
-#' #    |- figures/
-#' #    \- tables/
+#' with_example_project({
+#'   # Before
+#'   fs::dir_tree("R")
 #'
-#' # 1) Create a figure file in `R/figures/`
-#' create_file(type = "figure", name = "hr_by_age")
-#' # > v Figure file created at 'R/figures/hr_by_age.R'
+#'   # Create a figure file in R/figures/ and a table file in R/tables/
+#'   create_file("figure", "hr-by-age", open = FALSE, quiet = TRUE)
+#'   create_file("table", "baseline", open = FALSE, quiet = TRUE)
 #'
-#' # 2) Create a table file in `R/tables/`
-#' create_file(type = "table", name = "baseline_characteristics.R")
-#' # > v Table file created at 'R/tables/baseline_characteristics.R'
+#'   # Custom type: also creates matching data/models/ directory
+#'   create_file("model", "primary-model", open = FALSE, quiet = TRUE)
 #'
-#' # 3) Create a model file (custom type): creates R/models/ and data/models/
-#' create_file(type = "model", name = "primary_model")
-#' # > i Created directory 'R/models'.
-#' # > i Created directory 'data/models'.
-#' # > v Model file created at 'R/models/primary_model.R'.
-#'
-#' # 4) Calling again does not overwrite
-#' create_file(type = "model", name = "primary_model")
-#' # > ! File 'R/models/primary_model.R' already exists and will not be overwritten.
-#' }
+#'   # After
+#'   fs::dir_tree("R")
+#' })
 #'
 #' @export
 create_file <- function(
@@ -172,10 +161,13 @@ NULL
 #' @describeIn create_shortcuts Create a figure R file in `R/figures/` using the
 #'   figure template. File names may contain only letters, numbers, and hyphens.
 #' @examples
-#' if (FALSE) {
-#' create_figure("hr-by-age")
-#' # > v Hr-by-age file created at 'R/figures/hr-by-age.R'
-#' }
+#' with_example_project({
+#'   create_figure("hr-by-age", open = FALSE, quiet = TRUE)
+#'   create_table("baseline", open = FALSE, quiet = TRUE)
+#'   create_data("import-adsl", open = FALSE, quiet = TRUE)
+#'   create_function("helpers", open = FALSE, quiet = TRUE)
+#'   fs::dir_tree("R")
+#' })
 #'
 #' @export
 create_figure <- function(
@@ -190,11 +182,6 @@ create_figure <- function(
 
 #' @describeIn create_shortcuts Create a table R file in `R/tables/` using the
 #'   table template. File names may contain only letters, numbers, and hyphens.
-#' @examples
-#' if (FALSE) {
-#' create_table("baseline-characteristics")
-#' # > v Baseline-characteristics file created at 'R/tables/baseline-characteristics.R'
-#' }
 #'
 #' @export
 create_table <- function(
@@ -210,11 +197,6 @@ create_table <- function(
 #' @describeIn create_shortcuts Create a data R file in `R/data/` using the data
 #'   template. File names may contain letters, numbers, hyphens, and
 #'   underscores.
-#' @examples
-#' if (FALSE) {
-#' create_data("import-adsl")
-#' # > v Import-adsl file created at 'R/data/import-adsl.R'
-#' }
 #'
 #' @export
 create_data <- function(
@@ -231,11 +213,6 @@ create_data <- function(
 #'   the generic file template. File names may contain letters, numbers,
 #'   hyphens, and underscores. A matching `data/functions/` directory is also
 #'   created automatically.
-#' @examples
-#' if (FALSE) {
-#' create_function("helpers")
-#' # > v Helpers file created at 'R/functions/helpers.R'
-#' }
 #'
 #' @export
 create_function <- function(

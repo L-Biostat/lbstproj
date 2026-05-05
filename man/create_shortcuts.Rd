@@ -68,24 +68,12 @@ created automatically.
 
 }}
 \examples{
-if (FALSE) {
-create_figure("hr-by-age")
-# > v Hr-by-age file created at 'R/figures/hr-by-age.R'
-}
-
-if (FALSE) {
-create_table("baseline-characteristics")
-# > v Baseline-characteristics file created at 'R/tables/baseline-characteristics.R'
-}
-
-if (FALSE) {
-create_data("import-adsl")
-# > v Import-adsl file created at 'R/data/import-adsl.R'
-}
-
-if (FALSE) {
-create_function("helpers")
-# > v Helpers file created at 'R/functions/helpers.R'
-}
+with_example_project({
+  create_figure("hr-by-age", open = FALSE, quiet = TRUE)
+  create_table("baseline", open = FALSE, quiet = TRUE)
+  create_data("import-adsl", open = FALSE, quiet = TRUE)
+  create_function("helpers", open = FALSE, quiet = TRUE)
+  fs::dir_tree("R")
+})
 
 }

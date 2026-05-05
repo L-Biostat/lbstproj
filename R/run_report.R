@@ -36,10 +36,11 @@
 #'
 #' @return Invisibly returns the path to the report file.
 #' @examples
-#' if(FALSE) {
-#'   run_report()
-#'   run_report(file = "report_2026_03_16.qmd")
-#'   run_report(file = "report_2026_03_16.Rmd")
+#' \dontrun{
+#'   with_example_project({
+#'     create_report(quiet = TRUE)
+#'     run_report()
+#'   }, with_tot = TRUE)
 #' }
 #' @export
 run_report <- function(

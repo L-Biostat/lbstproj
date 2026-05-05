@@ -47,8 +47,8 @@ Generated report files are date-stamped, for example
 (flextable).
 }
 \examples{
-if(FALSE) {
-  create_report()
-  create_report(output_type = "docx", overwrite = TRUE)
-}
+with_example_project({
+  create_report(quiet = TRUE)
+  fs::dir_tree("report")
+}, with_tot = TRUE)
 }

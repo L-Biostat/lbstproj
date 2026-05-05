@@ -100,23 +100,21 @@ Figure and table names can only contain letters, numbers, and hyphens.
 Data names may also contain underscores.
 }
 \examples{
-if(FALSE) {
-  save_data(mtcars, name = "analysis_dataset")
+with_example_project({
+  cat("# Save a data frame to data/processed/\n")
+  save_data(mtcars, name = "analysis-dataset", quiet = TRUE)
+  fs::dir_tree("data/processed")
 
-  # gt project (default)
-  summary_table <- gt::gt(head(mtcars))
-  save_table(summary_table, name = "baseline_characteristics")
-
-  # flextable project
-  ft <- flextable::flextable(head(mtcars))
-  save_table(ft, name = "baseline_characteristics")
-
-  scatter_plot <- ggplot2::ggplot(
-    mtcars,
-    ggplot2::aes(wt, mpg)
-  ) +
+  cat("\n# Save a ggplot figure to results/figures/\n")
+  fig <- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) +
     ggplot2::geom_point()
-  save_figure(scatter_plot, name = "mpg_vs_weight")
-}
+  save_figure(fig, name = "mpg-vs-weight", quiet = TRUE)
+  fs::dir_tree("results/figures")
+
+  cat("\n# Save a gt table to data/tables/ (export = FALSE skips .docx)\n")
+  tbl <- gt::gt(head(mtcars))
+  save_table(tbl, name = "summary", export = FALSE, quiet = TRUE)
+  fs::dir_tree("data/tables")
+})
 
 }

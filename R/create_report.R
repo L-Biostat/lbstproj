@@ -31,10 +31,10 @@
 #'   otherwise.
 #' @return Invisibly returns the path to the generated report file.
 #' @examples
-#' if(FALSE) {
-#'   create_report()
-#'   create_report(output_type = "docx", overwrite = TRUE)
-#' }
+#' with_example_project({
+#'   create_report(quiet = TRUE)
+#'   fs::dir_tree("report")
+#' }, with_tot = TRUE)
 #' @export
 create_report <- function(
   output_type = "docx",

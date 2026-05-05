@@ -120,9 +120,10 @@ import_tot <- function(quiet = FALSE) {
 #'   frequently.
 #'
 #' @examples
-#' if(FALSE) {
-#'  tot <- load_tot()
-#' }
+#' with_example_project({
+#'   tot <- load_tot()
+#'   print(tot)
+#' }, with_tot = TRUE)
 #' @return A tibble containing the TOT data with the following columns:
 #' - `id`: Unique identifier for each item.
 #' - `type`: Type of the item (either "table" or "figure").

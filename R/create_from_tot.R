@@ -26,40 +26,14 @@
 #'   (file creation and CLI reporting).
 #'
 #' @examples
-#' if(FALSE) {
-#' # Hypothetical project structure:
-#' # R/
-#' # |-- figures/
-#' #    \-- fig_01_flowchart.R
-#' # \-- tables/
-#' #     \-- tab_01_baseline.R
+#' with_example_project({
+#'   cat("# Dry run (default): reports what would be created without writing files\n")
+#'   create_from_tot()
 #'
-#' # TOT contains:
-#' #   - fig_01_flowchart
-#' #   - fig_02_primary
-#' #   - tab_01_baseline
-#' #   - tab_02_primary
-#'
-#' # Dry run (no files created)
-#' create_from_tot()
-#'
-#' # Example CLI output:
-#' #
-#' # Figures
-#' # i Figures: 2 in TOT, 1 on disk, 1 matched.
-#' # i Figures: would generate 1 missing program (keeping 1 existing).
-#' # i Figures: would create 1 program in R/figures.
-#' # * R/figures/fig_02_primary.R
-#' #
-#' # Tables
-#' # i Tables: 2 in TOT, 1 on disk, 1 matched.
-#' # i Tables: would generate 1 missing program (keeping 1 existing).
-#' # i Tables: would create 1 program in R/tables.
-#' # * R/tables/tab_02_primary.R
-#'
-#' # Actual creation
-#' create_from_tot(dry_run = FALSE)
-#' }
+#'   cat("\n# Actually create the scripts\n")
+#'   create_from_tot(dry_run = FALSE, quiet = TRUE)
+#'   fs::dir_tree("R")
+#' }, with_tot = TRUE)
 #'
 #' @export
 create_from_tot <- function(
