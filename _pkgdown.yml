@@ -61,6 +61,7 @@ reference:
       - run_all_figures
       - run_all_tables
       - load_function
+      - check_status
 
   - title: Reporting
     desc: Generate, render, and archive Quarto reports.
