@@ -143,6 +143,9 @@ Source all scripts of a given type in batch.
 
   Source a file from `R/functions/`
 
+- [`check_status()`](https://l-biostat.github.io/lbstproj/reference/check_status.md)
+  : Check the status of figures or tables
+
 ## Reporting
 
 Generate, render, and archive Quarto reports.

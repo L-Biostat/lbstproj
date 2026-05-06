@@ -64,11 +64,11 @@ with_example_project({
   create_report(output_type = "html", overwrite = TRUE)
   fs::dir_tree("report")
 }, with_tot = TRUE)
-#> ✔ Writing report to report/report_2026_05_05.qmd.
+#> ✔ Writing report to report/report_2026_05_06.qmd.
 #> ℹ Use `run_report()` to render the report.
-#> ✔ Writing report to report/report_2026_05_05.qmd.
+#> ✔ Writing report to report/report_2026_05_06.qmd.
 #> ℹ Use `run_report()` to render the report.
 #> report
-#> ├── report_2026_05_05.qmd
+#> ├── report_2026_05_06.qmd
 #> └── utils
 ```

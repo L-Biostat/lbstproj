@@ -95,7 +95,7 @@ with_example_project({
 #> ── Running all figure files in R/figures ───────────────────────────────────────
 #> ℹ Found 1 file.
 #> ℹ Sourcing file 1/1: fig01
-#> ✔ Sourced file 1/1: fig01 [14ms]
+#> ✔ Sourced file 1/1: fig01 [11ms]
 #> 
 with_example_project({
   writeLines('# code for Table 1', "R/tables/tab01.R")
@@ -107,9 +107,9 @@ with_example_project({
 #> ── Running all table files in R/tables ─────────────────────────────────────────
 #> ℹ Found 2 files.
 #> ℹ Sourcing file 1/2: tab01
-#> ✔ Sourced file 1/2: tab01 [11ms]
+#> ✔ Sourced file 1/2: tab01 [13ms]
 #> 
 #> ℹ Sourcing file 2/2: tab02
-#> ✔ Sourced file 2/2: tab02 [11ms]
+#> ✔ Sourced file 2/2: tab02 [22ms]
 #> 
 ```

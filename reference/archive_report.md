@@ -72,9 +72,9 @@ with_example_project({
 #> # A tibble: 3 × 2
 #>   path                  modification_time  
 #>   <fs::path>            <dttm>             
-#> 1 report/report-v1.html 2026-05-05 10:31:27
-#> 2 report/report-v2.html 2026-05-05 10:32:27
-#> 3 report/utils          2026-05-05 10:32:27
+#> 1 report/report-v1.html 2026-05-06 11:18:25
+#> 2 report/report-v2.html 2026-05-06 11:19:25
+#> 3 report/utils          2026-05-06 11:19:25
 #> results/reports
 #> ✔ Report archived at results/reports/report-v2_v0.1.0.html.
 #> results/reports

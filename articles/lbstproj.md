@@ -48,7 +48,7 @@ The project now has the following structure:
 ``` r
 
 fs::dir_tree(tmp_proj_dir, recurse = TRUE)
-#> /tmp/Rtmpe4tLE3/fake-trial
+#> /tmp/Rtmpk3mc8r/fake-trial
 #> ├── DESCRIPTION
 #> ├── R
 #> │   ├── data
@@ -239,12 +239,12 @@ to retrieve TOT metadata, library calls, and placeholder comments:
 
     #' Name         : fig-age-dist.R
     #' Author       : Jane Doe
-    #' Date         : 05 May 2026
+    #' Date         : 06 May 2026
     #' Purpose      :
     #' Files created:
     #'  - `results/figures/fig-age-dist.png/pdf`
     #' Edits        :
-    #'  - 05 May 2026: Created file.
+    #'  - 06 May 2026: Created file.
 
     # File info ---------------------------------------------------------------
 
@@ -515,7 +515,7 @@ TOT.
 create_report(output_type = "html")
 ```
 
-    #> ✔ Writing report to report/report_2026_05_05.qmd.
+    #> ✔ Writing report to report/report_2026_05_06.qmd.
     #> ℹ Use `run_report()` to render the report.
 
 The generated file looks like this (excerpt):
